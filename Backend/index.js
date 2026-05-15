@@ -8,6 +8,8 @@ const cors = require("cors")
 app.use(cors())
 const mongoose = require("mongoose")
 
+import errorMiddleware from "./middleware/errorMiddleware"
+
 
 
 
@@ -29,6 +31,11 @@ mongoose.connect(process.env.MONGO_URL)
     })
 
 
+
+
+    app.use(errorMiddleware)
+
+    
     const PORT=process.env.PORT || 5000
     app.listen(PORT,()=>{
         console.log(`server is runningon port ${PORT}`)
