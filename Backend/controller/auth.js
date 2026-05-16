@@ -3,6 +3,7 @@
 const user = require("../models/userModel")
 const ErrorHandler = require("../utils/errorHandler")
 
+const bcrypt = require("bcryptjs")
 
 
 const registerUser = async (req, res, next) => {
@@ -26,10 +27,12 @@ const registerUser = async (req, res, next) => {
         if (userExists) {
             return next(new ErrorHandler("User already exists", 400))
         }
+
+        const hasshedPassword = await bcrypt.hash(password, 10)
         // create user
 
         const User = await user.create({
-            name, email, password
+            name, email, password: hasshedPassword
         })
         res.status(200).json({
             success: true,
@@ -64,7 +67,8 @@ const LoginUser = async (req, res, next) => {
             return next(new ErrorHandler("user not found", 401))
         }
 
-        if (existingUser.password !== password) {
+        const isMatch = await bcrypt.compare(password, existingUser.password)
+        if (!isMatch) {
             return next(new ErrorHandler("invalid password", 401))
         }
 
