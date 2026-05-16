@@ -13,9 +13,9 @@ const Signup = () => {
         name: "",
         email: "",
         password: ""
-    })  
+    })
 
-    const [ message, setmessage ] = useState("")
+    const [message, setmessage] = useState("")
 
     const handleChange = (e) => {
         setForm({
@@ -40,18 +40,21 @@ const Signup = () => {
 
     return (
         <>
-            <div>
+            <div className="auth-container">
 
-                <h2>Signup</h2>
-                <form onSubmit={handleSubmite}>
+                <div className="auth-box">
 
-                    <input type="text" name="name" placeholder="name" onChange={handleChange} value={formData.name} /><br/>
-                    <input type="email" name="email" placeholder="email" onChange={handleChange} value={formData.email} /><br/>
-                    <input type="password" name="password" placeholder="password" onChange={handleChange} value={formData.password} /><br/>
-                    <button type="submit">Signup</button>
+                    <h2>Signup</h2>
+                    <form className="auth-form" onSubmit={handleSubmite}>
 
-                </form>
-                <p>{message}</p>
+                        <input type="text" name="name" placeholder="name" onChange={handleChange} value={formData.name} /><br />
+                        <input type="email" name="email" placeholder="email" onChange={handleChange} value={formData.email} /><br />
+                        <input type="password" name="password" placeholder="password" onChange={handleChange} value={formData.password} /><br />
+                        <button type="submit">Signup</button>
+
+                    </form>
+                    <p>{message}</p>
+                </div>
 
 
             </div>

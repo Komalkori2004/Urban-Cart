@@ -39,7 +39,7 @@ const Login = () => {
                 `Bearer ${data.token}`
 
             if (data.user.role === "admin") {
-                navigate("/admin")  
+                navigate("/admin")
             } else {
                 navigate("/profile")
             }
@@ -53,18 +53,21 @@ const Login = () => {
 
     return (
         <>
-            <div>
+            <div className="auth-container">
 
-                <h2>Login</h2>
-                <form onSubmit={handleSubmite}>
+                <div className="auth-box">
+                    <h2>Login</h2>
+                    <form className="auth-form" onSubmit={handleSubmite}>
 
-                    {/* <input type="text" name="name" placeholder="name" onChange={handleChange} value={formData.name} /><br/> */}
-                    <input type="email" name="email" placeholder="email" onChange={handleChange} value={formData.email} /><br />
-                    <input type="password" name="password" placeholder="password" onChange={handleChange} value={formData.password} /><br />
-                    <button type="submit">Login</button>
+                        {/* <input type="text" name="name" placeholder="name" onChange={handleChange} value={formData.name} /><br/> */}
+                        <input type="email" name="email" placeholder="email" onChange={handleChange} value={formData.email} /><br />
+                        <input type="password" name="password" placeholder="password" onChange={handleChange} value={formData.password} /><br />
+                        <button type="submit">Login</button>
 
-                </form>
-                <p>{message}</p>
+                    </form>
+                    <p>{message}</p>
+
+                </div>
 
 
             </div>
