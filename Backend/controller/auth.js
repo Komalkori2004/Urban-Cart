@@ -5,6 +5,8 @@ const ErrorHandler = require("../utils/errorHandler")
 
 const bcrypt = require("bcryptjs")
 
+const jwt = require("jsonwebtoken")
+
 
 const registerUser = async (req, res, next) => {
 
@@ -72,9 +74,20 @@ const LoginUser = async (req, res, next) => {
             return next(new ErrorHandler("invalid password", 401))
         }
 
+        const token = jwt.sign(
+            {
+                id: existingUser._id,
+                role: existingUser.role
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        )
+
+
         res.status(200).json({
             success: true,
             message: "User Login seccessfully",
+            token,
             user: existingUser
         })
 
