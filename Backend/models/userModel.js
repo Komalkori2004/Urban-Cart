@@ -32,3 +32,5 @@ const userSchema = new mongoose.Schema({
     resetPasswordTokenExpiry: Date
 
 })
+
+module.exports=mongoose.model("User",userSchema)
