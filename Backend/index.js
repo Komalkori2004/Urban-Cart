@@ -8,7 +8,9 @@ const cors = require("cors")
 app.use(cors())
 const mongoose = require("mongoose")
 
-import errorMiddleware from "./middleware/errorMiddleware"
+    // import errorMiddleware from "./middleware/errorMiddleware"
+
+    const errorMiddleware=require("./middleware/errorMiddleware")
 
 
 
@@ -18,7 +20,7 @@ app.use(express.json())
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
 
-        console.log("mongoDB altls connected successfully")
+        console.log("mongoDB atls connected successfully")
 
     })
     .catch((error)=>{
