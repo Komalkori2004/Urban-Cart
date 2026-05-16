@@ -2,10 +2,13 @@ import React from 'react'
 
 import api from "../services/api"
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 
 
 const Signup = () => {
 
+    const navigate = useNavigate()
     const [formData, setForm] = useState({
         name: "",
         email: "",
@@ -25,6 +28,8 @@ const Signup = () => {
         e.preventDefault()
         try {
             const { data } = await api.post("/auth/register", formData)
+
+            navigate("/login")
             setmessage(data.message)
         } catch (error) {
             setmessage(error.response.data.message)

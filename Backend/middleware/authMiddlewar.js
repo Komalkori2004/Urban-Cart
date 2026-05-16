@@ -30,11 +30,12 @@ const authMiddleware = (req, res, next) => {
 
 
 
-const authorizeRoles=(...roles)=>{
-    return (req,res,next)=>{
-        if(!roles.includes(req.user.role)){
-            return 
-            next(new ErrorHandler("role not alloed"))
+const authorizeRoles = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(
+                new ErrorHandler("role not alloed")
+            )
         }
 
 
@@ -44,4 +45,4 @@ const authorizeRoles=(...roles)=>{
 
 }
 
-module.exports={authMiddleware,authorizeRoles}
+module.exports = { authMiddleware, authorizeRoles }

@@ -42,17 +42,10 @@ const registerUser = async (req, res, next) => {
             user
         })
 
-
-
     } catch (error) {
         next(error)
     }
-
-
 }
-
-
-
 
 // login user
 const LoginUser = async (req, res, next) => {
@@ -97,6 +90,25 @@ const LoginUser = async (req, res, next) => {
     }
 
 }
+const  getProfile=async(req,res,next)=>{
+
+    res.status(200).json({
+        success:true,
+        user:req.user
+    })
+}
+
+const AdminDashboard=async(req,res,next)=>{
+
+    res.status(200).json({
+        success:ture,
+        message:"Welcome to Admin Dashboard"
+    })
+}
 
 
-module.exports = { registerUser, LoginUser }
+
+
+
+
+module.exports = { registerUser, LoginUser ,getProfile,AdminDashboard}
