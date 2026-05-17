@@ -167,7 +167,7 @@ const updateProducts = asyncHandler(async (req, res, next) => {
 
 
     if (name) {
-      const newSlug = slugify(name, {
+        const newSlug = slugify(name, {
             lower: true
         })
         // check existing product with same slug
@@ -184,10 +184,6 @@ const updateProducts = asyncHandler(async (req, res, next) => {
 
         product.slug = newSlug
     }
-
-
-
-
 
 
     if (req.files && req.files.length > 0) {
@@ -243,7 +239,13 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
     if (product.images && product.images.length > 0) {
 
         for (const image of product.images) {
-            await cloudinary.uploader.destroy(image.public_id)
+
+            const deleteResult = await cloudinary.uploader.destroy(
+                image.public_id
+            )
+
+            console.log(deleteResult)
+
         }
 
     }
