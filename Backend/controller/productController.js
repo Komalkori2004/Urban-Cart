@@ -167,10 +167,27 @@ const updateProducts = asyncHandler(async (req, res, next) => {
 
 
     if (name) {
-        product.slug = slugify(name, {
+      const newSlug = slugify(name, {
             lower: true
         })
+        // check existing product with same slug
+        const existingProduct = await productModel.findOne({
+            slug: newSlug,
+            _id: { $ne: product._id }
+        })
+
+        if (existingProduct) {
+            return next(
+                new ErrorHandler(400, "Product with this name already exists")
+            )
+        }
+
+        product.slug = newSlug
     }
+
+
+
+
 
 
     if (req.files && req.files.length > 0) {
@@ -207,4 +224,38 @@ const updateProducts = asyncHandler(async (req, res, next) => {
 })
 
 
-module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts }
+
+
+
+// delete product
+
+
+const deleteProduct = asyncHandler(async (req, res, next) => {
+
+    const product = await productModel.findById(req.params.id)
+
+    if (!product) {
+        return next(
+            new ErrorHandler(404, "Product not found ")
+        )
+    }
+
+    if (product.images && product.images.length > 0) {
+
+        for (const image of product.images) {
+            await cloudinary.uploader.destroy(image.public_id)
+        }
+
+    }
+
+    await product.deleteOne()
+    res.status(200).json({
+        success: true,
+        message: "product deleted successfully"
+    })
+
+
+
+})
+
+module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct }
