@@ -1,114 +1,136 @@
+const user = require("../models/userModel");
+
+const ErrorHandler = require("../utils/errorHandler");
+
+const bcrypt = require("bcryptjs");
+
+const jwt = require("jsonwebtoken");
+
+const asyncHandler = require("../middleware/asyncHandler");
 
 
-const user = require("../models/userModel")
-const ErrorHandler = require("../utils/errorHandler")
+// Register User
+const registerUser = asyncHandler(async (req, res, next) => {
 
-const bcrypt = require("bcryptjs")
+  const { name, email, password } = req.body;
 
-const jwt = require("jsonwebtoken")
+  // Validation
+  if (!name || !email || !password) {
+    return next(
+      new ErrorHandler(400, "Please enter all fields")
+    );
+  }
+
+  // Check existing user
+  const userExists = await user.findOne({ email });
+
+  if (userExists) {
+    return next(
+      new ErrorHandler(400, "User already exists")
+    );
+  }
+
+  // Hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Create user
+  const User = await user.create({
+    name,
+    email,
+    password: hashedPassword,
+  });
+  User.password = undefined;
+
+  res.status(201).json({
+    success: true,
+    message: "User created successfully",
+    user: User,
+  });
+
+});
 
 
-const registerUser = async (req, res, next) => {
+// Login User
+const LoginUser = asyncHandler(async (req, res, next) => {
 
-    try {
+  const { email, password } = req.body;
 
-        // request come form frontend
-        const { name, email, password } = req.body
+  // Validation
+  if (!email || !password) {
+    return next(
+      new ErrorHandler(400, "Please enter email and password")
+    );
+  }
 
+  // Check user
+  const existingUser = await user.findOne({ email });
 
+  if (!existingUser) {
+    return next(
+      new ErrorHandler(401, "User not found")
+    );
+  }
 
-        // check all filed must have required
-        if (!name || !email || !password) {
-            return next(new ErrorHandler("please enter all fields", 400))
-        }
+  // Compare password
+  const isMatch = await bcrypt.compare(
+    password,
+    existingUser.password
+  );
 
-        // database check if email already exist
+  if (!isMatch) {
+    return next(
+      new ErrorHandler(401, "Invalid password")
+    );
+  }
 
-        const userExists = await user.findOne({ email })
-
-        if (userExists) {
-            return next(new ErrorHandler("User already exists", 400))
-        }
-
-        const hasshedPassword = await bcrypt.hash(password, 10)
-        // create user
-
-        const User = await user.create({
-            name, email, password: hasshedPassword
-        })
-        res.status(200).json({
-            success: true,
-            message: "user created successfully",
-            user
-        })
-
-    } catch (error) {
-        next(error)
+  // Generate token
+  const token = jwt.sign(
+    {
+      id: existingUser._id,
+      role: existingUser.role,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1d",
     }
-}
+  );
 
-// login user
-const LoginUser = async (req, res, next) => {
+  existingUser.password = undefined;
+  res.status(200).json({
+    success: true,
+    message: "User login successfully",
+    token,
+    user: existingUser,
+  });
 
-    try {
-
-        const { email, password } = req.body
-        if (!email || !password) {
-            return next(new ErrorHandler("please enter email or password ", 400))
-        }
-        const existingUser = await user.findOne({ email })
-
-        if (!existingUser) {
-            return next(new ErrorHandler("user not found", 401))
-        }
-
-        const isMatch = await bcrypt.compare(password, existingUser.password)
-        if (!isMatch) {
-            return next(new ErrorHandler("invalid password", 401))
-        }
-
-        const token = jwt.sign(
-            {
-                id: existingUser._id,
-                role: existingUser.role
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: "1d" }
-        )
+});
 
 
-        res.status(200).json({
-            success: true,
-            message: "User Login seccessfully",
-            token,
-            user: existingUser
-        })
+// Get Profile
+const getProfile = asyncHandler(async (req, res, next) => {
+
+  res.status(200).json({
+    success: true,
+    user: req.user,
+  });
+
+});
 
 
-    } catch (err) {
-        next(err)
-    }
+// Admin Dashboard
+const AdminDashboard = asyncHandler(async (req, res, next) => {
 
-}
-const  getProfile=async(req,res,next)=>{
+  res.status(200).json({
+    success: true,
+    message: "Welcome to Admin Dashboard",
+  });
 
-    res.status(200).json({
-        success:true,
-        user:req.user
-    })
-}
-
-const AdminDashboard=async(req,res,next)=>{
-
-    res.status(200).json({
-        success:ture,
-        message:"Welcome to Admin Dashboard"
-    })
-}
+});
 
 
-
-
-
-
-module.exports = { registerUser, LoginUser ,getProfile,AdminDashboard}
+module.exports = {
+  registerUser,
+  LoginUser,
+  getProfile,
+  AdminDashboard,
+};
