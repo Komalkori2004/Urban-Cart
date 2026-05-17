@@ -57,5 +57,36 @@ const createProduct = asyncHandler(async (req, res, next) => {
 
 
 
+//   all product 
 
-module.exports={createProduct}
+const getAllProduct = asyncHandler(async (req, res, next) => {
+    const products = await productModel.find()
+
+    res.status(200).json({
+        success: true,
+        products
+
+    })
+
+})
+
+
+
+
+const getSingleProduct = asyncHandler(async (req, res, next) => {
+    const product = await productModel.findOne({ slug: req.params.slug })
+
+    if (!product) {
+        return next(
+            new ErrorHandler(404, "Product not Found")
+        )
+    }
+
+    res.status(200).json({
+        success: true,
+        product
+    })
+})
+
+
+module.exports = { createProduct, getAllProduct , getSingleProduct}
