@@ -38,14 +38,6 @@ app.use("/api/products", require("./routes/productRouter"))
 
 
 
-
-
-
-
-
-
-
-
 // server start
 app.get("/", (req, res) => {
     res.send("server is running")
