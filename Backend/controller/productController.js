@@ -72,7 +72,7 @@ const createProduct = asyncHandler(async (req, res, next) => {
     if (req.files && req.files.length > 0) {
         for (const file of req.files) {
             const result = await uploadToCloudinary(file.buffer)
-         uploadedImages.push({
+            uploadedImages.push({
                 public_id: result.public_id,
                 url: result.secure_url
             })
@@ -98,7 +98,7 @@ const createProduct = asyncHandler(async (req, res, next) => {
     res.status(201).json({
         success: true,
         message: "Product created successfully",
-        product,
+        data: product,
     })
 
 
@@ -138,4 +138,73 @@ const getSingleProduct = asyncHandler(async (req, res, next) => {
 })
 
 
-module.exports = { createProduct, getAllProduct, getSingleProduct }
+
+// update products
+
+
+const updateProducts = asyncHandler(async (req, res, next) => {
+    const product = await productModel.findById(req.params.id)
+
+    if (!product) {
+        return next(
+            new ErrorHandler(404, "Product not found")
+        )
+    }
+
+
+
+
+    const { name, description, price, category, brand, stock, shipping } = req.body
+
+    product.name = name || product.name
+    product.description = description || product.description
+    product.price = price || product.price
+    product.category = category || product.category
+    product.brand = brand || product.brand
+    product.stock = stock || product.stock
+    product.shipping = shipping || product.shipping
+
+
+
+    if (name) {
+        product.slug = slugify(name, {
+            lower: true
+        })
+    }
+
+
+    if (req.files && req.files.length > 0) {
+        // delete old images
+        if (product.images && product.images.length > 0) {
+
+            for (const image of product.images) {
+                await cloudinary.uploader.destroy(image.public_id)
+            }
+
+        }
+
+        const uploadedImages = []
+        for (const file of req.files) {
+            const result = await uploadToCloudinary(file.buffer)
+            uploadedImages.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            })
+        }
+        product.images = uploadedImages
+    }
+
+    const updatedProduct = await product.save()
+    res.status(200).json({
+        success: true,
+        message: "Product Updated Successfully",
+        data: updatedProduct
+    })
+
+
+
+
+})
+
+
+module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts }

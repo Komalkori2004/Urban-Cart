@@ -1,17 +1,18 @@
-    const express=require("express")
+const express = require("express")
 
-    const router=express.Router()
-const upload=require("../middleware/multer")
+const router = express.Router()
+const upload = require("../middleware/multer")
 
 
-    const {createProduct,getAllProduct,getSingleProduct}=require("../controller/productController")
+const { createProduct, getAllProduct, getSingleProduct ,updateProducts} = require("../controller/productController")
 
-    const {authMiddleware,authorizeRoles}=require("../middleware/authMiddlewar")
-    
+const { authMiddleware, authorizeRoles } = require("../middleware/authMiddlewar")
 
-    router.post("/create",authMiddleware,authorizeRoles("admin"),upload.array("images",5),createProduct)
 
-    router.get("/",getAllProduct)
-    router.get("/:slug",getSingleProduct)
+router.post("/create", authMiddleware, authorizeRoles("admin"), upload.array("images", 5), createProduct)
 
-    module.exports=router
+router.get("/", getAllProduct)
+router.get("/:slug", getSingleProduct)
+router.put("/:id", authMiddleware, authorizeRoles("admin"), upload.array("images", 5), updateProducts)
+
+module.exports = router
