@@ -32,9 +32,6 @@ const uploadToCloudinary = async (fileBuffer) => {
 
 }
 
-
-
-
 const createProduct = asyncHandler(async (req, res, next) => {
     const { name,
         description,
@@ -63,9 +60,6 @@ const createProduct = asyncHandler(async (req, res, next) => {
             new ErrorHandler(400, "Product Already Exists")
         )
     }
-
-
-
     // upload image
 
     const uploadedImages = []
@@ -78,9 +72,6 @@ const createProduct = asyncHandler(async (req, res, next) => {
             })
         }
     }
-
-
-
     const product = await productModel.create({
         name,
         slug,
@@ -100,11 +91,7 @@ const createProduct = asyncHandler(async (req, res, next) => {
         message: "Product created successfully",
         data: product,
     })
-
-
 })
-
-
 
 //   all product 
 
@@ -118,10 +105,6 @@ const getAllProduct = asyncHandler(async (req, res, next) => {
     })
 
 })
-
-
-
-
 const getSingleProduct = asyncHandler(async (req, res, next) => {
     const product = await productModel.findOne({ slug: req.params.slug })
 
@@ -150,10 +133,6 @@ const updateProducts = asyncHandler(async (req, res, next) => {
             new ErrorHandler(404, "Product not found")
         )
     }
-
-
-
-
     const { name, description, price, category, brand, stock, shipping } = req.body
 
     product.name = name || product.name
@@ -163,8 +142,6 @@ const updateProducts = asyncHandler(async (req, res, next) => {
     product.brand = brand || product.brand
     product.stock = stock || product.stock
     product.shipping = shipping || product.shipping
-
-
 
     if (name) {
         const newSlug = slugify(name, {
@@ -184,7 +161,6 @@ const updateProducts = asyncHandler(async (req, res, next) => {
 
         product.slug = newSlug
     }
-
 
     if (req.files && req.files.length > 0) {
         // delete old images
@@ -213,19 +189,9 @@ const updateProducts = asyncHandler(async (req, res, next) => {
         message: "Product Updated Successfully",
         data: updatedProduct
     })
-
-
-
-
 })
 
-
-
-
-
 // delete product
-
-
 const deleteProduct = asyncHandler(async (req, res, next) => {
 
     const product = await productModel.findById(req.params.id)
@@ -247,17 +213,12 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
             console.log(deleteResult)
 
         }
-
     }
-
     await product.deleteOne()
     res.status(200).json({
         success: true,
         message: "product deleted successfully"
     })
-
-
-
 })
 
 module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct }

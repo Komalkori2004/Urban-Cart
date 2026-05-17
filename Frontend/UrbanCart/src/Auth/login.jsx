@@ -1,8 +1,10 @@
 import React from 'react'
 
-import api from "../services/api"
+
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../redux/thunks/authThunks'
 
 const Login = () => {
 
@@ -14,7 +16,10 @@ const Login = () => {
         password: ""
     })
 
-    const [message, setmessage] = useState("")
+
+    const dispatch = useDispatch()
+
+    const { loading, error } = useSelector(state => state.auth)
 
     const handleChange = (e) => {
         setForm({
@@ -25,27 +30,16 @@ const Login = () => {
 
     const handleSubmite = async (e) => {
         e.preventDefault()
-        try {
-            const { data } = await api.post("/auth/login", formData)
+        const result = await dispatch(loginUser(formData))
 
-            localStorage.setItem("token", data.token)
-
-            localStorage.setItem(
-                "user",
-                JSON.stringify(data.user)
-            )
-
-            api.defaults.headers.common["Authorization"] =
-                `Bearer ${data.token}`
-
-            if (data.user.role === "admin") {
+        if (result.meta.requestStatus === "fulfilled") {
+            if (result.payload.user.role === "admin") {
                 navigate("/admin")
             } else {
                 navigate("/profile")
             }
-            setmessage(data.message)
-        } catch (error) {
-            setmessage(error.response.data.message)
+
+
         }
 
     }
@@ -62,10 +56,10 @@ const Login = () => {
                         {/* <input type="text" name="name" placeholder="name" onChange={handleChange} value={formData.name} /><br/> */}
                         <input type="email" name="email" placeholder="email" onChange={handleChange} value={formData.email} /><br />
                         <input type="password" name="password" placeholder="password" onChange={handleChange} value={formData.password} /><br />
-                        <button type="submit">Login</button>
+                        <button type="submit">{loading ? "Loading..." : "login"}</button>
 
                     </form>
-                    <p>{message}</p>
+                    {error && <p>{error}</p>}
 
                 </div>
 
