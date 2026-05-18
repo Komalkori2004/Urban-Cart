@@ -1,13 +1,15 @@
 import React from 'react'
 
-import api from "../services/api"
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 
 const Signup = () => {
 
+    const dispatch = useDispatch()
+    const { loading, error } = useSelector((state) => state.auth)
     const navigate = useNavigate()
     const [formData, setForm] = useState({
         name: "",
@@ -15,7 +17,6 @@ const Signup = () => {
         password: ""
     })
 
-    const [message, setmessage] = useState("")
 
     const handleChange = (e) => {
         setForm({
@@ -26,15 +27,14 @@ const Signup = () => {
 
     const handleSubmite = async (e) => {
         e.preventDefault()
-        try {
-            const { data } = await api.post("/auth/register", formData)
+
+        const result = await dispatch(registerUser(formData))
+
+        if (result.payload?.success) {
 
             navigate("/login")
-            setmessage(data.message)
-        } catch (error) {
-            setmessage(error.response.data.message)
-        }
 
+        }
     }
 
 
@@ -50,10 +50,25 @@ const Signup = () => {
                         <input type="text" name="name" placeholder="name" onChange={handleChange} value={formData.name} /><br />
                         <input type="email" name="email" placeholder="email" onChange={handleChange} value={formData.email} /><br />
                         <input type="password" name="password" placeholder="password" onChange={handleChange} value={formData.password} /><br />
-                        <button type="submit">Signup</button>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                        >
+
+                            {
+                                loading
+                                    ? "Loading..."
+                                    : "Signup"
+                            }
+
+                        </button>
 
                     </form>
-                    <p>{message}</p>
+                    {
+                        error && <p>{error}</p>
+                    }
+
                 </div>
 
 

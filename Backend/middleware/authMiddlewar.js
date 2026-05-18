@@ -29,7 +29,6 @@ const authMiddleware = (req, res, next) => {
 }
 
 
-
 const authorizeRoles = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
@@ -37,8 +36,6 @@ const authorizeRoles = (...roles) => {
                 new ErrorHandler("role not alloed")
             )
         }
-
-
         next()
     }
 
