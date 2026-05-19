@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { getAllproduct } from "../redux/thunks/productThunks"
 
 import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom"
+
 
 const Product = () => {
 
@@ -37,66 +39,68 @@ const Product = () => {
                 {
                     products?.map((product) => (
 
-                        <div
-                            className="product-card"
-                            key={product._id}
-                        >
+                        <Link to={`/product/${product.slug}`} key={product._id}>
+                            <div
+                                className="product-card"
+                                key={product._id}
+                            >
 
-                            <img
-                                src={product.images[0]?.url}
-                                alt={product.name}
-                                className="product-image"
-                            />
-
-
-
-                            <div className="product-info">
-
-                                <h3>{product.name}</h3>
+                                <img
+                                    src={product.images[0]?.url}
+                                    alt={product.name}
+                                    className="product-image"
+                                />
 
 
 
-                                <p className="product-brand">
-                                    {product.brand}
-                                </p>
+                                <div className="product-info">
+
+                                    <h3>{product.name}</h3>
 
 
 
-                                <div className="price-section">
-
-                                    <span className="price">
-                                        ₹ {product.price}
-                                    </span>
+                                    <p className="product-brand">
+                                        {product.brand}
+                                    </p>
 
 
 
-                                    <span className="old-price">
-                                        ₹ 149999
-                                    </span>
+                                    <div className="price-section">
+
+                                        <span className="price">
+                                            ₹ {product.price}
+                                        </span>
+
+
+
+                                        <span className="old-price">
+                                            ₹ 149999
+                                        </span>
+
+                                    </div>
+
+
+
+                                    <p className="stock">
+
+                                        {
+                                            product.stock > 0
+                                                ? "In Stock"
+                                                : "Out Of Stock"
+                                        }
+
+                                    </p>
+
+
+
+                                    <button>
+                                        Add To Cart
+                                    </button>
 
                                 </div>
 
-
-
-                                <p className="stock">
-
-                                    {
-                                        product.stock > 0
-                                            ? "In Stock"
-                                            : "Out Of Stock"
-                                    }
-
-                                </p>
-
-
-
-                                <button>
-                                    Add To Cart
-                                </button>
-
                             </div>
-
-                        </div>
+                        </Link>
 
                     ))
                 }

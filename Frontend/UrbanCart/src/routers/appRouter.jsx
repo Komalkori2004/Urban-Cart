@@ -9,6 +9,10 @@ import ProtectRoute from './protectRoute'
 import UserProfile from '../pages/userD'
 import AdminProfile from '../pages/admin'
 import Product from '../pages/product'
+import SingleProduct from '../pages/singleProduct'
+
+
+
 
 
 
@@ -19,6 +23,7 @@ const AppRouter = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Product />} />
+                    <Route path="/product/:slug" element={<SingleProduct />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
 
