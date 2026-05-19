@@ -32,15 +32,76 @@ const Product = () => {
                 all Product
             </h2>
 
-            {
-                products.map((products) => (
-                    <div key={products._id}>
-                        <img src={products.images[0]?.url} alt={products.name} width={200} />
-                        <h3>{products.name}</h3>
-                        <p>{products.price}</p>
-                    </div>
-                ))
-            }
+            <div className="product-container">
+
+                {
+                    products?.map((product) => (
+
+                        <div
+                            className="product-card"
+                            key={product._id}
+                        >
+
+                            <img
+                                src={product.images[0]?.url}
+                                alt={product.name}
+                                className="product-image"
+                            />
+
+
+
+                            <div className="product-info">
+
+                                <h3>{product.name}</h3>
+
+
+
+                                <p className="product-brand">
+                                    {product.brand}
+                                </p>
+
+
+
+                                <div className="price-section">
+
+                                    <span className="price">
+                                        ₹ {product.price}
+                                    </span>
+
+
+
+                                    <span className="old-price">
+                                        ₹ 149999
+                                    </span>
+
+                                </div>
+
+
+
+                                <p className="stock">
+
+                                    {
+                                        product.stock > 0
+                                            ? "In Stock"
+                                            : "Out Of Stock"
+                                    }
+
+                                </p>
+
+
+
+                                <button>
+                                    Add To Cart
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    ))
+                }
+
+            </div>
 
         </div>
     </>)
