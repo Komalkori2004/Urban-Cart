@@ -8,6 +8,7 @@ import Login from '../Auth/login'
 import ProtectRoute from './protectRoute'
 import UserProfile from '../pages/userD'
 import AdminProfile from '../pages/admin'
+import Product from '../pages/product'
 
 
 
@@ -17,7 +18,8 @@ const AppRouter = () => {
 
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Signup />} />
+                    <Route path="/" element={<Product />} />
+                    <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
 
                     <Route path="/profile"
@@ -29,8 +31,6 @@ const AppRouter = () => {
                         element={<ProtectRoute role="admin">
                             <AdminProfile />
                         </ProtectRoute>} />
-
-
                 </Routes>
             </BrowserRouter>
         </>
