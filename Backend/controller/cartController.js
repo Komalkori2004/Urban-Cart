@@ -112,30 +112,38 @@ const getCart = asyncHandler(async (req, res, next) => {
 
 
 
+const removeCart = asyncHandler(async (req, res, next) => {
+
+    const userId = req.user.id
+
+    const { productId } = req.params;
+    const cart = await Cart.findOne({ user: userId })
+
+    if (!cart) {
+        return next(new ErrorHandler(404, "cart not found"))
+    }
 
 
+    cart.items = cart.items.filter(
+        (item) =>
+            item.product.toString() !== productId0o
+    );
 
+    await cart.save()
 
+    await cart.populate("items.product")
 
+    res.status(200).json({
+        success: true,
+        message: "Item removed from cart",
+        data: cart
+    })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+})
 
 
 
 
 module.exports = {
-    addToCart, getCart
+    addToCart, getCart, removeCart
 };
