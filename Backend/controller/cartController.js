@@ -126,7 +126,7 @@ const removeCart = asyncHandler(async (req, res, next) => {
 
     cart.items = cart.items.filter(
         (item) =>
-            item.product.toString() !== productId0o
+            item.product.toString() !== productId
     );
 
     await cart.save()
@@ -144,6 +144,73 @@ const removeCart = asyncHandler(async (req, res, next) => {
 
 
 
+const updateCart = asyncHandler(async (req, res, next) => {
+
+    const { productId, action } = req.body
+
+    const userId = req.user.id
+
+    if (action !== "increase" && action !== "decrease") {
+        return next(new ErrorHandler(400, "Invalid action"))
+    }
+
+
+    const cart = await Cart.findOne({ user: userId })
+
+    if (!cart) {
+        return next(new ErrorHandler(404, "Cart not found"))
+    }
+
+
+    const cartItem = cart.items.find((item) => item.product.toString() === productId)
+
+    if (!cartItem) {
+        return next(new ErrorHandler(404, "Cart item not found"))
+    }
+
+    const product = await Product.findById(productId)
+
+    if (!product) {
+        return next(new ErrorHandler(404, "Product not found"))
+    }
+
+    if (action === "increase") {
+        if (cartItem.quantity >= product.stock) {
+            return next(new ErrorHandler(400, "Insufficient stock"))
+        }
+
+        cartItem.quantity += 1
+    }
+
+
+    if (action === "decrease") {
+        if (cartItem.quantity <= 1) {
+            return next(new ErrorHandler(400, "Quantity cannot be less than 1"))
+        }
+        cartItem.quantity -= 1
+
+
+    }
+
+    await cart.save()
+    await cart.populate("items.product")
+
+    res.status(200).json({
+        success: true,
+        message: "Cart updated successfully",
+        data: cart
+    })
+
+
+
+
+})
+
+
+
+
+
+
 module.exports = {
-    addToCart, getCart, removeCart
+    addToCart, getCart, removeCart, updateCart
 };
