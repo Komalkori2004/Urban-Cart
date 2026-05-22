@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAllproduct } from "../redux/thunks/productThunks"
+import { addToCart } from "../redux/thunks/cartThunks"
 
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
@@ -93,7 +94,16 @@ const Product = () => {
 
 
 
-                                    <button>
+                                    <button
+                                        onClick={(e) => {
+                                            e.preventDefault
+                                            dispatch(addToCart({
+                                                productId: product._id,
+
+                                                quantity: 1
+                                            }))
+                                        }}
+                                    >
                                         Add To Cart
                                     </button>
 

@@ -11,7 +11,7 @@ import AdminProfile from '../pages/admin'
 import Product from '../pages/product'
 import SingleProduct from '../pages/singleProduct'
 
-
+import CartPage from '../pages/cart'
 
 
 
@@ -32,6 +32,15 @@ const AppRouter = () => {
                             <UserProfile />
                         </ProtectRoute>}
                     />
+                       <Route path="/cart"
+                        element={<ProtectRoute>
+                            <CartPage />
+                        </ProtectRoute>}
+                    />
+
+
+
+
                     <Route path="/admin"
                         element={<ProtectRoute role="admin">
                             <AdminProfile />

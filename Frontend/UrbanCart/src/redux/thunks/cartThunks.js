@@ -53,7 +53,7 @@ export const getCart = createAsyncThunk(
             }
 
             const { data } = await api.get("/cart", config)
-            return data
+            return data.items
         }
         catch (error) {
 
@@ -63,5 +63,36 @@ export const getCart = createAsyncThunk(
 
 
     }
+
+)
+
+
+export const addToCart = createAsyncThunk(
+
+
+
+    "cart/addToCart",
+
+    async (cartData, thunkAPI) => {
+
+        try {
+             const token = thunkAPI.getState().auth.token
+
+            const config = {
+                headers: {
+
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const {data}=await api.post("/cart/add",cartData,config)
+ return data.data
+
+
+        } catch (error) {
+
+        }
+    }
+
+
 
 )

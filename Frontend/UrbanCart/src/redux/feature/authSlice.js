@@ -5,11 +5,19 @@ import { loginUser, registerUser } from '../thunks/authThunks';
 
 
 const initialState = {
-    user: null,
-    token: null,
+    user: JSON.parse(
+        localStorage.getItem("user")
+    ) || null,
+
+    token:
+        localStorage.getItem("token") || null,
+
     loading: false,
+
     error: null,
-    isAuthenticated: false
+
+    isAuthenticated:
+        !!localStorage.getItem("token")
 };
 
 const authSlice = createSlice({
@@ -34,7 +42,7 @@ const authSlice = createSlice({
         builder
 
 
-        // for login user
+            // for login user
             .addCase(loginUser.pending, (state) => {
                 state.loading = true
                 state.error = null
@@ -61,13 +69,13 @@ const authSlice = createSlice({
 
             })
 
-            .addCase(registerUser.fulfilled,(state)=>{
-                state.loading=false
+            .addCase(registerUser.fulfilled, (state) => {
+                state.loading = false
 
             })
-            .addCase(registerUser.rejected,(state)=>{
-                state.loading=false,
-                state.error=action.payload
+            .addCase(registerUser.rejected, (state) => {
+                state.loading = false,
+                    state.error = action.payload
             })
 
     }
