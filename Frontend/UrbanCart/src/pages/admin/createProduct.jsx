@@ -3,6 +3,9 @@ import { useDispatch } from "react-redux";
 import { createProduct } from "../../redux/thunks/productThunks";
 import { useState } from 'react';
 
+import { toast }
+from "sonner";
+
 
 const CreateProduct = () => {
     const dispatch = useDispatch();
@@ -70,10 +73,19 @@ const CreateProduct = () => {
         })
 
         dispatch(createProduct(productData))
+
             .then((res) => {
 
-                if (res.meta.requestStatus
-                    === "fulfilled") {
+                if (
+                    res.meta.requestStatus
+                    === "fulfilled"
+                ) {
+
+                    toast.success(
+                        "Product Created Successfully"
+                    );
+
+
 
                     setFormData({
 
@@ -92,10 +104,23 @@ const CreateProduct = () => {
                         shipping: false
                     });
 
+
+
                     setImages([]);
                 }
-            });
 
+
+
+                if (
+                    res.meta.requestStatus
+                    === "rejected"
+                ) {
+
+                    toast.error(
+                        res.payload
+                    );
+                }
+            });
     }
 
 
