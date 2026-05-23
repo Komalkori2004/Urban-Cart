@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllproduct, getsingleProduct,createProduct } from "../thunks/productThunks";
+import { getAllproduct, getsingleProduct, createProduct, deleteProduct } from "../thunks/productThunks";
 
 
 const initialState = {
@@ -53,17 +53,44 @@ const productSlice = createSlice({
 
             // create product by admin
 
-            .addCase(createProduct.pending,(state)=>{
+            .addCase(createProduct.pending, (state) => {
                 state.loading = true,
-                state.error = null
+                    state.error = null
             })
-            .addCase(createProduct.fulfilled,(state,action)=>{
-                state.loading=false
+            .addCase(createProduct.fulfilled, (state, action) => {
+                state.loading = false
                 state.products.push(action.payload)
             })
-            .addCase(createProduct.rejected,(state,action)=>{
-                state.loading=false,
-                state.error=action.payload
+            .addCase(createProduct.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
+            })
+
+            // remove product by admin
+
+            .addCase(deleteProduct.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(deleteProduct.fulfilled,
+                (state, action) => {
+
+                    state.loading = false;
+
+
+
+                    state.products =
+                        state.products.filter(
+
+                            (product) =>
+
+                                product._id !==
+                                action.payload
+                        );
+                })
+            .addCase(deleteProduct.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
             })
     }
 })

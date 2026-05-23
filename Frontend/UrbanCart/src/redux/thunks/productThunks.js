@@ -54,12 +54,49 @@ export const createProduct = createAsyncThunk(
                     "Content-Type": "multipart/form-data"
                 }
             }
-            const { data } = await api.post("/products/create", productData,config)
+            const { data } = await api.post("/products/create", productData, config)
             return data.data
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data.message)
         }
     }
+)
+
+
+export const deleteProduct = createAsyncThunk(
+    "product/deleteProduct",
+
+    async (productId, thunkAPI) => {
+        try {
+
+            const token = thunkAPI.getState().auth.token
+
+            const config = {
+                headers: {
+
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
+                }
+            }
+            const { data } = await api.delete(`/products/${productId}`, config)
+
+            return productId
+
+
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 
