@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import { deleteProduct } from '../../redux/thunks/productThunks';
 
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 const AdminProducts = () => {
 
@@ -25,8 +26,8 @@ const AdminProducts = () => {
             text: "this product will be deleted permanently ",
             icon: "warning",
             showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: "#6c757d",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: "#6c757d",
             confirmButtonText: "Yes, Delete it!",
         })
             .then((result) => {
@@ -86,11 +87,17 @@ const AdminProducts = () => {
                         <p>Stock:{product.stock}</p>
 
 
-                        <button>
+                        {/* <button>
 
                             Edit
 
-                        </button>
+                        </button> */}
+
+                        <Link to={`/admin/update-product/${product._id}`}>
+                            <button>
+                                Edit
+                            </button>
+                        </Link>
 
 
 

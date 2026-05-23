@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllproduct, getsingleProduct, createProduct, deleteProduct } from "../thunks/productThunks";
+import { getAllproduct, getsingleProduct, createProduct, deleteProduct, updateProduct ,getSingleProductById} from "../thunks/productThunks";
 
 
 const initialState = {
@@ -92,7 +92,50 @@ const productSlice = createSlice({
                 state.loading = false,
                     state.error = action.payload
             })
+
+
+
+            // update product by admin
+
+            .addCase(updateProduct.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(updateProduct.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.products =
+                    state.products.map((product) =>
+
+                        product._id ===
+                            action.payload._id
+
+                            ? action.payload
+
+                            : product
+                    );
+            })
+            .addCase(updateProduct.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
+            })
+
+            // get single forproduct by id for admin
+
+            .addCase(getSingleProductById.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(getSingleProductById.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.singleProduct = action.payload
+            })
+            .addCase(getSingleProductById.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
+            })
     }
+
+
 })
 
 

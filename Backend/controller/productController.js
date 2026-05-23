@@ -221,4 +221,36 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
     })
 })
 
-module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct }
+
+
+const getSingleProductById =
+    asyncHandler(async (req, res) => {
+
+        const product =
+            await productModel.findById(
+                req.params.id
+            );
+
+
+
+        if (!product) {
+
+            return next(
+                new ErrorHandler(
+                    404,
+                    "Product not found"
+                )
+            );
+        }
+
+
+
+        res.status(200).json({
+
+            success: true,
+
+            product
+        });
+    });
+
+module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct,getSingleProductById }

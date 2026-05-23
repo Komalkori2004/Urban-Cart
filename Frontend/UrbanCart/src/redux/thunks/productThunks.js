@@ -90,17 +90,94 @@ export const deleteProduct = createAsyncThunk(
     }
 
 
+)
 
 
 
+// update product
 
 
+export const updateProduct = createAsyncThunk(
 
+    "product/updateProduct",
 
+    async ({ id, productData }, thunkAPI) => {
 
+        try {
+            const token = thunkAPI.getState().auth.token
 
+            const config = {
+                headers: {
 
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
+                }
+            }
 
+            const { data } =
+                await api.put(
 
+                    `/products/${id}`,
+
+                    productData,
+
+                    config
+                )
+            return data.data
+
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
+    }
 
 )
+
+
+export const getSingleProductById =
+    createAsyncThunk(
+
+        "product/getSingleProductById",
+
+        async (id, thunkAPI) => {
+
+            try {
+
+                const token =
+                    thunkAPI.getState()
+                        .auth.token;
+
+
+
+                const config = {
+
+                    headers: {
+
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                };
+
+
+
+                const { data } =
+                    await api.get(
+
+                        `/products/single/${id}`,
+
+                        config
+                    );
+
+
+
+                return data.product;
+
+            } catch (error) {
+
+                return thunkAPI.rejectWithValue(
+
+                    error.response.data.message
+                );
+            }
+        }
+    );

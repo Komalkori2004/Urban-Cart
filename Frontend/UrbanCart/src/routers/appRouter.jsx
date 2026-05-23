@@ -14,6 +14,7 @@ import CartPage from '../pages/cart'
 import NavBar from '../components/navbar'
 import CreateProduct from '../pages/admin/createProduct'
 import AdminProducts from '../pages/admin/AdminProducts'
+import UpdateProduct from '../pages/admin/UpdateProduct'
 
 
 
@@ -68,10 +69,26 @@ const AppRouter = () => {
                         element={<ProtectRoute role="admin">
                             <CreateProduct />
                         </ProtectRoute>} />
-                         <Route path="/admin/all-product"
+
+
+
+                    <Route path="/admin/all-product"
                         element={<ProtectRoute role="admin">
                             <AdminProducts />
                         </ProtectRoute>} />
+                    <Route
+
+                        path="/admin/update-product/:id"
+
+                        element={
+
+                            <ProtectRoute role="admin">
+
+                                <UpdateProduct />
+
+                            </ProtectRoute>
+                        }
+                    />
 
 
 
