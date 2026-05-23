@@ -13,6 +13,7 @@ import SingleProduct from '../pages/singleProduct'
 import CartPage from '../pages/cart'
 import NavBar from '../components/navbar'
 import CreateProduct from '../pages/admin/createProduct'
+import AdminProducts from '../pages/admin/AdminProducts'
 
 
 
@@ -26,11 +27,19 @@ const AppRouter = () => {
                 <NavBar />
 
                 <Routes>
+
+                    {/* for all customer  */}
+
                     <Route path="/" element={<Product />} />
                     <Route path="/product/:slug" element={<SingleProduct />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
 
+
+
+
+
+                    {/* only user can access */}
                     <Route path="/profile"
                         element={<ProtectRoute>
                             <UserProfile />
@@ -42,15 +51,26 @@ const AppRouter = () => {
                         </ProtectRoute>}
                     />
 
+
+
+
+
+
+                    {/* only admin can access */
+                    }
                     <Route path="/admin"
                         element={<ProtectRoute role="admin">
                             <AdminProfile />
                         </ProtectRoute>} />
 
 
-                        <Route path="/admin/add-product"
+                    <Route path="/admin/add-product"
                         element={<ProtectRoute role="admin">
                             <CreateProduct />
+                        </ProtectRoute>} />
+                         <Route path="/admin/all-product"
+                        element={<ProtectRoute role="admin">
+                            <AdminProducts />
                         </ProtectRoute>} />
 
 
