@@ -10,8 +10,9 @@ import UserProfile from '../pages/userD'
 import AdminProfile from '../pages/admin'
 import Product from '../pages/product'
 import SingleProduct from '../pages/singleProduct'
-
 import CartPage from '../pages/cart'
+import NavBar from '../components/navbar'
+
 
 
 
@@ -21,6 +22,8 @@ const AppRouter = () => {
         <>
 
             <BrowserRouter>
+                <NavBar />
+
                 <Routes>
                     <Route path="/" element={<Product />} />
                     <Route path="/product/:slug" element={<SingleProduct />} />
@@ -32,7 +35,7 @@ const AppRouter = () => {
                             <UserProfile />
                         </ProtectRoute>}
                     />
-                       <Route path="/cart"
+                    <Route path="/cart"
                         element={<ProtectRoute>
                             <CartPage />
                         </ProtectRoute>}

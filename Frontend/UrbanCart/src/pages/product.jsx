@@ -96,7 +96,7 @@ const Product = () => {
 
                                     <button
                                         onClick={(e) => {
-                                            e.preventDefault
+                                            e.preventDefault()
                                             dispatch(addToCart({
                                                 productId: product._id,
 
