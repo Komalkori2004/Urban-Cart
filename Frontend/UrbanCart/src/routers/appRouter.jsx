@@ -7,11 +7,12 @@ import Signup from '../Auth/signup'
 import Login from '../Auth/login'
 import ProtectRoute from './protectRoute'
 import UserProfile from '../pages/userD'
-import AdminProfile from '../pages/admin'
+import AdminProfile from '../pages/admin/admin'
 import Product from '../pages/product'
 import SingleProduct from '../pages/singleProduct'
 import CartPage from '../pages/cart'
 import NavBar from '../components/navbar'
+import CreateProduct from '../pages/admin/createProduct'
 
 
 
@@ -41,13 +42,22 @@ const AppRouter = () => {
                         </ProtectRoute>}
                     />
 
-
-
-
                     <Route path="/admin"
                         element={<ProtectRoute role="admin">
                             <AdminProfile />
                         </ProtectRoute>} />
+
+
+                        <Route path="/admin/add-product"
+                        element={<ProtectRoute role="admin">
+                            <CreateProduct />
+                        </ProtectRoute>} />
+
+
+
+
+
+
                 </Routes>
             </BrowserRouter>
         </>

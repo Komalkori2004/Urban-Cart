@@ -25,9 +25,8 @@ const Product = () => {
     if (error) {
         return <h2>{error}</h2>
     }
-
+    
     return (<>
-
 
         <div>
 

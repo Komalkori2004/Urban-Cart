@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllproduct, getsingleProduct } from "../thunks/productThunks";
+import { getAllproduct, getsingleProduct,createProduct } from "../thunks/productThunks";
 
 
 const initialState = {
@@ -20,6 +20,8 @@ const productSlice = createSlice({
     extraReducers: (builder) => {
         builder
 
+
+            // get all products
             .addCase(getAllproduct.pending, (state) => {
                 state.loading = true,
                     state.error = null
@@ -33,6 +35,8 @@ const productSlice = createSlice({
                     state.error = action.payload
             })
 
+            // get single product 
+
             .addCase(getsingleProduct.pending, (state) => {
                 state.loading = true,
                     state.error = null
@@ -45,6 +49,21 @@ const productSlice = createSlice({
             .addCase(getsingleProduct.rejected, (state, action) => {
                 state.loading = false,
                     state.error = action.payload
+            })
+
+            // create product by admin
+
+            .addCase(createProduct.pending,(state)=>{
+                state.loading = true,
+                state.error = null
+            })
+            .addCase(createProduct.fulfilled,(state,action)=>{
+                state.loading=false
+                state.products.push(action.payload)
+            })
+            .addCase(createProduct.rejected,(state,action)=>{
+                state.loading=false,
+                state.error=action.payload
             })
     }
 })
