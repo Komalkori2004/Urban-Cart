@@ -4,8 +4,14 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import {useLocation} from 'react-router-dom'
 
 const NavBar = () => {
+
+  const location=useLocation()
+  if(location.pathname.includes("/admin")){
+    return null
+  }
 
     const {items=[]}=useSelector((state)=>state.cart)
 

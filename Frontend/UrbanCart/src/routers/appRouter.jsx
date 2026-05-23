@@ -16,6 +16,8 @@ import CreateProduct from '../pages/admin/createProduct'
 import AdminProducts from '../pages/admin/AdminProducts'
 import UpdateProduct from '../pages/admin/UpdateProduct'
 
+import AdminLayout from '../layout/AdminLayout'
+
 
 
 
@@ -25,11 +27,12 @@ const AppRouter = () => {
         <>
 
             <BrowserRouter>
+
                 <NavBar />
 
                 <Routes>
 
-                    {/* for all customer  */}
+                    {/* PUBLIC ROUTES */}
 
                     <Route path="/" element={<Product />} />
                     <Route path="/product/:slug" element={<SingleProduct />} />
@@ -38,64 +41,58 @@ const AppRouter = () => {
 
 
 
+                    {/* USER ROUTES */}
 
-
-                    {/* only user can access */}
-                    <Route path="/profile"
-                        element={<ProtectRoute>
-                            <UserProfile />
-                        </ProtectRoute>}
-                    />
-                    <Route path="/cart"
-                        element={<ProtectRoute>
-                            <CartPage />
-                        </ProtectRoute>}
-                    />
-
-
-
-
-
-
-                    {/* only admin can access */
-                    }
-                    <Route path="/admin"
-                        element={<ProtectRoute role="admin">
-                            <AdminProfile />
-                        </ProtectRoute>} />
-
-
-                    <Route path="/admin/add-product"
-                        element={<ProtectRoute role="admin">
-                            <CreateProduct />
-                        </ProtectRoute>} />
-
-
-
-                    <Route path="/admin/all-product"
-                        element={<ProtectRoute role="admin">
-                            <AdminProducts />
-                        </ProtectRoute>} />
                     <Route
-
-                        path="/admin/update-product/:id"
-
+                        path="/profile"
                         element={
+                            <ProtectRoute>
+                                <UserProfile />
+                            </ProtectRoute>
+                        }
+                    />
 
-                            <ProtectRoute role="admin">
-
-                                <UpdateProduct />
-
+                    <Route
+                        path="/cart"
+                        element={
+                            <ProtectRoute>
+                                <CartPage />
                             </ProtectRoute>
                         }
                     />
 
 
 
+                    {/* ADMIN ROUTES */}
 
+                    <Route
+                        path="/admin"
+                        element={
+                            <ProtectRoute role="admin">
+                                <AdminLayout />
+                            </ProtectRoute>
+                        }
+                    >
+                        <Route index element={<AdminProfile />} />
 
+                        <Route
+                            path="add-product"
+                            element={<CreateProduct />}
+                        />
+
+                        <Route
+                            path="all-product"
+                            element={<AdminProducts />}
+                        />
+
+                        <Route
+                            path="update-product/:id"
+                            element={<UpdateProduct />}
+                        />
+                    </Route>
 
                 </Routes>
+
             </BrowserRouter>
         </>
     )
