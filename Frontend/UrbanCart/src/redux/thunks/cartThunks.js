@@ -65,8 +65,6 @@ export const getCart = createAsyncThunk(
     }
 
 )
-
-
 export const addToCart = createAsyncThunk(
 
 
@@ -76,7 +74,7 @@ export const addToCart = createAsyncThunk(
     async (cartData, thunkAPI) => {
 
         try {
-             const token = thunkAPI.getState().auth.token
+            const token = thunkAPI.getState().auth.token
 
             const config = {
                 headers: {
@@ -84,8 +82,8 @@ export const addToCart = createAsyncThunk(
                     Authorization: `Bearer ${token}`
                 }
             }
-            const {data}=await api.post("/cart/add",cartData,config)
- return data.data
+            const { data } = await api.post("/cart/add", cartData, config)
+            return data.data
 
 
         } catch (error) {
@@ -96,3 +94,36 @@ export const addToCart = createAsyncThunk(
 
 
 )
+
+
+
+export const removeCart = createAsyncThunk(
+    "cart/removeCart",
+
+
+    async (productId, thunkAPI) => {
+
+        try {
+            const token = thunkAPI.getState().auth.token
+
+            const config = {
+                headers: {
+
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await api.delete(`/cart/${productId}`, config)
+
+            return data.data
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
+    }
+
+)
+
+
+
+

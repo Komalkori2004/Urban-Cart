@@ -3,7 +3,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 
-import { updateCart, getCart, addToCart } from '../thunks/cartThunks'
+import { updateCart, getCart, addToCart,removeCart } from '../thunks/cartThunks'
 
 
 const initialState = {
@@ -65,6 +65,23 @@ const cartSlice = createSlice({
             .addCase(addToCart.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
+            })
+
+            // remove cart
+
+            .addCase(removeCart.pending,(state)=>{
+                state.loading=true,
+                state.error=null
+            })
+            .addCase(removeCart.fulfilled,(state,action)=>{
+                state.loading=false,
+                state.items=action.payload.items
+
+            })
+            .addCase(removeCart.rejected,(state,action)=>{
+                state.loading=false,
+                state.error=action.payload
+                
             })
 
 

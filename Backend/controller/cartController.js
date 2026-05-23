@@ -200,11 +200,34 @@ const updateCart = asyncHandler(async (req, res, next) => {
         message: "Cart updated successfully",
         data: cart
     })
-
-
-
-
 })
+
+// const removeCart = asyncHandler(async (req, res, next) => {
+
+//     const userId = req.user.id
+//     const { productId } = req.params
+//     const cart = await cart.findOne({ user: userId })
+
+//     if (!cart) {
+//         return next(new ErrorHandler(404, "cart not found"))
+//     }
+
+
+//     cart.items = cart.items.filter(
+//         (itme) => item.product.toString() !== productId
+
+//     )
+
+//     await cart.save()
+//     await cart.populate("items.product")
+
+//     res.status(200).json({
+//         sucess: true,
+//         message: "Item removed from cart",
+//         data: cart
+//     })
+
+// })
 
 
 

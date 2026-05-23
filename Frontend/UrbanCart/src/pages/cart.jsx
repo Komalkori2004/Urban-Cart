@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useDispatch, useSelector } from "react-redux"
 
-import { getCart, updateCart } from '../redux/thunks/cartThunks'
+import { getCart, updateCart,removeCart } from '../redux/thunks/cartThunks'
 import { useEffect } from 'react'
 
 
@@ -121,6 +121,24 @@ const CartPage = () => {
 
                             >
                                 +
+                            </button>
+
+                            <button
+
+                                type="button"
+
+                                onClick={() =>
+                                    dispatch(
+                                       removeCart(
+                                            item.product._id
+                                        )
+                                    )
+                                }
+
+                            >
+
+                                Remove
+
                             </button>
 
                         </div>
