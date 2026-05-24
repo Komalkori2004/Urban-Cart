@@ -3,16 +3,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate, } from 'react-router-dom'
 
-import { toast }
-    from "sonner";
+import { toast } from "sonner";
 
-import {
-
-    useDispatch,
-
-    useSelector
-
-} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getSingleProductById, updateProduct } from '../../redux/thunks/productThunks';
 
@@ -27,6 +20,7 @@ function UpdateProduct() {
     const { singleProduct, loading, error } = useSelector((state) => state.products)
 
     const [images, setImages] = useState([]);
+    const [previewImages, setPreviewImages] = useState([]);
 
     const [formData,
         setFormData] = useState({
@@ -97,7 +91,16 @@ function UpdateProduct() {
     }
 
     const handleImageChange = (e) => {
-        setImages(Array.from(e.target.files))
+
+        const files = Array.from(e.target.files)
+        setImages(files)
+        const preview = files.map((file) =>
+            URL.createObjectURL(file)
+
+        )
+        setPreviewImages(preview)
+
+
     }
 
     const handleSubmit = (e) => {
@@ -250,8 +253,49 @@ function UpdateProduct() {
 
                         onChange={
                             handleImageChange
+
                         }
-                    /><br />
+                    />
+
+                    <div className='preview-container'>
+
+                        {
+                            previewImages.length > 0
+                                ?
+
+                                previewImages.map((img, index) => (
+
+                                    <img
+                                        key={index}
+                                        src={img}
+                                        alt='preview'
+                                        className='preview-image'
+                                    />
+
+                                ))
+
+                                :
+
+                                singleProduct?.images?.map((img, index) => (
+
+                                    <img
+                                        key={index}
+                                        src={img.url}
+                                        alt='old-product'
+                                        className='preview-image'
+                                    />
+
+                                ))
+                        }
+
+                    </div>
+
+
+
+
+
+
+                    <br />
 
 
 

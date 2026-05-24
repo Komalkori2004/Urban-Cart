@@ -187,3 +187,18 @@ body {
 .admin-products-page{
     padding:20px;
 }
+
+.preview-container{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:20px 0;
+}
+
+.preview-image{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:10px;
+    border:1px solid #ddd;
+}
