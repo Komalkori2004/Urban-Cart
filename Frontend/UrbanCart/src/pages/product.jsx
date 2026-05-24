@@ -17,6 +17,7 @@ const Product = () => {
     const [debouncedSearch, setDebouncedSearch] = useState("")
 
     const [search, setSearch] = useState("")
+    const [SortOption, setSortOption] = useState("")
 
     const { categories } = useSelector((state) => state.category)
 
@@ -50,8 +51,22 @@ const Product = () => {
 
         })
 
-    console.log(products)
-    console.log(categories)
+
+    const ShortedProducts =
+        [...filteredProducts].sort((a, b) => {
+            if (SortOption === "lowToHigh") {
+                return a.price - b.price
+            }
+            if (SortOption === "highToLow") {
+                return b.price - a.price
+            }
+            return 0
+        })
+
+
+
+
+
 
     if (loading) {
         return <h2>Loading....</h2>
@@ -76,6 +91,11 @@ const Product = () => {
 
             />
 
+            <select value={SortOption} onChange={(e) => setSortOption(e.target.value)} >
+                <option value="">Sort Product</option>
+                <option value="lowToHigh">Price: Low to High</option>
+                <option value="highToLow">Price: High to Low</option>
+            </select>
 
             <div className="category-buttons">
 
@@ -111,7 +131,7 @@ const Product = () => {
             <div className="product-container">
 
                 {
-                    filteredProducts?.map((product) => (
+                  ShortedProducts?.map((product) => (
 
                         <Link to={`/product/${product.slug}`} key={product._id}>
                             <div
