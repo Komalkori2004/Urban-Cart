@@ -105,10 +105,15 @@ const LoginUser = asyncHandler(async (req, res, next) => {
   // Check user
   const existingUser = await user.findOne({ email });
 
-  if (!existingUser) {
+  if (!existingUser.isVerified) {
+
     return next(
-      new ErrorHandler(401, "User not found")
-    );
+
+      new ErrorHandler(
+        401,
+        "Please verify your email first"
+      )
+    )
   }
 
   // Compare password
@@ -146,6 +151,29 @@ const LoginUser = asyncHandler(async (req, res, next) => {
 });
 
 
+const verifyEmail = asyncHandler(async (req, res, next) => {
+  const { token } = req.params
+  const existingUser = await user.findOne({ verifyToken: token, verifyTokenExpiry: { $gt: Date.now() } })
+
+  if (!existingUser) {
+    return next(new ErrorHandler(400, "Invalid Token or Token Expired"))
+  }
+
+  existingUser.isVerified = true
+  existingUser.verifyToken = undefined
+  existingUser.verifyTokenExpiry = undefined
+
+  await existingUser.save()
+
+  res.status(200).json({
+    success: true,
+    message: "Email verified successfully"
+  })
+
+
+})
+
+
 
 
 // Get Profile
@@ -178,4 +206,5 @@ module.exports = {
   LoginUser,
   getProfile,
   AdminDashboard,
+  verifyEmail
 };

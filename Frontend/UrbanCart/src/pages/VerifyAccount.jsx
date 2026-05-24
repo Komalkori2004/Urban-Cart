@@ -1,9 +1,19 @@
 import React from 'react'
 import { useParams } from "react-router-dom"
-
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { verifyEmail } from '../redux/thunks/authThunks'
 function VerifyAccount() {
 
+    const dispatch = useDispatch()
     const { token } = useParams()
+    const { loading, error, message } = useSelector((state) => state.auth)
+
+
+    useEffect(() => {
+        dispatch(verifyEmail(token))
+    }, [])
+
 
 
     console.log("verify page")
@@ -11,22 +21,34 @@ function VerifyAccount() {
 
 
     return (
-        <>
-            <div
-                className="verify-page">
 
-                <h1>
-                    Verifying Account...
-                </h1>
+        <div
+            className="verify-page">
 
-                <p>
-                    Token:
-                    {token}
-                </p>
+            {
+                loading
+                    ?
+                    <h2>
+                        Verifying...
+                    </h2>
 
-            </div>
+                    :
 
-        </>
+                    message
+                        ?
+
+                        <h2>
+                            {message}
+                        </h2>
+
+                        :
+
+                        <h2>
+                            {error}
+                        </h2>
+            }
+
+        </div>
     )
 }
 

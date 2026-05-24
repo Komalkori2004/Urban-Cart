@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, registerUser } from '../thunks/authThunks';
+import { loginUser, registerUser, verifyEmail } from '../thunks/authThunks';
 
 
 
@@ -15,6 +15,7 @@ const initialState = {
     loading: false,
 
     error: null,
+    message: null,
 
     isAuthenticated:
         !!localStorage.getItem("token")
@@ -63,13 +64,13 @@ const authSlice = createSlice({
             // for register user
 
             .addCase(registerUser.pending, (state) => {
-                state.loading = null,
+                state.loading = true,
                     state.error = null
 
 
             })
 
-            .addCase(registerUser.fulfilled, (state,action) => {
+            .addCase(registerUser.fulfilled, (state, action) => {
                 state.loading = false
 
             })
@@ -77,7 +78,42 @@ const authSlice = createSlice({
                 state.loading = false,
                     state.error = action.payload
             })
+            // verify email
 
+            // verify email
+
+            .addCase(
+                verifyEmail.pending,
+
+                (state) => {
+
+                    state.loading = true
+
+                    state.error = null
+                }
+            )
+            .addCase(
+                verifyEmail.fulfilled,
+
+                (state, action) => {
+
+                    state.loading = false
+
+                    state.message =
+                        action.payload.message
+                }
+            )
+            .addCase(
+                verifyEmail.rejected,
+
+                (state, action) => {
+
+                    state.loading = false
+
+                    state.error =
+                        action.payload
+                }
+            )
     }
 
 

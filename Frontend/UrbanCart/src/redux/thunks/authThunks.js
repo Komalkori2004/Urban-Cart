@@ -49,3 +49,24 @@ export const registerUser = createAsyncThunk(
         }
     }
 )
+
+
+ export  const verifyEmail = createAsyncThunk(
+    "auth/verifyEmail",
+
+
+    async (token, thunkAPI) => {
+        try {
+            const { data } = await api.get(`/auth/verify/${token}`)
+            return data
+
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
+
+
+
+
+    }
+)
