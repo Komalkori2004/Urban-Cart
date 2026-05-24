@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAllproduct } from "../redux/thunks/productThunks"
 import { addToCart } from "../redux/thunks/cartThunks"
+import { getAllCategory } from "../redux/thunks/categoryThunks"
 
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
@@ -9,14 +10,26 @@ import { Link } from "react-router-dom"
 const Product = () => {
 
     const dispatch = useDispatch()
-
+    const [selectedCategory, setSelectedCategory] = useState("All")
     const { products, loading, error } = useSelector(state => state.products)
+
+
+    const { categories } = useSelector((state) => state.category)
+
+
+
+
 
     useEffect(() => {
         dispatch(getAllproduct())
+        dispatch(getAllCategory())
     }, [dispatch])
 
+    const filteredProducts = selectedCategory === "All" ? products : products.filter((product) => product.category === selectedCategory)
+
+
     console.log(products)
+    console.log(categories)
 
     if (loading) {
         return <h2>Loading....</h2>
@@ -25,7 +38,7 @@ const Product = () => {
     if (error) {
         return <h2>{error}</h2>
     }
-    
+
     return (<>
 
         <div>
@@ -33,11 +46,41 @@ const Product = () => {
             <h2>
                 all Product
             </h2>
+            <div className="category-buttons">
+
+                <button
+                    onClick={() =>
+                        setSelectedCategory("All")
+                    }
+                >
+                    All
+                </button>
+
+                {
+                    categories.map((category) => (
+
+                        <button
+
+                            key={category._id}
+
+                            onClick={() =>
+                                setSelectedCategory(
+                                    category.name
+                                )
+                            }
+                        >
+                            {category.name}
+                        </button>
+
+                    ))
+                }
+
+            </div>
 
             <div className="product-container">
 
                 {
-                    products?.map((product) => (
+                    filteredProducts?.map((product) => (
 
                         <Link to={`/product/${product.slug}`} key={product._id}>
                             <div

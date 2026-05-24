@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate, } from 'react-router-dom'
+import { getAllCategory } from '../../redux/thunks/categoryThunks'
 
 import { toast } from "sonner";
 
@@ -21,6 +22,10 @@ function UpdateProduct() {
 
     const [images, setImages] = useState([]);
     const [previewImages, setPreviewImages] = useState([]);
+    const { categories } = useSelector((state) => state.category)
+    useEffect(() => {
+        dispatch(getAllCategory())
+    }, [dispatch])
 
     const [formData,
         setFormData] = useState({
@@ -188,16 +193,33 @@ function UpdateProduct() {
 
 
 
-                    <input
-
-                        type="text"
+                    <select
 
                         name="category"
 
                         value={formData.category}
 
                         onChange={handleChange}
-                    /><br />
+                    >
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        {
+                            categories.map((category) => (
+
+                                <option
+                                    key={category._id}
+                                    value={category.name}
+                                >
+                                    {category.name}
+                                </option>
+
+                            ))
+                        }
+
+                    </select><br />
 
 
 
@@ -301,9 +323,9 @@ function UpdateProduct() {
 
                     <button type="submit" disabled={loading}>
 
-                       {
-                        loading?"updating...":"update product"
-                       }
+                        {
+                            loading ? "updating..." : "update product"
+                        }
 
                     </button>
 
