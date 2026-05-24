@@ -1,128 +1,189 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    font-family:Arial, Helvetica, sans-serif;
+body {
+    font-family: Arial, Helvetica, sans-serif;
     /* background:#000; */
     /* color: white; */
 }
 
-.auth-container{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.auth-box{
-    width:350px;
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+.auth-box {
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.auth-box h2{
-    text-align:center;
-    margin-bottom:20px;
+.auth-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.auth-form{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.auth-form input{
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:5px;
-    outline:none;
+.auth-form input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
 }
 
-.auth-form button{
-    padding:12px;
-    border:none;
-    background:black;
-    color:white;
-    border-radius:5px;
-    cursor:pointer;
+.auth-form button {
+    padding: 12px;
+    border: none;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.message{
-    text-align:center;
-    margin-top:15px;
-    color:red;
+.message {
+    text-align: center;
+    margin-top: 15px;
+    color: red;
 }
 
 
-.product-container{
-    display:flex;
-    flex-wrap:wrap;
-    gap:20px;
+.product-container {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 20px;
+
+    padding: 20px;
+}
+
+
+
+.product-card {
+    width: 100%;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    padding: 15px;
+
+    transition: 0.3s;
+
+    background: white;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-info h3 {
+    margin: 10px 0;
+}
+
+.product-brand {
+    color: gray;
+}
+
+.price-section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e63946;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.stock {
+    margin: 10px 0;
+    color: green;
+}
+
+.product-card button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+.admin-title {
+    margin: 20px;
+    font-size: 30px;
+}
+
+.admin-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.edit-btn {
+    background: #0077b6 !important;
+}
+
+.delete-btn {
+    background: #e63946 !important;
+}
+
+.empty-products {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+
+.stock {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.in-stock {
+    color: green;
+}
+
+.low-stock {
+    color: orange;
+}
+
+.out-stock {
+    color: red;
+}
+.admin-products-page{
     padding:20px;
-}
-
-.product-card{
-    width:250px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    overflow:hidden;
-    padding:15px;
-    transition:0.3s;
-    background:white;
-}
-
-.product-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
-}
-
-.product-image{
-    width:100%;
-    height:250px;
-    object-fit:cover;
-}
-
-.product-info h3{
-    margin:10px 0;
-}
-
-.product-brand{
-    color:gray;
-}
-
-.price-section{
-    display:flex;
-    gap:10px;
-    align-items:center;
-}
-
-.price{
-    font-size:20px;
-    font-weight:bold;
-    color:#e63946;
-}
-
-.old-price{
-    text-decoration:line-through;
-    color:gray;
-}
-
-.stock{
-    margin:10px 0;
-    color:green;
-}
-
-.product-card button{
-    width:100%;
-    padding:10px;
-    border:none;
-    background:black;
-    color:white;
-    cursor:pointer;
-    border-radius:5px;
 }

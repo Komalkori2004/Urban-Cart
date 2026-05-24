@@ -2,12 +2,15 @@ import React from 'react'
 import { useDispatch } from "react-redux";
 import { createProduct } from "../../redux/thunks/productThunks";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 import { toast }
-from "sonner";
+    from "sonner";
 
 
 const CreateProduct = () => {
+
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: "",
@@ -107,7 +110,10 @@ const CreateProduct = () => {
 
 
                     setImages([]);
+
+                    navigate("/admin/all-product")
                 }
+                // navigate("/admin/all-product")
 
 
 
@@ -149,7 +155,7 @@ const CreateProduct = () => {
                         value={formData.name}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -162,7 +168,7 @@ const CreateProduct = () => {
                         value={formData.description}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -177,7 +183,7 @@ const CreateProduct = () => {
                         value={formData.price}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -192,7 +198,7 @@ const CreateProduct = () => {
                         value={formData.category}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -207,7 +213,7 @@ const CreateProduct = () => {
                         value={formData.brand}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -222,7 +228,7 @@ const CreateProduct = () => {
                         value={formData.stock}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -241,7 +247,7 @@ const CreateProduct = () => {
                             onChange={handleChange}
                         />
 
-                    </label>
+                    </label><br />
 
 
 
@@ -254,7 +260,7 @@ const CreateProduct = () => {
                         accept="image/*"
 
                         onChange={handleImageChange}
-                    />
+                    /><br />
 
 
 

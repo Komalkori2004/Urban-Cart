@@ -168,7 +168,7 @@ function UpdateProduct() {
                         }
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -181,7 +181,7 @@ function UpdateProduct() {
                         value={formData.price}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -194,7 +194,7 @@ function UpdateProduct() {
                         value={formData.category}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -207,7 +207,7 @@ function UpdateProduct() {
                         value={formData.brand}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -220,7 +220,7 @@ function UpdateProduct() {
                         value={formData.stock}
 
                         onChange={handleChange}
-                    />
+                    /><br />
 
 
 
@@ -241,7 +241,7 @@ function UpdateProduct() {
                             onChange={handleChange}
                         />
 
-                    </label>
+                    </label><br />
                     <input
 
                         type="file"
@@ -251,7 +251,7 @@ function UpdateProduct() {
                         onChange={
                             handleImageChange
                         }
-                    />
+                    /><br />
 
 
 

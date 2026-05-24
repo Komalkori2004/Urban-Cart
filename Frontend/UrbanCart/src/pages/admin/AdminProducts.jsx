@@ -9,6 +9,7 @@ import { deleteProduct } from '../../redux/thunks/productThunks';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
+
 const AdminProducts = () => {
 
 
@@ -47,9 +48,6 @@ const AdminProducts = () => {
 
     }
 
-
-
-
     // if (loading) {
 
     //     return <h2>
@@ -67,58 +65,150 @@ const AdminProducts = () => {
     }
 
 
+    const getStockText = (stock) => {
+        if (stock === 0) {
+            return "Out of stock"
+        }
+
+        if (stock < 5) {
+            return "low Stock"
+        }
+        return "In Stock"
+
+    }
+
+
+    const getStockClass = (stock) => {
+        if (stock === 0) {
+            return "out-stock"
+        }
+        if (stock < 5) {
+            return "low-stock"
+        }
+        return "in-stock"
+
+    }
+
+
     return (
         <>
 
-            <div>
+            <div className="admin-products-page">
 
-                <h1>Admin Products</h1>
-
-                {products.map((product) => (
-                    <div key={product._id}>
-                        <img src={product.images?.[0]?.url} alt={product.name} width={120} />
+                <h1 className='admin-title'>
+                    Admin Products
+                </h1>
 
 
-                        h3{product.name}
-                        <p>{product.description}</p>
-                        <p>₹{product.price}</p>
+                {
+                    products.length === 0 ? (
 
+                        <div className='empty-products'>
 
-                        <p>Stock:{product.stock}</p>
+                            <h2>
+                                No Products Found
+                            </h2>
 
+                        </div>
 
-                        {/* <button>
+                    ) : (
 
-                            Edit
+                        <div className='product-container'>
 
-                        </button> */}
+                          
+                            {
+                                products.map((product) => (
 
-                        <Link to={`/admin/update-product/${product._id}`}>
-                            <button>
-                                Edit
-                            </button>
-                        </Link>
+                                    <div
+                                        className='product-card'
+                                        key={product._id}
+                                    >
 
-
-
-                        <button onClick={() => {
-                            handleDelete(product._id)
-                        }}>
-
-                            Delete
-
-                        </button>
+                                        <img
+                                            src={product.images?.[0]?.url}
+                                            alt={product.name}
+                                            className='product-image'
+                                        />
 
 
 
+                                        <div className='product-info'>
 
-                    </div>
-                ))}
+                                            <h3>
+                                                {product.name}
+                                            </h3>
 
 
+                                            <p className='product-brand'>
+                                                {product.category}
+                                            </p>
+
+
+                                            <div className='price-section'>
+
+                                                <span className='price'>
+                                                    ₹{product.price}
+                                                </span>
+
+                                            </div>
+
+
+
+                                            {/* <p className='stock'>
+
+                                                Stock:
+                                                {product.stock}
+
+                                            </p> */}
+                                            <p className={`stock ${getStockClass(product.stock)}`}>
+                                                {getStockText(product.stock)}
+                                                   ({product.stock})
+                                            </p>
+
+
+
+                                            <div className='admin-btns'>
+
+                                                <Link
+                                                    to={`/admin/update-product/${product._id}`}
+                                                >
+
+                                                    <button
+                                                        className='edit-btn'
+                                                    >
+                                                        Edit
+                                                    </button>
+
+                                                </Link>
+
+
+
+                                                <button
+
+                                                    className='delete-btn'
+
+                                                    onClick={() => {
+                                                        handleDelete(product._id)
+                                                    }}
+                                                >
+
+                                                    Delete
+
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                ))
+                            }
+
+                        </div>
+                    )
+                }
 
             </div>
-
 
         </>
     )
