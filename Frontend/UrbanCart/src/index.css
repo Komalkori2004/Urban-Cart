@@ -202,3 +202,8 @@ body {
     border-radius:10px;
     border:1px solid #ddd;
 }
+.error-text{
+    color:red;
+    font-size:14px;
+    margin-bottom:10px;
+}

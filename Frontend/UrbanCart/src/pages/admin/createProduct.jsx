@@ -12,6 +12,7 @@ const CreateProduct = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    const [error, setError] = useState({})
     const [formData, setFormData] = useState({
         name: "",
 
@@ -29,6 +30,40 @@ const CreateProduct = () => {
     })
 
     const [images, setImages] = useState([])
+
+
+    const validateForm = () => {
+
+        let newError = {}
+        if (formData.name.trim()) {
+            newError.naime = "product name is required "
+        }
+        if (formData.description.trim()) {
+            newError.description = "product description is required "
+        }
+        if (formData.price <= 0) {
+            newError.price = ' product price must be greater than 0'
+        }
+        if (formData.category.trim()) {
+            newError.category = "product category is required "
+        }
+
+        if (formData.brand.trim()) {
+            newError.brand = "Product brand is required "
+        }
+        if (formData.stock <= 0) {
+            newError.stock = "Product stock must be greater than 0"
+        }
+        if (!images.length) {
+            newError.images = "Product image is required "
+        }
+        setError(newError)
+
+        return Object.keys(newError).length === 0
+    }
+
+
+
 
 
     const handleChange = (e) => {
@@ -60,7 +95,7 @@ const CreateProduct = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        if (!validateForm()) { return }
 
         const productData = new FormData()
         productData.append("name", formData.name)
@@ -155,7 +190,12 @@ const CreateProduct = () => {
                         value={formData.name}
 
                         onChange={handleChange}
-                    /><br />
+
+                    />
+                    {error.name && <p className='error-text'>{error.name}</p>}
+                    
+                    
+                    <br />
 
 
 
@@ -168,7 +208,9 @@ const CreateProduct = () => {
                         value={formData.description}
 
                         onChange={handleChange}
-                    /><br />
+                    />
+                    {error.description && <p className='error-text'>{error.description}</p>}
+                    <br />
 
 
 
@@ -183,7 +225,9 @@ const CreateProduct = () => {
                         value={formData.price}
 
                         onChange={handleChange}
-                    /><br />
+                    />
+                    {error.price && <p className='error-text'>{error.price}</p>}
+                    <br />
 
 
 
@@ -198,7 +242,10 @@ const CreateProduct = () => {
                         value={formData.category}
 
                         onChange={handleChange}
-                    /><br />
+                    
+                    />
+                    {error.category && <p className='error-text' >{error.category}</p>}
+                    <br />
 
 
 
@@ -213,7 +260,10 @@ const CreateProduct = () => {
                         value={formData.brand}
 
                         onChange={handleChange}
-                    /><br />
+                    
+                    />
+                    {error.brand && <p className='error-text'>{error.brand}</p>}
+                    <br />
 
 
 
@@ -228,7 +278,9 @@ const CreateProduct = () => {
                         value={formData.stock}
 
                         onChange={handleChange}
-                    /><br />
+                    />
+                    {error.stock && <p className='error-text'>{error.stock}</p>}
+                    <br />
 
 
 
@@ -247,7 +299,8 @@ const CreateProduct = () => {
                             onChange={handleChange}
                         />
 
-                    </label><br />
+                    </label>
+                    <br />
 
 
 
@@ -260,7 +313,9 @@ const CreateProduct = () => {
                         accept="image/*"
 
                         onChange={handleImageChange}
-                    /><br />
+                    />
+                    {error.images && <p className='error-text'>{error.images}</p>}
+                    <br />
 
 
 
