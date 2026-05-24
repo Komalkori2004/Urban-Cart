@@ -11,8 +11,12 @@ const Product = () => {
 
     const dispatch = useDispatch()
     const [selectedCategory, setSelectedCategory] = useState("All")
+
     const { products, loading, error } = useSelector(state => state.products)
 
+    const [debouncedSearch, setDebouncedSearch] = useState("")
+
+    const [search, setSearch] = useState("")
 
     const { categories } = useSelector((state) => state.category)
 
@@ -25,8 +29,26 @@ const Product = () => {
         dispatch(getAllCategory())
     }, [dispatch])
 
-    const filteredProducts = selectedCategory === "All" ? products : products.filter((product) => product.category === selectedCategory)
 
+
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search)
+        }, 500)
+        return () => clearTimeout(timer)
+    }, [search])
+
+    const filteredProducts =
+        products.filter((product) => {
+            const matchCategory = selectedCategory === "All" || product.category === selectedCategory
+
+            const matchSearch = product.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+
+            return matchCategory && matchSearch
+
+
+        })
 
     console.log(products)
     console.log(categories)
@@ -46,6 +68,15 @@ const Product = () => {
             <h2>
                 all Product
             </h2>
+            <input type="text"
+                placeholder="Search Product"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="search-input"
+
+            />
+
+
             <div className="category-buttons">
 
                 <button

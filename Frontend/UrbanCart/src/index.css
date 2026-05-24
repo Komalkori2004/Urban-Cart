@@ -299,3 +299,16 @@ body {
     font-size:35px;
     font-weight:bold;
 }
+
+.search-input{
+
+    width:300px;
+
+    padding:12px;
+
+    margin:20px;
+
+    border:1px solid #ccc;
+
+    border-radius:5px;
+}
