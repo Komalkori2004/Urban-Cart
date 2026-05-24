@@ -299,9 +299,11 @@ function UpdateProduct() {
 
 
 
-                    <button type="submit">
+                    <button type="submit" disabled={loading}>
 
-                        Update Product
+                       {
+                        loading?"updating...":"update product"
+                       }
 
                     </button>
 

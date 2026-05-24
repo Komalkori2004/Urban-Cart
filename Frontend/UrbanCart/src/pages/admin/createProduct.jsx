@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../redux/thunks/productThunks";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +13,7 @@ const CreateProduct = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const [error, setError] = useState({})
+    const { loading } = useSelector(state => state.products)
     const [formData, setFormData] = useState({
         name: "",
 
@@ -30,25 +31,26 @@ const CreateProduct = () => {
     })
 
     const [images, setImages] = useState([])
+    const [previewImages, setPreviewImages] = useState([]);
 
 
     const validateForm = () => {
 
         let newError = {}
-        if (formData.name.trim()) {
+        if (!formData.name.trim()) {
             newError.naime = "product name is required "
         }
-        if (formData.description.trim()) {
+        if (!formData.description.trim()) {
             newError.description = "product description is required "
         }
         if (formData.price <= 0) {
             newError.price = ' product price must be greater than 0'
         }
-        if (formData.category.trim()) {
+        if (!formData.category.trim()) {
             newError.category = "product category is required "
         }
 
-        if (formData.brand.trim()) {
+        if (!formData.brand.trim()) {
             newError.brand = "Product brand is required "
         }
         if (formData.stock <= 0) {
@@ -87,7 +89,12 @@ const CreateProduct = () => {
 
 
     const handleImageChange = (e) => {
-        setImages(Array.from(e.target.files))
+        const files = Array.from(e.target.files)
+        setImages(files)
+        const preview = files.map((file) =>
+            URL.createObjectURL(file)
+        )
+        setPreviewImages(preview)
 
     }
 
@@ -193,8 +200,8 @@ const CreateProduct = () => {
 
                     />
                     {error.name && <p className='error-text'>{error.name}</p>}
-                    
-                    
+
+
                     <br />
 
 
@@ -242,7 +249,7 @@ const CreateProduct = () => {
                         value={formData.category}
 
                         onChange={handleChange}
-                    
+
                     />
                     {error.category && <p className='error-text' >{error.category}</p>}
                     <br />
@@ -260,7 +267,7 @@ const CreateProduct = () => {
                         value={formData.brand}
 
                         onChange={handleChange}
-                    
+
                     />
                     {error.brand && <p className='error-text'>{error.brand}</p>}
                     <br />
@@ -315,13 +322,33 @@ const CreateProduct = () => {
                         onChange={handleImageChange}
                     />
                     {error.images && <p className='error-text'>{error.images}</p>}
+                    <div className='preview-container'>
+
+                        {
+                            previewImages.map((img, index) => (
+
+                                <img
+                                    key={index}
+                                    src={img}
+                                    alt='preview'
+                                    className='preview-image'
+                                />
+
+                            ))
+                        }
+
+                    </div>
                     <br />
 
 
 
-                    <button type="submit">
+                    <button type="submit"
+                        disabled={loading}
+                    >
 
-                        Create Product
+                        {
+                            loading ? "creating...." : "create product"
+                        }
 
                     </button>
 

@@ -1,6 +1,6 @@
 
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { getAllproduct } from '../../redux/thunks/productThunks';
 import Swal from 'sweetalert2'
@@ -14,6 +14,7 @@ const AdminProducts = () => {
 
 
     const dispatch = useDispatch()
+    const [deleteLoading, setDeleteLoading] = useState(null)
     const { products, loading, error } = useSelector((state) => state.products)
 
     useEffect(() => {
@@ -33,8 +34,10 @@ const AdminProducts = () => {
         })
             .then((result) => {
                 if (result.isConfirmed) {
+                    setDeleteLoading(id)
                     dispatch(deleteProduct(id))
                         .then((res) => {
+                            setDeleteLoading(null)
                             if (res.meta.requestStatus === "fulfilled") {
                                 toast.success("product deleted sucessfully")
                             }
@@ -115,7 +118,7 @@ const AdminProducts = () => {
 
                         <div className='product-container'>
 
-                          
+
                             {
                                 products.map((product) => (
 
@@ -162,7 +165,7 @@ const AdminProducts = () => {
                                             </p> */}
                                             <p className={`stock ${getStockClass(product.stock)}`}>
                                                 {getStockText(product.stock)}
-                                                   ({product.stock})
+                                                ({product.stock})
                                             </p>
 
 
@@ -186,13 +189,16 @@ const AdminProducts = () => {
                                                 <button
 
                                                     className='delete-btn'
+                                                    disabled={deleteLoading===product._id}
 
                                                     onClick={() => {
                                                         handleDelete(product._id)
                                                     }}
                                                 >
 
-                                                    Delete
+                                                   {
+                                                    deleteLoading===product._id ? "Deleting..." : "Delete"
+                                                   }
 
                                                 </button>
 
