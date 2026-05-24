@@ -1,5 +1,5 @@
 const user = require("../models/userModel");
-
+const crypto = require("crypto")
 
 const ErrorHandler = require("../utils/errorHandler");
 
@@ -35,19 +35,46 @@ const registerUser = asyncHandler(async (req, res, next) => {
   // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
 
+  // verify email
+  const verifyToken = crypto.randomBytes(32).toString("hex")
+
+
+
   // Create user
   const User = await user.create({
     name,
     email,
     password: hashedPassword,
+    verifyToken,
+    verifyTokenExpiry: Date.now() + 10 * 60 * 1000
   });
-  console.log(email)
+
+  const verifyUrl = `${process.env.FRONTEND_URL}/verify/${verifyToken}`
+
 
   await transporter.sendMail({
     from: "urbancart@test.com",
     to: email,
     subject: "urbanCart Test",
-    text: "mailtrap testing successfull"
+    html: `
+
+<h2>
+Welcome to UrbanCart
+</h2>
+
+<p>
+Hello ${name},
+</p>
+
+<p>
+Please click below to verify your account:
+</p>
+
+<a href="${verifyUrl}">
+Verify Account
+</a>
+
+`
   })
 
 
