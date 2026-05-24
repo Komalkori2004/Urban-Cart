@@ -17,6 +17,7 @@ import AdminProducts from '../pages/admin/AdminProducts'
 import UpdateProduct from '../pages/admin/UpdateProduct'
 
 import AdminLayout from '../layout/AdminLayout'
+import VerifyAccount from '../pages/VerifyAccount'
 
 
 
@@ -38,6 +39,10 @@ const AppRouter = () => {
                     <Route path="/product/:slug" element={<SingleProduct />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
+                    <Route
+                        path="/verify/:token"
+                        element={<VerifyAccount />}
+                    />
 
 
 
