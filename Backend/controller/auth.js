@@ -1,5 +1,6 @@
 const user = require("../models/userModel");
 
+
 const ErrorHandler = require("../utils/errorHandler");
 
 const bcrypt = require("bcryptjs");
@@ -7,6 +8,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const asyncHandler = require("../middleware/asyncHandler");
+const transporter = require("../config/mailer");
 
 
 // Register User
@@ -39,6 +41,17 @@ const registerUser = asyncHandler(async (req, res, next) => {
     email,
     password: hashedPassword,
   });
+  console.log(email)
+
+  await transporter.sendMail({
+    from: "urbancart@test.com",
+    to: email,
+    subject: "urbanCart Test",
+    text: "mailtrap testing successfull"
+  })
+
+
+
   User.password = undefined;
 
   res.status(201).json({

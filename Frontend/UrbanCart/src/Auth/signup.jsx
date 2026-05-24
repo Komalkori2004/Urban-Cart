@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { registerUser } from '../redux/thunks/authThunks'
 import { useDispatch, useSelector } from 'react-redux'
 
 
