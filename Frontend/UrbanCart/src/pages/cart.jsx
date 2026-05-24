@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useDispatch, useSelector } from "react-redux"
 
-import { getCart, updateCart,removeCart } from '../redux/thunks/cartThunks'
+import { getCart, updateCart, removeCart } from '../redux/thunks/cartThunks'
 import { useEffect } from 'react'
 
 
@@ -25,6 +25,18 @@ const CartPage = () => {
     if (error) {
         return <h2>{error}</h2>
     }
+    if (items.length == 0) {
+        return (
+            <div>
+
+                <h2>
+                    Cart is Empty
+                </h2>
+
+            </div>
+        )
+    }
+
 
     const totalItem = items.reduce((acc, item) => {
         return acc + item.quantity
@@ -57,6 +69,8 @@ const CartPage = () => {
                 <h3>Grand Total :{grandTotal}</h3>
 
 
+
+
                 {
                     items?.map((item) => (
 
@@ -66,7 +80,7 @@ const CartPage = () => {
 
                             <img
                                 src={item.product.images[0]?.url}
-                                alt={item.product.title}
+                                alt={item.product.name}
                                 width="120"
                             />
 
@@ -80,6 +94,7 @@ const CartPage = () => {
 
                             <button
                                 type="button"
+                                disabled={item.quantity <= 1}
 
                                 onClick={() =>
                                     dispatch(
@@ -129,7 +144,7 @@ const CartPage = () => {
 
                                 onClick={() =>
                                     dispatch(
-                                       removeCart(
+                                        removeCart(
                                             item.product._id
                                         )
                                     )
