@@ -1,8 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../redux/thunks/productThunks";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { getAllCategory } from '../../redux/thunks/categoryThunks'
+
 
 import { toast }
     from "sonner";
@@ -10,10 +12,17 @@ import { toast }
 
 const CreateProduct = () => {
 
+
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const [error, setError] = useState({})
     const { loading } = useSelector(state => state.products)
+    const { categories } = useSelector((state) => state.category)
+    useEffect(() => {
+        dispatch(getAllCategory())
+    }, [dispatch])
+
+    console.log(categories)
     const [formData, setFormData] = useState({
         name: "",
 
@@ -237,20 +246,33 @@ const CreateProduct = () => {
                     <br />
 
 
-
-                    <input
-
-                        type="text"
+                    <select
 
                         name="category"
-
-                        placeholder="Category"
 
                         value={formData.category}
 
                         onChange={handleChange}
+                    >
 
-                    />
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        {
+                            categories.map((category) => (
+
+                                <option
+                                    key={category._id}
+                                    value={category.name}
+                                >
+                                    {category.name}
+                                </option>
+
+                            ))
+                        }
+
+                    </select>
                     {error.category && <p className='error-text' >{error.category}</p>}
                     <br />
 

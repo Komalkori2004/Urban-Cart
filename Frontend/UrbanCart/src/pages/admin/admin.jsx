@@ -4,8 +4,13 @@ import { getAllproduct } from '../../redux/thunks/productThunks'
 
 
 
+
+
 const AdminProfile = () => {
    const dispatch = useDispatch()
+
+
+
    const { products } = useSelector((state) => state.products)
    useEffect(() => {
       dispatch(getAllproduct())
