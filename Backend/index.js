@@ -13,8 +13,8 @@ const errorMiddleware = require("./middleware/errorMiddleware")
 // routers import
 const userRouter = require("./routes/authRouter")
 const productRouter = require("./routes/productRouter")
-
 const cartRouter=require("./routes/cartRouter")
+const CategoryRouter = require("./routes/categoryRouter")
 // mongoDB connection
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
@@ -34,6 +34,7 @@ app.use("/api/auth", userRouter)
 app.use("/api/products", require("./routes/productRouter"))
 
 app.use("/api/cart",cartRouter)
+app.use("/api/category",CategoryRouter)
 
 
 
