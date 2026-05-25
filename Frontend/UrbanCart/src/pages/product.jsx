@@ -6,6 +6,8 @@ import { getAllCategory } from "../redux/thunks/categoryThunks"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 
+import "../style/product.css"
+
 
 const Product = () => {
 
@@ -80,22 +82,50 @@ const Product = () => {
 
         <div>
 
-            <h2>
+            {/* <h2>
                 all Product
-            </h2>
-            <input type="text"
-                placeholder="Search Product"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="search-input"
+            </h2> */}
 
-            />
 
-            <select value={SortOption} onChange={(e) => setSortOption(e.target.value)} >
-                <option value="">Sort Product</option>
-                <option value="lowToHigh">Price: Low to High</option>
-                <option value="highToLow">Price: High to Low</option>
-            </select>
+
+            <div className="filter-section">
+
+                <input
+                    type="text"
+                    placeholder="Search Product"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="search-input"
+                />
+
+
+
+                <select
+                    value={SortOption}
+                    onChange={(e) =>
+                        setSortOption(e.target.value)
+                    }
+
+                    className="sort-select"
+                >
+
+                    <option value="">
+                        Sort Product
+                    </option>
+
+                    <option value="lowToHigh">
+                        Price: Low to High
+                    </option>
+
+                    <option value="highToLow">
+                        Price: High to Low
+                    </option>
+
+                </select>
+
+            </div>
+
+            
 
             <div className="category-buttons">
 
@@ -131,7 +161,7 @@ const Product = () => {
             <div className="product-container">
 
                 {
-                  ShortedProducts?.map((product) => (
+                    ShortedProducts?.map((product) => (
 
                         <Link to={`/product/${product.slug}`} key={product._id}>
                             <div

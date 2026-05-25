@@ -105,15 +105,14 @@ const LoginUser = asyncHandler(async (req, res, next) => {
   // Check user
   const existingUser = await user.findOne({ email });
 
-  if (!existingUser.isVerified) {
+  if (!existingUser) {
 
     return next(
-
       new ErrorHandler(
         401,
-        "Please verify your email first"
+        "User not found"
       )
-    )
+    );
   }
 
   // Compare password
@@ -176,6 +175,171 @@ const verifyEmail = asyncHandler(async (req, res, next) => {
 
 
 
+// forget password
+
+const forgotPassword = asyncHandler(async (req, res, next) => {
+  const { email } = req.body
+
+  const existUser = await user.findOne({ email })
+
+  if (!existUser) {
+    return next(new ErrorHandler(400, "user not Found"))
+  }
+  if (!existUser.isVerified) {
+
+    return next(
+      new ErrorHandler(
+        401,
+        "Please verify your email first"
+      )
+    )
+  }
+
+  const resetToken = crypto.randomBytes(32).toString("hex")
+
+
+  existUser.resetPasswordToken = resetToken
+  existUser.resetPasswordTokenExpiry = Date.now() + 10 * 60 * 1000
+
+  await existUser.save()
+
+
+  const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`
+  await transporter.sendMail({
+    from:
+      "urbancart@test.com",
+
+    to: email,
+
+    subject:
+      "Reset Your Password",
+
+
+    html: `
+
+<h2>
+Reset Password
+</h2>
+
+<p>
+Click below to reset your password
+</p>
+
+<a href="${resetUrl}">
+Reset Password
+</a>
+
+`
+
+  })
+
+
+  res.status(200).json({
+    success: true,
+    message: "Reset_Password link sent successfully"
+  })
+
+})
+
+
+
+
+
+const resetPassword =
+  asyncHandler(async (req, res, next) => {
+
+    const { token } =
+      req.params
+
+
+    const { password } =
+      req.body
+
+
+
+    const existingUser =
+      await user.findOne({
+
+        resetPasswordToken:
+          token,
+
+        resetPasswordTokenExpiry: {
+          $gt: Date.now()
+        }
+
+      })
+
+
+
+    if (!existingUser) {
+
+      return next(
+
+        new ErrorHandler(
+          400,
+          "Invalid token or token expired"
+        )
+      )
+    }
+
+
+
+    const hashedPassword =
+      await bcrypt.hash(
+        password,
+        10
+      )
+
+
+
+    existingUser.password =
+      hashedPassword
+
+
+
+    existingUser
+      .resetPasswordToken =
+      undefined
+
+
+
+    existingUser
+      .resetPasswordTokenExpiry =
+      undefined
+
+
+
+    await existingUser.save()
+
+
+
+    res.status(200).json({
+
+      success: true,
+
+      message:
+        "Password reset successfully"
+    })
+
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Get Profile
 const getProfile = asyncHandler(async (req, res, next) => {
 
@@ -206,5 +370,7 @@ module.exports = {
   LoginUser,
   getProfile,
   AdminDashboard,
-  verifyEmail
+  verifyEmail,
+  forgotPassword,
+  resetPassword
 };
