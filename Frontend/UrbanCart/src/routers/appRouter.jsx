@@ -19,6 +19,8 @@ import UpdateProduct from '../pages/admin/UpdateProduct'
 import AdminLayout from '../layout/AdminLayout'
 import VerifyAccount from '../pages/VerifyAccount'
 
+import ForgotPassword from '../pages/ForgotPassword'
+
 
 
 
@@ -43,6 +45,8 @@ const AppRouter = () => {
                         path="/verify/:token"
                         element={<VerifyAccount />}
                     />
+
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
 
 
 

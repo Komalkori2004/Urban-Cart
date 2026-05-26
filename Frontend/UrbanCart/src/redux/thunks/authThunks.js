@@ -51,7 +51,7 @@ export const registerUser = createAsyncThunk(
 )
 
 
- export  const verifyEmail = createAsyncThunk(
+export const verifyEmail = createAsyncThunk(
     "auth/verifyEmail",
 
 
@@ -68,5 +68,20 @@ export const registerUser = createAsyncThunk(
 
 
 
+    }
+)
+
+ 
+
+export const forgotPassword = createAsyncThunk(
+    "auth/forgotPassword",
+    async (email, thunkAPI) => {
+        try {
+            const { data } = await api.post("/auth/forgot-password", { email })
+            return data
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
     }
 )
