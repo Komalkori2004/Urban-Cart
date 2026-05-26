@@ -238,3 +238,76 @@
 
    backdrop-filter: blur(10px);
 }
+
+
+
+/* feature section  */
+
+
+
+.feature-bar{
+
+   display:grid;
+
+   grid-template-columns:
+   repeat(4,1fr);
+
+   gap:2rem;
+
+   padding:4rem 8%;
+
+   background:
+var(--black);
+}
+
+
+
+.feature-card{
+
+   text-align:center;
+
+   padding:2rem;
+
+   border:
+   1px solid
+   rgba(212,175,55,0.15);
+
+   border-radius:16px;
+
+   transition:
+   var(--transition);
+}
+
+
+
+.feature-card span{
+
+   font-size:2rem;
+
+   color:var(--gold);
+
+   display:block;
+
+   margin-bottom:1rem;
+}
+
+
+
+.feature-card p{
+
+   color:var(--white);
+
+   font-size:1rem;
+}
+
+
+
+.feature-card:hover{
+
+   transform:
+   translateY(-6px);
+
+   box-shadow:
+   0 0 20px
+   rgba(212,175,55,0.12);
+}
