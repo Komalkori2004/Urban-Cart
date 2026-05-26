@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct } from "../../redux/thunks/productThunks";
+import { createProduct } from "../redux/thunks/productThunks";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { getAllCategory } from '../../redux/thunks/categoryThunks'
+import { getAllCategory } from '../redux/thunks/categoryThunks'
 
 
 import { toast }

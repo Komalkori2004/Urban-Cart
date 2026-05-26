@@ -1,0 +1,240 @@
+.hero-section {
+
+   min-height: 90vh;
+
+   display: flex;
+
+   align-items: center;
+
+   justify-content: space-between;
+
+   padding: 6rem 8%;
+   background: var(--black);
+
+   color: var(--white);
+
+   gap: 4rem;
+   position: relative;
+
+   overflow: hidden;
+}
+
+.hero-section::before {
+
+   content: "";
+
+   position: absolute;
+
+   width: 500px;
+
+   height: 500px;
+
+   background:
+      radial-gradient(circle,
+
+         rgba(212, 175, 55, 0.18),
+
+         transparent 70%);
+
+   top: -100px;
+
+   right: -100px;
+
+   z-index: 0;
+}
+
+
+
+.hero-content {
+
+   flex: 1;
+}
+
+.hero-content,
+.hero-image {
+
+   position: relative;
+
+   z-index: 2;
+}
+
+
+
+.hero-subtitle {
+
+   color: var(--gold);
+
+   letter-spacing: 3px;
+
+   margin-bottom: 1rem;
+
+   font-size: 0.9rem;
+}
+
+
+
+.hero-content h1 {
+
+   font-size: 4rem;
+   max-width: 700px;
+   line-height: 1.1;
+
+   font-family:
+      "Playfair Display",
+      serif;
+
+   margin-bottom: 1.5rem;
+}
+
+
+
+.hero-text {
+
+   color: var(--champagne);
+
+   font-size: 1.1rem;
+
+   line-height: 1.8;
+
+   max-width: 500px;
+
+   margin-bottom: 2rem;
+}
+
+
+
+.hero-buttons {
+
+   display: flex;
+
+   gap: 1rem;
+}
+
+
+
+.hero-buttons button {
+
+   padding: 1rem 2rem;
+
+   background: var(--gold);
+   color: var(--black);
+
+   font-weight: 600;
+   border-radius: 8px;
+
+   border: none;
+
+   cursor: pointer;
+
+   transition:
+      var(--transition);
+}
+.hero-buttons button:hover{
+
+   transform:
+   translateY(-4px);
+
+   box-shadow:
+   0 0 20px
+   rgba(212,175,55,0.35);
+}
+
+
+
+.outline-btn {
+
+   background: transparent !important;
+
+   border: 1px solid var(--gold) !important;
+
+   color: var(--gold) !important;
+}
+
+
+
+.hero-buttons button:hover {
+
+   transform: translateY(-3px);
+}
+
+
+
+.hero-image {
+
+   flex: 1;
+
+   display: flex;
+
+   justify-content: center;
+}
+
+
+
+.hero-image img {
+
+   width: 100%;
+
+   max-width: 650px;
+
+   border-radius: 20px;
+
+   object-fit: cover;
+
+   box-shadow:
+      0 0 40px rgba(212, 175, 55, 0.25);
+}
+
+.hero-image img {
+
+   animation:
+      floatImage 4s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+
+   0% {
+
+      transform:
+         translateY(0px);
+   }
+
+   50% {
+
+      transform:
+         translateY(-12px);
+   }
+
+   100% {
+
+      transform:
+         translateY(0px);
+   }
+}
+
+.hero-buttons button:hover {
+
+   transform:
+      translateY(-4px);
+
+   box-shadow:
+      0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+.hero-badge {
+
+   display: inline-block;
+
+   padding: 0.5rem 1rem;
+
+   border: 1px solid rgba(212, 175, 55, 0.3);
+
+   color: var(--gold);
+
+   border-radius: 30px;
+
+   margin-bottom: 1.5rem;
+
+   font-size: 0.85rem;
+
+   backdrop-filter: blur(10px);
+}

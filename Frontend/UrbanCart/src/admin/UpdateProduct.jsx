@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate, } from 'react-router-dom'
-import { getAllCategory } from '../../redux/thunks/categoryThunks'
+import { getAllCategory } from '../redux/thunks/categoryThunks'
 
 import { toast } from "sonner";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { getSingleProductById, updateProduct } from '../../redux/thunks/productThunks';
+import { getSingleProductById, updateProduct } from '../redux/thunks/productThunks';
 
 
 function UpdateProduct() {

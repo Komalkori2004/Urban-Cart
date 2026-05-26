@@ -7,14 +7,14 @@ import Signup from '../Auth/signup'
 import Login from '../Auth/login'
 import ProtectRoute from './protectRoute'
 import UserProfile from '../pages/userD'
-import AdminProfile from '../pages/admin/admin'
+import AdminProfile from '../admin/admin'
 import Product from '../pages/product'
 import SingleProduct from '../pages/singleProduct'
 import CartPage from '../pages/cart'
 import NavBar from '../components/navbar'
-import CreateProduct from '../pages/admin/createProduct'
-import AdminProducts from '../pages/admin/AdminProducts'
-import UpdateProduct from '../pages/admin/UpdateProduct'
+import CreateProduct from '../admin/UpdateProduct'
+import AdminProducts from '../admin/AdminProducts'
+import UpdateProduct from '../admin/UpdateProduct'
 
 import AdminLayout from '../layout/AdminLayout'
 import VerifyAccount from '../pages/VerifyAccount'
@@ -22,6 +22,8 @@ import VerifyAccount from '../pages/VerifyAccount'
 import ForgotPassword from '../pages/ForgotPassword' 
 
 import ResetPassword from '../pages/ResetPassword'
+
+import HomePage from '../pages/home'
 
 
 
@@ -37,9 +39,12 @@ const AppRouter = () => {
 
                 <Routes>
 
-                    {/* PUBLIC ROUTES */}
+                      
 
-                    <Route path="/" element={<Product />} />
+                    {/* PUBLIC ROUTES */}
+                      <Route path="/" element={<HomePage />}/>
+
+                    <Route path="products" element={<Product />} />
                     <Route path="/product/:slug" element={<SingleProduct />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { getAllproduct } from '../../redux/thunks/productThunks';
+import { getAllproduct } from '../redux/thunks/productThunks';
 import Swal from 'sweetalert2'
-import { deleteProduct } from '../../redux/thunks/productThunks';
+import { deleteProduct } from '../redux/thunks/productThunks';
 
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';

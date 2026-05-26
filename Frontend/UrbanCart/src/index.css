@@ -1,86 +1,90 @@
-:root{
+:root {
 
-   --gold:#D4AF37;
+   --gold: #D4AF37;
 
-   --black:#0D0D0D;
+   --black: #0D0D0D;
 
-   --charcoal:#1A1A1A;
+   --charcoal: #1A1A1A;
 
-   --burgundy:#5C0D1A;
+   --burgundy: #5C0D1A;
 
-   --champagne:#F5E6C8;
+   --champagne: #F5E6C8;
 
-   --white:#FFFFFF;
+   --white: #FFFFFF;
 
 
 
    --heading-font:
-   "Playfair Display", serif;
+      "Playfair Display", serif;
 
    --body-font:
-   "Poppins", sans-serif;
+      "Poppins", sans-serif;
 
 
 
    --transition:
-   all 0.3s ease;
+      all 0.3s ease;
 
 
 
    --shadow-sm:
-   0 2px 8px rgba(0,0,0,0.25);
+      0 2px 8px rgba(0, 0, 0, 0.25);
 
    --shadow-md:
-   0 8px 24px rgba(0,0,0,0.35);
+      0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 
 
-*{
+* {
 
-   margin:0;
+   margin: 0;
 
-   padding:0;
+   padding: 0;
 
-   box-sizing:border-box;
+   box-sizing: border-box;
 }
 
 
-/* 
-body{
+
+body {
 
    background:
-   var(--black);
+      var(--black);
 
    color:
-   var(--white);
+      var(--white);
 
    font-family:
-   var(--body-font);
+      var(--body-font);
 
-   overflow-x:hidden;
-} */
-
-
-
-a{
-
-   text-decoration:none;
-
-   color:inherit;
+   overflow-x: hidden;
 }
 
 
 
-button{
+a {
 
-   border:none;
+   text-decoration: none;
 
-   cursor:pointer;
+   color: inherit;
+}
+
+
+
+button {
+
+   border: none;
+
+   cursor: pointer;
 
    font-family:
-   var(--body-font);
+      var(--body-font);
 
    transition:
-   var(--transition);
+      var(--transition);
 }
+
+
+
+
