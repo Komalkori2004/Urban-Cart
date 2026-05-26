@@ -19,7 +19,9 @@ import UpdateProduct from '../pages/admin/UpdateProduct'
 import AdminLayout from '../layout/AdminLayout'
 import VerifyAccount from '../pages/VerifyAccount'
 
-import ForgotPassword from '../pages/ForgotPassword'
+import ForgotPassword from '../pages/ForgotPassword' 
+
+import ResetPassword from '../pages/ResetPassword'
 
 
 
@@ -47,6 +49,7 @@ const AppRouter = () => {
                     />
 
                     <Route path="/forgot-password" element={<ForgotPassword />} />
+                     <Route path="/reset-password/:token" element={<ResetPassword />} />
 
 
 

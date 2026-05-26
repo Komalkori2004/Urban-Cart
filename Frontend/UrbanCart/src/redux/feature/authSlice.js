@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, registerUser, verifyEmail, forgotPassword } from '../thunks/authThunks';
+import { loginUser, registerUser, verifyEmail, forgotPassword, resetPassword } from '../thunks/authThunks';
 
 
 
@@ -124,6 +124,23 @@ const authSlice = createSlice({
                 state.message = action.payload.message
             })
             .addCase(forgotPassword.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+
+            // resetPassword
+
+
+            .addCase(resetPassword.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(resetPassword.fulfilled, (state, action) => {
+                state.loading = false
+                state.message = action.payload.message
+            })
+            .addCase(resetPassword.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
             })
