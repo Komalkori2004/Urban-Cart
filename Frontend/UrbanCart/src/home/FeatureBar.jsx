@@ -6,6 +6,7 @@ FaLock,
 FaUndo,
 FaGem
 }
+
 from "react-icons/fa"
 
 
@@ -16,22 +17,44 @@ function FeatureBar(){
 
       {
          icon:<FaGem />,
-         title:"Premium Quality"
+
+         title:"PREMIUM QUALITY",
+
+         description:
+         "Finest ingredients sourced globally"
       },
+
+
 
       {
          icon:<FaLock />,
-         title:"Secure Payment"
+
+         title:"SECURE PAYMENT",
+
+         description:
+         "100% secure & trusted checkout experience"
       },
+
+
 
       {
          icon:<FaTruck />,
-         title:"Fast Delivery"
+
+         title:"FAST DELIVERY",
+
+         description:
+         "Swift & safe delivery at your doorstep"
       },
+
+
 
       {
          icon:<FaUndo />,
-         title:"Easy Returns"
+
+         title:"EASY RETURNS",
+
+         description:
+         "Hassle-free returns within 7 days"
       }
 
    ]
@@ -54,17 +77,37 @@ function FeatureBar(){
                "feature-card"
                >
 
-                  <span>
+                  <span
+                  className=
+                  "feature-icon"
+                  >
 
                      {item.icon}
 
                   </span>
 
-                  <p>
 
-                     {item.title}
 
-                  </p>
+                  <div
+                  className=
+                  "feature-content"
+                  >
+
+                     <h3>
+
+                        {item.title}
+
+                     </h3>
+
+
+
+                     <p>
+
+                        {item.description}
+
+                     </p>
+
+                  </div>
 
                </div>
             ))
