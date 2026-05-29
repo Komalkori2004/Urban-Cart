@@ -12,7 +12,7 @@ export const updateCart = createAsyncThunk(
             const token = thunkAPI.getState().auth.token
 
             const config = {
-                Headers: {
+                  headers: {
 
                     Authorization: `Bearer ${token}`
                 }
