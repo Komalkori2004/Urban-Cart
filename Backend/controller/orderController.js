@@ -114,10 +114,32 @@ const getOrderbyId = asyncHandler(async (req, res, next) => {
 })
 
 
+const orderStatus = asyncHandler(async (req, res, next) => {
+    const { orderStatus } = req.body
+    const order = await Order.findById(req.params.id)
+
+    if (!order) {
+        return next(new ErrorHandler(404, "Order not found"))
+    }
+
+    order.orderStatus = orderStatus
+
+ await order.save() 
+
+ res.status(200).json({
+    success:true,
+    message:"Order status updated successfully",
+    data:order
+ })
+
+
+})
 
 
 
 
 
-module.exports = { placeOrder, getMyOrder, getOrderbyId }
+
+
+module.exports = { placeOrder, getMyOrder, getOrderbyId ,orderStatus}
 

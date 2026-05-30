@@ -1,7 +1,7 @@
   const express = require("express")
   const router = express.Router()
   const { authMiddleware, authorizeRoles } = require("../middleware/authMiddlewar")
-  const { placeOrder,getMyOrder,getOrderbyId  } = require("../controller/orderController")
+  const { placeOrder,getMyOrder,getOrderbyId,orderStatus  } = require("../controller/orderController")
 
 
   router.get("/test", (req, res) => {
@@ -11,6 +11,8 @@
   router.post("/", authMiddleware,placeOrder) 
   router.get("/myorders", authMiddleware, getMyOrder)
   router.get("/:id",authMiddleware,getOrderbyId )
+  router.put("/:id/status",authMiddleware,authorizeRoles("admin"),orderStatus )
+
 
 
 
