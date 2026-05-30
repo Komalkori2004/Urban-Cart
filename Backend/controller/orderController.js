@@ -86,12 +86,31 @@ const getMyOrder = asyncHandler(async (req, res, next) => {
 
 
     res.status(200).json({
-        sucess: true,
-        count:orders.length,
+        success: true,
+        count: orders.length,
         data: orders
     })
 
 
+})
+
+const getOrderbyId = asyncHandler(async (req, res, next) => {
+
+    const order = await Order.findById(req.params.id)
+
+    if (!order) {
+        next(new ErrorHandler(404, "Order not found"))
+    }
+
+    if (order.user.toString() !== req.user.id && req.user.role !== admin) {
+        return next(new ErrorHandler(401, "not authorized to view this order"))
+
+    }
+
+    res.status(200).json({
+        success: true,
+        data: order
+    })
 })
 
 
@@ -100,6 +119,5 @@ const getMyOrder = asyncHandler(async (req, res, next) => {
 
 
 
-
-module.exports = { placeOrder,getMyOrder }
+module.exports = { placeOrder, getMyOrder, getOrderbyId }
 
