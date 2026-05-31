@@ -13,9 +13,9 @@ const errorMiddleware = require("./middleware/errorMiddleware")
 // routers import
 const userRouter = require("./routes/authRouter")
 const productRouter = require("./routes/productRouter")
-const cartRouter=require("./routes/cartRouter")
+const cartRouter = require("./routes/cartRouter")
 const CategoryRouter = require("./routes/categoryRouter")
-const OrderRouter=require("./routes/orderRouter")
+const OrderRouter = require("./routes/orderRouter")
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
 
@@ -33,11 +33,14 @@ app.use("/api/auth", userRouter)
 
 app.use("/api/products", require("./routes/productRouter"))
 
-app.use("/api/cart",cartRouter)
-app.use("/api/category",CategoryRouter)
-console.log("Order Router Loaded");
+app.use("/api/cart", cartRouter)
+app.use("/api/category", CategoryRouter)
 
-app.use("/api/order",OrderRouter)
+app.use("/api/order", OrderRouter)
+
+
+
+
 
 
 
@@ -49,12 +52,9 @@ app.get("/", (req, res) => {
     res.send("server is running")
 })
 
-
 // global error handler
 
 app.use(errorMiddleware)
-
-
 
 // port
 const PORT = process.env.PORT || 5000

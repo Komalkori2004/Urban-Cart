@@ -124,15 +124,50 @@ const orderStatus = asyncHandler(async (req, res, next) => {
 
     order.orderStatus = orderStatus
 
- await order.save() 
+    await order.save()
 
- res.status(200).json({
-    success:true,
-    message:"Order status updated successfully",
-    data:order
- })
+    res.status(200).json({
+        success: true,
+        message: "Order status updated successfully",
+        data: order
+    })
 
 
+})
+
+
+
+// cancle order
+
+const cancleOrder = asyncHandler(async (req, res, next) => {
+    const order = await Order.findById(req.params.id)
+
+    if (!order) {
+        return next(new ErrorHandler(404, "Order not found "))
+
+    }
+
+    if (order.orderStatus === "Cancelled") {
+        return next(new ErrorHandler(400, "Order already cancelled"))
+
+    }
+
+    if (order.orderStatus === "Delivered") {
+        return next(new ErrorHandler(400, "Delivered order cannot be cancelled"))
+    }
+
+    for (const item of order.items) {
+        const product = await Product.findById(item.product)
+        product.stock += item.quantity
+        await product.save()
+    }
+    order.orderStatus = "Cancelled"
+    await order.save()
+    res.status(200).json({
+        success: true,
+        message: "Order cancelled successfully",
+        data: order
+    })
 })
 
 
@@ -141,5 +176,5 @@ const orderStatus = asyncHandler(async (req, res, next) => {
 
 
 
-module.exports = { placeOrder, getMyOrder, getOrderbyId ,orderStatus}
+module.exports = { placeOrder, getMyOrder, getOrderbyId, orderStatus, cancleOrder }
 
