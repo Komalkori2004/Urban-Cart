@@ -3,6 +3,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllOrders } from "../redux/thunks/orderThunks";
+import "./style/admin.css"
+
+
 
 
 
@@ -12,7 +15,7 @@ const AdminOrder = () => {
   const { order, loading, error } = useSelector((state) => state.order)
   const state = useSelector((state) => state);
 
-console.log(state);
+  console.log(state);
   useEffect(() => {
     console.log("Fetching orders...", order)
 
@@ -46,42 +49,45 @@ console.log(state);
 
           <tbody>
 
-{
-   order?.map((item) => (
+            {
+              order?.map((item) => (
 
-      <tr key={item._id}>
+                <tr key={item._id}>
 
-         <td>
-            {item._id.slice(-6)}
-         </td>
+                  <td>
+                    {item._id.slice(-6)}
+                  </td>
 
-         <td>
-            {item.shippingAddress?.fullName}
-         </td>
+                  <td>
+                    {item.shippingAddress?.fullName}
+                  </td>
 
-         <td>
-            ₹{item.totalAmount}
-         </td>
+                  <td>
+                    ₹{item.totalAmount}
+                  </td>
 
-         <td>
-            {item.orderStatus}
-         </td>
+                  <td>
+                    <span
+                      className={`status-badge ${item.orderStatus.toLowerCase()}`}
+                    >
+                      {item.orderStatus}
+                    </span>
+                  </td>
+                  <td>
+                    {item.paymentMethod}
+                  </td>
 
-         <td>
-            {item.paymentMethod}
-         </td>
+                  <td>
 
-         <td>
+                    <button>
+                      View
+                    </button>
 
-            <button>
-               View
-            </button>
+                  </td>
 
-         </td>
-
-      </tr>
-   ))
-}
+                </tr>
+              ))
+            }
 
           </tbody>
         </table>
