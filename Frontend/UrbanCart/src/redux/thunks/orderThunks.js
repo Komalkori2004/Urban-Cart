@@ -3,8 +3,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import api from "../../services/api"
 
 
-export const createOrder = createAsyncThunk(
-    "order/createOrder",
+export const getAllOrders = createAsyncThunk(
+    "order/getAllOrders",
 
     async (_, thunkAPI) => {
 
