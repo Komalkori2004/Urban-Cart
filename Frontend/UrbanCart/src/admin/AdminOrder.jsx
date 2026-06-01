@@ -1,6 +1,32 @@
+
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllOrders } from "../redux/thunks/orderThunks";
+
+
+
 
 const AdminOrder = () => {
+  const dispatch = useDispatch()
+  const { order, loading, error } = useSelector((state) => state.order)
+  const state = useSelector((state) => state);
+
+console.log(state);
+  useEffect(() => {
+    console.log("Fetching orders...", order)
+
+    dispatch(getAllOrders())
+  }, [dispatch])
+
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+  if (error) {
+    return <h2>{error}</h2>;
+  }
+
+
   return (
     <div className="admin-orders">
       <h1 className="orders-title">Manage Orders</h1>
@@ -19,27 +45,44 @@ const AdminOrder = () => {
           </thead>
 
           <tbody>
-            <tr>
-              <td>#12345</td>
-              <td>Komal</td>
-              <td>₹4000</td>
-              <td>Pending</td>
-              <td>COD</td>
-              <td>
-                <button>View</button>
-              </td>
-            </tr>
 
-            <tr>
-              <td>#12346</td>
-              <td>User</td>
-              <td>₹2500</td>
-              <td>Processing</td>
-              <td>COD</td>
-              <td>
-                <button>View</button>
-              </td>
-            </tr>
+{
+   order?.map((item) => (
+
+      <tr key={item._id}>
+
+         <td>
+            {item._id.slice(-6)}
+         </td>
+
+         <td>
+            {item.shippingAddress?.fullName}
+         </td>
+
+         <td>
+            ₹{item.totalAmount}
+         </td>
+
+         <td>
+            {item.orderStatus}
+         </td>
+
+         <td>
+            {item.paymentMethod}
+         </td>
+
+         <td>
+
+            <button>
+               View
+            </button>
+
+         </td>
+
+      </tr>
+   ))
+}
+
           </tbody>
         </table>
       </div>

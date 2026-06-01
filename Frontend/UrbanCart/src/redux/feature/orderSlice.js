@@ -5,7 +5,7 @@ import { getAllOrders } from "../thunks/orderThunks"
 
 
 const initialState = {
-    orders: [],
+    order: [],
     loading: false,
     error: null,
 };
@@ -26,7 +26,7 @@ const orderSlice = createSlice({
             })
             .addCase(getAllOrders.fulfilled, (state, action) => {
                 state.loading = false,
-                    state.orders = action.payload
+                    state.order = action.payload
             })
             .addCase(getAllOrders.rejected, (state, action) => {
                 state.loading = false,

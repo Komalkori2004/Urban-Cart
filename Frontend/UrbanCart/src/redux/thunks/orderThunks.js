@@ -19,7 +19,7 @@ export const getAllOrders = createAsyncThunk(
                 }
             }
             const { data } = await api.get("/order", config)
-
+            return data.data
 
 
         } catch (error) {
