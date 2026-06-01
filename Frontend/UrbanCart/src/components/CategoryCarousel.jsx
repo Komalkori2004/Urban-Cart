@@ -9,6 +9,9 @@ import { getAllCategory } from "../redux/thunks/categoryThunks";
 // import { getAllCategory } from "../../redux/slices/categorySlice";
 import { useNavigate } from "react-router-dom";
 
+
+import "./style/categoryShowcase.css";
+
 const CategoryCarousel = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

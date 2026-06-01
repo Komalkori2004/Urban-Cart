@@ -6,7 +6,7 @@ const AdminNavbar = () => {
         <div className='admin-navbar'>
 
             <h2>
-                Admin Panel
+              
             </h2>
 
         </div>

@@ -1,6 +1,7 @@
 
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import "./style/adminSidebar.css"
 
 const AdminSidebar = () => {
     return (
@@ -38,12 +39,18 @@ const AdminSidebar = () => {
                         Manage Product
                     </NavLink>
 
-                    <NavLink to="#">
-                        orders
-
+                    <NavLink to="/admin/orders"
+                        className={({ isActive }) =>
+                            isActive ? "active-link" : ""
+                        }>
+                        Orders
                     </NavLink>
-                    <NavLink to="#">
-                        users
+
+                    <NavLink to="/admin/users"
+                        className={({ isActive }) =>
+                            isActive ? "active-link" : ""
+                        }>
+                        Users
                     </NavLink>
 
 
