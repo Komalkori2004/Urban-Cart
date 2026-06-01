@@ -25,6 +25,8 @@ import ResetPassword from '../pages/ResetPassword'
 
 import HomePage from '../pages/home'
 
+import AdminOrder from '../admin/AdminOrder'
+
 
 
 
@@ -105,6 +107,10 @@ const AppRouter = () => {
                         <Route
                             path="update-product/:id"
                             element={<UpdateProduct />}
+                        />
+                        <Route
+                            path="orders"
+                            element={<AdminOrder />}
                         />
                     </Route>
 

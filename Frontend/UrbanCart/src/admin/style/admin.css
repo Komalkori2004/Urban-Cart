@@ -132,3 +132,54 @@
     font-size: 28px;
   }
 }
+
+
+
+/* order csss start here */
+
+.admin-orders {
+  padding: 30px;
+}
+
+.orders-title {
+  color: var(--champagne);
+  font-family: var(--heading-font);
+  margin-bottom: 25px;
+}
+
+.orders-table-wrapper {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  background: var(--charcoal);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.orders-table th {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold);
+  padding: 18px;
+  text-align: left;
+}
+
+.orders-table td {
+  padding: 18px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  color: var(--champagne);
+}
+
+.orders-table tr:hover {
+  background: rgba(212,175,55,0.05);
+}
+
+.orders-table button {
+  background: var(--gold);
+  color: black;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
