@@ -171,10 +171,20 @@ const cancleOrder = asyncHandler(async (req, res, next) => {
 })
 
 
+// get all orders for admin
+
+const getAllOrders=asyncHandler(async(req,res,next)=>{
+    const orders=await Order.find().sort({createdAt:-1})
+
+    res.status(200).json({
+        success:true,
+        count:orders.length,
+        data:orders
+    })
+})
 
 
 
 
-
-module.exports = { placeOrder, getMyOrder, getOrderbyId, orderStatus, cancleOrder }
+module.exports = { placeOrder, getMyOrder, getOrderbyId, orderStatus, cancleOrder, getAllOrders }
 
