@@ -211,6 +211,13 @@
     color: #dc3545;
 }
 
+
+.orders-table button {
+  background: var(--gold);
+  color: black;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
 .order-status-select {
     background: var(--charcoal);
 
@@ -248,4 +255,46 @@
     background: var(--charcoal);
 
     color: var(--champagne);
+}
+
+
+.order-modal {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.order-modal-content {
+    width: 90%;
+    max-width: 700px;
+
+    background: var(--charcoal);
+
+    border: 1px solid rgba(212, 175, 55, 0.2);
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    color: var(--champagne);
+
+    box-shadow:
+        0 0 30px rgba(212, 175, 55, 0.15);
+}
+
+.close-modal {
+    float: right;
+
+    background: transparent;
+
+    color: var(--gold);
+
+    font-size: 24px;
 }

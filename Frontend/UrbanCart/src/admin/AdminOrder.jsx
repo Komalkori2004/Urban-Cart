@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllOrders, updateOrderStatus, getOrderById } from "../redux/thunks/orderThunks";
 import "./style/admin.css"
 
@@ -11,6 +11,7 @@ import "./style/admin.css"
 
 
 const AdminOrder = () => {
+  const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
   const { order, selectedOrder, loading, error } = useSelector((state) => state.order)
   console.log("Selected Order:", selectedOrder)
@@ -31,91 +32,136 @@ const AdminOrder = () => {
 
 
   return (
-    <div className="admin-orders">
-      <h1 className="orders-title">Manage Orders</h1>
+    <>
+      <div className="admin-orders">
+        <h1 className="orders-title">Manage Orders</h1>
 
-      <div className="orders-table-wrapper">
-        <table className="orders-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Payment</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+        <div className="orders-table-wrapper">
+          <table className="orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-          <tbody>
+            <tbody>
 
-            {
-              order?.map((item) => (
+              {
+                order?.map((item) => (
 
-                <tr key={item._id}>
+                  <tr key={item._id}>
 
-                  <td>
-                    {item._id.slice(-6)}
-                  </td>
+                    <td>
+                      {item._id.slice(-6)}
+                    </td>
 
-                  <td>
-                    {item.shippingAddress?.fullName}
-                  </td>
+                    <td>
+                      {item.shippingAddress?.fullName}
+                    </td>
 
-                  <td>
-                    ₹{item.totalAmount}
-                  </td>
+                    <td>
+                      ₹{item.totalAmount}
+                    </td>
 
-                  <td>
-                    <span
-                      className={`status-badge ${item.orderStatus.toLowerCase()}`}
-                    >
-                      {item.orderStatus}
-                    </span>
-                  </td>
-                  <td>
-                    {item.paymentMethod}
-                  </td>
-                  <td>
-                    <button
-                      onClick={() =>
-                        dispatch(
-                          getOrderById(item._id)
-                        )
-                      }
-                    >
-                      View
-                    </button>
+                    <td>
+                      <span
+                        className={`status-badge ${item.orderStatus.toLowerCase()}`}
+                      >
+                        {item.orderStatus}
+                      </span>
+                    </td>
+                    <td>
+                      {item.paymentMethod}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => {
 
-                    <select
-                      className="order-status-select"
-                      value={item.orderStatus}
-                      onChange={(e) =>
-                        dispatch(
-                          updateOrderStatus({
-                            id: item._id,
-                            orderStatus: e.target.value
-                          })
-                        )
-                      }
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Processing">Processing</option>
-                      <option value="Shipped">Shipped</option>
-                      <option value="Delivered">Delivered</option>
-                      <option value="Cancelled">Cancelled</option>
-                    </select>
+                          dispatch(
+                            getOrderById(item._id)
+                          )
+                          setShowModal(true)
+                        }}
+                      >
+                        View
+                      </button>
 
-                  </td>
+                      <select
+                        className="order-status-select"
+                        value={item.orderStatus}
+                        onChange={(e) =>
+                          dispatch(
+                            updateOrderStatus({
+                              id: item._id,
+                              orderStatus: e.target.value
+                            })
+                          )
+                        }
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
 
-                </tr>
-              ))
-            }
+                    </td>
 
-          </tbody>
-        </table>
+                  </tr>
+                ))
+              }
+
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+
+
+
+      {
+        showModal && selectedOrder && (
+
+          <div className="order-modal">
+
+            <div className="order-modal-content">
+
+              <button
+                className="close-modal"
+                onClick={() => setShowModal(false)}
+              >
+                ✖️
+              </button>
+
+              <h2>
+                Order Details
+              </h2>
+
+              <p>
+                Customer:
+                {selectedOrder.shippingAddress?.fullName}
+              </p>
+
+              <p>
+                Phone:
+                {selectedOrder.shippingAddress?.phone}
+              </p>
+
+              <p>
+                Total:
+                ₹{selectedOrder.totalAmount}
+              </p>
+
+            </div>
+
+          </div>
+        )
+      }
+    </>
   );
 };
 
