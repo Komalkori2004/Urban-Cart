@@ -102,7 +102,7 @@ const getOrderbyId = asyncHandler(async (req, res, next) => {
         next(new ErrorHandler(404, "Order not found"))
     }
 
-    if (order.user.toString() !== req.user.id && req.user.role !== admin) {
+    if (order.user.toString() !== req.user.id && req.user.role !== "admin") {
         return next(new ErrorHandler(401, "not authorized to view this order"))
 
     }

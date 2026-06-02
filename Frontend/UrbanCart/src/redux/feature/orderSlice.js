@@ -1,13 +1,14 @@
 
 
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllOrders, updateOrderStatus } from "../thunks/orderThunks"
+import { getAllOrders, updateOrderStatus, getOrderById } from "../thunks/orderThunks"
 
 
 const initialState = {
     order: [],
     loading: false,
     error: null,
+    selectedOrder: null,
 };
 
 
@@ -38,7 +39,7 @@ const orderSlice = createSlice({
                     state.error = null
             })
             .addCase(updateOrderStatus.fulfilled, (state, action) => {
-                 state.loading = false;
+                state.loading = false;
                 const updatedOrder =
                     action.payload;
 
@@ -54,6 +55,23 @@ const orderSlice = createSlice({
                 state.loading = false,
                     state.error = action.payload
             })
+
+            .addCase(getOrderById.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+
+            })
+            .addCase(getOrderById.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.selectedOrder = action.payload;
+
+            })
+            .addCase(getOrderById.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
+            })
+
+
 
 
 

@@ -2,7 +2,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAllOrders, updateOrderStatus } from "../redux/thunks/orderThunks";
+import { getAllOrders, updateOrderStatus, getOrderById } from "../redux/thunks/orderThunks";
 import "./style/admin.css"
 
 
@@ -12,7 +12,8 @@ import "./style/admin.css"
 
 const AdminOrder = () => {
   const dispatch = useDispatch()
-  const { order, loading, error } = useSelector((state) => state.order)
+  const { order, selectedOrder, loading, error } = useSelector((state) => state.order)
+  console.log("Selected Order:", selectedOrder)
 
 
   useEffect(() => {
@@ -76,9 +77,18 @@ const AdminOrder = () => {
                     {item.paymentMethod}
                   </td>
                   <td>
+                    <button
+                      onClick={() =>
+                        dispatch(
+                          getOrderById(item._id)
+                        )
+                      }
+                    >
+                      View
+                    </button>
 
                     <select
-                     className="order-status-select"
+                      className="order-status-select"
                       value={item.orderStatus}
                       onChange={(e) =>
                         dispatch(

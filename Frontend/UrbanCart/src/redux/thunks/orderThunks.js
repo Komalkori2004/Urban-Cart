@@ -52,8 +52,28 @@ export const updateOrderStatus = createAsyncThunk(
             return thunkAPI.rejectWithValue(error.response.data)
         }
     }
+)
 
 
+export const getOrderById=createAsyncThunk(
+    "order/getOrderById",
 
+    async(id,thunkAPI)=>{
+        try{
 
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {  
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const {data}=await api.get(`/order/${id}`,config)
+
+            return data.data
+
+        }
+        catch(error){
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
 )

@@ -6,7 +6,7 @@ const ErrorHandler = require("../utils/errorHandler")
 const authMiddleware = (req, res, next) => {
 
     try {
-        console.log(req.headers.authorization);
+     
 
         const token = req.headers.authorization.split(" ")[1]
 
