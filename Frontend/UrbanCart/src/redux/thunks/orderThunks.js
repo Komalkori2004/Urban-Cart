@@ -28,3 +28,32 @@ export const getAllOrders = createAsyncThunk(
 
     }
 )
+
+
+export const updateOrderStatus = createAsyncThunk(
+    "order/updateOrderStatus",
+
+    async ({ id, orderStatus }, thunkAPI) => {
+
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await api.put(`/order/${id}/status`, { orderStatus }, config)
+            return data.data
+
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+
+
+
+
+)
