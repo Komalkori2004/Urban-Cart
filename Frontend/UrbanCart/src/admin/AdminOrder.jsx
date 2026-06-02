@@ -136,25 +136,83 @@ const AdminOrder = () => {
               >
                 ✖️
               </button>
+              <h3 className="order-section-title">
+                Customer Information
+              </h3>
 
-              <h2>
-                Order Details
-              </h2>
+              <p><strong>Name:</strong> {selectedOrder.shippingAddress?.fullName}</p>
+
+              <p><strong>Phone:</strong> {selectedOrder.shippingAddress?.phone}</p>
+
+              <hr />
+
+              <h3>Order Summary</h3>
+
+              <p><strong>Total:</strong> ₹{selectedOrder.totalAmount}</p>
+
+              <p><strong>Payment:</strong> {selectedOrder.paymentMethod}</p>
 
               <p>
-                Customer:
-                {selectedOrder.shippingAddress?.fullName}
+                <strong>Status:</strong>
+
+                <span
+                  className={`status-badge ${selectedOrder.orderStatus.toLowerCase()}`}
+                >
+                  {selectedOrder.orderStatus}
+                </span>
               </p>
 
-              <p>
-                Phone:
-                {selectedOrder.shippingAddress?.phone}
-              </p>
+              <h3>Products</h3>
 
-              <p>
-                Total:
-                ₹{selectedOrder.totalAmount}
-              </p>
+              <div className="order-products">
+
+                {
+                  selectedOrder?.items?.map((item) => (
+
+                    <div
+                      key={item._id}
+                      className="order-product"
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                      />
+
+                      <div>
+
+                        <h4>{item.name}</h4>
+
+                        <p>
+                          Qty: {item.quantity}
+                        </p>
+
+                        <p>
+                          ₹{item.price}
+                        </p>
+
+                      </div>
+
+                    </div>
+                  ))
+                }
+                <div className="address-card">
+
+                  <h3>Shipping Address</h3>
+
+                  <p>{selectedOrder.shippingAddress?.addressLine1}</p>
+
+                  <p>{selectedOrder.shippingAddress?.addressLine2}</p>
+
+                  <p>
+                    {selectedOrder.shippingAddress?.city},
+                    {selectedOrder.shippingAddress?.state}
+                  </p>
+
+                  <p>{selectedOrder.shippingAddress?.country}</p>
+
+                </div>
+
+              </div>
 
             </div>
 
