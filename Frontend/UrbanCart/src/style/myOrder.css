@@ -1,0 +1,106 @@
+.my-orders-container {
+  max-width: 950px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.my-orders-container h2 {
+  font-family: var(--heading-font);
+  color: var(--gold);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.order-card {
+  background: var(--charcoal);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.order-card-body strong {
+  color: var(--champagne);
+  margin-right: 6px;
+}   
+
+.order-card-header h4 {
+  color: var(--champagne);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.order-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.order-card-body p {
+ 
+    color: #d8d8d8;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.order-card-footer {
+  margin-top: 20px;
+}
+
+.order-card-footer button {
+  background: var(--gold);
+  color: var(--black);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.order-card-footer button:hover {
+  background: var(--champagne);
+}
+
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: #ffb020;
+  color: #111;
+}
+
+.status-badge.processing {
+  background: #4da3ff;
+  color: #fff;
+}
+
+.status-badge.shipped {
+  background: #8b5cf6;
+  color: #fff;
+}
+
+.status-badge.delivered {
+  background: #22c55e;
+  color: #fff;
+}
+
+.status-badge.cancelled {
+  background: #ef4444;
+  color: #fff;
+}

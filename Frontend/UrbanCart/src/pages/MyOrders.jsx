@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyOrders, getOrderById } from "../redux/thunks/orderThunks";
 
+import "../style/myOrder.css"
+
 const MyOrders = () => {
 
     const dispatch = useDispatch()
@@ -24,49 +26,57 @@ const MyOrders = () => {
             <div className="my-orders-container">
                 <h2>My Orders</h2>
 
-                {loading && <p>Loading...</p>}
-
-                {error && <p>{error}</p>}
+              
 
                 {!loading && myOrders.length === 0 && (
                     <p>No Orders Found</p>
                 )}
 
                 {myOrders?.map((order) => (
-                    <div
-                        key={order._id}
-                        className="order-card"
-                    >
-                        <h4>
-                            Order #{order._id.slice(-6)}
-                        </h4>
+                    <div key={order._id} className="order-card">
 
-                        <p>
-                            Total: ₹{order.totalAmount}
-                        </p>
+                        <div className="order-card-header">
+                            <h4>Order #{order._id.slice(-6)}</h4>
 
-                        <p>
-                            Status: {order.orderStatus}
-                        </p>
+                            <span
+                                className={`status-badge ${order.orderStatus.toLowerCase()}`}
+                            >
+                                {order.orderStatus}
+                            </span>
+                        </div>
 
-                        <p>
-                            Payment: {order.paymentMethod}
-                        </p>
+                        <div className="order-card-body">
 
-                        <p>
-                            Date:
-                            {" "}
-                            {new Date(order.createdAt)
-                                .toLocaleDateString()}
-                        </p>
+                            <p>
+                                <strong>Total:</strong>
+                                ₹{order.totalAmount}
+                            </p>
 
-                        <button
-                            onClick={() => {
-                                dispatch(getOrderById(order._id))
-                                setShowModal(true)
-                            }}>
-                            View Details
-                        </button>
+                            <p>
+                                <strong>Payment:</strong>
+                                {order.paymentMethod}
+                            </p>
+
+                            <p>
+                                <strong>Date:</strong>
+                                {new Date(order.createdAt).toLocaleDateString()}
+                            </p>
+
+                        </div>
+
+                        <div className="order-card-footer">
+
+                            <button
+                                onClick={() => {
+                                    dispatch(getOrderById(order._id));
+                                    setShowModal(true);
+                                }}
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
                     </div>
                 ))}
             </div>
