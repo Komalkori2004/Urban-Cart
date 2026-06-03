@@ -26,7 +26,7 @@ const MyOrders = () => {
             <div className="my-orders-container">
                 <h2>My Orders</h2>
 
-              
+
 
                 {!loading && myOrders.length === 0 && (
                     <p>No Orders Found</p>
@@ -84,104 +84,111 @@ const MyOrders = () => {
             {
                 showModal && selectedOrder && (
                     <div className="order-modal">
+                        <div className="order-modal-content">
 
-                        <button
-                            onClick={() => setShowModal(false)}
-                        >
-                            Close
-                        </button>
-                        <h3>Customer Information</h3>
 
-                        <p>
-                            <strong>Name:</strong>{" "}
-                            {selectedOrder.shippingAddress?.fullName}
-                        </p>
+                            <button
+                                className="close-modal"
 
-                        <p>
-                            <strong>Phone:</strong>{" "}
-                            {selectedOrder.shippingAddress?.phone}
-                        </p>
+                                onClick={() => setShowModal(false)}
+                            >
+                                ✖️
+                            </button>
+                            <h3>Customer Information</h3>
 
-                        <hr />
+                            <p>
+                                <strong>Name:</strong>{" "}
+                                {selectedOrder.shippingAddress?.fullName}
+                            </p>
 
-                        <h3>Shipping Address</h3>
+                            <p>
+                                <strong>Phone:</strong>{" "}
+                                {selectedOrder.shippingAddress?.phone}
+                            </p>
 
-                        <p>
-                            {selectedOrder.shippingAddress?.addressLine1}
-                        </p>
+                            <hr />
 
-                        <p>
-                            {selectedOrder.shippingAddress?.addressLine2}
-                        </p>
+                            <h3>Shipping Address</h3>
 
-                        <p>
-                            {selectedOrder.shippingAddress?.city},
-                            {" "}
-                            {selectedOrder.shippingAddress?.state}
-                        </p>
+                            <p>
+                                {selectedOrder.shippingAddress?.addressLine1}
+                            </p>
 
-                        <p>
-                            {selectedOrder.shippingAddress?.pincode}
-                        </p>
+                            <p>
+                                {selectedOrder.shippingAddress?.addressLine2}
+                            </p>
 
-                        <p>
-                            {selectedOrder.shippingAddress?.country}
-                        </p>
+                            <p>
+                                {selectedOrder.shippingAddress?.city},
+                                {" "}
+                                {selectedOrder.shippingAddress?.state}
+                            </p>
 
-                        <hr />
-                        <h3>Products</h3>
+                            <p>
+                                {selectedOrder.shippingAddress?.pincode}
+                            </p>
 
-                        {
-                            selectedOrder?.items?.map((item) => (
+                            <p>
+                                {selectedOrder.shippingAddress?.country}
+                            </p>
 
-                                <div
-                                    key={item._id}
-                                    className="order-product"
-                                >
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        width="80"
-                                    />
+                            <hr />
+                            <h3>Products</h3>
 
-                                    <div>
-                                        <h4>{item.name}</h4>
+                            {
+                                selectedOrder?.items?.map((item) => (
 
-                                        <p>
-                                            Qty: {item.quantity}
-                                        </p>
+                                    <div
+                                        key={item._id}
+                                        className="order-product"
+                                    >
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            width="80"
+                                        />
 
-                                        <p>
-                                            ₹{item.price}
-                                        </p>
+                                        <div>
+                                            <h4>{item.name}</h4>
+
+                                            <p>
+                                                Qty: {item.quantity}
+                                            </p>
+
+                                            <p>
+                                                ₹{item.price}
+                                            </p>
+                                        </div>
+
                                     </div>
+                                ))
+                            }
+                            <h3>Order Summary</h3>
 
-                                </div>
-                            ))
-                        }
+                            <div className="order-summary">
 
-                        <h3>Order Details</h3>
+                                <p>
+                                    <strong>Order ID:</strong>
+                                    {selectedOrder._id.slice(-8)}
+                                </p>
 
-                        <p>
-                            Order ID:
-                            {selectedOrder._id}
-                        </p>
+                                <p>
+                                    <strong>Total Amount:</strong>
+                                    ₹{selectedOrder.totalAmount}
+                                </p>
 
-                        <p>
-                            Total:
-                            ₹{selectedOrder.totalAmount}
-                        </p>
+                                <p>
+                                    <strong>Status:</strong>
+                                    {selectedOrder.orderStatus}
+                                </p>
 
-                        <p>
-                            Status:
-                            {selectedOrder.orderStatus}
-                        </p>
+                                <p>
+                                    <strong>Payment Method:</strong>
+                                    {selectedOrder.paymentMethod}
+                                </p>
 
-                        <p>
-                            Payment:
-                            {selectedOrder.paymentMethod}
-                        </p>
-
+                            </div>
+                        </div>
                     </div>
                 )
             }
