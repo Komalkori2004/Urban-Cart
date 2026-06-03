@@ -27,6 +27,8 @@ import HomePage from '../pages/home'
 
 import AdminOrder from '../admin/AdminOrder'
 
+import MyOrders from '../pages/MyOrders'
+
 
 
 
@@ -76,6 +78,15 @@ const AppRouter = () => {
                         element={
                             <ProtectRoute>
                                 <CartPage />
+                            </ProtectRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/my-orders"
+                        element={
+                            <ProtectRoute>
+                                <MyOrders />
                             </ProtectRoute>
                         }
                     />

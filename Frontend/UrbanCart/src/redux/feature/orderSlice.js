@@ -1,11 +1,12 @@
 
 
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllOrders, updateOrderStatus, getOrderById } from "../thunks/orderThunks"
+import { getAllOrders, updateOrderStatus, getOrderById, getMyOrders } from "../thunks/orderThunks"
 
 
 const initialState = {
-    order: [],
+    orders: [],      // Admin Orders
+    myOrders: [],    // User Orders
     loading: false,
     error: null,
     selectedOrder: null,
@@ -27,7 +28,7 @@ const orderSlice = createSlice({
             })
             .addCase(getAllOrders.fulfilled, (state, action) => {
                 state.loading = false,
-                    state.order = action.payload
+                    state.orders = action.payload
             })
             .addCase(getAllOrders.rejected, (state, action) => {
                 state.loading = false,
@@ -42,13 +43,11 @@ const orderSlice = createSlice({
                 state.loading = false;
                 const updatedOrder =
                     action.payload;
-
-                state.order =
-                    state.order.map((item) =>
-                        item._id === updatedOrder._id
-                            ? updatedOrder
-                            : item
-                    );
+                state.orders = state.orders.map((item) =>
+                    item._id === updatedOrder._id
+                        ? updatedOrder
+                        : item
+                );
 
             })
             .addCase(updateOrderStatus.rejected, (state, action) => {
@@ -67,6 +66,19 @@ const orderSlice = createSlice({
 
             })
             .addCase(getOrderById.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
+            })
+
+            .addCase(getMyOrders.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(getMyOrders.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.myOrders = action.payload;
+            })
+            .addCase(getMyOrders.rejected, (state, action) => {
                 state.loading = false,
                     state.error = action.payload
             })

@@ -13,12 +13,12 @@ import "./style/admin.css"
 const AdminOrder = () => {
   const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
-  const { order, selectedOrder, loading, error } = useSelector((state) => state.order)
+  const { orders, selectedOrder, loading, error } = useSelector((state) => state.order)
   console.log("Selected Order:", selectedOrder)
 
 
   useEffect(() => {
-    console.log("Fetching orders...", order)
+    console.log("Fetching orders...", orders)
 
     dispatch(getAllOrders())
   }, [dispatch])
@@ -52,7 +52,7 @@ const AdminOrder = () => {
             <tbody>
 
               {
-                order?.map((item) => (
+                orders?.map((item) => (
 
                   <tr key={item._id}>
 
