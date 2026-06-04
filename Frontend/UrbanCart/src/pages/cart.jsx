@@ -1,5 +1,6 @@
 import React from 'react'
 
+import {useNavigate} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 import { getCart, updateCart, removeCart } from '../redux/thunks/cartThunks'
@@ -10,6 +11,7 @@ import "../style/cart.css"
 
 
 const CartPage = () => {
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     const { items, loading, error } = useSelector((state) => state.cart)
@@ -202,6 +204,8 @@ const CartPage = () => {
 
                         <button
                             className="checkout-btn"
+                            onClick={() => navigate("/checkout")}
+
                         >
                             Proceed To Checkout
                         </button>

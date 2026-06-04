@@ -1,7 +1,7 @@
 
 
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllOrders, updateOrderStatus, getOrderById, getMyOrders, cancleOrder } from "../thunks/orderThunks"
+import { getAllOrders, updateOrderStatus, getOrderById, getMyOrders, cancleOrder,placeOrder } from "../thunks/orderThunks"
 
 
 const initialState = {
@@ -107,13 +107,21 @@ const orderSlice = createSlice({
                 state.error = action.payload
             })
 
+            .addCase(placeOrder.pending,(state)=>{
+                state.loading=true
+                state.error=null
+            })
 
-
-
+            .addCase(placeOrder.fulfilled,(state,action)=>{
+                state.loading=false
+                state.selectedOrder=action.payload
+            })
+            .addCase(placeOrder.rejected,(state,action)=>{
+                state.loading=false
+                state.error=action.payload
+            })
 
     }
-
-
 
 
 })

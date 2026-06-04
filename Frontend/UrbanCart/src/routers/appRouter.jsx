@@ -29,6 +29,8 @@ import AdminOrder from '../admin/AdminOrder'
 
 import MyOrders from '../pages/MyOrders'
 
+import CheckoutPage from '../pages/CheckoutPage'
+
 
 
 
@@ -87,6 +89,15 @@ const AppRouter = () => {
                         element={
                             <ProtectRoute>
                                 <MyOrders />
+                            </ProtectRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/checkout"
+                        element={
+                            <ProtectRoute>
+                                <CheckoutPage />
                             </ProtectRoute>
                         }
                     />

@@ -132,3 +132,27 @@ export const cancleOrder = createAsyncThunk(
         }
     }
 )
+
+ 
+export  const placeOrder = createAsyncThunk(
+    "order/placeOrder",
+
+
+    async (orderData, thunkAPI) => {
+
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { data } = await api.post("/order", orderData, config)
+            return data.data
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+
+    }
+)
