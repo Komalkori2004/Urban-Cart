@@ -1,7 +1,7 @@
 
 
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllOrders, updateOrderStatus, getOrderById, getMyOrders } from "../thunks/orderThunks"
+import { getAllOrders, updateOrderStatus, getOrderById, getMyOrders, cancleOrder } from "../thunks/orderThunks"
 
 
 const initialState = {
@@ -83,6 +83,29 @@ const orderSlice = createSlice({
                     state.error = action.payload
             })
 
+            .addCase(cancleOrder.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+            .addCase(cancleOrder.fulfilled, (state, action) => {
+                state.loading = false
+                const updatedOrder = action.payload
+                state.myOrders = state.myOrders.map((item) =>
+                    item._id === updatedOrder._id
+                        ? updatedOrder
+                        : item
+                )
+                if (
+                    state.selectedOrder &&
+                    state.selectedOrder._id === updatedOrder._id
+                ) {
+                    state.selectedOrder = updatedOrder;
+                }
+            })
+            .addCase(cancleOrder.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
 
 
 

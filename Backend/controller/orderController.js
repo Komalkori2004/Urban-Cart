@@ -146,6 +146,17 @@ const cancleOrder = asyncHandler(async (req, res, next) => {
         return next(new ErrorHandler(404, "Order not found "))
 
     }
+    if (
+        order.user.toString() !== req.user.id &&
+        req.user.role !== "admin"
+    ) {
+        return next(
+            new ErrorHandler(
+                401,
+                "Not authorized to cancel this order"
+            )
+        );
+    }
 
     if (order.orderStatus === "Cancelled") {
         return next(new ErrorHandler(400, "Order already cancelled"))
@@ -173,13 +184,13 @@ const cancleOrder = asyncHandler(async (req, res, next) => {
 
 // get all orders for admin
 
-const getAllOrders=asyncHandler(async(req,res,next)=>{
-    const orders=await Order.find().sort({createdAt:-1})
+const getAllOrders = asyncHandler(async (req, res, next) => {
+    const orders = await Order.find().sort({ createdAt: -1 })
 
     res.status(200).json({
-        success:true,
-        count:orders.length,
-        data:orders
+        success: true,
+        count: orders.length,
+        data: orders
     })
 })
 

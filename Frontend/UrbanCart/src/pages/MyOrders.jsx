@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyOrders, getOrderById } from "../redux/thunks/orderThunks";
+import { getMyOrders, getOrderById , cancleOrder} from "../redux/thunks/orderThunks";
 
 import "../style/myOrder.css"
 
@@ -188,6 +188,24 @@ const MyOrders = () => {
                                 </p>
 
                             </div>
+                            {
+                                selectedOrder?.orderStatus !== "Delivered" &&
+                                selectedOrder?.orderStatus !== "Cancelled" && (
+
+                                    <button
+                                        className="cancel-order-btn"
+                                        onClick={
+                                            ()=>{
+                                                dispatch(cancleOrder(selectedOrder._id))
+                                            }
+                                        }
+                                    
+                                    >
+                                        Cancel Order
+                                    </button>
+
+                                )
+                            }
                         </div>
                     </div>
                 )

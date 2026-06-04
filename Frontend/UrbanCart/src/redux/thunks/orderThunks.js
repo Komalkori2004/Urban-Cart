@@ -55,51 +55,80 @@ export const updateOrderStatus = createAsyncThunk(
 )
 
 
-export const getOrderById=createAsyncThunk(
+export const getOrderById = createAsyncThunk(
     "order/getOrderById",
 
-    async(id,thunkAPI)=>{
-        try{
+    async (id, thunkAPI) => {
+        try {
 
             const token = thunkAPI.getState().auth.token
             const config = {
-                headers: {  
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const {data}=await api.get(`/order/${id}`,config)
+            const { data } = await api.get(`/order/${id}`, config)
 
             return data.data
 
         }
-        catch(error){
+        catch (error) {
             return thunkAPI.rejectWithValue(error.response.data)
         }
     }
 )
 
 
-export const getMyOrders=createAsyncThunk(
+export const getMyOrders = createAsyncThunk(
     "order/getMyOrders",
-    async(_,thunkAPI)=>{
+    async (_, thunkAPI) => {
 
-        try{
-             const token = thunkAPI.getState().auth.token
+        try {
+            const token = thunkAPI.getState().auth.token
             const config = {
-                headers: {  
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             }
-             const { data } = await api.get("/order/myorders", config);
+            const { data } = await api.get("/order/myorders", config);
 
             return data.data
 
 
         }
-        catch(error){
+        catch (error) {
             return thunkAPI.rejectWithValue(error.response.data)
 
         }
     }
 )
 
+
+export const cancleOrder = createAsyncThunk(
+    "order/cancleOrder",
+
+    async (id, thunkAPI) => {
+
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { data } =
+                await api.put(
+                    `/order/${id}/cancel`,
+                    {},
+                    config
+                );
+
+
+            return data.data
+
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
