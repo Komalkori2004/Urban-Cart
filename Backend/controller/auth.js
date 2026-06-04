@@ -343,9 +343,19 @@ const resetPassword =
 // Get Profile
 const getProfile = asyncHandler(async (req, res, next) => {
 
+  const existingUser = await user
+    .findById(req.user.id)
+    .select("-password");
+
+  if (!existingUser) {
+    return next(
+      new ErrorHandler(404, "User not found")
+    );
+  }
+
   res.status(200).json({
     success: true,
-    user: req.user,
+    user: existingUser,
   });
 
 });
