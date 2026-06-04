@@ -1,47 +1,38 @@
 
 
 import React, { useEffect, useState } from 'react'
-import api from '../services/api'
+import { getProfile } from '../redux/thunks/authThunks'
+import { useDispatch, useSelector } from 'react-redux'
+
 
 
 const UserProfile = () => {
 
-    const [user, setuser] = useState(null)
+  const dispatch = useDispatch()
+  const { user,loading,error } = useSelector(state => state.auth)
 
-    useEffect(() => {
+  useEffect(() => {
+    dispatch(getProfile())
+  }, [dispatch])
 
-        const getuser = async () => {
-
-            try {
-                const { data } = await api.get("/auth/profile")
-                setuser(data.user)
-
-
-            } catch (error) {
-                console.log(error.response.data.message)
-            }
-
-        }
-        getuser()
-
-
-    }, [])
-
-
-
+  console.log("user ",user)
     return (
         <>
 
+<div>
+  <h1>User Profile</h1>
 
-            <div>
+  <h3>Name : {user?.name}</h3>
 
-                <h1>User Profile</h1>
+  <h3>Email : {user?.email}</h3>
 
-                <h2>{user?.id}</h2>
+  <h3>Role : {user?.role}</h3>
 
-                <h2>{user?.role}</h2>
-
-            </div>
+  <h3>
+    Verified :
+    {user?.isVerified ? " Yes" : " No"}
+  </h3>
+</div>
 
         </>
     )

@@ -103,3 +103,17 @@ export const resetPassword=createAsyncThunk(
         }
     }
 )
+
+
+export const getProfile=createAsyncThunk(
+    "auth/getProfile",
+    async (_,thunkAPI)=>{
+        try{
+            const {data}=await api.get("/auth/profile")
+            return data
+        }
+        catch(error){
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
+    }
+)
