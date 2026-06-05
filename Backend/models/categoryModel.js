@@ -13,7 +13,16 @@ const categorySchema=new mongoose.Schema({
         required: true,
         unique: true,
         lowercase: true
+    },
+        image: {
+        public_id: {
+            type: String
+        },
+        url: {
+            type: String
+        }
     }
+
 },{timestamps:true})
 
 
