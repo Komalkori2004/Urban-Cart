@@ -82,9 +82,17 @@ const Product = () => {
 
         <div>
 
-            {/* <h2>
-                all Product
-            </h2> */}
+            <div className="shop-header">
+
+                <p className="shop-subtitle">
+                    PREMIUM COLLECTION
+                </p>
+
+                <h1 className="shop-title">
+                    Discover Luxury Products
+                </h1>
+
+            </div>
 
 
 
@@ -125,11 +133,16 @@ const Product = () => {
 
             </div>
 
-            
+
 
             <div className="category-buttons">
 
                 <button
+                    className={
+                        selectedCategory === "All"
+                            ? "active-category"
+                            : ""
+                    }
                     onClick={() =>
                         setSelectedCategory("All")
                     }
@@ -141,22 +154,26 @@ const Product = () => {
                     categories.map((category) => (
 
                         <button
-
                             key={category._id}
-
+                            className={
+                                selectedCategory === category.name
+                                    ? "active-category"
+                                    : ""
+                            }
                             onClick={() =>
-                                setSelectedCategory(
-                                    category.name
-                                )
+                                setSelectedCategory(category.name)
                             }
                         >
                             {category.name}
                         </button>
-
+                        
                     ))
                 }
 
             </div>
+            <p className="product-count">
+    {ShortedProducts.length} Products Found
+</p>
 
             <div className="product-container">
 
@@ -196,10 +213,10 @@ const Product = () => {
                                         </span>
 
 
-
+                                        {/* 
                                         <span className="old-price">
                                             ₹ 149999
-                                        </span>
+                                        </span> */}
 
                                     </div>
 
