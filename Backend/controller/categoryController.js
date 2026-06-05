@@ -12,7 +12,7 @@ const uploadToCloudinary = async (fileBuffer) => {
     return new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
             {
-               folder: "urbancart_categories"
+                folder: "urbancart_categories"
             },
             (error, result) => {
                 if (error) {
@@ -49,9 +49,26 @@ const createCategory = asyncHandler(async (req, res, next) => {
         )
     }
 
+    let categoryImage = {}
+
+    if (req.file) {
+
+        const result = await uploadToCloudinary(
+            req.file.buffer
+        )
+
+        categoryImage = {
+            public_id: result.public_id,
+            url: result.secure_url
+        }
+    }
+
+
+
     const category = await categoryModel.create({
         name,
-        slug: slugify(name)
+        slug: slugify(name),
+            image: categoryImage
     })
 
     res.status(200).json({
