@@ -50,7 +50,7 @@ const CategoryCarousel = () => {
             modules={[Autoplay]}
             spaceBetween={30}
             slidesPerView={5}
-            loop={true}
+            loop={false}
             speed={1200}
             autoplay={{
               delay: 2500,
@@ -84,21 +84,21 @@ const CategoryCarousel = () => {
                   }
                 >
                   <div className="category-image-wrapper">
-                    {/* <img
+                    <img
                       src={category.image?.url}
                       alt={category.name}
                       className="category-image"
-                    /> */}
+                    />
 
 
-                    <img
+                    {/* <img
   src={
     category?.image?.url ||
     "https://via.placeholder.com/300x300?text=Category"
   }
   alt={category.name}
   className="category-image"
-/>
+/> */}
                   </div>
 
                   <h3 className="category-name">

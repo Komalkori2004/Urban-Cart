@@ -30,6 +30,7 @@ import AdminOrder from '../admin/AdminOrder'
 import MyOrders from '../pages/MyOrders'
 
 import CheckoutPage from '../pages/CheckoutPage'
+import CreateCategory from '../admin/CreateCategory'
 
 
 
@@ -133,6 +134,10 @@ const AppRouter = () => {
                         <Route
                             path="orders"
                             element={<AdminOrder />}
+                        />
+                        <Route
+                        path='add-Category'
+                        element={<CreateCategory />}
                         />
                     </Route>
 

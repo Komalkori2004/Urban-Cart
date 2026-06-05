@@ -30,7 +30,7 @@ export const createCategory = createAsyncThunk(
             const token = thunkAPI.getState().auth.token
 
             const config = {
-                Headers: {
+                headers: {
 
                     Authorization: `Bearer ${token}`
                 }

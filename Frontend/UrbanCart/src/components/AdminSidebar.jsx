@@ -29,6 +29,12 @@ const AdminSidebar = () => {
                     >
                         add-Product
                     </NavLink>
+                          <NavLink to="add-Category"
+                        className={({ isActive }) =>
+                            isActive ? "active-link" : ""
+                        }>
+                        Add-Category
+                    </NavLink>
 
                     <NavLink
                         to="/admin/all-product"
