@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 
-import {  useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getAllproduct } from '../redux/thunks/productThunks'
+import { useNavigate } from 'react-router-dom'
 import {
     FaHeart,
     FaShoppingBag
@@ -9,9 +10,10 @@ import {
 
     from "react-icons/fa"
 
-    import "./hero.css"
+import "./hero.css"
 const FeatureProduct = () => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const { products = [] } = useSelector((state) => state.products)
     useEffect(() => {
@@ -81,144 +83,44 @@ const FeatureProduct = () => {
 
                                 <div
                                     key={product._id}
-
-                                    className=
-                                    "product-card"
+                                    className="featured-card"
                                 >
 
-                                    <div
-                                        className=
-                                        "product-badge"
-                                    >
-
-                                        BEST SELLER
-
-                                    </div>
-
-
-
-                                    <div
-                                        className=
-                                        "wishlist-icon"
-                                    >
-
-                                        <FaHeart />
-
-                                    </div>
-
-
-
-                                    <div
-                                        className=
-                                        "product-image"
-                                    >
+                                    <div className="featured-image">
 
                                         <img
-
                                             src={product.images?.[0]?.url}
-
-                                            alt=
-                                            {product.name}
-
+                                            alt={product.name}
                                         />
 
                                     </div>
 
+                                    <div className="featured-content">
 
-
-                                    <div
-                                        className=
-                                        "product-info"
-                                    >
+                                        <p className="featured-category">
+                                            Luxury Collection
+                                        </p>
 
                                         <h3>
-
                                             {product.name}
-
                                         </h3>
 
-
-
-                                        <p
-                                            className=
-                                            "product-category"
-                                        >
-
-                                            Luxury Collection
-
+                                        <p className="featured-description">
+                                            Crafted for timeless elegance
+                                            and modern sophistication.
                                         </p>
 
+                                        <div className="featured-footer">
 
-
-                                        <p
-                                            className=
-                                            "product-description"
-                                        >
-
-                                            Crafted with
-                                            premium quality
-                                            and timeless
-                                            elegance for
-                                            modern lifestyle.
-
-                                        </p>
-
-
-
-                                        <div
-                                            className=
-                                            "product-features"
-                                        >
-
-                                            <span>
-
-                                                Premium
-
-                                            </span>
-
-
-
-                                            <span>
-
-                                                Trending
-
-                                            </span>
-
-
-
-                                            <span>
-
-                                                Luxury
-
-                                            </span>
-
-                                        </div>
-
-
-
-                                        <div
-                                            className=
-                                            "product-footer"
-                                        >
-
-                                            <h2>
-
-                                                ₹
-                                                {product.price}
-
-                                            </h2>
-
-
+                                            {/* <h2>
+                                                ₹{product.price}
+                                            </h2> */}
 
                                             <button
-                                                className=
-                                                "cart-btn"
+                                                className="explore-btn"
+                                                onClick={() => navigate("/products")}
                                             >
-
-                                                <FaShoppingBag />
-
-                                                Add To Cart
-
+                                                Explore Product →
                                             </button>
 
                                         </div>

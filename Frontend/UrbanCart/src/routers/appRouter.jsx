@@ -51,7 +51,7 @@ const AppRouter = () => {
                     {/* PUBLIC ROUTES */}
                       <Route path="/" element={<HomePage />}/>
 
-                    <Route path="products" element={<Product />} />
+                    <Route path="/products" element={<Product />} />
                     <Route path="/product/:slug" element={<SingleProduct />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
