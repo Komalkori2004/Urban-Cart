@@ -3,9 +3,33 @@ const asyncHandler = require("../middleware/asyncHandler");
 const ErrorHandler = require("../utils/errorHandler");
 const slugify = require("slugify")
 const categoryModel = require("../models/categoryModel")
+const streamifier = require("streamifier")
+const cloudinary = require("../config/cloudinary")
 
 
 
+const uploadToCloudinary = async (fileBuffer) => {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            {
+               folder: "urbancart_categories"
+            },
+            (error, result) => {
+                if (error) {
+                    reject(error)
+                }
+                else {
+                    resolve(result)
+                }
+            }
+
+
+        )
+        streamifier.createReadStream(fileBuffer).pipe(stream)
+
+    })
+
+}
 
 const createCategory = asyncHandler(async (req, res, next) => {
 
