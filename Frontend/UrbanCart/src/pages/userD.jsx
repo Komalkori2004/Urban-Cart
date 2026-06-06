@@ -18,6 +18,7 @@ const UserProfile = () => {
   console.log("user ", user)
   return (
     <>
+    <div className="container">
 
       <div className="profile-container">
 
@@ -70,6 +71,7 @@ const UserProfile = () => {
 
         </div>
 
+      </div>
       </div>
     </>
   )
