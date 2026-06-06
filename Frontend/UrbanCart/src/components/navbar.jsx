@@ -1,12 +1,14 @@
 import './style/navbar.css'
 
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import { HiMenu, HiX } from "react-icons/hi";
 
 const NavBar = () => {
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const location = useLocation()
   if (location.pathname.includes("/admin")) {
@@ -21,52 +23,96 @@ const NavBar = () => {
   return (
     <>
 
-      <nav className="navbar">
+  <nav className="navbar">
 
-        <div className="nav-links">
+  <div className="nav-left">
 
-          <Link to="/">
-            Home
-          </Link>
+    <Link to="/">Home</Link>
 
-          <Link to="/products">
-            Shop
-          </Link>
+    <Link to="/products">Shop</Link>
 
+  </div>
 
+  <div className="nav-logo">
 
-          <div className="nav-logo">
+    <Link to="/">
+      <img
+        src="/logo/nav-logo.png"
+        alt="UrbanCart"
+      />
+    </Link>
 
-            <Link to="/">
+  </div>
 
-              <img
-                src="/logo/nav-logo.png"
-                alt="UrbanCart"
-              />
+  <div className="nav-right">
 
-            </Link>
+    <Link to="/wishlist">
+      Wishlist
+    </Link>
 
-          </div>
+    <Link to="/cart">
+      Cart ({cartCount})
+    </Link>
 
+    <Link to="/profile">
+      Profile
+    </Link>
 
+  </div>
 
-          <Link to="/wishlist">
-            Wishlist
-          </Link>
+  <div
+    className="menu-toggle"
+    onClick={() => setMenuOpen(!menuOpen)}
+  >
+    {
+      menuOpen
+        ? <HiX />
+        : <HiMenu />
+    }
+  </div>
 
-          <Link to="/cart">
-            Cart ({cartCount})
-          </Link>
+  <div
+    className={`mobile-menu ${menuOpen ? "active" : ""}`}
+  >
 
-          <Link to="/profile">
-            Profile
-          </Link>
+    <Link
+      to="/"
+      onClick={() => setMenuOpen(false)}
+    >
+      Home
+    </Link>
 
-        </div>
+    <Link
+      to="/products"
+      onClick={() => setMenuOpen(false)}
+    >
+      Shop
+    </Link>
 
-      </nav>
+    <Link
+      to="/wishlist"
+      onClick={() => setMenuOpen(false)}
+    >
+      Wishlist
+    </Link>
 
+    <Link
+      to="/cart"
+      onClick={() => setMenuOpen(false)}
+    >
+      Cart ({cartCount})
+    </Link>
 
+    <Link
+      to="/profile"
+      onClick={() => setMenuOpen(false)}
+    >
+      Profile
+    </Link>
+
+  </div>
+
+</nav>
 
 
     </>

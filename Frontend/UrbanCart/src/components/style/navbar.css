@@ -1,10 +1,15 @@
 .navbar{
 
    position:sticky;
-
    top:0;
-
    z-index:999;
+
+   display:grid;
+
+   grid-template-columns:
+   1fr auto 1fr;
+
+   align-items:center;
 
    padding:0.5rem 3rem;
 
@@ -15,21 +20,34 @@
    blur(12px);
 
    border-bottom:
-   1px solid
-   rgba(212,175,55,0.15);
+   1px solid rgba(212,175,55,0.15);
 }
 
-
-
-.nav-links{
+.nav-left,
+.nav-right{
 
    display:flex;
 
    align-items:center;
 
-   justify-content:center;
-
    gap:2rem;
+}
+
+.nav-left{
+   justify-content:flex-end;
+}
+
+.nav-right{
+   justify-content:flex-start;
+}
+
+.nav-logo{
+   padding:0 3rem;
+}
+
+.menu-toggle,
+.mobile-menu{
+   display:none;
 }
 
 
@@ -59,24 +77,24 @@
 
 
 
-.nav-links a{
+.nav-left a,
+.nav-right a,
+.mobile-menu a{
 
    position:relative;
 
-   color:
-   var(--white);
+   color:var(--white);
 
    font-size:0.95rem;
 
    letter-spacing:1px;
 
-   transition:
-   var(--transition);
+   transition:var(--transition);
 }
 
-
-
-.nav-links a::after{
+.nav-left a::after,
+.nav-right a::after,
+.mobile-menu a::after{
 
    content:"";
 
@@ -86,28 +104,98 @@
 
    bottom:-6px;
 
-   width:0%;
+   width:0;
 
    height:1px;
 
-   background:
-   var(--gold);
+   background:var(--gold);
 
-   transition:
-   var(--transition);
+   transition:var(--transition);
 }
 
+.nav-left a:hover,
+.nav-right a:hover,
+.mobile-menu a:hover{
 
-
-.nav-links a:hover{
-
-   color:
-   var(--gold);
+   color:var(--gold);
 }
 
-
-
-.nav-links a:hover::after{
+.nav-left a:hover::after,
+.nav-right a:hover::after,
+.mobile-menu a:hover::after{
 
    width:100%;
+}
+
+
+
+@media(max-width:768px){
+
+   .navbar{
+
+      display:flex;
+
+      justify-content:space-between;
+
+      align-items:center;
+
+      padding:1rem 1.5rem;
+
+      position:relative;
+   }
+
+   .nav-left,
+   .nav-right{
+
+      display:none;
+   }
+
+   .menu-toggle{
+
+      display:block;
+
+      color:var(--gold);
+
+      font-size:2rem;
+
+      cursor:pointer;
+   }
+
+   .mobile-menu{
+
+      display:none;
+   }
+
+   .mobile-menu.active{
+
+      display:flex;
+
+      flex-direction:column;
+
+      align-items:center;
+
+      gap:1.5rem;
+
+      position:absolute;
+
+      top:100%;
+
+      left:0;
+
+      width:100%;
+
+      background:#0d0d0d;
+
+      padding:2rem 0;
+
+      border-bottom:
+      1px solid rgba(212,175,55,.15);
+
+      z-index:1000;
+   }
+
+   .nav-logo img{
+
+      width:110px;
+   }
 }
