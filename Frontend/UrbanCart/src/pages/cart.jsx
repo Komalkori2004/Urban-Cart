@@ -59,7 +59,7 @@ const CartPage = () => {
     const grandTotal = subTotal + shipping
     return (
         <>
-
+<div className="container">
 
             <div className="cart-container">
 
@@ -212,6 +212,7 @@ const CartPage = () => {
 
                     </div>
 
+                </div>
                 </div>
 
             </div>

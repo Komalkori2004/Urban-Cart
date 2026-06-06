@@ -80,185 +80,188 @@ const Product = () => {
 
     return (<>
 
-        <div>
+        <div className="shop-page">
 
-            <div className="shop-header">
+            <div className="container">
 
-                <p className="shop-subtitle">
-                    PREMIUM COLLECTION
+                <div className="shop-header">
+
+                    <p className="shop-subtitle">
+                        PREMIUM COLLECTION
+                    </p>
+
+                    <h1 className="shop-title">
+                        Discover Luxury Products
+                    </h1>
+
+                </div>
+
+
+
+                <div className="filter-section">
+
+                    <input
+                        type="text"
+                        placeholder="Search Product"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="search-input"
+                    />
+
+
+
+                    <select
+                        value={SortOption}
+                        onChange={(e) =>
+                            setSortOption(e.target.value)
+                        }
+
+                        className="sort-select"
+                    >
+
+                        <option value="">
+                            Sort Product
+                        </option>
+
+                        <option value="lowToHigh">
+                            Price: Low to High
+                        </option>
+
+                        <option value="highToLow">
+                            Price: High to Low
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div className="category-buttons">
+
+                    <button
+                        className={
+                            selectedCategory === "All"
+                                ? "active-category"
+                                : ""
+                        }
+                        onClick={() =>
+                            setSelectedCategory("All")
+                        }
+                    >
+                        All
+                    </button>
+
+                    {
+                        categories.map((category) => (
+
+                            <button
+                                key={category._id}
+                                className={
+                                    selectedCategory === category.name
+                                        ? "active-category"
+                                        : ""
+                                }
+                                onClick={() =>
+                                    setSelectedCategory(category.name)
+                                }
+                            >
+                                {category.name}
+                            </button>
+
+                        ))
+                    }
+
+                </div>
+                <p className="product-count">
+                    {ShortedProducts.length} Products Found
                 </p>
 
-                <h1 className="shop-title">
-                    Discover Luxury Products
-                </h1>
+                <div className="product-container">
 
-            </div>
+                    {
+                        ShortedProducts?.map((product) => (
 
+                            <Link to={`/product/${product.slug}`} key={product._id}>
+                                <div
+                                    className="product-card"
+                                    key={product._id}
+                                >
 
-
-            <div className="filter-section">
-
-                <input
-                    type="text"
-                    placeholder="Search Product"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="search-input"
-                />
-
-
-
-                <select
-                    value={SortOption}
-                    onChange={(e) =>
-                        setSortOption(e.target.value)
-                    }
-
-                    className="sort-select"
-                >
-
-                    <option value="">
-                        Sort Product
-                    </option>
-
-                    <option value="lowToHigh">
-                        Price: Low to High
-                    </option>
-
-                    <option value="highToLow">
-                        Price: High to Low
-                    </option>
-
-                </select>
-
-            </div>
+                                    <img
+                                        src={product.images[0]?.url}
+                                        alt={product.name}
+                                        className="product-image"
+                                    />
 
 
 
-            <div className="category-buttons">
+                                    <div className="product-info">
 
-                <button
-                    className={
-                        selectedCategory === "All"
-                            ? "active-category"
-                            : ""
-                    }
-                    onClick={() =>
-                        setSelectedCategory("All")
-                    }
-                >
-                    All
-                </button>
-
-                {
-                    categories.map((category) => (
-
-                        <button
-                            key={category._id}
-                            className={
-                                selectedCategory === category.name
-                                    ? "active-category"
-                                    : ""
-                            }
-                            onClick={() =>
-                                setSelectedCategory(category.name)
-                            }
-                        >
-                            {category.name}
-                        </button>
-                        
-                    ))
-                }
-
-            </div>
-            <p className="product-count">
-    {ShortedProducts.length} Products Found
-</p>
-
-            <div className="product-container">
-
-                {
-                    ShortedProducts?.map((product) => (
-
-                        <Link to={`/product/${product.slug}`} key={product._id}>
-                            <div
-                                className="product-card"
-                                key={product._id}
-                            >
-
-                                <img
-                                    src={product.images[0]?.url}
-                                    alt={product.name}
-                                    className="product-image"
-                                />
+                                        <h3>{product.name}</h3>
 
 
 
-                                <div className="product-info">
-
-                                    <h3>{product.name}</h3>
-
-
-
-                                    <p className="product-brand">
-                                        {product.brand}
-                                    </p>
+                                        <p className="product-brand">
+                                            {product.brand}
+                                        </p>
 
 
 
-                                    <div className="price-section">
+                                        <div className="price-section">
 
-                                        <span className="price">
-                                            ₹ {product.price}
-                                        </span>
+                                            <span className="price">
+                                                ₹ {product.price}
+                                            </span>
 
 
-                                        {/* 
+                                            {/* 
                                         <span className="old-price">
                                             ₹ 149999
                                         </span> */}
 
+                                        </div>
+
+
+
+                                        <p className="stock">
+
+                                            {
+                                                product.stock > 0
+                                                    ? "In Stock"
+                                                    : "Out Of Stock"
+                                            }
+
+                                        </p>
+
+
+
+                                        <button
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                dispatch(addToCart({
+                                                    productId: product._id,
+
+                                                    quantity: 1
+                                                }))
+                                            }}
+                                        >
+                                            Add To Cart
+                                        </button>
+
                                     </div>
 
-
-
-                                    <p className="stock">
-
-                                        {
-                                            product.stock > 0
-                                                ? "In Stock"
-                                                : "Out Of Stock"
-                                        }
-
-                                    </p>
-
-
-
-                                    <button
-                                        onClick={(e) => {
-                                            e.preventDefault()
-                                            dispatch(addToCart({
-                                                productId: product._id,
-
-                                                quantity: 1
-                                            }))
-                                        }}
-                                    >
-                                        Add To Cart
-                                    </button>
-
                                 </div>
+                            </Link>
 
-                            </div>
-                        </Link>
+                        ))
+                    }
 
-                    ))
-                }
+                </div>
+                </div>
 
             </div>
-
-        </div>
-    </>)
+        </>)
 }
 
-export default Product
+        export default Product

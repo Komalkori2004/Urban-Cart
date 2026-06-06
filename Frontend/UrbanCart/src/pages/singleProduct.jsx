@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getsingleProduct,getAllproduct } from '../redux/thunks/productThunks'
+import { getsingleProduct, getAllproduct } from '../redux/thunks/productThunks'
 import { Link } from "react-router-dom"
 
 import { useNavigate } from "react-router-dom"
@@ -20,7 +20,7 @@ const SingleProduct = () => {
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState("")
 
-    const { singleProduct, products,loading, error } = useSelector((state) => state.products)
+    const { singleProduct, products, loading, error } = useSelector((state) => state.products)
     useEffect(() => {
         dispatch(getsingleProduct(slug))
         dispatch(getAllproduct())
@@ -50,13 +50,13 @@ const SingleProduct = () => {
         navigate("/cart")
     }
 
-    const relatedProducts= products.filter((product)=>
+    const relatedProducts = products.filter((product) =>
 
-        product.category===singleProduct.category &&
-        product._id!==singleProduct._id 
+        product.category === singleProduct.category &&
+        product._id !== singleProduct._id
 
-        
-    ).slice(0,4)
+
+    ).slice(0, 4)
 
 
     useEffect(() => {
@@ -77,150 +77,161 @@ const SingleProduct = () => {
 
     return (
         <>
+            <div className="container">
 
-            <div className="single-product-container">
 
-                <div className="single-product-image">
+                <div className="single-product-container">
 
-                    <div className="thumbnail-list">
+                    <div className="single-product-image">
 
-                        {singleProduct.images?.map((image) => (
+                        <div className="thumbnail-list">
+
+                            {singleProduct.images?.map((image) => (
+
+                                <img
+                                    key={image.public_id}
+                                    src={image.url}
+                                    alt="thumbnail"
+                                    className={
+                                        activeImage === image.url
+                                            ? "active-thumb"
+                                            : ""
+                                    }
+                                    onClick={() =>
+                                        setActiveImage(image.url)
+                                    }
+                                />
+
+                            ))}
+
+                        </div>
+
+                        <div className="main-image">
 
                             <img
-                                key={image.public_id}
-                                src={image.url}
-                                alt="thumbnail"
-                                className={
-                                    activeImage === image.url
-                                        ? "active-thumb"
-                                        : ""
-                                }
-                                onClick={() =>
-                                    setActiveImage(image.url)
-                                }
+                                src={activeImage}
+                                alt={singleProduct.name}
                             />
 
-                        ))}
+                        </div>
 
-                    </div>  
+                    </div>
 
-                    <div className="main-image">
+                    <div className="single-product-content">
 
-                        <img
-                            src={activeImage}
-                            alt={singleProduct.name}
-                        />
+                        <p className="product-label">
+                            Luxury Collection
+                        </p>
+
+                        <h1>
+                            {singleProduct.name}
+                        </h1>
+
+                        <p className="product-brand">
+                            {singleProduct.brand}
+                        </p>
+
+                        <h2 className="product-price">
+                            ₹ {singleProduct.price}
+                        </h2>
+
+
+
+                        <p className="product-description">
+                            {singleProduct.description}
+                        </p>
+
+                        <div className="product-meta">
+
+                            <span>
+                                Category:
+                                {singleProduct.category}
+                            </span>
+
+                            <span
+                                className={
+                                    singleProduct.stock > 0
+                                        ? "Available"
+                                        : "out-stock"
+                                }
+                            >
+                                {
+                                    singleProduct.stock > 0
+                                        ? `${singleProduct.stock} Available`
+                                        : "Out Of Stock"
+                                }
+                            </span>
+
+                        </div>
+
+                        <div className="quantity-box">
+                            <button onClick={decressQty}>-</button>
+                            <span>{quantity}</span>
+                            <button onClick={incressQty}>+</button>
+                        </div>
+
+
+
+                        <div className="product-actions">
+
+
+                            <button className="add-cart-btn"
+                                onClick={handleAddToCart}
+                            >
+                                Add To Cart
+                            </button>
+
+                            <button className="buy-now-btn" >
+                                Buy Now
+                            </button>
+
+                        </div>
 
                     </div>
 
                 </div>
-
-                <div className="single-product-content">
-
-                    <p className="product-label">
-                        Luxury Collection
-                    </p>
-
-                    <h1>
-                        {singleProduct.name}
-                    </h1>
-
-                    <p className="product-brand">
-                        {singleProduct.brand}
-                    </p>
-
-                    <h2 className="product-price">
-                        ₹ {singleProduct.price}
-                    </h2>
-
-
-
-                    <p className="product-description">
-                        {singleProduct.description}
-                    </p>
-
-                    <div className="product-meta">
-
-                        <span>
-                            Category:
-                            {singleProduct.category}
-                        </span>
-
-                        <span
-                            className={
-                                singleProduct.stock > 0
-                                    ? "Available"
-                                    : "out-stock"
-                            }
-                        >
-                            {
-                                singleProduct.stock > 0
-                                    ? `${singleProduct.stock} Available`
-                                    : "Out Of Stock"
-                            }
-                        </span>
-
-                    </div>
-
-                    <div className="quantity-box">
-                        <button onClick={decressQty}>-</button>
-                        <span>{quantity}</span>
-                        <button onClick={incressQty}>+</button>
-                    </div>
-
-
-
-                    <div className="product-actions">
-
-
-                        <button className="add-cart-btn"
-                            onClick={handleAddToCart}
-                        >
-                            Add To Cart
-                        </button>
-
-                        <button className="buy-now-btn" >
-                            Buy Now
-                        </button>
-
-                    </div>
-
-                </div>
-
             </div>
 
-            <div className="related-products">
 
-    <h2>
-        You May Also Like
-    </h2>
+            <section className="related-products-section">
 
-    <div className="related-grid">
+                <div className="container">
 
-        {relatedProducts.map((product) => (
+                    <div className="related-products">
 
-           <Link
-    key={product._id}
-    to={`/product/${product.slug}`}
-    className="related-card"
->
+                        <h2>
+                            You May Also Like
+                        </h2>
 
-    <img
-        src={product.images?.[0]?.url}
-        alt={product.name}
-    />
+                        <div className="related-grid">
 
-    <h3>{product.name}</h3>
+                            {relatedProducts.map((product) => (
 
-    <p>₹ {product.price}</p>
+                                <Link
+                                    key={product._id}
+                                    to={`/product/${product.slug}`}
+                                    className="related-card"
+                                >
 
-</Link>
+                                    <img
+                                        src={product.images?.[0]?.url}
+                                        alt={product.name}
+                                    />
 
-        ))}
+                                    <h3>{product.name}</h3>
 
-    </div>
+                                    <p>₹ {product.price}</p>
 
-</div>
+                                </Link>
+
+                            ))}
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
 
 
 

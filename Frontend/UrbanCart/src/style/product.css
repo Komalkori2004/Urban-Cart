@@ -1,16 +1,13 @@
 /*product css  */
 
+.shop-page{
+    padding:4rem 0;
+}
 .product-container{
-
-    width:84%;
-
-    margin:3rem auto;
-
+    margin:3rem 0;
     display:grid;
-
     grid-template-columns:
     repeat(auto-fit,minmax(280px,1fr));
-
     gap:2rem;
 }
 
@@ -221,7 +218,7 @@
 
     color:var(--white);
 
-    font-size:4rem;
+      font-size:clamp(2rem,5vw,4rem);
 
     font-family:var(--heading-font);
 }
@@ -243,6 +240,9 @@
         flex-direction:column;
     }
 
+      .product-info h3{
+        min-height:auto;
+    }
     .search-input{
 
         width:100%;
