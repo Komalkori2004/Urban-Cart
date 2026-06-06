@@ -87,6 +87,7 @@ export const addToCart = createAsyncThunk(
 
 
         } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data.message)
 
         }
     }

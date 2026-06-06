@@ -1,12 +1,12 @@
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getsingleProduct } from '../redux/thunks/productThunks'
 
-import {useNavigate} from "react-router-dom"
-
+import { useNavigate } from "react-router-dom"
+import {addToCart} from "../redux/thunks/cartThunks"
 import "../style/singleProduct.css"
 
 
@@ -16,6 +16,8 @@ const SingleProduct = () => {
     const dispatch = useDispatch()
     const { slug } = useParams()
 
+    const [quantity, setQuantity] = useState(1)
+
     const { singleProduct, loading, error } = useSelector((state) => state.products)
     useEffect(() => {
         dispatch(getsingleProduct(slug))
@@ -23,14 +25,38 @@ const SingleProduct = () => {
     }, [slug, dispatch])
 
 
+    const incressQty = () => {
 
+        if (quantity < singleProduct.stock) {
+            setQuantity(quantity + 1)
+        }
+    }
+    const decressQty = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1)
+        }
+    }
 
-    if (loading) {
-        return <h2>Loading...</h2>
+    const handleAddToCart = () => {
+        dispatch(
+        addToCart({
+            productId: singleProduct._id,
+            quantity
+        })
+    )
+        navigate("/cart")
     }
-    if (error) {
-        return <h2>{error}</h2>
-    }
+
+    useEffect(() => {
+ setQuantity(1)
+    }, [singleProduct._id])
+
+    // if (loading) {
+    //     return <h2>Loading...</h2>
+    // }
+    // if (error) {
+    //     return <h2>{error}</h2>
+    // }
 
     return (
         <>
@@ -64,6 +90,8 @@ const SingleProduct = () => {
                         ₹ {singleProduct.price}
                     </h2>
 
+
+
                     <p className="product-description">
                         {singleProduct.description}
                     </p>
@@ -78,22 +106,33 @@ const SingleProduct = () => {
                         <span
                             className={
                                 singleProduct.stock > 0
-                                    ? "in-stock"
+                                    ? "Available"
                                     : "out-stock"
                             }
                         >
                             {
                                 singleProduct.stock > 0
-                                    ? "In Stock"
+                                    ? `${singleProduct.stock} Available`
                                     : "Out Of Stock"
                             }
                         </span>
 
                     </div>
 
+                    <div className="quantity-box">
+                        <button onClick={decressQty}>-</button>
+                        <span>{quantity}</span>
+                        <button onClick={incressQty}>+</button>
+                    </div>
+
+
+
                     <div className="product-actions">
 
-                        <button className="add-cart-btn">
+                        
+                        <button className="add-cart-btn"
+                        onClick={handleAddToCart}
+                        >
                             Add To Cart
                         </button>
 
