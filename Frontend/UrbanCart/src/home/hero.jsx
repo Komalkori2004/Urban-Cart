@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import './hero.css'
+import "../home/style/hero.css"
 
 function Hero() {
     return (

@@ -1,13 +1,16 @@
 .category-showcase-section {
-  width: 100%;
-  padding: 90px 5%;
-  background: var(--black);
-  overflow: hidden;
+
+ 
+   padding:90px 0;
+
+  background:var(--black);
+
+  overflow:hidden;
 }
 
 .category-showcase-header {
   text-align: center;
-  margin-bottom: 55px;
+ margin:0 auto 55px;
 }
 
 .category-subtitle {
@@ -63,10 +66,11 @@
 /* IMAGE */
 
 .category-image-wrapper {
-  width: 150px;
+     max-width: 1200px;
+   margin:0 auto;
   height: 150px;
 
-  margin: 0 auto 22px;
+  /* margin: 0 auto 22px; */
 
   border-radius: 50%;
   overflow: hidden;
@@ -74,7 +78,7 @@
   position: relative;
 
   padding: 4px;
-
+   border:2px solid blue;
   background: linear-gradient(
     135deg,
     #d4af37,

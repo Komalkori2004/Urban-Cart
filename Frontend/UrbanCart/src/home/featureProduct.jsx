@@ -10,7 +10,7 @@ import {
 
     from "react-icons/fa"
 
-import "./hero.css"
+import "../home/style/featureProduct.css"
 const FeatureProduct = () => {
 
     const navigate = useNavigate()

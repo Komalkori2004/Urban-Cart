@@ -9,7 +9,7 @@ FaGem
 
 from "react-icons/fa"
 
-
+import "../home/style/featureBar.css"
 
 function FeatureBar(){
 
@@ -65,6 +65,7 @@ function FeatureBar(){
 
       <section
       className="feature-bar">
+         
 
          {
             features.map(
