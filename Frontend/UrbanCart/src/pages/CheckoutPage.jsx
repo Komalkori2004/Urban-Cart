@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import "../style/checkOut.css"
 import { useDispatch, useSelector } from "react-redux"
 
 import { placeOrder } from "../redux/thunks/orderThunks";
 
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const CheckoutPage = () => {
 
@@ -28,7 +29,8 @@ const CheckoutPage = () => {
         })
     }
 
-    const handleSubmit =  async(e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const orderData = {
             shippingAddress,
@@ -54,10 +56,14 @@ const CheckoutPage = () => {
                 Checkout
             </h1>
 
-            <div className="checkout-form">
+            <form
+                className="checkout-form"
+                onSubmit={handleSubmit}
+            >
 
                 <input
                     type="text"
+                    required
                     placeholder="Full Name"
                     name="fullName"
                     onChange={handleChange}
@@ -70,19 +76,23 @@ const CheckoutPage = () => {
                     name="phone"
                     onChange={handleChange}
                     value={shippingAddress.phone}
+                    required
                 />
 
                 <input
                     type="text"
                     placeholder="Address Line 1"
                     name="addressLine1"
+                    className="full-width"
                     onChange={handleChange}
                     value={shippingAddress.addressLine1}
+                    required
                 />
 
                 <input
                     type="text"
                     placeholder="Address Line 2"
+                    className="full-width"
                     name="addressLine2"
                     onChange={handleChange}
                     value={shippingAddress.addressLine2}
@@ -94,6 +104,7 @@ const CheckoutPage = () => {
                     name="city"
                     onChange={handleChange}
                     value={shippingAddress.city}
+                    required
                 />
 
                 <input
@@ -102,6 +113,7 @@ const CheckoutPage = () => {
                     name="state"
                     onChange={handleChange}
                     value={shippingAddress.state}
+                    required
                 />
 
                 <input
@@ -110,6 +122,7 @@ const CheckoutPage = () => {
                     name="pincode"
                     onChange={handleChange}
                     value={shippingAddress.pincode}
+                    required
                 />
 
 
@@ -121,40 +134,46 @@ const CheckoutPage = () => {
                     onChange={handleChange}
                     readOnly
                 />
-
                 <div className="payment-section">
 
-                    <h3>
-                        Payment Method
-                    </h3>
+                    <h3>Payment Method</h3>
 
-                    <label>
+                    <label className="payment-option">
 
                         <input
                             type="radio"
                             value="COD"
-                            checked={
-                                paymentMethod === "COD"
-                            }
-                            readOnly
+                            checked={paymentMethod === "COD"}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
                         />
 
-                        Cash On Delivery
+                        <span>Cash On Delivery</span>
 
                     </label>
+                    <label className="payment-option disabled">
 
+                        <input
+                            type="radio"
+                            value="ONLINE"
+                            disabled
+                        />
+
+                        <span>Online Payment (Coming Soon)</span>
+
+                    </label>
                 </div>
 
                 <button
                     className="place-order-btn"
-                    onClick={handleSubmit}
+                    type="submit"
+
                 >
                     Place Order
                 </button>
 
-            </div>
+            </form>
 
-        </div>
+        </div >
     </>)
 }
 
