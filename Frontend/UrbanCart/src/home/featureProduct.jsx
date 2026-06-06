@@ -28,6 +28,8 @@ const FeatureProduct = () => {
                 "featured-products"
             >
 
+    <div className="container">
+
                 <div
                     className=
                     "featured-header"
@@ -132,6 +134,7 @@ const FeatureProduct = () => {
                     }
 
                 </div>
+                   </div>
 
             </section>
 

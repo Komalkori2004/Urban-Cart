@@ -30,6 +30,8 @@ const CategoryCarousel = () => {
 
   return (
     <section className="category-showcase-section">
+
+        <div className="container">
       <div className="category-showcase-header">
         <span className="category-subtitle">
           LUXURY COLLECTION
@@ -109,6 +111,7 @@ const CategoryCarousel = () => {
             ))}
           </Swiper>
         )}
+      </div>
       </div>
     </section>
   );

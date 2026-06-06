@@ -1,3 +1,10 @@
+
+.container {
+   width: 100%;
+   max-width: 1280px;
+   margin: 0 auto;
+   padding: 0 1rem;
+}
 .category-showcase-section {
 
  
@@ -66,19 +73,15 @@
 /* IMAGE */
 
 .category-image-wrapper {
-     max-width: 1200px;
-   margin:0 auto;
-  height: 150px;
-
-  /* margin: 0 auto 22px; */
-
-  border-radius: 50%;
-  overflow: hidden;
-
-  position: relative;
-
-  padding: 4px;
-   border:2px solid blue;
+  width: 150px;
+   height: 150px;
+   margin: 0 auto 22px;
+   border-radius: 50%;
+   overflow: hidden;
+   position: relative;
+   padding: 4px;
+  
+  
   background: linear-gradient(
     135deg,
     #d4af37,

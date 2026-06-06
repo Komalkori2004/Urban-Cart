@@ -3,13 +3,17 @@
 
 /* feature section  */
 
+.feature-bar-section{
+     padding-top:1rem;
+   padding-bottom:4rem;
 
+   background: var(--black);
+}
 
 
 .feature-bar{
 
-   width:84%;
-   margin:4rem auto;
+
 
    border:
    1px solid
@@ -116,23 +120,21 @@
 }
 
 
-
 @media(max-width:576px){
 
    .feature-bar{
-
-      grid-template-columns:
-      1fr;
+      grid-template-columns:1fr;
    }
 
-
-
    .feature-card{
+      text-align:center;
+      flex-direction:column;
 
       border-right:none;
+      border-bottom:1px solid rgba(212,175,55,0.08);
+   }
 
-      border-bottom:
-      1px solid
-      rgba(212,175,55,0.08);
+   .feature-card:last-child{
+      border-bottom:none;
    }
 }

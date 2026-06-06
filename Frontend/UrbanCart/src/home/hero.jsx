@@ -10,6 +10,7 @@ function Hero() {
 
             <section
                 className="hero-section">
+                       <div className="container">
 
                 <div
                     className="hero-content">
@@ -83,6 +84,7 @@ function Hero() {
 
                     />
 
+                </div>
                 </div>
 
             </section>

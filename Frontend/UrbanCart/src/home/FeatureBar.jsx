@@ -1,118 +1,124 @@
 import React from "react"
 
 import {
-FaTruck,
-FaLock,
-FaUndo,
-FaGem
+   FaTruck,
+   FaLock,
+   FaUndo,
+   FaGem
 }
 
-from "react-icons/fa"
+   from "react-icons/fa"
 
 import "../home/style/featureBar.css"
 
-function FeatureBar(){
+function FeatureBar() {
 
    const features = [
 
       {
-         icon:<FaGem />,
+         icon: <FaGem />,
 
-         title:"PREMIUM QUALITY",
+         title: "PREMIUM QUALITY",
 
          description:
-         "Finest ingredients sourced globally"
+            "Finest ingredients sourced globally"
       },
 
 
 
       {
-         icon:<FaLock />,
+         icon: <FaLock />,
 
-         title:"SECURE PAYMENT",
+         title: "SECURE PAYMENT",
 
          description:
-         "100% secure & trusted checkout experience"
+            "100% secure & trusted checkout experience"
       },
 
 
 
       {
-         icon:<FaTruck />,
+         icon: <FaTruck />,
 
-         title:"FAST DELIVERY",
+         title: "FAST DELIVERY",
 
          description:
-         "Swift & safe delivery at your doorstep"
+            "Swift & safe delivery at your doorstep"
       },
 
 
 
       {
-         icon:<FaUndo />,
+         icon: <FaUndo />,
 
-         title:"EASY RETURNS",
+         title: "EASY RETURNS",
 
          description:
-         "Hassle-free returns within 7 days"
+            "Hassle-free returns within 7 days"
       }
 
    ]
 
 
 
-   return(
+   return (
 
-      <section
-      className="feature-bar">
-         
+      <section className="feature-bar-section">
 
-         {
-            features.map(
-            (item,index)=>(
+         <div className="container">
 
-               <div
-               key={index}
-
-               className=
-               "feature-card"
-               >
-
-                  <span
-                  className=
-                  "feature-icon"
-                  >
-
-                     {item.icon}
-
-                  </span>
+            <div className="feature-bar">
 
 
+               {
+                  features.map(
+                     (item, index) => (
 
-                  <div
-                  className=
-                  "feature-content"
-                  >
+                        <div
+                           key={index}
 
-                     <h3>
+                           className=
+                           "feature-card"
+                        >
 
-                        {item.title}
+                           <span
+                              className=
+                              "feature-icon"
+                           >
 
-                     </h3>
+                              {item.icon}
+
+                           </span>
 
 
 
-                     <p>
+                           <div
+                              className=
+                              "feature-content"
+                           >
 
-                        {item.description}
+                              <h3>
 
-                     </p>
+                                 {item.title}
 
-                  </div>
+                              </h3>
 
-               </div>
-            ))
-         }
+
+
+                              <p>
+
+                                 {item.description}
+
+                              </p>
+
+                           </div>
+
+                        </div>
+                     ))
+               }
+            </div>
+
+         </div>
 
       </section>
    )
