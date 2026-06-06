@@ -16,8 +16,8 @@ const addToWishlist = asyncHandler(async (req, res, next) => {
             user: req.user.id,
             products: [productId]
         })
-        
-       return res.status(201).json({
+
+        return res.status(201).json({
             success: true,
             message: "Wishlist created",
             wishlist
@@ -38,7 +38,7 @@ const addToWishlist = asyncHandler(async (req, res, next) => {
         return next(
             new ErrorHandler(
                 400, "Product already exists in wishlist"
-               
+
             )
         );
     }
@@ -55,9 +55,27 @@ const addToWishlist = asyncHandler(async (req, res, next) => {
 
 })
 
+const getWishlist = asyncHandler(async (req, res, next) => {
+
+    const wishlist = await wishlistModel.findOne({ user: req.user.id }).populate("products")
+    if (!wishlist) {
+        return res.status(200).json({
+            success: true,
+            message: "Wishlist not found",
+            wishlist: []
+        })
+    }
+
+    return res.status(200).json({
+        success: true,
+
+        wishlist
+
+    })
+})
 
 
 
 
 
-module.exports = { addToWishlist }
+    module.exports = { addToWishlist,getWishlist}
