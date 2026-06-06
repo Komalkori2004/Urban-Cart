@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import { getsingleProduct } from '../redux/thunks/productThunks'
 
 import { useNavigate } from "react-router-dom"
-import {addToCart} from "../redux/thunks/cartThunks"
+import { addToCart } from "../redux/thunks/cartThunks"
 import "../style/singleProduct.css"
 
 
@@ -17,6 +17,7 @@ const SingleProduct = () => {
     const { slug } = useParams()
 
     const [quantity, setQuantity] = useState(1)
+    const [activeImage, setActiveImage] = useState("")
 
     const { singleProduct, loading, error } = useSelector((state) => state.products)
     useEffect(() => {
@@ -39,16 +40,21 @@ const SingleProduct = () => {
 
     const handleAddToCart = () => {
         dispatch(
-        addToCart({
-            productId: singleProduct._id,
-            quantity
-        })
-    )
+            addToCart({
+                productId: singleProduct._id,
+                quantity
+            })
+        )
         navigate("/cart")
     }
 
     useEffect(() => {
- setQuantity(1)
+        setQuantity(1)
+
+        if (singleProduct?.images?.length > 0) {
+            setActiveImage(singleProduct.images[0].url)
+
+        }
     }, [singleProduct._id])
 
     // if (loading) {
@@ -65,10 +71,36 @@ const SingleProduct = () => {
 
                 <div className="single-product-image">
 
-                    <img
-                        src={singleProduct.images?.[0]?.url}
-                        alt={singleProduct.name}
-                    />
+                    <div className="thumbnail-list">
+
+                        {singleProduct.images?.map((image) => (
+
+                            <img
+                                key={image.public_id}
+                                src={image.url}
+                                alt="thumbnail"
+                                className={
+                                    activeImage === image.url
+                                        ? "active-thumb"
+                                        : ""
+                                }
+                                onClick={() =>
+                                    setActiveImage(image.url)
+                                }
+                            />
+
+                        ))}
+
+                    </div>  
+
+                    <div className="main-image">
+
+                        <img
+                            src={activeImage}
+                            alt={singleProduct.name}
+                        />
+
+                    </div>
 
                 </div>
 
@@ -129,9 +161,9 @@ const SingleProduct = () => {
 
                     <div className="product-actions">
 
-                        
+
                         <button className="add-cart-btn"
-                        onClick={handleAddToCart}
+                            onClick={handleAddToCart}
                         >
                             Add To Cart
                         </button>
