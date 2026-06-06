@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getsingleProduct } from '../redux/thunks/productThunks'
+import { getsingleProduct,getAllproduct } from '../redux/thunks/productThunks'
+import { Link } from "react-router-dom"
 
 import { useNavigate } from "react-router-dom"
 import { addToCart } from "../redux/thunks/cartThunks"
@@ -19,9 +20,10 @@ const SingleProduct = () => {
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState("")
 
-    const { singleProduct, loading, error } = useSelector((state) => state.products)
+    const { singleProduct, products,loading, error } = useSelector((state) => state.products)
     useEffect(() => {
         dispatch(getsingleProduct(slug))
+        dispatch(getAllproduct())
 
     }, [slug, dispatch])
 
@@ -48,6 +50,15 @@ const SingleProduct = () => {
         navigate("/cart")
     }
 
+    const relatedProducts= products.filter((product)=>
+
+        product.category===singleProduct.category &&
+        product._id!==singleProduct._id 
+
+        
+    ).slice(0,4)
+
+
     useEffect(() => {
         setQuantity(1)
 
@@ -55,7 +66,7 @@ const SingleProduct = () => {
             setActiveImage(singleProduct.images[0].url)
 
         }
-    }, [singleProduct._id])
+    }, [singleProduct])
 
     // if (loading) {
     //     return <h2>Loading...</h2>
@@ -177,6 +188,39 @@ const SingleProduct = () => {
                 </div>
 
             </div>
+
+            <div className="related-products">
+
+    <h2>
+        You May Also Like
+    </h2>
+
+    <div className="related-grid">
+
+        {relatedProducts.map((product) => (
+
+           <Link
+    key={product._id}
+    to={`/product/${product.slug}`}
+    className="related-card"
+>
+
+    <img
+        src={product.images?.[0]?.url}
+        alt={product.name}
+    />
+
+    <h3>{product.name}</h3>
+
+    <p>₹ {product.price}</p>
+
+</Link>
+
+        ))}
+
+    </div>
+
+</div>
 
 
 
