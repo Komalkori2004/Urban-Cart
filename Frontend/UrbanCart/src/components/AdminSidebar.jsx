@@ -29,7 +29,7 @@ const AdminSidebar = () => {
                     >
                         add-Product
                     </NavLink>
-                          <NavLink to="add-Category"
+                          <NavLink to="/admin/add-Category"
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>

@@ -45,8 +45,7 @@ export const getWishlist = createAsyncThunk(
                 }
             }
             const { data } = await api.get("/wishlist", config)
-            return data.wishlist.products
-
+            return data.wishlist?.products || []
         }
         catch (error) {
             return thunkAPI.rejectWithValue(error.response.data.message)

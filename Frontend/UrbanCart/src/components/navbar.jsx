@@ -11,20 +11,28 @@ const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const location = useLocation()
+
+  const { wishlist = [] } = useSelector(
+    (state) => state.wishlist
+  )
+
+  const { items = [] } = useSelector(
+    (state) => state.cart
+  )
+
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  )
+
   if (location.pathname.includes("/admin")) {
     return null
   }
 
-  const { wishlist = [] } = useSelector((state) => state.wishlist)
-
-  const { items = [] } = useSelector((state) => state.cart)
-
   const cartCount = items.reduce((acc, item) => {
-    return acc + item.quantity
+    return acc + item.quantity  
   }, 0)
 
-
-  const wishlistcount=wishlist.length
+  const wishlistcount = wishlist.length
   return (
     <>
 
@@ -50,6 +58,11 @@ const NavBar = () => {
         </div>
 
         <div className="nav-right">
+          {user?.role === "admin" && (
+            <Link to="/admin">
+              Dashboard
+            </Link>
+          )}
 
           <Link to="/wishlist">
             Wishlist ({wishlistcount})
@@ -98,7 +111,7 @@ const NavBar = () => {
             to="/wishlist"
             onClick={() => setMenuOpen(false)}
           >
-        Wishlist ({wishlistcount})
+            Wishlist ({wishlistcount})
           </Link>
 
           <Link

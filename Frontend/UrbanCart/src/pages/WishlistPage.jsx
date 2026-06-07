@@ -30,7 +30,7 @@ if (loading) {
     return <h2>Loading...</h2>;
 }
 
-    if (!loading && wishlist.length === 0) {
+  if (!loading && wishlist?.length === 0){
         return (
             <div className="empty-state">
 
