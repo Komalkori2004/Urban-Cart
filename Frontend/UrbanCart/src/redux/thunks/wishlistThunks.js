@@ -40,7 +40,7 @@ export const getWishlist=createAsyncThunk(
                 }
             }
             const {data}=await api.get("/wishlist",config)
-            return data
+          return data.wishlist.products
 
         }
         catch(error){
