@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getAllproduct } from "../redux/thunks/productThunks"
 import { addToCart } from "../redux/thunks/cartThunks"
 import { getAllCategory } from "../redux/thunks/categoryThunks"
+import { addToWishlist, removeWishlist, getWishlist } from "../redux/thunks/wishlistThunks"
 
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
@@ -13,6 +14,7 @@ const Product = () => {
 
     const dispatch = useDispatch()
     const [selectedCategory, setSelectedCategory] = useState("All")
+    const { wishlist } = useSelector(state => state.wishlist)
 
     const { products, loading, error } = useSelector(state => state.products)
 
@@ -30,6 +32,7 @@ const Product = () => {
     useEffect(() => {
         dispatch(getAllproduct())
         dispatch(getAllCategory())
+        dispatch(getWishlist())
     }, [dispatch])
 
 
@@ -64,6 +67,7 @@ const Product = () => {
             }
             return 0
         })
+
 
 
 
@@ -188,12 +192,41 @@ const Product = () => {
                                     key={product._id}
                                 >
 
-                                    <img
-                                        src={product.images[0]?.url}
-                                        alt={product.name}
-                                        className="product-image"
-                                    />
+                                    <div className="product-image-wrapper">
 
+                                        <img
+                                            src={product.images[0]?.url}
+                                            alt={product.name}
+                                            className="product-image"
+                                        />
+
+                                        <button
+                                            className="wishlist-btn"
+                                            onClick={async (e) => {
+                                                e.preventDefault()
+
+                                                const isWishlisted = wishlist.some(
+                                                    (item) => item._id === product._id
+                                                )
+
+                                                if (isWishlisted) {
+                                                    dispatch(removeWishlist(product._id))
+                                                } else {
+                                                    await dispatch(addToWishlist(product._id))
+                                                    dispatch(getWishlist())
+                                                }
+                                            }}
+                                        >
+                                            {
+                                                wishlist.some(
+                                                    (item) => item._id === product._id
+                                                )
+                                                    ? "❤️"
+                                                    : "🤍"
+                                            }
+                                        </button>
+
+                                    </div>
 
 
                                     <div className="product-info">
@@ -258,10 +291,10 @@ const Product = () => {
                     }
 
                 </div>
-                </div>
-
             </div>
-        </>)
+
+        </div>
+    </>)
 }
 
-        export default Product
+export default Product

@@ -14,11 +14,12 @@ export const addToWishlist = createAsyncThunk(
                     Authorization: `Bearer ${token}`
                 }
             }
-           const { data } = await api.post(
-    "/wishlist/add",
-    { productId },
-    config
-)
+            const { data } = await api.post(
+                "/wishlist/add",
+                { productId },
+                config
+            )
+            console.log(data)
             return data
 
 
@@ -27,45 +28,45 @@ export const addToWishlist = createAsyncThunk(
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data.message)
         }
-        
+
     }
 )
 
-export const getWishlist=createAsyncThunk(
+export const getWishlist = createAsyncThunk(
     "wishlist/getWishlist",
 
 
-    async(_,thunkAPI)=>{
-        try{
-            const token =thunkAPI.getState().auth.token
-            const config={
-                headers:{
-                    Authorization:`Bearer ${token}`
+    async (_, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
             }
-            const {data}=await api.get("/wishlist",config)
-          return data.wishlist.products
+            const { data } = await api.get("/wishlist", config)
+            return data.wishlist.products
 
         }
-        catch(error){
+        catch (error) {
             return thunkAPI.rejectWithValue(error.response.data.message)
         }
     }
 )
 
 
-export const removeWishlist=createAsyncThunk(
+export const removeWishlist = createAsyncThunk(
     "wishlist/removeWishlist",
 
-    async(productId,thunkAPI)=>{
+    async (productId, thunkAPI) => {
 
-        try{
+        try {
 
             const token = thunkAPI.getState().auth.token
 
             const config = {
-                headers:{
-                    Authorization:`Bearer ${token}`
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
             }
 
@@ -76,7 +77,7 @@ export const removeWishlist=createAsyncThunk(
 
             return productId
 
-        }catch(error){
+        } catch (error) {
 
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message
