@@ -18,6 +18,18 @@ const WishlistPage = () => {
         dispatch(getWishlist())
     }, [dispatch])
 
+    if (error) {
+    return (
+        <div className="empty-state">
+            <h2>Something went wrong</h2>
+            <p>{error}</p>
+        </div>
+    );
+}
+if (loading) {
+    return <h2>Loading...</h2>;
+}
+
     if (!loading && wishlist.length === 0) {
         return (
             <div className="empty-state">
