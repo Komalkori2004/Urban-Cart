@@ -37,8 +37,25 @@ import WishlistPage from '../pages/WishlistPage'
 
 
 
+// 
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { getWishlist } from '../redux/thunks/wishlistThunks'
+import { getCart } from '../redux/thunks/cartThunks'
+
 
 const AppRouter = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+
+    const token = localStorage.getItem("token")
+
+    if (token) {
+        dispatch(getCart())
+        dispatch(getWishlist())
+    }
+
+}, [dispatch])
     return (
         <>
 

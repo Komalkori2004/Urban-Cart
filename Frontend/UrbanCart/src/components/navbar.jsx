@@ -15,104 +15,109 @@ const NavBar = () => {
     return null
   }
 
+  const { wishlist = [] } = useSelector((state) => state.wishlist)
+
   const { items = [] } = useSelector((state) => state.cart)
 
   const cartCount = items.reduce((acc, item) => {
     return acc + item.quantity
   }, 0)
+
+
+  const wishlistcount=wishlist.length
   return (
     <>
 
-  <nav className="navbar">
+      <nav className="navbar">
 
-  <div className="nav-left">
+        <div className="nav-left">
 
-    <Link to="/">Home</Link>
+          <Link to="/">Home</Link>
 
-    <Link to="/products">Shop</Link>
+          <Link to="/products">Shop</Link>
 
-  </div>
+        </div>
 
-  <div className="nav-logo">
+        <div className="nav-logo">
 
-    <Link to="/">
-      <img
-        src="/logo/nav-logo.png"
-        alt="UrbanCart"
-      />
-    </Link>
+          <Link to="/">
+            <img
+              src="/logo/nav-logo.png"
+              alt="UrbanCart"
+            />
+          </Link>
 
-  </div>
+        </div>
 
-  <div className="nav-right">
+        <div className="nav-right">
 
-    <Link to="/wishlist">
-      Wishlist
-    </Link>
+          <Link to="/wishlist">
+            Wishlist ({wishlistcount})
+          </Link>
 
-    <Link to="/cart">
-      Cart ({cartCount})
-    </Link>
+          <Link to="/cart">
+            Cart ({cartCount})
+          </Link>
 
-    <Link to="/profile">
-      Profile
-    </Link>
+          <Link to="/profile">
+            Profile
+          </Link>
 
-  </div>
+        </div>
 
-  <div
-    className="menu-toggle"
-    onClick={() => setMenuOpen(!menuOpen)}
-  >
-    {
-      menuOpen
-        ? <HiX />
-        : <HiMenu />
-    }
-  </div>
+        <div
+          className="menu-toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {
+            menuOpen
+              ? <HiX />
+              : <HiMenu />
+          }
+        </div>
 
-  <div
-    className={`mobile-menu ${menuOpen ? "active" : ""}`}
-  >
+        <div
+          className={`mobile-menu ${menuOpen ? "active" : ""}`}
+        >
 
-    <Link
-      to="/"
-      onClick={() => setMenuOpen(false)}
-    >
-      Home
-    </Link>
+          <Link
+            to="/"
+            onClick={() => setMenuOpen(false)}
+          >
+            Home
+          </Link>
 
-    <Link
-      to="/products"
-      onClick={() => setMenuOpen(false)}
-    >
-      Shop
-    </Link>
+          <Link
+            to="/products"
+            onClick={() => setMenuOpen(false)}
+          >
+            Shop
+          </Link>
 
-    <Link
-      to="/wishlist"
-      onClick={() => setMenuOpen(false)}
-    >
-      Wishlist
-    </Link>
+          <Link
+            to="/wishlist"
+            onClick={() => setMenuOpen(false)}
+          >
+        Wishlist ({wishlistcount})
+          </Link>
 
-    <Link
-      to="/cart"
-      onClick={() => setMenuOpen(false)}
-    >
-      Cart ({cartCount})
-    </Link>
+          <Link
+            to="/cart"
+            onClick={() => setMenuOpen(false)}
+          >
+            Cart ({cartCount})
+          </Link>
 
-    <Link
-      to="/profile"
-      onClick={() => setMenuOpen(false)}
-    >
-      Profile
-    </Link>
+          <Link
+            to="/profile"
+            onClick={() => setMenuOpen(false)}
+          >
+            Profile
+          </Link>
 
-  </div>
+        </div>
 
-</nav>
+      </nav>
 
 
     </>
