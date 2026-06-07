@@ -83,18 +83,11 @@ const removeWishlist = asyncHandler(async (req, res, next) => {
         return next(new ErrorHandler(404, "Wishlist not found"))
 
     }
-    console.log("ProductId:", productId);
-
-    console.log(
-        "Before:",
-        wishlist.products.map(id => id.toString())
-    );
+   
+ 
 
     wishlist.products = wishlist.products.filter((id) => id.toString() !== productId)
-    console.log(
-        "After:",
-        wishlist.products.map(id => id.toString())
-    );
+  
     await wishlist.save()
     return res.status(200).json({
         success: true,
