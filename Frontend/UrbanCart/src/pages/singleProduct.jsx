@@ -8,6 +8,8 @@ import { Link } from "react-router-dom"
 
 import { useNavigate } from "react-router-dom"
 import { addToCart } from "../redux/thunks/cartThunks"
+
+import { getWishlist, removeWishlist, addToWishlist } from "../redux/thunks/wishlistThunks"
 import "../style/singleProduct.css"
 
 
@@ -19,6 +21,7 @@ const SingleProduct = () => {
 
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState("")
+    const { wishlist } = useSelector((state) => state.wishlist)
 
     const { singleProduct, products, loading, error } = useSelector((state) => state.products)
     useEffect(() => {
@@ -68,6 +71,30 @@ const SingleProduct = () => {
         }
     }, [singleProduct])
 
+
+    const isWishlisted = wishlist.some(
+        (item) => item._id === singleProduct._id
+    )
+
+    const handleWishlist = async () => {
+
+        if (isWishlisted) {
+
+            dispatch(
+                removeWishlist(singleProduct._id)
+            )
+
+        } else {
+
+            await dispatch(
+                addToWishlist(singleProduct._id)
+            )
+
+            dispatch(getWishlist())
+        }
+    }
+
+
     // if (loading) {
     //     return <h2>Loading...</h2>
     // }
@@ -107,12 +134,12 @@ const SingleProduct = () => {
                         </div>
 
                         <div className="main-image">
-
-                            <img
-                                src={activeImage}
-                                alt={singleProduct.name}
-                            />
-
+                            {activeImage && (
+                                <img
+                                    src={activeImage}
+                                    alt={singleProduct.name}
+                                />
+                            )}
                         </div>
 
                     </div>
@@ -171,17 +198,26 @@ const SingleProduct = () => {
                         </div>
 
 
-
                         <div className="product-actions">
 
-
-                            <button className="add-cart-btn"
+                            <button
+                                className="add-cart-btn"
                                 onClick={handleAddToCart}
                             >
                                 Add To Cart
                             </button>
 
-                            <button className="buy-now-btn" >
+                            <button
+                                className="wishlist-single-btn"
+                                onClick={handleWishlist}
+                            >
+                                {isWishlisted
+                                    ? "❤️ Wishlisted"
+                                    : "🤍 Add Wishlist"
+                                }
+                            </button>
+
+                            <button className="buy-now-btn">
                                 Buy Now
                             </button>
 

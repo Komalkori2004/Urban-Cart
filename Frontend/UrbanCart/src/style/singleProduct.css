@@ -281,6 +281,26 @@
     margin:1.5rem 0;
 }
 
+.wishlist-single-btn {
+    padding: 14px 28px;
+    border: 1px solid #d4af37;
+    background: transparent;
+    color: #d4af37;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.wishlist-single-btn:hover {
+    background: #d4af37;
+    color: #000;
+}
+
 
 @media(max-width:768px){
 
