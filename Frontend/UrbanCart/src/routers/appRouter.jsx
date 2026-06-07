@@ -32,6 +32,8 @@ import MyOrders from '../pages/MyOrders'
 import CheckoutPage from '../pages/CheckoutPage'
 import CreateCategory from '../admin/CreateCategory'
 
+import WishlistPage from '../pages/WishlistPage'
+
 
 
 
@@ -99,6 +101,15 @@ const AppRouter = () => {
                         element={
                             <ProtectRoute>
                                 <CheckoutPage />
+                            </ProtectRoute>
+                        }
+                    />
+                    
+                    <Route
+                        path="/wishlist"
+                        element={
+                            <ProtectRoute>
+                                <WishlistPage />
                             </ProtectRoute>
                         }
                     />
