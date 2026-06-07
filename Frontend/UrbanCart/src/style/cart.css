@@ -130,7 +130,7 @@
     font-weight: 600;
 }
 
-.remove-btn {
+/* .remove-btn {
 
     background: transparent;
 
@@ -141,13 +141,42 @@
     padding: 10px 18px;
 
     border-radius: 8px;
-}
-
+} */
+/* 
 .remove-btn:hover {
 
     background: #ff6b6b;
 
     color: white;
+} */
+
+.remove-btn{
+    margin-top:auto;
+
+    width:100%;
+    font-weight:600;
+
+       background:var(--gold);
+
+   color:var(--black);
+
+    border:none;
+
+    padding:1rem;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+}
+
+.remove-btn:hover{
+  transform:translateY(-3px);
+
+    box-shadow:
+    0 0 20px
+    rgba(212,175,55,0.25);
 }
 
 .cart-summary {
