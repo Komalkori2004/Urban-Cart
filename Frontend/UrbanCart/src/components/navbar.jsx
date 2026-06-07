@@ -2,15 +2,23 @@ import './style/navbar.css'
 
 import React, { useState } from 'react'
 
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import { logoutUser } from "../redux/feature/authSlice"
+
+import { clearCart } from "../redux/feature/cartSlice"
+
+import { clearWishlist } from "../redux/feature/wishlistSlice"
 import { HiMenu, HiX } from "react-icons/hi";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const location = useLocation()
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { wishlist = [] } = useSelector(
     (state) => state.wishlist
@@ -29,8 +37,19 @@ const NavBar = () => {
   }
 
   const cartCount = items.reduce((acc, item) => {
-    return acc + item.quantity  
+    return acc + item.quantity
   }, 0)
+
+
+
+  const handleLogout = () => {
+    dispatch(logoutUser())
+
+    dispatch(clearCart())
+
+    dispatch(clearWishlist())
+    navigate("/")
+  }
 
   const wishlistcount = wishlist.length
   return (
@@ -75,6 +94,12 @@ const NavBar = () => {
           <Link to="/profile">
             Profile
           </Link>
+          <button
+            className="logout-btn"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
 
         </div>
 
@@ -127,6 +152,15 @@ const NavBar = () => {
           >
             Profile
           </Link>
+          <button
+            className="logout-btn"
+            onClick={() => {
+              handleLogout()
+              setMenuOpen(false)
+            }}
+          >
+            Logout
+          </button>
 
         </div>
 

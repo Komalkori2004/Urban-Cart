@@ -14,7 +14,13 @@ const wishlistSlice = createSlice({
 
     name: "wishlist",
     initialState,
-    reducers: {},
+ reducers: {
+    clearWishlist: (state) => {
+        state.wishlist = []
+        state.loading = false
+        state.error = null
+    }
+},
 
     extraReducers: (builder) => {
         builder
@@ -75,6 +81,8 @@ const wishlistSlice = createSlice({
 
 
 })
+
+export const { clearWishlist } = wishlistSlice.actions
 
 
 export default wishlistSlice.reducer
