@@ -24,6 +24,7 @@ const SingleProduct = () => {
     const { wishlist } = useSelector((state) => state.wishlist)
 
     const { singleProduct, products, loading, error } = useSelector((state) => state.products)
+    
     useEffect(() => {
         dispatch(getsingleProduct(slug))
         dispatch(getAllproduct())
