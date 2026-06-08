@@ -18,6 +18,9 @@ const SingleProduct = () => {
 
     const dispatch = useDispatch()
     const { slug } = useParams()
+    const [rating, setRating] = useState(0)
+
+    const [comment, setComment] = useState("")
 
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState("")
@@ -238,59 +241,120 @@ const SingleProduct = () => {
                     </div>
 
                 </div>
-            </div>
-<section className="reviews-section">
+                <div className="review-form">
 
-    <div className="container">
+    <h3>
+        Write A Review
+    </h3>
 
-        <h2 className="reviews-title">
-            Customer Reviews
-        </h2>
+    <div className="rating-select">
 
-        {
-            singleProduct.reviews?.length > 0 ? (
+        <select
+            value={rating}
+            onChange={(e) =>
+                setRating(e.target.value)
+            }
+        >
 
-                <div className="reviews-list">
+            <option value="0">
+                Select Rating
+            </option>
 
-                    {
-                        singleProduct.reviews.map((review) => (
+            <option value="1">
+                1 Star
+            </option>
 
-                            <div
-                                className="review-card"
-                                key={review._id}
-                            >
+            <option value="2">
+                2 Stars
+            </option>
 
-                                <h4>
-                                    {review.name}
-                                </h4>
+            <option value="3">
+                3 Stars
+            </option>
 
-                                <p>
-                                    {"⭐".repeat(review.rating)}
-                                </p>
+            <option value="4">
+                4 Stars
+            </option>
 
-                                <p>
-                                    {review.comment}
-                                </p>
+            <option value="5">
+                5 Stars
+            </option>
 
-                            </div>
-
-                        ))
-                    }
-
-                </div>
-
-            ) : (
-
-                <p>
-                    No Reviews Yet
-                </p>
-
-            )
-        }
+        </select>
 
     </div>
 
-</section>
+    <textarea
+
+        placeholder="Write your review..."
+
+        value={comment}
+
+        onChange={(e) =>
+            setComment(e.target.value)
+        }
+
+    />
+
+    <button>
+        Submit Review
+    </button>
+
+</div>
+            </div>
+            <section className="reviews-section">
+
+                <div className="container">
+
+                    <h2 className="reviews-title">
+                        Customer Reviews
+                    </h2>
+
+                    {
+                        singleProduct.reviews?.length > 0 ? (
+
+                            <div className="reviews-list">
+
+                                {
+                                    singleProduct.reviews.map((review) => (
+
+                                        <div
+                                            className="review-card"
+                                            key={review._id}
+                                        >
+
+                                            <h4>
+                                                {review.name}
+                                            </h4>
+
+                                            <p>
+                                                {"⭐".repeat(review.rating)}
+                                            </p>
+
+                                            <p>
+                                                {review.comment}
+                                            </p>
+
+                                        </div>
+
+                                    ))
+                                }
+
+                            </div>
+
+                        ) : (
+
+                            <p>
+                                No Reviews Yet
+                            </p>
+
+                        )
+                    }
+
+                </div>
+                
+
+            </section>
 
             <section className="related-products-section">
 

@@ -394,3 +394,57 @@
 .review-card p{
     margin-bottom:8px;
 }
+
+.review-form{
+    margin-top:40px;
+    padding:30px;
+    border:1px solid #333;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    background:#111;
+}
+
+.review-form h3{
+    color:#d4af37;
+}
+
+.rating-select select{
+    width:200px;
+    padding:12px;
+    border-radius:8px;
+    background:#000;
+    color:#fff;
+    border:1px solid #d4af37;
+}
+
+.review-form textarea{
+    width:100%;
+    min-height:150px;
+    padding:15px;
+    background:#000;
+    color:#fff;
+    border:1px solid #333;
+    border-radius:8px;
+    resize:none;
+}
+
+.review-form button{
+    flex:1;
+    width:220px;
+
+    background:var(--gold);
+
+    color:var(--black);
+
+    border:none;
+
+    padding:1rem;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
