@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 
 import { useNavigate } from "react-router-dom"
 import { addToCart } from "../redux/thunks/cartThunks"
+import { addReview } from '../redux/thunks/reviewThunk'
 
 import { getWishlist, removeWishlist, addToWishlist } from "../redux/thunks/wishlistThunks"
 import "../style/singleProduct.css"
@@ -25,6 +26,8 @@ const SingleProduct = () => {
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState("")
     const { wishlist } = useSelector((state) => state.wishlist)
+    const { loading: reviewLoadind } = useSelector(state => state.review)
+
 
     const { singleProduct, products, loading, error } = useSelector((state) => state.products)
 
@@ -97,6 +100,50 @@ const SingleProduct = () => {
             dispatch(getWishlist())
         }
     }
+
+
+
+    const handleReviewSubmit = async (e) => {
+        e.preventDefault()
+        console.log("Button clicked")
+        console.log("Rating:", rating)
+        console.log("Comment:", comment)
+
+        if (!rating || !comment) {
+            return alert("Please enter rating and comment")
+        }
+
+
+        console.log("Before Dispatch")
+
+        const result = await dispatch(
+            addReview({
+                productId: singleProduct._id,
+                rating,
+                comment
+            })
+        )
+
+        console.log("After Dispatch")
+        console.log(result)
+        if (
+            result.meta.requestStatus ===
+            "fulfilled"
+        ) {
+
+            dispatch(
+                getsingleProduct(slug)
+            )
+
+            setRating(0)
+            setComment("")
+        }
+    }
+    // dispatch(addToReview({rating,comment,singleProduct._id}))
+
+
+
+
 
 
     // if (loading) {
@@ -243,64 +290,68 @@ const SingleProduct = () => {
                 </div>
                 <div className="review-form">
 
-    <h3>
-        Write A Review
-    </h3>
+                    <h3>
+                        Write A Review
+                    </h3>
 
-    <div className="rating-select">
+                    <div className="rating-select">
 
-        <select
-            value={rating}
-            onChange={(e) =>
-                setRating(e.target.value)
-            }
-        >
+                        <select
+                            value={rating}
+                            onChange={(e) =>
+                                setRating(e.target.value)
+                            }
+                        >
 
-            <option value="0">
-                Select Rating
-            </option>
+                            <option value="0">
+                                Select Rating
+                            </option>
 
-            <option value="1">
-                1 Star
-            </option>
+                            <option value="1">
+                                1 Star
+                            </option>
 
-            <option value="2">
-                2 Stars
-            </option>
+                            <option value="2">
+                                2 Stars
+                            </option>
 
-            <option value="3">
-                3 Stars
-            </option>
+                            <option value="3">
+                                3 Stars
+                            </option>
 
-            <option value="4">
-                4 Stars
-            </option>
+                            <option value="4">
+                                4 Stars
+                            </option>
 
-            <option value="5">
-                5 Stars
-            </option>
+                            <option value="5">
+                                5 Stars
+                            </option>
 
-        </select>
 
-    </div>
+                        </select>
 
-    <textarea
+                    </div>
 
-        placeholder="Write your review..."
+                    <textarea
 
-        value={comment}
+                        placeholder="Write your review..."
 
-        onChange={(e) =>
-            setComment(e.target.value)
-        }
+                        value={comment}
 
-    />
+                        onChange={(e) =>
+                            setComment(e.target.value)
+                        }
 
-    <button>
-        Submit Review
-    </button>
+                    />
 
-</div>
+                    <button
+                        onClick={handleReviewSubmit}
+
+                    >
+                        {reviewLoadind ? "Submitting..." : "Submit Review"}
+                    </button>
+
+                </div>
             </div>
             <section className="reviews-section">
 
@@ -352,7 +403,7 @@ const SingleProduct = () => {
                     }
 
                 </div>
-                
+
 
             </section>
 
