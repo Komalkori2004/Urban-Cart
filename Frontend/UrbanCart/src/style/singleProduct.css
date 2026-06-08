@@ -365,3 +365,32 @@
 
 
 }
+
+.reviews-section{
+    padding:60px 0;
+}
+
+.reviews-title{
+    margin-bottom:30px;
+    font-size:28px;
+}
+
+.reviews-list{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.review-card{
+    border:1px solid #333;
+    padding:20px;
+    border-radius:10px;
+}
+
+.review-card h4{
+    margin-bottom:10px;
+}
+
+.review-card p{
+    margin-bottom:8px;
+}

@@ -239,7 +239,58 @@ const SingleProduct = () => {
 
                 </div>
             </div>
+<section className="reviews-section">
 
+    <div className="container">
+
+        <h2 className="reviews-title">
+            Customer Reviews
+        </h2>
+
+        {
+            singleProduct.reviews?.length > 0 ? (
+
+                <div className="reviews-list">
+
+                    {
+                        singleProduct.reviews.map((review) => (
+
+                            <div
+                                className="review-card"
+                                key={review._id}
+                            >
+
+                                <h4>
+                                    {review.name}
+                                </h4>
+
+                                <p>
+                                    {"⭐".repeat(review.rating)}
+                                </p>
+
+                                <p>
+                                    {review.comment}
+                                </p>
+
+                            </div>
+
+                        ))
+                    }
+
+                </div>
+
+            ) : (
+
+                <p>
+                    No Reviews Yet
+                </p>
+
+            )
+        }
+
+    </div>
+
+</section>
 
             <section className="related-products-section">
 
