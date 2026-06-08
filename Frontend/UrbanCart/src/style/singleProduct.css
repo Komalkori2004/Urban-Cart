@@ -281,6 +281,14 @@
     margin:1.5rem 0;
 }
 
+.product-rating{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:12px 0;
+    color:#d4af37;
+    font-weight:600;
+}
 .wishlist-single-btn {
     padding: 14px 28px;
     border: 1px solid #d4af37;
