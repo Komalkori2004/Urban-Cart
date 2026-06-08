@@ -5,6 +5,7 @@ const ErrorHandler = require("../utils/errorHandler")
 const asyncHandler = require("../middleware/asyncHandler");
 const streamifier = require("streamifier")
 const cloudinary = require("../config/cloudinary")
+const userModel = require("../models/userModel")
 
 
 // clondinary setting
@@ -224,7 +225,7 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
 
 
 const getSingleProductById =
-    asyncHandler(async (req, res) => {
+    asyncHandler(async (req, res,next) => {
 
         const product =
             await productModel.findById(
@@ -253,4 +254,47 @@ const getSingleProductById =
         });
     });
 
-module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct,getSingleProductById }
+
+
+const CreateReview = asyncHandler(async (req, res, next) => {
+    const { rating, comment } = req.body
+
+    const product = await productModel.findById( req.params.id)
+    const currentUser = await userModel.findById(
+        req.user.id
+    )
+
+    if (!product) {
+        return next(new ErrorHandler(404, "Product not found"))
+    }
+
+    const review = {
+        user: currentUser._id,
+        name: currentUser.name,
+        rating: Number(rating),
+        comment
+    }
+
+    const  alreadyReviewed = product.reviews.find(
+        (rev) => rev.user.toString() === currentUser._id.toString()
+    )
+
+    if (alreadyReviewed) {
+       alreadyReviewed.rating = Number(rating)
+            alreadyReviewed.comment=comment
+    }
+    else {
+        product.reviews.push(review)
+        product.numReviews = product.reviews.length
+    }
+
+    product.ratings = product.reviews.reduce((acc, item) => acc + item.rating, 0) / product.reviews.length
+    await product.save()
+    res.status(200).json({
+        success: true,
+        message: "Review added successfully"
+
+    })
+})
+
+module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct, getSingleProductById, CreateReview }

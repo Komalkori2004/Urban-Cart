@@ -4,13 +4,18 @@ const router = express.Router()
 const upload = require("../middleware/multer")
 
 
-const { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct, getSingleProductById } = require("../controller/productController")
+const { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct, getSingleProductById ,CreateReview} = require("../controller/productController")
 
 const { authMiddleware, authorizeRoles } = require("../middleware/authMiddlewar")
 
 
 
 router.get("/", getAllProduct)
+router.post(
+    "/:id/review",
+    authMiddleware,
+  CreateReview
+) 
 router.get(
 
     "/single/:id",
