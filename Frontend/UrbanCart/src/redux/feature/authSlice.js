@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, registerUser, verifyEmail, forgotPassword, resetPassword, getProfile } from '../thunks/authThunks';
+import { loginUser, registerUser, verifyEmail, forgotPassword, resetPassword, getProfile,getAllUser } from '../thunks/authThunks';
 
 
 
@@ -155,6 +155,21 @@ const authSlice = createSlice({
                 state.user=action.payload.user
             })
             .addCase(getProfile.rejected,(state,action)=>{
+                state.loading=false,
+                state.error=action.payload
+            })
+
+            // get all user for admin
+
+            .addCase(getAllUser.pending,(state)=>{
+                state.loading=true,
+                state.error=null
+            })
+            .addCase(getAllUser.fulfilled,(state,action)=>{
+                state.loading=false,
+                state.users=action.payload
+            })
+            .addCase(getAllUser.rejected,(state,action)=>{
                 state.loading=false,
                 state.error=action.payload
             })

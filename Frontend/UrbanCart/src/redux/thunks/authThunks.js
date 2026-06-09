@@ -117,3 +117,27 @@ export const getProfile=createAsyncThunk(
         }
     }
 )
+
+
+
+
+export const getAllUser=createAsyncThunk(
+    "auth/getAllUser",
+
+    async(_,thunkAPI)=>{
+
+        try{
+            const token=thunkAPI.getState().auth.token
+            const config={
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+            const {data}=await api.get("/auth/all-users",config)
+            return data.users
+        }
+        catch(error){
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
+    }
+)
