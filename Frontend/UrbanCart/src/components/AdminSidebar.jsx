@@ -52,7 +52,7 @@ const AdminSidebar = () => {
                         Orders
                     </NavLink>
 
-                    <NavLink to="/admin/users"
+                    <NavLink to="/admin/all-users"
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>

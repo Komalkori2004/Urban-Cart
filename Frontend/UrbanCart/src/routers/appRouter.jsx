@@ -43,6 +43,8 @@ import { useDispatch } from "react-redux"
 import { getWishlist } from '../redux/thunks/wishlistThunks'
 import { getCart } from '../redux/thunks/cartThunks'
 
+import AdminUsers from '../admin/AdminUsers'
+
 
 const AppRouter = () => {
     const dispatch = useDispatch()
@@ -166,6 +168,10 @@ const AppRouter = () => {
                         <Route
                         path='add-Category'
                         element={<CreateCategory />}
+                        />
+                           <Route
+                        path='all-users'
+                        element={<AdminUsers />}
                         />
                     </Route>
 
