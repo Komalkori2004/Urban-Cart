@@ -318,7 +318,8 @@ const resetPassword =
       success: true,
 
       message:
-        "Password reset successfully"
+        "Password reset successfully",
+        
     })
 
   })
@@ -326,17 +327,15 @@ const resetPassword =
 
 
 
+  // 
 
-
-
-
-
-
-
-
-
-
-
+  const getAlluser=asyncHandler(async(req,res,next)=>{
+    const users=await user.find().select("-password")
+    res.status(200).json({
+      success:true,
+      users
+    })
+  })
 
 
 
@@ -368,9 +367,13 @@ const AdminDashboard = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Welcome to Admin Dashboard",
+    
   });
 
 });
+
+
+
 
 
 
@@ -382,5 +385,6 @@ module.exports = {
   AdminDashboard,
   verifyEmail,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  getAlluser
 };
