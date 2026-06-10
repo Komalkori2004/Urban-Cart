@@ -3,16 +3,18 @@
 import React, { useEffect, useState } from 'react'
 import { getProfile } from '../redux/thunks/authThunks'
 import { useDispatch, useSelector } from 'react-redux'
+import { getAddresses } from '../redux/thunks/authThunks'
 
 import "../style/userD.css"
 
 const UserProfile = () => {
 
   const dispatch = useDispatch()
-  const { user, loading, error } = useSelector(state => state.auth)
+  const { user, loading, error,addresses } = useSelector(state => state.auth)
 
   useEffect(() => {
     dispatch(getProfile())
+    dispatch(getAddresses())
   }, [dispatch])
 
   console.log("user ", user)
@@ -70,6 +72,23 @@ const UserProfile = () => {
           </div>
 
         </div>
+        <h2>Saved Addresses</h2>
+
+{
+  addresses?.map((address) => (
+    <div key={address._id}>
+      <h4>{address.fullName}</h4>
+
+      <p>{address.phone}</p>
+
+      <p>{address.addressLine1}</p>
+
+      <p>{address.city}</p>
+
+      <p>{address.state}</p>
+    </div>
+  ))
+}
 
       </div>
       </div>
