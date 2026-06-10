@@ -2,7 +2,7 @@
 
 const express=require("express")
 const router=express.Router()
-const{registerUser,LoginUser,getProfile,AdminDashboard,verifyEmail,resetPassword,forgotPassword,getAlluser}=require("../controller/auth")
+const{registerUser,LoginUser,getProfile,AdminDashboard,verifyEmail,resetPassword,forgotPassword,getAlluser,addAddress}=require("../controller/auth")
 const {authMiddleware,authorizeRoles}=require("../middleware/authMiddlewar")
 
 router.post("/register",registerUser)

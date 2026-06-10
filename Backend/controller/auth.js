@@ -421,5 +421,6 @@ module.exports = {
   verifyEmail,
   forgotPassword,
   resetPassword,
-  getAlluser
+  getAlluser,
+  addAddress
 };
