@@ -16,8 +16,10 @@ const productRouter = require("./routes/productRouter")
 const cartRouter = require("./routes/cartRouter")
 const CategoryRouter = require("./routes/categoryRouter")
 const OrderRouter = require("./routes/orderRouter")
-
 const wishlistRouter=require("./routes/wishlistRoute")
+
+const paymentRouter=require("./routes/paymentRoutes")
+
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
 
@@ -41,6 +43,7 @@ app.use("/api/category", CategoryRouter)
 app.use("/api/order", OrderRouter)
 
 app.use("/api/wishlist",wishlistRouter)
+app.use("/api/payment",paymentRouter)
 
 
 

@@ -5,3 +5,5 @@ const razorpay=new Razorpay({
 
     key_secret:process.env.Razorpay_KEY_SECRET
 })
+
+module.exports=razorpay
