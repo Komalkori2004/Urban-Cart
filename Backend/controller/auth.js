@@ -407,6 +407,22 @@ const addAddress = asyncHandler(async(req,res,next)=>{
 })
 
 
+const getAddresses=asyncHandler(async(req,res,next)=>{
+  
+  const existingUser= await user.findById(req.user.id).select("addresses")
+
+  if(!existingUser){
+    return next(
+      new ErrorHandler(404,"User not found")
+    )
+  }
+
+  res.status(200).json({
+    success:true,
+    addresses:existingUser.addresses
+  })
+})
+
 
 
 
@@ -422,5 +438,6 @@ module.exports = {
   forgotPassword,
   resetPassword,
   getAlluser,
-  addAddress
+  addAddress,
+  getAddresses
 };
