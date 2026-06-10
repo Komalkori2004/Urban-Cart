@@ -7,6 +7,11 @@ const {authMiddleware,authorizeRoles}=require("../middleware/authMiddlewar")
 
 router.post("/register",registerUser)
 router.post("/login",LoginUser)
+router.post(
+  "/address",
+  authMiddleware,
+  addAddress
+)
 router.get("/all-users",authMiddleware,authorizeRoles("admin"),getAlluser) 
 router.get("/profile",authMiddleware,getProfile)
 router.get("/admin",authMiddleware,authorizeRoles("admin"),AdminDashboard)

@@ -374,6 +374,41 @@ const AdminDashboard = asyncHandler(async (req, res, next) => {
 
 
 
+const addAddress = asyncHandler(async(req,res,next)=>{
+
+  const existingUser =
+    await user.findById(req.user.id)
+
+  if(!existingUser){
+    return next(
+      new ErrorHandler(404,"User not found")
+    )
+  }
+
+  const newAddress = {
+    ...req.body,
+    isDefault:
+      existingUser.addresses.length === 0
+  }
+
+  existingUser.addresses.push(
+    newAddress
+  )
+
+  await existingUser.save()
+
+  res.status(201).json({
+    success:true,
+    message:"Address added successfully",
+    addresses:
+      existingUser.addresses
+  })
+
+})
+
+
+
+
 
 
 
