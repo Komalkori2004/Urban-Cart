@@ -141,3 +141,49 @@ export const getAllUser=createAsyncThunk(
         }
     }
 )
+
+
+
+export const getAddresses=createAsyncThunk(
+    "auth/getAddresses",
+
+    async(_,thunkAPI)=>{
+
+        try{
+            const token=thunkAPI.getState().auth.token
+            const config={
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+            const {data}=await api.get("/auth/address",config)
+            return data.addresses
+        }
+        catch(error){
+            return thunkAPI.rejectWithValue(error.response.data.message)
+        }
+    }
+)
+
+
+export const addAddress=createAsyncThunk(
+    "auth/addAddress",
+
+async(addressData,thunkAPI)=>{
+    try{
+        const token=thunkAPI.getState().auth.token
+        const config={
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        }
+        const {data}=await api.post("/auth/address",addressData,config)
+        return data.addresses
+    }
+    catch(error){
+        return thunkAPI.rejectWithValue(error.response.data.message)
+    }
+}
+
+
+)

@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, registerUser, verifyEmail, forgotPassword, resetPassword, getProfile,getAllUser } from '../thunks/authThunks';
+import { loginUser, registerUser, verifyEmail, forgotPassword, resetPassword, getProfile,getAllUser
+    ,addAddress,getAddresses
+ } from '../thunks/authThunks';
 
 
 
@@ -18,7 +20,9 @@ const initialState = {
     message: null,
 
     isAuthenticated:
-        !!localStorage.getItem("token")
+        !!localStorage.getItem("token"),
+        addresses: [],
+users: []
 };
 
 const authSlice = createSlice({
@@ -170,6 +174,34 @@ const authSlice = createSlice({
                 state.users=action.payload
             })
             .addCase(getAllUser.rejected,(state,action)=>{
+                state.loading=false,
+                state.error=action.payload
+            })
+
+            // get address
+            .addCase(getAddresses.pending,(state)=>{
+                state.loading=true,
+                state.error=null
+            })
+            .addCase(getAddresses.fulfilled,(state,action)=>{
+                state.loading=false,
+                state.addresses=action.payload
+            })
+            .addCase(getAddresses.rejected,(state,action)=>{
+                state.loading=false,
+                state.error=action.payload
+            })
+
+            // add address
+            .addCase(addAddress.pending,(state)=>{
+                state.loading=true,
+                state.error=null
+            })
+            .addCase(addAddress.fulfilled,(state,action)=>{
+                state.loading=false,
+                state.addresses=action.payload
+            })
+            .addCase(addAddress.rejected,(state,action)=>{
                 state.loading=false,
                 state.error=action.payload
             })
