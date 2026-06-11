@@ -1,4 +1,4 @@
-.checkout-container{
+/* .checkout-container{
     max-width: 1280px;
     margin: 0 auto;
     padding: 4rem 1rem;
@@ -201,5 +201,271 @@
 
     .payment-section{
         padding:1rem;
+    }
+} */
+
+
+
+.checkout-container{
+    max-width:1280px;
+    margin:0 auto;
+    padding:4rem 1rem;
+}
+
+.checkout-title{
+    text-align:center;
+    color:var(--gold);
+    font-size:clamp(2rem,5vw,4rem);
+    font-family:var(--heading-font);
+    margin-bottom:3rem;
+}
+
+/* =====================
+   Address Section
+===================== */
+
+.checkout-section{
+    margin-bottom:3rem;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:1.5rem;
+}
+
+.section-header h2{
+    color:var(--white);
+    font-size:1.5rem;
+}
+
+.add-address-btn{
+    background:transparent;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    padding:.8rem 1.2rem;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.add-address-btn:hover{
+    background:var(--gold);
+    color:var(--black);
+}
+
+/* =====================
+   Address Cards
+===================== */
+
+.saved-addresses{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+    gap:1rem;
+}
+
+.address-card{
+    background:linear-gradient(
+        180deg,
+        #111,
+        #0d0d0d
+    );
+
+    border:1px solid rgba(212,175,55,.15);
+
+    border-radius:16px;
+
+    padding:1.2rem;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+}
+
+.address-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--gold);
+}
+
+.address-card.selected{
+    border:2px solid var(--gold);
+    background:rgba(212,175,55,.08);
+}
+
+.address-card h4{
+    color:var(--gold);
+    margin-bottom:.8rem;
+}
+
+.address-card p{
+    color:#d8d8d8;
+    margin-bottom:.4rem;
+}
+
+.default-badge{
+    display:inline-block;
+    margin-top:.8rem;
+    padding:.35rem .7rem;
+    border-radius:20px;
+    background:rgba(212,175,55,.15);
+    color:var(--gold);
+    font-size:.8rem;
+}
+
+/* =====================
+   Main Checkout Layout
+===================== */
+
+.checkout-layout{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:2rem;
+    align-items:start;
+}
+
+/* =====================
+   Payment Card
+===================== */
+
+.payment-section{
+    background:var(--charcoal);
+    border:1px solid rgba(212,175,55,.15);
+    border-radius:16px;
+    padding:1.5rem;
+}
+
+.payment-section h3{
+    color:var(--gold);
+    margin-bottom:1rem;
+}
+
+.payment-option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    width:100%;
+
+    padding:1rem;
+
+    margin-top:1rem;
+
+    border:1px solid rgba(212,175,55,.15);
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    color:var(--white);
+
+    transition:.3s;
+}
+
+.payment-option:hover{
+    border-color:var(--gold);
+}
+
+.payment-option input[type="radio"]{
+    accent-color:var(--gold);
+}
+
+/* =====================
+   Order Summary
+===================== */
+
+.order-summary{
+    background:var(--charcoal);
+
+    border:1px solid rgba(212,175,55,.15);
+
+    border-radius:16px;
+
+    padding:1.5rem;
+
+    position:sticky;
+    top:100px;
+}
+
+.order-summary h3{
+    color:var(--gold);
+    margin-bottom:1.5rem;
+}
+
+.order-summary p{
+    display:flex;
+    justify-content:space-between;
+
+    color:#d8d8d8;
+
+    margin-bottom:1rem;
+}
+
+.order-summary hr{
+    border:none;
+    border-top:1px solid rgba(212,175,55,.15);
+    margin:1rem 0;
+}
+
+.total-row{
+    font-size:1.1rem;
+    color:var(--white);
+}
+
+.place-order-btn{
+    width:100%;
+
+    margin-top:1.5rem;
+
+    background:var(--gold);
+
+    color:var(--black);
+
+    border:none;
+
+    padding:1rem;
+
+    border-radius:12px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.place-order-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 20px rgba(212,175,55,.25);
+}
+
+/* =====================
+   Responsive
+===================== */
+
+@media(max-width:992px){
+
+    .checkout-layout{
+        grid-template-columns:1fr;
+    }
+
+    .order-summary{
+        position:static;
+    }
+}
+
+@media(max-width:576px){
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:1rem;
+    }
+
+    .checkout-container{
+        padding:3rem 1rem;
     }
 }

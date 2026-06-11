@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "../style/checkOut.css"
 import { useDispatch, useSelector } from "react-redux"
 
 import { placeOrder, createRozerpayOrder, verifyPayment } from "../redux/thunks/orderThunks";
+import { getAddresses, addAddress } from '../redux/thunks/authThunks'
 
 import { useNavigate } from "react-router-dom"
 import { toast }
     from "sonner";
 
 
+
 const CheckoutPage = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [selectAddress, setSelectAddress] = useState(null)
+
+    const { user, loading, error, addresses } = useSelector(state => state.auth)
     const { items } = useSelector(state => state.cart)
     const [shippingAddress, setShippingAddress] = useState({
         fullName: "",
@@ -43,12 +48,12 @@ const CheckoutPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (paymentMethod === "COD") {
 
             const result = await dispatch(
                 placeOrder({
-                    shippingAddress,
+                    shippingAddress:
+                        selectAddress || shippingAddress,
                     paymentMethod: "COD",
                 })
             );
@@ -56,6 +61,10 @@ const CheckoutPage = () => {
             if (placeOrder.fulfilled.match(result)) {
                 toast.success("Order placed successfully");
                 navigate("/my-orders");
+            }
+
+            if (placeOrder.rejected.match(result)) {
+                toast.error(result.payload?.message);
             }
 
             return;
@@ -98,24 +107,26 @@ const CheckoutPage = () => {
                     })
                 );
 
-                if (verifyPayment.fulfilled.match(verifyResult)) {
+                if (verifyPayment.rejected.match(verifyResult)) {
+                    toast.error("Payment verification failed");
+                    return;
+                }
 
-                    const orderResult = await dispatch(
-                        placeOrder({
-                            shippingAddress,
-                            paymentMethod: "RAZORPAY",
-                        })
-                    );
+                const orderResult = await dispatch(
+                    placeOrder({
+                        shippingAddress:
+                            selectAddress || shippingAddress,
+                        paymentMethod: "RAZORPAY",
+                    })
+                );
 
-                    if (placeOrder.fulfilled.match(orderResult)) {
-                        toast.success("Order placed successfully");
-                        navigate("/my-orders");
-                    }
-                    if (placeOrder.rejected.match(orderResult)) {
+                if (placeOrder.fulfilled.match(orderResult)) {
+                    toast.success("Order placed successfully");
+                    navigate("/my-orders");
+                }
 
-                        toast.error(orderResult.payload?.message);
-                    }
-
+                if (placeOrder.rejected.match(orderResult)) {
+                    toast.error(orderResult.payload?.message);
                 }
             }
         };
@@ -127,141 +138,187 @@ const CheckoutPage = () => {
     };
 
 
+useEffect(() => {
+  dispatch(getAddresses());
+}, [dispatch]);
 
-    console.log(
-        "token",
-        localStorage.getItem("token")
+useEffect(() => {
+  if (addresses?.length > 0) {
+    const defaultAddress =
+      addresses.find(addr => addr.isDefault);
+
+    setSelectAddress(
+      defaultAddress || addresses[0]
     );
-    return (<>
-
-        <div className="checkout-container">
-
-            <h1 className="checkout-title">
-                Checkout
-            </h1>
-
-            <form
-                className="checkout-form"
-                onSubmit={handleSubmit}
-            >
-
-                <input
-                    type="text"
-                    required
-                    placeholder="Full Name"
-                    name="fullName"
-                    onChange={handleChange}
-                    value={shippingAddress.fullName}
-                />
-
-                <input
-                    type="text"
-                    placeholder="Phone Number"
-                    name="phone"
-                    onChange={handleChange}
-                    value={shippingAddress.phone}
-                    required
-                />
-
-                <input
-                    type="text"
-                    placeholder="Address Line 1"
-                    name="addressLine1"
-                    className="full-width"
-                    onChange={handleChange}
-                    value={shippingAddress.addressLine1}
-                    required
-                />
-
-                <input
-                    type="text"
-                    placeholder="Address Line 2"
-                    className="full-width"
-                    name="addressLine2"
-                    onChange={handleChange}
-                    value={shippingAddress.addressLine2}
-                />
-
-                <input
-                    type="text"
-                    placeholder="City"
-                    name="city"
-                    onChange={handleChange}
-                    value={shippingAddress.city}
-                    required
-                />
-
-                <input
-                    type="text"
-                    placeholder="State"
-                    name="state"
-                    onChange={handleChange}
-                    value={shippingAddress.state}
-                    required
-                />
-
-                <input
-                    type="text"
-                    placeholder="Pincode"
-                    name="pincode"
-                    onChange={handleChange}
-                    value={shippingAddress.pincode}
-                    required
-                />
+  }
+}, [addresses]);
 
 
-                <input
-                    type="text"
-                    placeholder="Country"
-                    name="country"
-                    value={shippingAddress.country}
-                    onChange={handleChange}
-                    readOnly
-                />
-                <div className="payment-section">
+  return (
+  <div className="checkout-container">
 
-                    <h3>Payment Method</h3>
+    <h1 className="checkout-title">
+      Checkout
+    </h1>
 
-                    <label className="payment-option">
+    {/* Address Section */}
 
-                        <input
-                            type="radio"
-                            value="COD"
-                            checked={paymentMethod === "COD"}
-                            onChange={(e) => setPaymentMethod(e.target.value)}
-                        />
+    <section className="checkout-section">
 
-                        <span>Cash On Delivery</span>
+      <div className="section-header">
+        <h2>Delivery Address</h2>
 
-                    </label>
-                    <label className="payment-option">
+        <button
+          type="button"
+          className="add-address-btn"
+        >
+          + Add New Address
+        </button>
+      </div>
 
-                        <input
-                            type="radio"
-                            value="RAZORPAY"
-                            checked={paymentMethod === "RAZORPAY"}
-                            onChange={(e) =>
-                                setPaymentMethod(e.target.value)
-                            }
-                        />
+      <div className="saved-addresses">
 
-                        <span>Pay Online (Razorpay)</span>
+        {addresses?.map((address) => (
 
-                    </label>
-                </div>
+          <div
+            key={address._id}
+            className={`address-card ${
+              selectAddress?._id === address._id
+                ? "selected"
+                : ""
+            }`}
+            onClick={() =>
+              setSelectAddress(address)
+            }
+          >
 
-                <button
-                    className="place-order-btn"
-                    type="submit"
+            <h4>{address.fullName}</h4>
 
-                >
-                    Place Order
-                </button>
+            <p>{address.phone}</p>
 
-            </form>
+            <p>{address.addressLine1}</p>
 
-        </div >
-    </>)
+            <p>
+              {address.city}, {address.state}
+            </p>
+
+            <p>{address.pincode}</p>
+
+            {address.isDefault && (
+              <span className="default-badge">
+                Default Address
+              </span>
+            )}
+
+          </div>
+
+        ))}
+
+      </div>
+
+    </section>
+
+    {/* Checkout Layout */}
+
+    <div className="checkout-layout">
+
+      {/* Left Side */}
+
+      <div className="checkout-left">
+
+        <div className="payment-section">
+
+          <h3>Payment Method</h3>
+
+          <label className="payment-option">
+
+            <input
+              type="radio"
+              value="COD"
+              checked={paymentMethod === "COD"}
+              onChange={(e) =>
+                setPaymentMethod(e.target.value)
+              }
+            />
+
+            <span>Cash On Delivery</span>
+
+          </label>
+
+          <label className="payment-option">
+
+            <input
+              type="radio"
+              value="RAZORPAY"
+              checked={paymentMethod === "RAZORPAY"}
+              onChange={(e) =>
+                setPaymentMethod(e.target.value)
+              }
+            />
+
+            <span>
+              Pay Online (Razorpay)
+            </span>
+
+          </label>
+
+        </div>
+
+      </div>
+
+      {/* Right Side */}
+
+      <div className="checkout-right">
+
+        <div className="order-summary">
+
+          <h3>Order Summary</h3>
+
+          <p>
+            <span>Items</span>
+
+            <span>{items.length}</span>
+          </p>
+
+          <p>
+            <span>Subtotal</span>
+
+            <span>₹{totalAmount}</span>
+          </p>
+
+          <p>
+            <span>Shipping</span>
+
+            <span>Free</span>
+          </p>
+
+          <hr />
+
+          <p className="total-row">
+
+            <strong>Total</strong>
+
+            <strong>
+              ₹{totalAmount}
+            </strong>
+
+          </p>
+
+          <button
+            className="place-order-btn"
+            onClick={handleSubmit}
+          >
+            Place Order
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+);
 }
 
 export default CheckoutPage
