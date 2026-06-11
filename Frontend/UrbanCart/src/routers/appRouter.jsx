@@ -19,7 +19,7 @@ import UpdateProduct from '../admin/UpdateProduct'
 import AdminLayout from '../layout/AdminLayout'
 import VerifyAccount from '../pages/VerifyAccount'
 
-import ForgotPassword from '../pages/ForgotPassword' 
+import ForgotPassword from '../pages/ForgotPassword'
 
 import ResetPassword from '../pages/ResetPassword'
 
@@ -33,6 +33,8 @@ import CheckoutPage from '../pages/CheckoutPage'
 import CreateCategory from '../admin/CreateCategory'
 
 import WishlistPage from '../pages/WishlistPage'
+
+import AddAddressPage from '../components/AddAddressPage'
 
 
 
@@ -50,14 +52,14 @@ const AppRouter = () => {
     const dispatch = useDispatch()
     useEffect(() => {
 
-    const token = localStorage.getItem("token")
+        const token = localStorage.getItem("token")
 
-    if (token) {
-        dispatch(getCart())
-        dispatch(getWishlist())
-    }
+        if (token) {
+            dispatch(getCart())
+            dispatch(getWishlist())
+        }
 
-}, [dispatch])
+    }, [dispatch])
     return (
         <>
 
@@ -67,10 +69,10 @@ const AppRouter = () => {
 
                 <Routes>
 
-                      
+
 
                     {/* PUBLIC ROUTES */}
-                      <Route path="/" element={<HomePage />}/>
+                    <Route path="/" element={<HomePage />} />
 
                     <Route path="/products" element={<Product />} />
                     <Route path="/product/:slug" element={<SingleProduct />} />
@@ -82,7 +84,7 @@ const AppRouter = () => {
                     />
 
                     <Route path="/forgot-password" element={<ForgotPassword />} />
-                     <Route path="/reset-password/:token" element={<ResetPassword />} />
+                    <Route path="/reset-password/:token" element={<ResetPassword />} />
 
 
 
@@ -123,7 +125,15 @@ const AppRouter = () => {
                             </ProtectRoute>
                         }
                     />
-                    
+                    <Route
+                        path="/add-address"
+                        element={
+                            <ProtectRoute>
+                                <AddAddressPage />
+                            </ProtectRoute>
+                        }
+                    />
+
                     <Route
                         path="/wishlist"
                         element={
@@ -166,13 +176,14 @@ const AppRouter = () => {
                             element={<AdminOrder />}
                         />
                         <Route
-                        path='add-Category'
-                        element={<CreateCategory />}
+                            path='add-Category'
+                            element={<CreateCategory />}
                         />
-                           <Route
-                        path='all-users'
-                        element={<AdminUsers />}
+                        <Route
+                            path='all-users'
+                            element={<AdminUsers />}
                         />
+
                     </Route>
 
                 </Routes>

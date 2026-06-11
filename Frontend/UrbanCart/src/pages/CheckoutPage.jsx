@@ -138,187 +138,187 @@ const CheckoutPage = () => {
     };
 
 
-useEffect(() => {
-  dispatch(getAddresses());
-}, [dispatch]);
+    useEffect(() => {
+        dispatch(getAddresses());
+    }, [dispatch]);
 
-useEffect(() => {
-  if (addresses?.length > 0) {
-    const defaultAddress =
-      addresses.find(addr => addr.isDefault);
+    useEffect(() => {
+        if (addresses?.length > 0) {
+            const defaultAddress =
+                addresses.find(addr => addr.isDefault);
 
-    setSelectAddress(
-      defaultAddress || addresses[0]
+            setSelectAddress(
+                defaultAddress || addresses[0]
+            );
+        }
+    }, [addresses]);
+
+
+    return (
+        <div className="checkout-container">
+
+            <h1 className="checkout-title">
+                Checkout
+            </h1>
+
+            {/* Address Section */}
+
+            <section className="checkout-section">
+
+                <div className="section-header">
+                    <h2>Delivery Address</h2>
+
+                    <button
+                        type="button"
+                        className="add-address-btn"
+                        onClick={() => navigate("/add-address")}
+                    >
+                        + Add New Address
+                    </button>
+                </div>
+
+                <div className="saved-addresses">
+
+                    {addresses?.map((address) => (
+
+                        <div
+                            key={address._id}
+                            className={`address-card ${selectAddress?._id === address._id
+                                    ? "selected"
+                                    : ""
+                                }`}
+                            onClick={() =>
+                                setSelectAddress(address)
+                            }
+                        >
+
+                            <h4>{address.fullName}</h4>
+
+                            <p>{address.phone}</p>
+
+                            <p>{address.addressLine1}</p>
+
+                            <p>
+                                {address.city}, {address.state}
+                            </p>
+
+                            <p>{address.pincode}</p>
+
+                            {address.isDefault && (
+                                <span className="default-badge">
+                                    Default Address
+                                </span>
+                            )}
+
+                        </div>
+
+                    ))}
+
+                </div>
+
+            </section>
+
+            {/* Checkout Layout */}
+
+            <div className="checkout-layout">
+
+                {/* Left Side */}
+
+                <div className="checkout-left">
+
+                    <div className="payment-section">
+
+                        <h3>Payment Method</h3>
+
+                        <label className="payment-option">
+
+                            <input
+                                type="radio"
+                                value="COD"
+                                checked={paymentMethod === "COD"}
+                                onChange={(e) =>
+                                    setPaymentMethod(e.target.value)
+                                }
+                            />
+
+                            <span>Cash On Delivery</span>
+
+                        </label>
+
+                        <label className="payment-option">
+
+                            <input
+                                type="radio"
+                                value="RAZORPAY"
+                                checked={paymentMethod === "RAZORPAY"}
+                                onChange={(e) =>
+                                    setPaymentMethod(e.target.value)
+                                }
+                            />
+
+                            <span>
+                                Pay Online (Razorpay)
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                {/* Right Side */}
+
+                <div className="checkout-right">
+
+                    <div className="order-summary">
+
+                        <h3>Order Summary</h3>
+
+                        <p>
+                            <span>Items</span>
+
+                            <span>{items.length}</span>
+                        </p>
+
+                        <p>
+                            <span>Subtotal</span>
+
+                            <span>₹{totalAmount}</span>
+                        </p>
+
+                        <p>
+                            <span>Shipping</span>
+
+                            <span>Free</span>
+                        </p>
+
+                        <hr />
+
+                        <p className="total-row">
+
+                            <strong>Total</strong>
+
+                            <strong>
+                                ₹{totalAmount}
+                            </strong>
+
+                        </p>
+
+                        <button
+                            className="place-order-btn"
+                            onClick={handleSubmit}
+                        >
+                            Place Order
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
     );
-  }
-}, [addresses]);
-
-
-  return (
-  <div className="checkout-container">
-
-    <h1 className="checkout-title">
-      Checkout
-    </h1>
-
-    {/* Address Section */}
-
-    <section className="checkout-section">
-
-      <div className="section-header">
-        <h2>Delivery Address</h2>
-
-        <button
-          type="button"
-          className="add-address-btn"
-        >
-          + Add New Address
-        </button>
-      </div>
-
-      <div className="saved-addresses">
-
-        {addresses?.map((address) => (
-
-          <div
-            key={address._id}
-            className={`address-card ${
-              selectAddress?._id === address._id
-                ? "selected"
-                : ""
-            }`}
-            onClick={() =>
-              setSelectAddress(address)
-            }
-          >
-
-            <h4>{address.fullName}</h4>
-
-            <p>{address.phone}</p>
-
-            <p>{address.addressLine1}</p>
-
-            <p>
-              {address.city}, {address.state}
-            </p>
-
-            <p>{address.pincode}</p>
-
-            {address.isDefault && (
-              <span className="default-badge">
-                Default Address
-              </span>
-            )}
-
-          </div>
-
-        ))}
-
-      </div>
-
-    </section>
-
-    {/* Checkout Layout */}
-
-    <div className="checkout-layout">
-
-      {/* Left Side */}
-
-      <div className="checkout-left">
-
-        <div className="payment-section">
-
-          <h3>Payment Method</h3>
-
-          <label className="payment-option">
-
-            <input
-              type="radio"
-              value="COD"
-              checked={paymentMethod === "COD"}
-              onChange={(e) =>
-                setPaymentMethod(e.target.value)
-              }
-            />
-
-            <span>Cash On Delivery</span>
-
-          </label>
-
-          <label className="payment-option">
-
-            <input
-              type="radio"
-              value="RAZORPAY"
-              checked={paymentMethod === "RAZORPAY"}
-              onChange={(e) =>
-                setPaymentMethod(e.target.value)
-              }
-            />
-
-            <span>
-              Pay Online (Razorpay)
-            </span>
-
-          </label>
-
-        </div>
-
-      </div>
-
-      {/* Right Side */}
-
-      <div className="checkout-right">
-
-        <div className="order-summary">
-
-          <h3>Order Summary</h3>
-
-          <p>
-            <span>Items</span>
-
-            <span>{items.length}</span>
-          </p>
-
-          <p>
-            <span>Subtotal</span>
-
-            <span>₹{totalAmount}</span>
-          </p>
-
-          <p>
-            <span>Shipping</span>
-
-            <span>Free</span>
-          </p>
-
-          <hr />
-
-          <p className="total-row">
-
-            <strong>Total</strong>
-
-            <strong>
-              ₹{totalAmount}
-            </strong>
-
-          </p>
-
-          <button
-            className="place-order-btn"
-            onClick={handleSubmit}
-          >
-            Place Order
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-);
 }
 
 export default CheckoutPage

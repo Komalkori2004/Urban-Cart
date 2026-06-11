@@ -1,0 +1,140 @@
+.address-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 0;
+}
+
+.address-page h1 {
+    text-align: center;
+    color: var(--gold);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-family: var(--heading-font);
+    margin-bottom: 3rem;
+}
+
+.checkout-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(212,175,55,.15);
+    border-radius: 20px;
+
+    padding: 2rem;
+
+    backdrop-filter: blur(10px);
+}
+
+.checkout-form input {
+    width: 100%;
+
+    background: var(--charcoal);
+
+    border: 1px solid rgba(212,175,55,.15);
+
+    color: var(--white);
+
+    padding: 1rem;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    transition: .3s ease;
+}
+
+.checkout-form input::placeholder {
+    color: rgba(255,255,255,.5);
+}
+
+.checkout-form input:focus {
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 12px rgba(212,175,55,.15);
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.place-order-btn {
+    grid-column: span 2;
+
+    width: 100%;
+
+    background: var(--gold);
+
+    color: var(--black);
+
+    border: none;
+
+    padding: 1rem;
+
+    border-radius: 12px;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+
+    margin-top: .5rem;
+}
+
+.place-order-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 20px rgba(212,175,55,.25);
+}
+
+/* Card Effect */
+
+.checkout-form:hover {
+    border-color: rgba(212,175,55,.3);
+}
+
+/* Tablet */
+
+@media (max-width: 768px) {
+
+    .address-page {
+        padding: 3rem 0;
+    }
+
+    .checkout-form {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+
+    .full-width,
+    .place-order-btn {
+        grid-column: span 1;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 576px) {
+
+    .address-page h1 {
+        margin-bottom: 2rem;
+    }
+
+    .checkout-form {
+        padding: 1.2rem;
+        gap: 1rem;
+    }
+
+    .checkout-form input {
+        padding: .9rem;
+    }
+
+    .place-order-btn {
+        width: 100%;
+    }
+}
