@@ -1,7 +1,10 @@
 
 
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllOrders, updateOrderStatus, getOrderById, getMyOrders, cancleOrder,placeOrder } from "../thunks/orderThunks"
+import {
+    getAllOrders, updateOrderStatus, getOrderById, getMyOrders, cancleOrder, placeOrder
+    , verifyPayment
+} from "../thunks/orderThunks"
 
 
 const initialState = {
@@ -10,6 +13,7 @@ const initialState = {
     loading: false,
     error: null,
     selectedOrder: null,
+    paymentVerified: false,
 };
 
 
@@ -107,18 +111,34 @@ const orderSlice = createSlice({
                 state.error = action.payload
             })
 
-            .addCase(placeOrder.pending,(state)=>{
-                state.loading=true
-                state.error=null
+            .addCase(placeOrder.pending, (state) => {
+                state.loading = true
+                state.error = null
             })
 
-            .addCase(placeOrder.fulfilled,(state,action)=>{
-                state.loading=false
-                state.selectedOrder=action.payload
+            .addCase(placeOrder.fulfilled, (state, action) => {
+                state.loading = false
+                state.selectedOrder = action.payload
             })
-            .addCase(placeOrder.rejected,(state,action)=>{
-                state.loading=false
-                state.error=action.payload
+            .addCase(placeOrder.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+            .addCase(verifyPayment.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+
+            .addCase(verifyPayment.fulfilled, (state) => {
+                state.loading = false;
+                state.paymentVerified = true;
+            })
+
+            .addCase(verifyPayment.rejected, (state, action) => {
+                state.loading = false;
+                state.paymentVerified = false;
+                state.error = action.payload;
             })
 
     }

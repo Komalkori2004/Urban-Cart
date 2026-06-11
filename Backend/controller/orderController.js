@@ -54,13 +54,20 @@ const placeOrder = asyncHandler(async (req, res, next) => {
     }, 0)
 
 
-    const newOrder = await Order.create({
+    const orderData = {
         user: userID,
         items: orderItems,
         shippingAddress,
         paymentMethod,
-        totalAmount
-    })
+        totalAmount,
+    };
+    if (paymentMethod === "RAZORPAY") {
+        orderData.paymentStatus = "Paid";
+        orderData.isPaid = true;
+        orderData.paidAt = new Date();
+    }
+
+    const newOrder = await Order.create(orderData);
 
 
     for (const item of cartItems.items) {

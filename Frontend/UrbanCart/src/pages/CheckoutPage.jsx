@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "../style/checkOut.css"
 import { useDispatch, useSelector } from "react-redux"
 
-import { placeOrder, createRozerpayOrder} from "../redux/thunks/orderThunks";
+import { placeOrder, createRozerpayOrder,verifyPayment} from "../redux/thunks/orderThunks";
 
 import { useNavigate } from "react-router-dom"
 
@@ -25,6 +25,7 @@ const CheckoutPage = () => {
     })
     const [paymentMethod, setPaymentMethod] = useState("COD")
 
+
     const handleChange = (e) => {
 
         setShippingAddress({
@@ -33,6 +34,7 @@ const CheckoutPage = () => {
     }
 
     const totalAmount = items.reduce((acc, item) => acc + item.quantity * item.product.price, 0);
+
 
 
 
@@ -66,11 +68,27 @@ const CheckoutPage = () => {
 
     name: "UrbanCart",
 
-    handler: async function (
-      response
-    ) {
-      console.log(response);
-    }
+handler: async function (response) {
+
+  const verifyResult = await dispatch(
+    verifyPayment({
+      razorpay_payment_id: response.razorpay_payment_id,
+      razorpay_order_id: response.razorpay_order_id,
+      razorpay_signature: response.razorpay_signature,
+    })
+  );
+
+  if (verifyPayment.fulfilled.match(verifyResult)) {
+const orderResult = await dispatch(
+  placeOrder({
+    shippingAddress,
+    paymentMethod: "RAZORPAY"
+  })
+);
+
+    console.log(orderResult);
+  }
+}
   };
 
   const razorpay =
