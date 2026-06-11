@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import "../style/checkOut.css"
 import { useDispatch, useSelector } from "react-redux"
 
-import { placeOrder, createRozerpayOrder,verifyPayment} from "../redux/thunks/orderThunks";
+import { placeOrder, createRozerpayOrder, verifyPayment } from "../redux/thunks/orderThunks";
 
 import { useNavigate } from "react-router-dom"
+import { toast }
+    from "sonner";
 
 
 const CheckoutPage = () => {
@@ -26,6 +28,7 @@ const CheckoutPage = () => {
     const [paymentMethod, setPaymentMethod] = useState("COD")
 
 
+
     const handleChange = (e) => {
 
         setShippingAddress({
@@ -38,71 +41,80 @@ const CheckoutPage = () => {
 
 
 
-   const handleSubmit = async (e) => {
-  e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  const resultAction =
-    await dispatch(
-      createRozerpayOrder(totalAmount)
+        const resultAction =
+            await dispatch(
+                createRozerpayOrder(totalAmount)
+            );
+
+        if (
+            !createRozerpayOrder.fulfilled.match(
+                resultAction
+            )
+        ) {
+            return;
+        }
+
+        const order = resultAction.payload;
+
+        const options = {
+            key:
+                import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+            amount: order.amount,
+
+            currency: order.currency,
+
+            order_id: order.id,
+
+            name: "UrbanCart",
+
+            handler: async function (response) {
+
+                const verifyResult = await dispatch(
+                    verifyPayment({
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_signature: response.razorpay_signature,
+                    })
+                );
+
+                if (verifyPayment.fulfilled.match(verifyResult)) {
+
+                    const orderResult = await dispatch(
+                        placeOrder({
+                            shippingAddress,
+                            paymentMethod: "RAZORPAY",
+                        })
+                    );
+
+                    if (placeOrder.fulfilled.match(orderResult)) {
+                        toast.success("Order placed successfully");
+                        navigate("/my-orders");
+                    }
+                    if (placeOrder.rejected.match(orderResult)) {
+
+                        toast.error(orderResult.payload?.message);
+                    }
+
+                }
+            }
+        };
+
+        const razorpay =
+            new window.Razorpay(options);
+
+        razorpay.open();
+    };
+
+
+
+    console.log(
+        "token",
+        localStorage.getItem("token")
     );
-
-  if (
-    !createRozerpayOrder.fulfilled.match(
-      resultAction
-    )
-  ) {
-    return;
-  }
-
-  const order = resultAction.payload;
-
-  const options = {
-    key:
-      import.meta.env.VITE_RAZORPAY_KEY_ID,
-
-    amount: order.amount,
-
-    currency: order.currency,
-
-    order_id: order.id,
-
-    name: "UrbanCart",
-
-handler: async function (response) {
-
-  const verifyResult = await dispatch(
-    verifyPayment({
-      razorpay_payment_id: response.razorpay_payment_id,
-      razorpay_order_id: response.razorpay_order_id,
-      razorpay_signature: response.razorpay_signature,
-    })
-  );
-
-  if (verifyPayment.fulfilled.match(verifyResult)) {
-const orderResult = await dispatch(
-  placeOrder({
-    shippingAddress,
-    paymentMethod: "RAZORPAY"
-  })
-);
-
-    console.log(orderResult);
-  }
-}
-  };
-
-  const razorpay =
-    new window.Razorpay(options);
-
-  razorpay.open();
-};
-
-
-
-console.log(
-  "token",
-  localStorage.getItem("token")
-);
     return (<>
 
         <div className="checkout-container">
