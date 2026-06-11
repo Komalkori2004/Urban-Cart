@@ -61,7 +61,22 @@ const MyOrders = () => {
                                     <strong>Payment:</strong>
                                     {order.paymentMethod}
                                 </p>
+                                <p>
+                                    <strong>Payment Status:</strong>
+                                    {order.paymentStatus}
+                                </p>
 
+                                <p>
+                                    <strong>Paid:</strong>
+                                    {order.isPaid ? "Yes" : "No"}
+                                </p>
+
+                                <span className={`payment-badge ${order.paymentStatus === "Paid"
+                                        ? "paid"
+                                        : "pending"
+                                    }`}>
+                                    {order.paymentStatus}
+                                </span>
                                 <p>
                                     <strong>Date:</strong>
                                     {new Date(order.createdAt).toLocaleDateString()}

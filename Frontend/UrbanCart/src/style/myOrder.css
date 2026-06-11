@@ -26,27 +26,26 @@
         #121212,
         #0d0d0d
     );
-
+  position:relative;
     border:1px solid rgba(212,175,55,.15);
 
     border-radius:20px;
-
+    margin-bottom: 1.5rem;
     padding:1.5rem;
 
     transition:.3s ease;
 }
 
 .order-card:hover{
-    transform:translateY(-5px);
+   transform:translateY(-4px);
+    z-index:10;
 
     box-shadow:
     0 0 25px rgba(212,175,55,.08);
+       border-color: var(--gold);
 }
 
-.order-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--gold);
-}
+ 
 
 .order-card-header {
     display: flex;
@@ -154,6 +153,36 @@
 .empty-orders{
     text-align:center;
     padding:4rem 0;
+}
+
+
+.payment-badge{
+    display:inline-block;
+
+    padding:.4rem .8rem;
+width:fit-content;
+    border-radius:999px;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    margin-top:.5rem;
+}
+
+.payment-badge.paid{
+    background:#22c55e;
+    color:white;
+}
+
+.payment-badge.pending{
+    background:#f59e0b;
+    color:white;
+}
+
+.payment-badge.failed{
+    background:#ef4444;
+    color:white;
 }
 /*  */
 
