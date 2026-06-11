@@ -16,32 +16,16 @@ const createRozerOrder = asyncHandler(async (req, res, next) => {
         currency: "INR",
         receipt: `receipt_${Date.now()}`
     };
-    try {
-        console.log("Before Razorpay");
 
-        const order = await rozerpay.orders.create(options);
 
-        console.log("After Razorpay");
+    const order =
+        await rozerpay.orders.create(options);
 
-        return res.status(200).json({
-            success: true,
-            order
-        });
+    res.status(200).json({
 
-    } catch (error) {
-
-        console.log("========== RAZORPAY ERROR ==========");
-        console.log(error);
-
-        console.log("STATUS:", error.statusCode);
-        console.log("MESSAGE:", error.message);
-        console.log("DESCRIPTION:", error.error?.description);
-
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
+        sucess: true,
+        order
+    })
 
 })
 

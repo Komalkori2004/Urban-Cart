@@ -44,6 +44,23 @@ const CheckoutPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (paymentMethod === "COD") {
+
+            const result = await dispatch(
+                placeOrder({
+                    shippingAddress,
+                    paymentMethod: "COD",
+                })
+            );
+
+            if (placeOrder.fulfilled.match(result)) {
+                toast.success("Order placed successfully");
+                navigate("/my-orders");
+            }
+
+            return;
+        }
+
         const resultAction =
             await dispatch(
                 createRozerpayOrder(totalAmount)
@@ -217,15 +234,18 @@ const CheckoutPage = () => {
                         <span>Cash On Delivery</span>
 
                     </label>
-                    <label className="payment-option disabled">
+                    <label className="payment-option">
 
                         <input
                             type="radio"
-                            value="ONLINE"
-                            disabled
+                            value="RAZORPAY"
+                            checked={paymentMethod === "RAZORPAY"}
+                            onChange={(e) =>
+                                setPaymentMethod(e.target.value)
+                            }
                         />
 
-                        <span>Online Payment (Coming Soon)</span>
+                        <span>Pay Online (Razorpay)</span>
 
                     </label>
                 </div>
