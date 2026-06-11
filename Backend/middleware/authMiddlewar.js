@@ -4,28 +4,33 @@ const ErrorHandler = require("../utils/errorHandler")
 
 
 const authMiddleware = (req, res, next) => {
+try {
 
-    try {
-     
+  const token =
+    req.headers.authorization.split(" ")[1];
 
-        const token = req.headers.authorization.split(" ")[1]
+  console.log("Token:", token);
 
-        if (!token) {
-            return res.status(401).json({
-                success: false,
-                message: "login first"
-            })
-        }
+  const decode =
+    jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
 
-        const decode = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = decode
-        next()
+  console.log("Decoded:", decode);
 
-    } catch (error) {
-        res.status(401).json({
-            message: "login first"
-        })
-    }
+  req.user = decode;
+  next();
+
+} catch (error) {
+
+  console.log("JWT ERROR:", error.message);
+
+  return res.status(401).json({
+    success:false,
+    message:error.message
+  });
+}
 
 }
 

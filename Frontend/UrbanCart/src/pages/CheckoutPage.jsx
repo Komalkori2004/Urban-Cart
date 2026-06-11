@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+
 import "../style/checkOut.css"
 import { useDispatch, useSelector } from "react-redux"
 
-import { placeOrder } from "../redux/thunks/orderThunks";
+import { placeOrder, createRozerpayOrder} from "../redux/thunks/orderThunks";
 
 import { useNavigate } from "react-router-dom"
+
 
 const CheckoutPage = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { items } = useSelector(state => state.cart)
     const [shippingAddress, setShippingAddress] = useState({
         fullName: "",
         phone: "",
@@ -29,25 +32,59 @@ const CheckoutPage = () => {
         })
     }
 
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const orderData = {
-            shippingAddress,
-            paymentMethod
-        }
-
-        const resultAction =
-            await dispatch(
-                placeOrder(orderData)
-            );
-        if (placeOrder.fulfilled.match(resultAction)) {
-            navigate("/my-orders")
-        }
+    const totalAmount = items.reduce((acc, item) => acc + item.quantity * item.product.price, 0);
 
 
+
+   const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const resultAction =
+    await dispatch(
+      createRozerpayOrder(totalAmount)
+    );
+
+  if (
+    !createRozerpayOrder.fulfilled.match(
+      resultAction
+    )
+  ) {
+    return;
+  }
+
+  const order = resultAction.payload;
+
+  const options = {
+    key:
+      import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+    amount: order.amount,
+
+    currency: order.currency,
+
+    order_id: order.id,
+
+    name: "UrbanCart",
+
+    handler: async function (
+      response
+    ) {
+      console.log(response);
     }
+  };
 
+  const razorpay =
+    new window.Razorpay(options);
+
+  razorpay.open();
+};
+
+
+
+console.log(
+  "token",
+  localStorage.getItem("token")
+);
     return (<>
 
         <div className="checkout-container">

@@ -133,8 +133,8 @@ export const cancleOrder = createAsyncThunk(
     }
 )
 
- 
-export  const placeOrder = createAsyncThunk(
+
+export const placeOrder = createAsyncThunk(
     "order/placeOrder",
 
 
@@ -154,5 +154,37 @@ export  const placeOrder = createAsyncThunk(
             return thunkAPI.rejectWithValue(error.response.data)
         }
 
+    }
+)
+
+
+
+export const createRozerpayOrder = createAsyncThunk(
+    "order/createRozerpayOrder",
+
+
+
+    async (amount, thunkAPI) => {
+
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            console.log("Token:", token);
+            console.log("Config:", config);
+
+
+
+            const { data } = await api.post("/payment/create-order", { amount }, config)
+            return data.order
+
+
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
     }
 )

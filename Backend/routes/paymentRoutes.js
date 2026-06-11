@@ -6,8 +6,9 @@ const router=express.Router()
 const { authMiddleware, authorizeRoles } = require("../middleware/authMiddlewar")
 
 
-const {createRozerOrder}=require("../controller/paymentController")
+const {createRozerOrder,verifyPayment}=require("../controller/paymentController")
 
-router.post("/pay",authMiddleware,createRozerOrder)
+router.post("/create-order",authMiddleware,createRozerOrder)
+router.post("/verify-payment",authMiddleware,verifyPayment)
 
 module.exports=router
