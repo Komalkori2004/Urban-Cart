@@ -59,29 +59,33 @@ const MyOrders = () => {
 
                                 <p>
                                     <strong>Payment:</strong>
-                                    {order.paymentMethod}
+                                    {
+                                        order.paymentMethod === "RAZORPAY"
+                                            ? "Online Payment"
+                                            : "Cash On Delivery"
+                                    }
                                 </p>
                                 <p>
                                     <strong>Payment Status:</strong>
                                     {order.paymentStatus}
                                 </p>
 
-                                <p>
-                                    <strong>Paid:</strong>
-                                    {order.isPaid ? "Yes" : "No"}
-                                </p>
+
 
                                 <span className={`payment-badge ${order.paymentStatus === "Paid"
-                                        ? "paid"
-                                        : "pending"
+                                    ? "paid"
+                                    : "pending"
                                     }`}>
                                     {order.paymentStatus}
                                 </span>
-                                <p>
-                                    <strong>Date:</strong>
-                                    {new Date(order.createdAt).toLocaleDateString()}
-                                </p>
-
+                                {new Date(order.createdAt).toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        day: "numeric",
+                                        month: "short",
+                                        year: "numeric"
+                                    }
+                                )}
                             </div>
 
                             <div className="order-card-footer">
@@ -206,6 +210,16 @@ const MyOrders = () => {
                                         <strong>Payment Method:</strong>
                                         {selectedOrder.paymentMethod}
                                     </p>
+                                    <p>
+                                        <strong>Payment Status:</strong>
+                                        {selectedOrder.paymentStatus}
+                                    </p>
+                                    {selectedOrder.paymentInfo?.id && (
+                                        <p>
+                                            <strong>Transaction ID:</strong>
+                                            {selectedOrder.paymentInfo.id}
+                                        </p>
+                                    )}
 
                                 </div>
                                 {
