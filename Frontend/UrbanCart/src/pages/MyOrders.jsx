@@ -99,9 +99,9 @@ const MyOrders = () => {
 
                                         <div
                                             className={`step ${["Processing", "Shipped", "Delivered"]
-                                                    .includes(order.orderStatus)
-                                                    ? "active"
-                                                    : ""
+                                                .includes(order.orderStatus)
+                                                ? "active"
+                                                : ""
                                                 }`}
                                         >
                                             <span></span>
@@ -110,9 +110,9 @@ const MyOrders = () => {
 
                                         <div
                                             className={`step ${["Shipped", "Delivered"]
-                                                    .includes(order.orderStatus)
-                                                    ? "active"
-                                                    : ""
+                                                .includes(order.orderStatus)
+                                                ? "active"
+                                                : ""
                                                 }`}
                                         >
                                             <span></span>
@@ -121,8 +121,8 @@ const MyOrders = () => {
 
                                         <div
                                             className={`step ${order.orderStatus === "Delivered"
-                                                    ? "active"
-                                                    : ""
+                                                ? "active"
+                                                : ""
                                                 }`}
                                         >
                                             <span></span>
@@ -141,8 +141,8 @@ const MyOrders = () => {
 
                                             <span
                                                 className={`payment-badge ${order.paymentStatus === "Paid"
-                                                        ? "paid"
-                                                        : "pending"
+                                                    ? "paid"
+                                                    : "pending"
                                                     }`}
                                             >
                                                 {order.paymentStatus}
@@ -182,43 +182,70 @@ const MyOrders = () => {
                                 >
                                     ✖️
                                 </button>
-                                <h3>Customer Information</h3>
+                                <div className="modal-header">
 
-                                <p>
-                                    <strong>Name:</strong>{" "}
-                                    {selectedOrder.shippingAddress?.fullName}
-                                </p>
+                                    <div>
+                                        <h2>
+                                            Order #{selectedOrder._id.slice(-8)}
+                                        </h2>
 
-                                <p>
-                                    <strong>Phone:</strong>{" "}
-                                    {selectedOrder.shippingAddress?.phone}
-                                </p>
+                                        <p>
+                                            Placed on{" "}
+                                            {
+                                                new Date(selectedOrder.createdAt)
+                                                    .toLocaleDateString("en-IN")
+                                            }
+                                        </p>
+                                    </div>
 
-                                <hr />
+                                </div>
+                                <div className="info-grid">
 
-                                <h3>Shipping Address</h3>
+                                    <div className="info-card">
 
-                                <p>
-                                    {selectedOrder.shippingAddress?.addressLine1}
-                                </p>
+                                        <h3>Customer Information</h3>
 
-                                <p>
-                                    {selectedOrder.shippingAddress?.addressLine2}
-                                </p>
+                                        <p>
+                                            <strong>Name:</strong>
+                                            {selectedOrder.shippingAddress?.fullName}
+                                        </p>
 
-                                <p>
-                                    {selectedOrder.shippingAddress?.city},
-                                    {" "}
-                                    {selectedOrder.shippingAddress?.state}
-                                </p>
+                                        <p>
+                                            <strong>Phone:</strong>
+                                            {selectedOrder.shippingAddress?.phone}
+                                        </p>
 
-                                <p>
-                                    {selectedOrder.shippingAddress?.pincode}
-                                </p>
+                                    </div>
 
-                                <p>
-                                    {selectedOrder.shippingAddress?.country}
-                                </p>
+                                    <div className="info-card">
+
+                                        <h3>Shipping Address</h3>
+
+                                        <p>
+                                            {selectedOrder.shippingAddress?.addressLine1}
+                                        </p>
+
+                                        <p>
+                                            {selectedOrder.shippingAddress?.addressLine2}
+                                        </p>
+
+                                        <p>
+                                            {selectedOrder.shippingAddress?.city},
+                                            {" "}
+                                            {selectedOrder.shippingAddress?.state}
+                                        </p>
+
+                                        <p>
+                                            {selectedOrder.shippingAddress?.pincode}
+                                        </p>
+
+                                        <p>
+                                            {selectedOrder.shippingAddress?.country}
+                                        </p>
+
+                                    </div>
+
+                                </div>
 
                                 <hr />
                                 <h3>Products</h3>
