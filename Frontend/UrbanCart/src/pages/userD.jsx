@@ -27,7 +27,7 @@ const UserProfile = () => {
 
         <div className="profile-container">
 
-          <div className="profile-card">
+          {/* <div className="profile-card">
 
             <div className="profile-header">
 
@@ -74,7 +74,87 @@ const UserProfile = () => {
               }
             </div>
 
+          </div> */}
+
+
+
+          <div className="profile-hero">
+
+            <div className="profile-avatar">
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
+
+            <div className="profile-info">
+
+              <h2>{user?.name}</h2>
+
+              <p>{user?.email}</p>
+
+              {
+                user?.isVerified ? (
+                  <span className="verified-badge">
+                    ✓ Verified Account
+                  </span>
+                ) : (
+                  <span className="unverified-badge">
+                    Not Verified
+                  </span>
+                )
+              }
+
+            </div>
+
           </div>
+
+       <div className="profile-grid">
+
+  <div className="profile-section">
+
+    <h2>Personal Information</h2>
+
+    <div className="info-card">
+      <span>Full Name</span>
+      <h4>{user?.name}</h4>
+    </div>
+
+    <div className="info-card">
+      <span>Email</span>
+      <h4>{user?.email}</h4>
+    </div>
+
+    <div className="info-card">
+      <span>Role</span>
+      <h4>{user?.role}</h4>
+    </div>
+
+  </div>
+
+  <div className="profile-section">
+
+    <h2>Account Overview</h2>
+
+    <div className="stats-grid">
+
+      <div className="stat-card">
+        <h3>{addresses?.length}</h3>
+        <p>Addresses</p>
+      </div>
+
+      <div className="stat-card">
+        <h3>0</h3>
+        <p>Orders</p>
+      </div>
+
+      <div className="stat-card">
+        <h3>0</h3>
+        <p>Wishlist</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
           <div className="address-section">
 
             <div className="address-header">
@@ -135,7 +215,7 @@ const UserProfile = () => {
         </div>
 
 
-      
+
       </div>
 
     </>
