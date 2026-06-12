@@ -11,6 +11,8 @@ import { addToCart } from "../redux/thunks/cartThunks"
 import { addReview } from '../redux/thunks/reviewThunk'
 import ProductReviewForm from "../components/ProductReviewForm"
 
+import ProductReviews from '../components/ProductReviews'
+
 import { getWishlist, removeWishlist, addToWishlist } from "../redux/thunks/wishlistThunks"
 import "../style/singleProduct.css"
 
@@ -289,132 +291,21 @@ const SingleProduct = () => {
                     </div>
 
                 </div>
-                {/* <div className="review-form">
 
-                    <h3>
-                        Write A Review
-                    </h3>
-
-                    <div className="rating-select">
-
-                        <select
-                            value={rating}
-                            onChange={(e) =>
-                                setRating(e.target.value)
-                            }
-                        >
-
-                            <option value="0">
-                                Select Rating
-                            </option>
-
-                            <option value="1">
-                                1 Star
-                            </option>
-
-                            <option value="2">
-                                2 Stars
-                            </option>
-
-                            <option value="3">
-                                3 Stars
-                            </option>
-
-                            <option value="4">
-                                4 Stars
-                            </option>
-
-                            <option value="5">
-                                5 Stars
-                            </option>
-
-
-                        </select>
-
-                    </div>
-
-                    <textarea
-
-                        placeholder="Write your review..."
-
-                        value={comment}
-
-                        onChange={(e) =>
-                            setComment(e.target.value)
-                        }
-
-                    />
-
-                    <button
-                        onClick={handleReviewSubmit}
-
-                    >
-                        {reviewLoadind ? "Submitting..." : "Submit Review"}
-                    </button>
-
-                </div> */}
                 <ProductReviewForm
-    rating={rating}
-    setRating={setRating}
-    comment={comment}
-    setComment={setComment}
-    handleReviewSubmit={handleReviewSubmit}
-    reviewLoading={reviewLoadind}
-/>
+                    rating={rating}
+                    setRating={setRating}
+                    comment={comment}
+                    setComment={setComment}
+                    handleReviewSubmit={handleReviewSubmit}
+                    reviewLoading={reviewLoadind}
+                />
             </div>
-            <section className="reviews-section">
-
-                <div className="container">
-
-                    <h2 className="reviews-title">
-                        Customer Reviews
-                    </h2>
-
-                    {
-                        singleProduct.reviews?.length > 0 ? (
-
-                            <div className="reviews-list">
-
-                                {
-                                    singleProduct.reviews.map((review) => (
-
-                                        <div
-                                            className="review-card"
-                                            key={review._id}
-                                        >
-
-                                            <h4>
-                                                {review.name}
-                                            </h4>
-
-                                            <p>
-                                                {"⭐".repeat(review.rating)}
-                                            </p>
-
-                                            <p>
-                                                {review.comment}
-                                            </p>
-
-                                        </div>
-
-                                    ))
-                                }
-
-                            </div>
-
-                        ) : (
-
-                            <p>
-                                No Reviews Yet
-                            </p>
-
-                        )
-                    }
-
-                </div>
 
 
-            </section>
+            <ProductReviews
+                reviews={singleProduct.reviews}
+            />
 
             <section className="related-products-section">
 
