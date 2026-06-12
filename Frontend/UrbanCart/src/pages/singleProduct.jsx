@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
 import { addToCart } from "../redux/thunks/cartThunks"
 import { addReview } from '../redux/thunks/reviewThunk'
 import ProductReviewForm from "../components/ProductReviewForm"
-
+import RelatedProducts from '../components/RelatedProducts'
 import ProductReviews from '../components/ProductReviews'
 
 import { getWishlist, removeWishlist, addToWishlist } from "../redux/thunks/wishlistThunks"
@@ -306,8 +306,8 @@ const SingleProduct = () => {
             <ProductReviews
                 reviews={singleProduct.reviews}
             />
-
-            <section className="related-products-section">
+            
+            {/* <section className="related-products-section">
 
                 <div className="container">
 
@@ -345,7 +345,13 @@ const SingleProduct = () => {
                     </div>
                 </div>
 
-            </section>
+            </section> */}
+
+            <RelatedProducts
+                products={relatedProducts}
+            />
+    
+
 
 
 
