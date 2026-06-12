@@ -9,6 +9,7 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { addToCart } from "../redux/thunks/cartThunks"
 import { addReview } from '../redux/thunks/reviewThunk'
+import ProductReviewForm from "../components/ProductReviewForm"
 
 import { getWishlist, removeWishlist, addToWishlist } from "../redux/thunks/wishlistThunks"
 import "../style/singleProduct.css"
@@ -288,7 +289,7 @@ const SingleProduct = () => {
                     </div>
 
                 </div>
-                <div className="review-form">
+                {/* <div className="review-form">
 
                     <h3>
                         Write A Review
@@ -351,7 +352,15 @@ const SingleProduct = () => {
                         {reviewLoadind ? "Submitting..." : "Submit Review"}
                     </button>
 
-                </div>
+                </div> */}
+                <ProductReviewForm
+    rating={rating}
+    setRating={setRating}
+    comment={comment}
+    setComment={setComment}
+    handleReviewSubmit={handleReviewSubmit}
+    reviewLoading={reviewLoadind}
+/>
             </div>
             <section className="reviews-section">
 
