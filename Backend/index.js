@@ -20,6 +20,8 @@ const wishlistRouter=require("./routes/wishlistRoute")
 
 const paymentRouter=require("./routes/paymentRoutes")
 
+const couponRouter=require("./routes/couponRouter")
+
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
 
@@ -45,7 +47,7 @@ app.use("/api/order", OrderRouter)
 app.use("/api/wishlist",wishlistRouter)
 app.use("/api/payment",paymentRouter)
 
-
+app.use("/api/coupon",couponRouter)
 
 
 
