@@ -151,6 +151,7 @@ const MyOrders = () => {
                                         </div>
 
                                         <button
+                                        className="order-details-btn"
                                             onClick={() => {
                                                 dispatch(getOrderById(order._id));
                                                 setShowModal(true);
@@ -199,7 +200,48 @@ const MyOrders = () => {
                                     </div>
 
                                 </div>
+                                  <div className="modal-status-tracker">
+
+                                        <div className="status-step active">
+                                            <span></span>
+                                            <p>Ordered</p>
+                                        </div>
+
+                                        <div
+                                            className={`status-step ${["Processing", "Shipped", "Delivered"]
+                                                .includes(selectedOrder.orderStatus)
+                                                ? "active"
+                                                : ""
+                                                }`}
+                                        >
+                                            <span></span>
+                                            <p>Processing</p>
+                                        </div>
+
+                                        <div
+                                            className={`status-step ${["Shipped", "Delivered"]
+                                                .includes(selectedOrder.orderStatus)
+                                                ? "active"
+                                                : ""
+                                                }`}
+                                        >
+                                            <span></span>
+                                            <p>Shipped</p>
+                                        </div>
+
+                                        <div
+                                            className={`status-step ${selectedOrder.orderStatus === "Delivered"
+                                                ? "active"
+                                                : ""
+                                                }`}
+                                        >
+                                            <span></span>
+                                            <p>Delivered</p>
+                                        </div>
+
+                                    </div>
                                 <div className="info-grid">
+                                  
 
                                     <div className="info-card">
 
@@ -262,19 +304,23 @@ const MyOrders = () => {
                                                 alt={item.name}
                                                 width="80"
                                             />
+                                            <div className="product-details">
 
-                                            <div>
                                                 <h4>{item.name}</h4>
 
-                                                <p>
-                                                    Qty: {item.quantity}
-                                                </p>
+                                                <div className="product-meta">
 
-                                                <p>
-                                                    ₹{item.price}
-                                                </p>
+                                                    <span>
+                                                        Qty: {item.quantity}
+                                                    </span>
+
+                                                    <span>
+                                                        ₹{item.price}
+                                                    </span>
+
+                                                </div>
+
                                             </div>
-
                                         </div>
                                     ))
                                 }
@@ -303,13 +349,26 @@ const MyOrders = () => {
                                     </p>
                                     <p>
                                         <strong>Payment Status:</strong>
-                                        {selectedOrder.paymentStatus}
+
+                                        <span
+                                            className={`payment-chip ${selectedOrder.paymentStatus === "Paid"
+                                                ? "paid"
+                                                : "pending"
+                                                }`}
+                                        >
+                                            {selectedOrder.paymentStatus}
+                                        </span>
                                     </p>
                                     {selectedOrder.paymentInfo?.id && (
-                                        <p>
-                                            <strong>Transaction ID:</strong>
-                                            {selectedOrder.paymentInfo.id}
-                                        </p>
+                                        <div className="transaction-badge">
+
+                                            <span>Transaction ID</span>
+
+                                            <p>
+                                                {selectedOrder.paymentInfo.id}
+                                            </p>
+
+                                        </div>
                                     )}
 
                                 </div>
