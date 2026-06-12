@@ -38,66 +38,130 @@ const MyOrders = () => {
                     )}
 
                     {myOrders?.map((order) => (
-                        <div key={order._id} className="order-card">
+                        <div className="order-card">
 
-                            <div className="order-card-header">
-                                <h4>Order #{order._id.slice(-6)}</h4>
+                            <div className="order-main" key={order._id}>
 
-                                <span
-                                    className={`status-badge ${order.orderStatus.toLowerCase()}`}
-                                >
-                                    {order.orderStatus}
-                                </span>
-                            </div>
+                                <div className="order-image">
+                                    <img
+                                        src={order.items?.[0]?.image}
+                                        alt={order.items?.[0]?.name}
+                                    />
+                                </div>
 
-                            <div className="order-card-body">
+                                <div className="order-info">
 
-                                <p>
-                                    <strong>Total:</strong>
-                                    ₹{order.totalAmount}
-                                </p>
+                                    <div className="order-card-header">
 
-                                <p>
-                                    <strong>Payment:</strong>
-                                    {
-                                        order.paymentMethod === "RAZORPAY"
-                                            ? "Online Payment"
-                                            : "Cash On Delivery"
-                                    }
-                                </p>
-                                <p>
-                                    <strong>Payment Status:</strong>
-                                    {order.paymentStatus}
-                                </p>
+                                        <div>
+                                            <h4>
+                                                {order.items?.[0]?.name}
+                                            </h4>
 
+                                            {order.items?.length > 1 && (
+                                                <span className="more-items">
+                                                    +{order.items.length - 1} more items
+                                                </span>
+                                            )}
+                                        </div>
 
+                                        <span
+                                            className={`status-badge ${order.orderStatus.toLowerCase()}`}
+                                        >
+                                            {order.orderStatus}
+                                        </span>
 
-                                <span className={`payment-badge ${order.paymentStatus === "Paid"
-                                    ? "paid"
-                                    : "pending"
-                                    }`}>
-                                    {order.paymentStatus}
-                                </span>
-                                {new Date(order.createdAt).toLocaleDateString(
-                                    "en-IN",
-                                    {
-                                        day: "numeric",
-                                        month: "short",
-                                        year: "numeric"
-                                    }
-                                )}
-                            </div>
+                                    </div>
 
-                            <div className="order-card-footer">
+                                    <p className="order-id">
+                                        Order #{order._id.slice(-6)}
+                                    </p>
 
-                                <button
-                                    onClick={() => {
-                                        dispatch(getOrderById(order._id));
-                                        setShowModal(true);
-                                    }}
-                                >
-                                    View Details
-                                </button>
+                                    <p className="order-date">
+                                        {new Date(order.createdAt).toLocaleDateString(
+                                            "en-IN",
+                                            {
+                                                day: "numeric",
+                                                month: "short",
+                                                year: "numeric"
+                                            }
+                                        )}
+                                    </p>
+
+                                    {/* STATUS TRACKER */}
+
+                                    <div className="status-tracker">
+
+                                        <div className={`step active`}>
+                                            <span></span>
+                                            <p>Ordered</p>
+                                        </div>
+
+                                        <div
+                                            className={`step ${["Processing", "Shipped", "Delivered"]
+                                                    .includes(order.orderStatus)
+                                                    ? "active"
+                                                    : ""
+                                                }`}
+                                        >
+                                            <span></span>
+                                            <p>Processing</p>
+                                        </div>
+
+                                        <div
+                                            className={`step ${["Shipped", "Delivered"]
+                                                    .includes(order.orderStatus)
+                                                    ? "active"
+                                                    : ""
+                                                }`}
+                                        >
+                                            <span></span>
+                                            <p>Shipped</p>
+                                        </div>
+
+                                        <div
+                                            className={`step ${order.orderStatus === "Delivered"
+                                                    ? "active"
+                                                    : ""
+                                                }`}
+                                        >
+                                            <span></span>
+                                            <p>Delivered</p>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="order-bottom">
+
+                                        <div>
+
+                                            <p className="total-price">
+                                                ₹{order.totalAmount}
+                                            </p>
+
+                                            <span
+                                                className={`payment-badge ${order.paymentStatus === "Paid"
+                                                        ? "paid"
+                                                        : "pending"
+                                                    }`}
+                                            >
+                                                {order.paymentStatus}
+                                            </span>
+
+                                        </div>
+
+                                        <button
+                                            onClick={() => {
+                                                dispatch(getOrderById(order._id));
+                                                setShowModal(true);
+                                            }}
+                                        >
+                                            View Details
+                                        </button>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 

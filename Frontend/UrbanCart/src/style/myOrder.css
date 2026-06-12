@@ -45,6 +45,51 @@
        border-color: var(--gold);
 }
 
+.order-main{
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+}
+
+.order-image img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:16px;
+    border:1px solid rgba(212,175,55,.2);
+}
+
+.order-info{
+    flex:1;
+}
+
+.more-items{
+    color:var(--gold);
+    font-size:.9rem;
+}
+
+.order-id{
+    color:#aaa;
+    margin-top:6px;
+}
+
+.order-date{
+    color:#888;
+    margin-bottom:20px;
+}
+
+.order-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:25px;
+}
+
+.total-price{
+    color:var(--gold);
+    font-size:1.3rem;
+    font-weight:700;
+}
  
 
 .order-card-header {
@@ -125,6 +170,53 @@
 .status-badge.cancelled {
     background: #ef4444;
     color: #fff;
+}
+
+.status-tracker{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+    position:relative;
+}
+
+.status-tracker::before{
+    content:"";
+    position:absolute;
+    top:12px;
+    left:0;
+    width:100%;
+    height:2px;
+    background:#333;
+    z-index:0;
+}
+
+.step{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    flex:1;
+}
+
+.step span{
+    width:24px;
+    height:24px;
+    display:block;
+    margin:auto;
+    border-radius:50%;
+    background:#444;
+    border:2px solid #444;
+}
+
+.step.active span{
+    background:var(--gold);
+    border-color:var(--gold);
+    box-shadow:0 0 12px rgba(212,175,55,.5);
+}
+
+.step p{
+    margin-top:8px;
+    font-size:.8rem;
 }
 
 .cancel-order-btn{
@@ -418,7 +510,29 @@ width:fit-content;
         width:120px;
         height:120px;
     }
+
+      .order-main{
+        flex-direction:column;
+    }
+
+    .order-image img{
+        width:100%;
+        height:220px;
+    }
+
+    .order-bottom{
+        flex-direction:column;
+        gap:15px;
+        align-items:flex-start;
+    }
+
+    .status-tracker{
+        overflow-x:auto;
+        gap:20px;
+    }
 }
+
+
 
 @media(max-width:576px){
 
