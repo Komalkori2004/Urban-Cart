@@ -68,6 +68,21 @@ if(discountValue <= 0){
 
 
 
+const updateCoupon=asyncHandler(async(req,res,next)=>{
+    const {id}=req.params
+    const coupon=await Coupon.findById(id)
+    if(!coupon){
+        return next(new ErrorHandler(404,"Coupon not found"))
+    }
+    const updatedCoupon=await Coupon.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
+    res.status(200).json({
+        success:true,
+        message:"Coupon updated successfully",
+        updatedCoupon
+    })
+})
+
+
 // 
 const getAllCoupons=asyncHandler(async(req,res,next)=>{
 
@@ -75,8 +90,9 @@ const getAllCoupons=asyncHandler(async(req,res,next)=>{
     const coupons=await Coupon.find().sort({createdAt:-1})
     res.status(200).json({
         success:true,
+           count: coupons.length,
         coupons
     })
 })
 
-module.exports = { createCoupon,getAllCoupons }
+module.exports = { createCoupon,getAllCoupons,updateCoupon }
