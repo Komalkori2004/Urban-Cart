@@ -68,4 +68,15 @@ if(discountValue <= 0){
 
 
 
-module.exports = { createCoupon }
+// 
+const getAllCoupons=asyncHandler(async(req,res,next)=>{
+
+
+    const coupons=await Coupon.find().sort({createdAt:-1})
+    res.status(200).json({
+        success:true,
+        coupons
+    })
+})
+
+module.exports = { createCoupon,getAllCoupons }
