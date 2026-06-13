@@ -19,30 +19,30 @@ const createCoupon = asyncHandler(async (req, res, next) => {
         applicableFor
     } = req.body;
 
-    const existingCoupon=await Coupon.findOne({code:code.toUpperCase()})
+    const existingCoupon = await Coupon.findOne({ code: code.toUpperCase() })
 
-    if(existingCoupon){
-        return next(new ErrorHandler(400,"Coupon already exists"))
+    if (existingCoupon) {
+        return next(new ErrorHandler(400, "Coupon already exists"))
     }
-    if(
-    new Date(startDate) >=
-    new Date(expiryDate)
-){
-    return next(
-        new ErrorHandler(
-            400,
-            "Expiry date must be after start date"
+    if (
+        new Date(startDate) >=
+        new Date(expiryDate)
+    ) {
+        return next(
+            new ErrorHandler(
+                400,
+                "Expiry date must be after start date"
+            )
         )
-    )
-}
-if(discountValue <= 0){
-    return next(
-        new ErrorHandler(
-            400,
-            "Invalid discount value"
+    }
+    if (discountValue <= 0) {
+        return next(
+            new ErrorHandler(
+                400,
+                "Invalid discount value"
+            )
         )
-    )
-}
+    }
 
 
     const coupon = await Coupon.create({
@@ -56,43 +56,57 @@ if(discountValue <= 0){
         usageLimit,
         applicableFor
     })
-
-
     res.status(201).json({
         success: true,
         message: "Coupon created successfully",
         coupon
     })
-
 })
 
 
 
-const updateCoupon=asyncHandler(async(req,res,next)=>{
-    const {id}=req.params
-    const coupon=await Coupon.findById(id)
-    if(!coupon){
-        return next(new ErrorHandler(404,"Coupon not found"))
+const updateCoupon = asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+    const coupon = await Coupon.findById(id)
+    if (!coupon) {
+        return next(new ErrorHandler(404, "Coupon not found"))
     }
-    const updatedCoupon=await Coupon.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
+    const updatedCoupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
     res.status(200).json({
-        success:true,
-        message:"Coupon updated successfully",
+        success: true,
+        message: "Coupon updated successfully",
         updatedCoupon
     })
 })
 
 
 // 
-const getAllCoupons=asyncHandler(async(req,res,next)=>{
+const getAllCoupons = asyncHandler(async (req, res, next) => {
 
 
-    const coupons=await Coupon.find().sort({createdAt:-1})
+    const coupons = await Coupon.find().sort({ createdAt: -1 })
     res.status(200).json({
-        success:true,
-           count: coupons.length,
+        success: true,
+        count: coupons.length,
         coupons
     })
 })
 
-module.exports = { createCoupon,getAllCoupons,updateCoupon }
+
+
+const deleteCoupon = asyncHandler(async (req, res, next) => {
+    const coupon = await Coupon.findById(req.params.id)
+
+    if (!coupon) {
+        return next(new ErrorHandler(404, "Coupon not found"))
+    }
+
+
+    await coupon.deleteOne()
+    res.status(200).json({
+        success: true,
+        message: "Coupon deleted successfully"
+    })
+})
+
+module.exports = { createCoupon, getAllCoupons, updateCoupon , deleteCoupon}
