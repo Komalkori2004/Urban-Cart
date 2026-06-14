@@ -3,6 +3,8 @@ const asyncHandler = require("../middleware/asyncHandler")
 const ErrorHandler = require("../utils/errorHandler")
 const Coupon = require("../models/couponModel")
 
+const Cart = require("../models/cartModel")
+const Order = require("../models/orderModel")
 
 const createCoupon = asyncHandler(async (req, res, next) => {
 
@@ -106,7 +108,122 @@ const deleteCoupon = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: "Coupon deleted successfully"
+
     })
+
+
 })
 
-module.exports = { createCoupon, getAllCoupons, updateCoupon , deleteCoupon}
+
+
+
+const applyCoupon = asyncHandler(async (req, res, next) => {
+
+    const { couponCode } = req.body
+
+
+    if (!couponCode) {
+        return next(new ErrorHandler(400, "Coupon code is required"))
+    }
+
+    const cart = await Cart.findOne({ user: req.user.id }).populate("items.product")
+
+    if (!cart || cart.items.length === 0) {
+        return next(new ErrorHandler(400, "Cart is empty"))
+
+    }
+
+    const cartTotal = cart.items.reduce((total, item) => {
+        return total + (
+            item.product.price * item.quantity
+
+        )
+
+    }, 0)
+
+    const coupon = await Coupon.findOne({ code: couponCode.toUpperCase() })
+
+    if (!coupon) {
+        return next(new ErrorHandler(404, "Invalid coupon code"))
+    }
+
+    if (!coupon.isActive) {
+        return next(new ErrorHandler(400, "Coupon is not active"))
+    }
+
+    const now = new Date()
+
+ if(now < coupon.startDate){
+    return next(
+        new ErrorHandler(
+            400,
+            "Coupon is not active yet"
+        )
+    )
+}
+
+  if(now > coupon.expiryDate){
+    return next(
+        new ErrorHandler(
+            400,
+            "Coupon has expired"
+        )
+    )
+}
+
+    if(coupon.usedCount >= coupon.usageLimit){
+        return next(new ErrorHandler(400, "Coupon usage limit exceeded"))
+    }
+
+
+    const alreadyUsed= coupon.usedBy.some((userId)=>
+        userId.toString() === req.user.id)
+
+
+    if(alreadyUsed){
+        return next(new ErrorHandler(400, "You have already used this coupon"))
+    
+    }   
+    
+
+    if (
+    coupon.applicableFor ===
+    "first_order"
+) {
+
+    const totalOrders =
+        await Order.countDocuments({
+            user: req.user.id
+        });
+
+    if (totalOrders > 0) {
+        return next(
+            new ErrorHandler(
+                400,
+                "Coupon valid only for first order"
+            )
+        );
+    }
+}
+
+if (
+    cartTotal <
+    coupon.minimumOrderAmount
+) {
+    return next(
+        new ErrorHandler(
+            400,
+            `Minimum order amount should be ₹${coupon.minimumOrderAmount}`
+        )
+    );
+}
+
+return res.status(200).json({
+    success: true,
+    message: "Coupon validation passed"
+})
+
+
+})
+
+module.exports = { createCoupon, getAllCoupons, updateCoupon, deleteCoupon, applyCoupon }
