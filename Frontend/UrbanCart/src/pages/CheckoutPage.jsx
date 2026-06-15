@@ -19,6 +19,13 @@ const CheckoutPage = () => {
     const [selectAddress, setSelectAddress] = useState(null)
 
     const { user, loading, error, addresses } = useSelector(state => state.auth)
+    const {
+        couponCode,
+        discount,
+        finalAmount
+    } = useSelector(
+        (state) => state.coupon
+    );
     const { items } = useSelector(state => state.cart)
     const [shippingAddress, setShippingAddress] = useState({
         fullName: "",
@@ -41,7 +48,14 @@ const CheckoutPage = () => {
         })
     }
 
-    const totalAmount = items.reduce((acc, item) => acc + item.quantity * item.product.price, 0);
+    const cartTotal = items.reduce((acc, item) => acc + item.quantity * item.product.price, 0);
+ const shipping =
+    cartTotal >= 5000 ? 0 : 100;
+
+const payableAmount =
+    discount > 0
+        ? finalAmount + shipping
+        : cartTotal + shipping;
 
 
 
@@ -55,6 +69,7 @@ const CheckoutPage = () => {
                     shippingAddress:
                         selectAddress || shippingAddress,
                     paymentMethod: "COD",
+                    couponCode
                 })
             );
 
@@ -72,7 +87,7 @@ const CheckoutPage = () => {
 
         const resultAction =
             await dispatch(
-                createRozerpayOrder(totalAmount)
+                createRozerpayOrder(payableAmount)
             );
 
         if (
@@ -117,6 +132,7 @@ const CheckoutPage = () => {
                         shippingAddress:
                             selectAddress || shippingAddress,
                         paymentMethod: "RAZORPAY",
+                        couponCode
                     })
                 );
 
@@ -153,6 +169,9 @@ const CheckoutPage = () => {
         }
     }, [addresses]);
 
+    // const shipping =
+    // cartTotal >= 5000 ? 0 : 100;
+    
 
     return (
         <div className="checkout-container">
@@ -184,8 +203,8 @@ const CheckoutPage = () => {
                         <div
                             key={address._id}
                             className={`address-card ${selectAddress?._id === address._id
-                                    ? "selected"
-                                    : ""
+                                ? "selected"
+                                : ""
                                 }`}
                             onClick={() =>
                                 setSelectAddress(address)
@@ -282,19 +301,20 @@ const CheckoutPage = () => {
 
                         <p>
                             <span>Subtotal</span>
-
-                            <span>₹{totalAmount}</span>
+                            <span>₹{cartTotal}</span>
                         </p>
+<p>
+    <span>Shipping</span>
 
-                        <p>
-                            <span>Shipping</span>
+    <span>
+        {shipping === 0
+            ? "Free"
+            : `₹${shipping}`}
+    </span>
+</p>
 
-                            <span>Free</span>
-                        </p>
 
-                        <hr />
-
-                        <p className="total-row">
+                        {/* <p className="total-row">
 
                             <strong>Total</strong>
 
@@ -302,6 +322,25 @@ const CheckoutPage = () => {
                                 ₹{totalAmount}
                             </strong>
 
+                        </p> */}
+                        {discount > 0 && (
+                            <p>
+                                <span>Discount</span>
+                                <span>-₹{discount}</span>
+                            </p>
+                        )}
+                        {couponCode && (
+                            <p className="coupon-applied">
+                                Coupon Applied: {couponCode}
+                            </p>
+                        )}
+                        <hr />
+                        <p className="total-row">
+                            <strong>Total</strong>
+
+                            <strong>
+                                ₹{payableAmount}
+                            </strong>
                         </p>
 
                         <button

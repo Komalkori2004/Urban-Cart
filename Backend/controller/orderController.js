@@ -2,13 +2,14 @@
 const cart = require("../models/cartModel")
 const Order = require("../models/orderModel")
 const Product = require("../models/productModel")
+const Coupon = require("../models/couponModel")
 const asyncHandler = require("../middleware/asyncHandler")
 const ErrorHandler = require("../utils/errorHandler")
 
 const placeOrder = asyncHandler(async (req, res, next) => {
     const userID = req.user.id
 
-    const { shippingAddress, paymentMethod } = req.body
+    const { shippingAddress, paymentMethod, couponCode } = req.body
 
     const cartItems = await cart.findOne({ user: userID }).populate("items.product")
 
@@ -20,8 +21,6 @@ const placeOrder = asyncHandler(async (req, res, next) => {
     if (!cartItems || cartItems.items.length === 0) {
         return next(new ErrorHandler(400, "Cart is empty"))
     }
-
-
 
     for (const item of cartItems.items) {
         const product = await Product.findById(item.product._id)
@@ -36,9 +35,6 @@ const placeOrder = asyncHandler(async (req, res, next) => {
 
         }
     }
-
-
-
     const orderItems = cartItems.items.map((item) => ({
         product: item.product._id,
         name: item.product.name,
@@ -53,14 +49,144 @@ const placeOrder = asyncHandler(async (req, res, next) => {
         return acc + item.product.price * item.quantity
     }, 0)
 
+    let discountAmount = 0;
+    let finalAmount = totalAmount;
 
-    const orderData = {
-        user: userID,
-        items: orderItems,
-        shippingAddress,
-        paymentMethod,
-        totalAmount,
-    };
+let coupon = null;
+
+    if (couponCode) {
+
+         coupon = await Coupon.findOne({
+            code: couponCode.toUpperCase()
+        });
+
+        if (!coupon) {
+            return next(
+                new ErrorHandler(
+                    404,
+                    "Invalid coupon code"
+                )
+            );
+        }
+
+
+        if (!coupon.isActive) {
+            return next(
+                new ErrorHandler(
+                    400,
+                    "Coupon is not active"
+                )
+            );
+        } const now = new Date();
+
+        if (now < coupon.startDate) {
+            return next(
+                new ErrorHandler(
+                    400,
+                    "Coupon is not active yet"
+                )
+            );
+        }
+
+        if (now > coupon.expiryDate) {
+            return next(
+                new ErrorHandler(
+                    400,
+                    "Coupon has expired"
+                )
+            );
+        } if (
+            coupon.usedCount >=
+            coupon.usageLimit
+        ) {
+            return next(
+                new ErrorHandler(
+                    400,
+                    "Coupon usage limit exceeded"
+                )
+            );
+        } const alreadyUsed =
+            coupon.usedBy.some(
+                (userId) =>
+                    userId.toString() === userID
+            );
+
+        if (alreadyUsed) {
+            return next(
+                new ErrorHandler(
+                    400,
+                    "You have already used this coupon"
+                )
+            );
+        }
+        if (
+            coupon.applicableFor ===
+            "first_order"
+        ) {
+
+            const totalOrders =
+                await Order.countDocuments({
+                    user: userID
+                });
+
+            if (totalOrders > 0) {
+                return next(
+                    new ErrorHandler(
+                        400,
+                        "Coupon valid only for first order"
+                    )
+                );
+            }
+        }
+        if (
+            totalAmount <
+            coupon.minimumOrderAmount
+        ) {
+            return next(
+                new ErrorHandler(
+                    400,
+                    `Minimum order amount should be ₹${coupon.minimumOrderAmount}`
+                )
+            );
+        }
+        if (coupon.discountType === "percentage") {
+
+            discountAmount =
+                (totalAmount * coupon.discountValue) / 100;
+
+            if (coupon.maximumDiscountAmount > 0) {
+
+                discountAmount = Math.min(
+                    discountAmount,
+                    coupon.maximumDiscountAmount
+                );
+            }
+
+        } else {
+
+            discountAmount =
+                coupon.discountValue;
+        }
+
+        finalAmount =
+            totalAmount - discountAmount;
+
+    }
+   
+  const orderData = {
+    user: userID,
+    items: orderItems,
+    shippingAddress,
+    paymentMethod,
+
+   originalAmount: totalAmount, // before discount
+
+    totalAmount: finalAmount,    // after discount
+
+    couponCode: couponCode || null,
+
+    discountAmount
+};
     if (paymentMethod === "RAZORPAY") {
         orderData.paymentStatus = "Paid";
         orderData.isPaid = true;
@@ -69,6 +195,14 @@ const placeOrder = asyncHandler(async (req, res, next) => {
 
     const newOrder = await Order.create(orderData);
 
+    if (coupon) {
+
+    coupon.usedCount += 1;
+
+    coupon.usedBy.push(userID);
+
+    await coupon.save();
+}
 
     for (const item of cartItems.items) {
         const product = await Product.findById(item.product._id)
