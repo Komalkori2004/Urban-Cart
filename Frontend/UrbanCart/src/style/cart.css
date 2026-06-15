@@ -285,3 +285,59 @@
         justify-content: center;
     }
 }
+
+
+
+
+.coupon-section{
+    display:flex;
+    gap:10px;
+    margin:20px 0;
+}
+
+.coupon-input{
+    flex:1;
+
+    padding:12px;
+
+    background:#111;
+
+    color:white;
+
+    border:1px solid rgba(212,175,55,.2);
+
+    border-radius:10px;
+
+    transition:.3s ease;
+}
+
+.coupon-input:focus{
+    outline:none;
+    border-color:var(--gold);
+
+    box-shadow:
+    0 0 10px rgba(212,175,55,.2);
+}
+
+.apply-coupon-btn{
+    background:var(--gold);
+
+    color:var(--black);
+
+    border:none;
+
+    padding:0 18px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+}
+
+.apply-coupon-btn:hover{
+    opacity:.9;
+    transform:translateY(-2px);
+}
