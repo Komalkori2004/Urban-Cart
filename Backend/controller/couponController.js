@@ -153,75 +153,109 @@ const applyCoupon = asyncHandler(async (req, res, next) => {
 
     const now = new Date()
 
- if(now < coupon.startDate){
-    return next(
-        new ErrorHandler(
-            400,
-            "Coupon is not active yet"
+    if (now < coupon.startDate) {
+        return next(
+            new ErrorHandler(
+                400,
+                "Coupon is not active yet"
+            )
         )
-    )
-}
+    }
 
-  if(now > coupon.expiryDate){
-    return next(
-        new ErrorHandler(
-            400,
-            "Coupon has expired"
+    if (now > coupon.expiryDate) {
+        return next(
+            new ErrorHandler(
+                400,
+                "Coupon has expired"
+            )
         )
-    )
-}
+    }
 
-    if(coupon.usedCount >= coupon.usageLimit){
+    if (coupon.usedCount >= coupon.usageLimit) {
         return next(new ErrorHandler(400, "Coupon usage limit exceeded"))
     }
 
 
-    const alreadyUsed= coupon.usedBy.some((userId)=>
+    const alreadyUsed = coupon.usedBy.some((userId) =>
         userId.toString() === req.user.id)
 
 
-    if(alreadyUsed){
+    if (alreadyUsed) {
         return next(new ErrorHandler(400, "You have already used this coupon"))
-    
-    }   
-    
+
+    }
+
 
     if (
-    coupon.applicableFor ===
-    "first_order"
-) {
+        coupon.applicableFor ===
+        "first_order"
+    ) {
 
-    const totalOrders =
-        await Order.countDocuments({
-            user: req.user.id
-        });
+        const totalOrders =
+            await Order.countDocuments({
+                user: req.user.id
+            });
 
-    if (totalOrders > 0) {
+        if (totalOrders > 0) {
+            return next(
+                new ErrorHandler(
+                    400,
+                    "Coupon valid only for first order"
+                )
+            );
+        }
+    }
+
+    if (
+        cartTotal <
+        coupon.minimumOrderAmount
+    ) {
         return next(
             new ErrorHandler(
                 400,
-                "Coupon valid only for first order"
+                `Minimum order amount should be ₹${coupon.minimumOrderAmount}`
             )
         );
     }
-}
+
+    let discount = 0;
+
+  
 
 if (
-    cartTotal <
-    coupon.minimumOrderAmount
+    coupon.discountType ===
+    "percentage"
 ) {
-    return next(
-        new ErrorHandler(
-            400,
-            `Minimum order amount should be ₹${coupon.minimumOrderAmount}`
-        )
-    );
+
+    discount =
+        (cartTotal *
+            coupon.discountValue) /
+        100;
+
+    if (
+        coupon.maximumDiscountAmount > 0
+    ) {
+
+        discount = Math.min(
+            discount,
+            coupon.maximumDiscountAmount
+        );
+    }
+}
+else{
+   discount = coupon.discountValue;
 }
 
+const finalAmount =
+    cartTotal - discount;
+
 return res.status(200).json({
-    success: true,
-    message: "Coupon validation passed"
-})
+    success:true,
+    couponCode: coupon.code,
+    cartTotal,
+    discount,
+    finalAmount
+});
 
 
 })

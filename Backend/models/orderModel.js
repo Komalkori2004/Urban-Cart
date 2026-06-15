@@ -89,6 +89,21 @@ isPaid: {
   default: false
 },
 
+couponCode: {
+    type: String,
+    default: null
+},
+
+discountAmount: {
+    type: Number,
+    default: 0
+},
+
+originalAmount: {
+    type: Number,
+    required: true
+} , 
+
 paidAt: Date,
     deliveredAt: {
         type: Date,
