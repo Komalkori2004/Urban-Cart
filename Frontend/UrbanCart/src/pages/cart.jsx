@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-
+import { resetCoupon } from '../redux/feature/couponSlice'
 import { getCart, updateCart, removeCart } from '../redux/thunks/cartThunks'
 import { applyCoupon } from '../redux/thunks/couponThunk'
 import { useEffect, useState } from 'react'
@@ -122,18 +122,16 @@ const CartPage = () => {
                                                 className="qty-btn"
                                                 disabled={item.quantity <= 1}
 
-                                                onClick={() =>
+                                                onClick={() => {
                                                     dispatch(
                                                         updateCart({
-
-                                                            productId:
-                                                                item.product._id,
-
+                                                            productId: item.product._id,
                                                             action: "decrease"
                                                         })
-                                                    )
-                                                }
+                                                    );
 
+                                                    dispatch(resetCoupon());
+                                                }}
                                             >
                                                 -
                                             </button>
@@ -149,17 +147,16 @@ const CartPage = () => {
                                             <button
                                                 type="button"
                                                 className="qty-btn"
-                                                onClick={() =>
+                                                onClick={() => {
                                                     dispatch(
                                                         updateCart({
-
-                                                            productId:
-                                                                item.product._id,
-
+                                                            productId: item.product._id,
                                                             action: "increase"
                                                         })
-                                                    )
-                                                }
+                                                    );
+
+                                                    dispatch(resetCoupon());
+                                                }}
 
                                             >
                                                 +
@@ -172,14 +169,13 @@ const CartPage = () => {
                                             type="button"
                                             className="remove-btn"
 
-                                            onClick={() =>
+                                            onClick={() => {
                                                 dispatch(
-                                                    removeCart(
-                                                        item.product._id
-                                                    )
-                                                )
-                                            }
+                                                    removeCart(item.product._id)
+                                                );
 
+                                                dispatch(resetCoupon());
+                                            }}
                                         >
 
                                             Remove

@@ -17,13 +17,15 @@ const couponSlice=createSlice({
     name:"coupon",
     initialState,
 reducers:{
-    resetCoupon:(state)=>{
+resetCoupon:(state)=>{
         state.couponCode=""
         state.cartTotal=0
         state.discount=0
         state.finalAmount=0
         state.error=null
     }
+
+
 },
 
     extraReducers:(builder)=>{
