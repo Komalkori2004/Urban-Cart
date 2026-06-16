@@ -5,29 +5,38 @@ const ErrorHandler = require("../utils/errorHandler")
 
 const authMiddleware = (req, res, next) => {
   try {
+    const token = req.headers.authorization?.split(" ")[1];
 
-    const token =
-      req.headers.authorization.split(" ")[1];
-    const decode =
-      jwt.verify(
-        token,
-        process.env.JWT_SECRET
-      );
-    req.user = decode;
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Please login first",
+      });
+    }
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+    req.user = decoded;
     next();
 
   } catch (error) {
 
-
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({
+        success: false,
+        message: "Session expired. Please login again",
+      });
+    }
 
     return res.status(401).json({
       success: false,
-      message: error.message
+      message: "Invalid token",
     });
   }
-
-}
-
+};
 
 const authorizeRoles = (...roles) => {
   return (req, res, next) => {

@@ -423,12 +423,6 @@ const getAddresses=asyncHandler(async(req,res,next)=>{
   })
 })
 
-
-
-
-
-
-
 module.exports = {
   registerUser,
   LoginUser,

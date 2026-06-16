@@ -57,6 +57,12 @@ export const getCart = createAsyncThunk(
         }
         catch (error) {
 
+            if (error.response?.status === 401) {
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+    }
+
             return thunkAPI.rejectWithValue(error.response.data.message)
 
         }
