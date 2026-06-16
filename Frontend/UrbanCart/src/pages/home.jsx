@@ -10,19 +10,20 @@ import NewArrivals from '../home/NewArrivals'
 
 import BrandStory from '../home/BrandStory'
 import Testimonials from '../home/testimonials'
+import CollectionShowcase from '../home/collectionshow'
 function HomePage() {
   return (
     <>
     <Hero/>
+     <FeatureBar/>
     <CategoryCarousel/>
         <FeatureProduct/>
-  
-
     <OfferBanner/>
-      <FeatureBar/>
-      {/* <NewArrivals/> */}
-      <BrandStory/>
+       <BrandStory/>
       <Testimonials/>
+      <CollectionShowcase/>
+
+      {/* <NewArrivals/> */}
     
     </>
   )
