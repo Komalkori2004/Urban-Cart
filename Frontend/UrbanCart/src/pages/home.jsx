@@ -6,6 +6,7 @@ import FeatureProduct from '../home/featureProduct'
 import CategoryCarousel from '../components/CategoryCarousel'
 
 import OfferBanner from '../home/OfferBanner'
+import NewArrivals from '../home/NewArrivals'
 function HomePage() {
   return (
     <>
@@ -16,6 +17,7 @@ function HomePage() {
 
     <OfferBanner/>
       <FeatureBar/>
+      {/* <NewArrivals/> */}
     
     </>
   )

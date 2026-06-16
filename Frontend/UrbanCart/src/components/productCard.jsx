@@ -11,7 +11,6 @@ function ProductCard({
         <Link to={`/product/${product.slug}`}>
             <div
                 className="product-card"
-                
             >
 
                 <div className="product-image-wrapper">
