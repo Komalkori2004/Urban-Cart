@@ -9,6 +9,7 @@ import OfferBanner from '../home/OfferBanner'
 import NewArrivals from '../home/NewArrivals'
 
 import BrandStory from '../home/BrandStory'
+import Testimonials from '../home/testimonials'
 function HomePage() {
   return (
     <>
@@ -21,6 +22,7 @@ function HomePage() {
       <FeatureBar/>
       {/* <NewArrivals/> */}
       <BrandStory/>
+      <Testimonials/>
     
     </>
   )
