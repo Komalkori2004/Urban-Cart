@@ -6,6 +6,7 @@ import { addToWishlist, removeWishlist, getWishlist } from "../redux/thunks/wish
 
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import ProductCard from "../components/productCard"
 
 import "../style/product.css"
 
@@ -184,110 +185,54 @@ const Product = () => {
                 <div className="product-container">
 
                     {
-                        ShortedProducts?.map((product) => (
+                        ShortedProducts?.map((product) => {
 
-                            <Link to={`/product/${product.slug}`} key={product._id}>
-                                <div
-                                    className="product-card"
+                            const isWishlisted =
+                                wishlist.some(
+                                    item => item._id === product._id
+                                );
+
+                            return (
+
+                                <ProductCard
                                     key={product._id}
-                                >
+                                    product={product}
+                                    isWishlisted={isWishlisted}
 
-                                    <div className="product-image-wrapper">
+                                    onWishlist={async (e) => {
 
-                                        <img
-                                            src={product.images[0]?.url}
-                                            alt={product.name}
-                                            className="product-image"
-                                        />
+                                        e.preventDefault();
 
-                                        <button
-                                            className="wishlist-btn"
-                                            onClick={async (e) => {
-                                                e.preventDefault()
+                                        if (isWishlisted) {
 
-                                                const isWishlisted = wishlist.some(
-                                                    (item) => item._id === product._id
-                                                )
+                                            dispatch(
+                                                removeWishlist(product._id)
+                                            );
 
-                                                if (isWishlisted) {
-                                                    dispatch(removeWishlist(product._id))
-                                                } else {
-                                                    await dispatch(addToWishlist(product._id))
-                                                    dispatch(getWishlist())
-                                                }
-                                            }}
-                                        >
-                                            {
-                                                wishlist.some(
-                                                    (item) => item._id === product._id
-                                                )
-                                                    ? "❤️"
-                                                    : "🤍"
-                                            }
-                                        </button>
+                                        } else {
 
-                                    </div>
+                                            await dispatch(
+                                                addToWishlist(product._id)
+                                            );
 
+                                            dispatch(getWishlist());
+                                        }
+                                    }}
 
-                                    <div className="product-info">
+                                    onAddToCart={(e) => {
 
-                                        <h3>{product.name}</h3>
+                                        e.preventDefault();
 
-
-
-                                        <p className="product-brand">
-                                            {product.brand}
-                                        </p>
-
-
-
-                                        <div className="price-section">
-
-                                            <span className="price">
-                                                ₹ {product.price}
-                                            </span>
-
-
-                                            {/* 
-                                        <span className="old-price">
-                                            ₹ 149999
-                                        </span> */}
-
-                                        </div>
-
-
-
-                                        <p className="stock">
-
-                                            {
-                                                product.stock > 0
-                                                    ? "In Stock"
-                                                    : "Out Of Stock"
-                                            }
-
-                                        </p>
-
-
-
-                                        <button
-                                            onClick={(e) => {
-                                                e.preventDefault()
-                                                dispatch(addToCart({
-                                                    productId: product._id,
-
-                                                    quantity: 1
-                                                }))
-                                            }}
-                                        >
-                                            Add To Cart
-                                        </button>
-
-                                    </div>
-
-                                </div>
-                            </Link>
-
-                        ))
+                                        dispatch(
+                                            addToCart({
+                                                productId: product._id,
+                                                quantity: 1
+                                            })
+                                        );
+                                    }}
+                                />
+                            );
+                        })
                     }
 
                 </div>
