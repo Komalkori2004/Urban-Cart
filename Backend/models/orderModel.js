@@ -78,39 +78,42 @@ const orderSchema = new mongoose.Schema({
         default: "Pending",
     },
 
-paymentInfo: {
-    paymentId: String,
-    razorpayOrderId: String,
-    status: String
-},
+    paymentInfo: {
+        paymentId: String,
+        razorpayOrderId: String,
+        status: String
+    },
 
-isPaid: {
-  type: Boolean,
-  default: false
-},
+    isPaid: {
+        type: Boolean,
+        default: false
+    },
 
-couponCode: {
-    type: String,
-    default: null
-},
+    couponCode: {
+        type: String,
+        default: null
+    },
 
-discountAmount: {
+    discountAmount: {
+        type: Number,
+        default: 0
+    },
+
+    originalAmount: {
+        type: Number,
+        required: true
+    },
+shippingCharge: {
     type: Number,
     default: 0
 },
-
-originalAmount: {
-    type: Number,
-    required: true
-} , 
-
-paidAt: Date,
+    paidAt: Date,
     deliveredAt: {
         type: Date,
     }
 
 
-},{ timestamps: true })
+}, { timestamps: true })
 
 
 module.exports = mongoose.model("Order", orderSchema)

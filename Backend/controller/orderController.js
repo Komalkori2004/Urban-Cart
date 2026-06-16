@@ -48,15 +48,17 @@ const placeOrder = asyncHandler(async (req, res, next) => {
     const totalAmount = cartItems.items.reduce((acc, item) => {
         return acc + item.product.price * item.quantity
     }, 0)
+    const shippingCharge =
+        totalAmount >= 5000 ? 0 : 100;
 
     let discountAmount = 0;
     let finalAmount = totalAmount;
 
-let coupon = null;
+    let coupon = null;
 
     if (couponCode) {
 
-         coupon = await Coupon.findOne({
+        coupon = await Coupon.findOne({
             code: couponCode.toUpperCase()
         });
 
@@ -172,21 +174,24 @@ let coupon = null;
             totalAmount - discountAmount;
 
     }
-   
-  const orderData = {
-    user: userID,
-    items: orderItems,
-    shippingAddress,
-    paymentMethod,
 
-   originalAmount: totalAmount, // before discount
+    const orderData = {
+        user: userID,
+        items: orderItems,
+        shippingAddress,
+        paymentMethod,
 
-    totalAmount: finalAmount,    // after discount
+        originalAmount: totalAmount, // before discount
 
-    couponCode: couponCode || null,
 
-    discountAmount
-};
+        totashippingCharge,
+        discountAmount,
+        totalAmount: finalAmount + shippingCharge,  // after discount
+
+        couponCode: couponCode || null,
+
+      
+    };
     if (paymentMethod === "RAZORPAY") {
         orderData.paymentStatus = "Paid";
         orderData.isPaid = true;
@@ -197,12 +202,12 @@ let coupon = null;
 
     if (coupon) {
 
-    coupon.usedCount += 1;
+        coupon.usedCount += 1;
 
-    coupon.usedBy.push(userID);
+        coupon.usedBy.push(userID);
 
-    await coupon.save();
-}
+        await coupon.save();
+    }
 
     for (const item of cartItems.items) {
         const product = await Product.findById(item.product._id)
