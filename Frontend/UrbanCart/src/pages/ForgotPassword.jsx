@@ -2,9 +2,10 @@
 
 import React from 'react'
 import { useState } from 'react'
+import "../Auth/auth.css"
 
 import { useDispatch, useSelector } from 'react-redux'
-
+import { Link } from 'react-router-dom'
 import { forgotPassword } from '../redux/thunks/authThunks'
 
 function ForgotPassword() {
@@ -23,70 +24,82 @@ function ForgotPassword() {
     }
 
 
-    return (
-        <>
+   
+return (
+    <div className="auth-container">
 
-            <div
-                className="forgot-container">
+        <div className="auth-box">
 
-                <form
-                    onSubmit={handleSubmit}
+            <img
+                src="/logo/nav-logo.png"
+                alt="UrbanCart"
+                className="auth-logo"
+            />
 
-                    className="forgot-form"
+            <h2 className="auth-title">
+                Forgot Password
+            </h2>
+
+            <p className="auth-subtitle">
+                Enter the email associated with your account
+                and we'll send you a secure password reset link.
+            </p>
+
+            <form
+                onSubmit={handleSubmit}
+                className="auth-form"
+            >
+
+                <input
+                    type="email"
+                    className="auth-input"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) =>
+                        setEmail(e.target.value)
+                    }
+                />
+
+                <button
+                    type="submit"
+                    className="auth-btn"
                 >
-
-                    <h2>
-                        Forgot Password
-                    </h2>
-
-
-
-                    <input
-                        type="email"
-
-                        placeholder=
-                        "Enter your email"
-
-                        value={email}
-
-                        onChange={(e) =>
-                            setEmail(e.target.value)
-                        }
-                    />
-
-
-
-                    <button type="submit">
-
-                        {
-                            loading
-                                ?
-                                "Sending..."
-                                :
-                                "Send Reset Link"
-                        }
-
-                    </button>
-
                     {
-                        message &&
-                        <p>{message}</p>
+                        loading
+                            ? "Sending..."
+                            : "Send Reset Link"
                     }
+                </button>
+
+            </form>
+
+            <p className="auth-link">
+                Remember your password?
+                <Link to="/login">
+                    Login
+                </Link>
+            </p>
+
+            {
+                message &&
+                <p className="auth-success">
+                    {message}
+                </p>
+            }
+
+            {
+                error &&
+                <p className="auth-error">
+                    {error}
+                </p>
+            }
+
+        </div>
+
+    </div>
+)
 
 
-
-                    {
-                        error &&
-                        <p>{error}</p>
-                    }
-
-                </form>
-
-            </div>
-
-
-        </>
-    )
 }
 
 export default ForgotPassword
