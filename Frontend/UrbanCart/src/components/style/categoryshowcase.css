@@ -5,19 +5,20 @@
    margin: 0 auto;
    padding: 0 1rem;
 }
-.category-image-wrapper {
-    padding: 50px 0;
-    background: var(--black);
-    overflow: hidden;
-}
-
 .category-showcase-section {
-    padding: 50px 0 !important;
-    background: var(--black);
-    overflow: hidden;
+
+ 
+   padding:90px 0;
+
+  background:var(--black);
+
+  overflow:hidden;
 }
 
-
+.category-showcase-header {
+  text-align: center;
+ margin:0 auto 55px;
+}
 
 .category-subtitle {
   color: #d4af37;
