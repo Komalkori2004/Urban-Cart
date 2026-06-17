@@ -46,6 +46,7 @@ import { getWishlist } from '../redux/thunks/wishlistThunks'
 import { getCart } from '../redux/thunks/cartThunks'
 
 import AdminUsers from '../admin/AdminUsers'
+import Footer from '../components/Footer'
 
 
 const AppRouter = () => {
@@ -187,7 +188,8 @@ const AppRouter = () => {
                     </Route>
 
                 </Routes>
-
+                
+<Footer/>
             </BrowserRouter>
         </>
     )
