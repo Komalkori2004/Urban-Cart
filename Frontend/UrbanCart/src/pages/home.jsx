@@ -11,6 +11,7 @@ import NewArrivals from '../home/NewArrivals'
 import BrandStory from '../home/BrandStory'
 import Testimonials from '../home/testimonials'
 import CollectionShowcase from '../home/collectionshow'
+import InstagramGallery from '../home/InstagramGallery'
 function HomePage() {
   return (
     <>
@@ -22,6 +23,7 @@ function HomePage() {
        <BrandStory/>
       <Testimonials/>
       <CollectionShowcase/>
+      <InstagramGallery/>
 
       {/* <NewArrivals/> */}
     
