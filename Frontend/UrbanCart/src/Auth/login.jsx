@@ -1,13 +1,12 @@
 import React from 'react'
-
+import './auth.css'
 
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../redux/thunks/authThunks'
+import { useNavigate, Link } from 'react-router-dom'
 
 const Login = () => {
-
 
     const navigate = useNavigate()
     const [formData, setForm] = useState({
@@ -50,21 +49,62 @@ const Login = () => {
             <div className="auth-container">
 
                 <div className="auth-box">
-                    <h2>Login</h2>
+
+                    <img
+
+                        src="/logo/nav-logo.png"
+                        alt="UrbanCart"
+
+
+                        className="auth-logo"
+                    />
+
+                    <h2 className="auth-title">
+                        Welcome Back
+                    </h2>
+
+                    <p className="auth-subtitle">
+                        Sign in to continue your UrbanCart journey.
+                    </p>
+
+
                     <form className="auth-form" onSubmit={handleSubmite}>
 
                         {/* <input type="text" name="name" placeholder="name" onChange={handleChange} value={formData.name} /><br/> */}
-                        <input type="email" name="email" placeholder="email" onChange={handleChange} value={formData.email} /><br />
-                        <input type="password" name="password" placeholder="password" onChange={handleChange} value={formData.password} /><br />
-                        <button type="submit">{loading ? "Loading..." : "login"}</button>
+                        <input type="email" className="auth-input" name="email" placeholder="email" onChange={handleChange} value={formData.email} />
+                        <input type="password" className="auth-input" name="password" placeholder="password" onChange={handleChange} value={formData.password} />
+                        <button type="submit" className="auth-btn">
+                            {loading ? "Signing In..." : "Login"}
+                        </button>
+
+                        <p className="auth-link">
+                            Forgot Password?
+                            <Link to="/forgot-password">
+                                Reset Here
+                            </Link>
+                        </p>
+
+                        <p className="auth-link">
+                            Don't have an account?
+                            <Link to="/signup">
+                                Create Account
+                            </Link>
+                        </p>
+
+                        {error && (
+                            <p className="auth-error">
+                                {error}
+                            </p>
+                        )}
 
                     </form>
-                    {error && <p>{error}</p>}
+
 
                 </div>
 
 
             </div>
+
         </>
     )
 }
