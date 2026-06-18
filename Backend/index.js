@@ -22,6 +22,8 @@ const couponRouter=require("./routes/couponRouter")
 
 const NewsletterRouter=require("./routes/newsletterRouter")
 
+const ContactRouter=require("./routes/contactRouter")
+
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
 
@@ -49,6 +51,9 @@ app.use("/api/payment",paymentRouter)
 
 app.use("/api/coupon",couponRouter)
 app.use("/api/newsletter",NewsletterRouter)
+app.use("/api/contact",ContactRouter)
+
+
 
 
 
