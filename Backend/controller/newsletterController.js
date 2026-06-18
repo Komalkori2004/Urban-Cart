@@ -45,6 +45,18 @@ const subscribeNewsletter = asyncHandler(async (req, res, next) => {
 
 
 
+
+const getSubscribers = asyncHandler(async (req, res, next) => {
+    const subscribers = await Newsletter.find().sort({ createdAt: -1 })
+  
+    res.status(200).json({
+        success: true,
+        count: subscribers.length,
+        subscribers
+    })
+})
+
 module.exports = {
-  subscribeNewsletter
+    subscribeNewsletter,
+    getSubscribers
 }
