@@ -17,10 +17,10 @@ const cartRouter = require("./routes/cartRouter")
 const CategoryRouter = require("./routes/categoryRouter")
 const OrderRouter = require("./routes/orderRouter")
 const wishlistRouter=require("./routes/wishlistRoute")
-
 const paymentRouter=require("./routes/paymentRoutes")
-
 const couponRouter=require("./routes/couponRouter")
+
+const NewsletterRouter=require("./routes/newsletterRouter")
 
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
@@ -48,6 +48,7 @@ app.use("/api/wishlist",wishlistRouter)
 app.use("/api/payment",paymentRouter)
 
 app.use("/api/coupon",couponRouter)
+app.use("/api/newsletter",NewsletterRouter)
 
 
 
