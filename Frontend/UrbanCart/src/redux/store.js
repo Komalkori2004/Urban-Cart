@@ -9,6 +9,7 @@ import wishlistReducer from "./feature/wishlistSlice";
 import reviewReducer from "./feature/reviewSlice";
 
 import couponReducer from "./feature/couponSlice"
+import newsletterReducer from "./feature/newsletterSlice"
 export const store = configureStore({
 
     reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
         order: orderReducer,
         wishlist: wishlistReducer,
         review: reviewReducer,
-        coupon:couponReducer
+        coupon:couponReducer,
+        newsletter:newsletterReducer
 
 
 
