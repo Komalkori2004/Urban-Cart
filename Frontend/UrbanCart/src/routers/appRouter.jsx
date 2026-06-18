@@ -36,6 +36,9 @@ import WishlistPage from '../pages/WishlistPage'
 
 import AddAddressPage from '../components/AddAddressPage'
 
+import AdminUsers from '../admin/AdminUsers'
+import Footer from '../components/Footer'
+import Subscribers from "../admin/Subscribers"
 
 
 
@@ -45,8 +48,6 @@ import { useDispatch } from "react-redux"
 import { getWishlist } from '../redux/thunks/wishlistThunks'
 import { getCart } from '../redux/thunks/cartThunks'
 
-import AdminUsers from '../admin/AdminUsers'
-import Footer from '../components/Footer'
 
 
 const AppRouter = () => {
@@ -183,6 +184,10 @@ const AppRouter = () => {
                         <Route
                             path='all-users'
                             element={<AdminUsers />}
+                        />
+                          <Route
+                            path='all-Subscribers'
+                            element={<Subscribers />}
                         />
 
                     </Route>
