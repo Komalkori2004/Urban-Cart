@@ -7,9 +7,13 @@ const AdminSidebar = () => {
     return (
         <>
             <div className="admin-sidebar">
-                <h2 className='sidebar-logo'>
+
+            <NavLink to="/">
+                 <h2 className='sidebar-logo'>  
                     urbanCart
                 </h2>
+            </NavLink>
+               
 
                 <nav className="sidebar-links">
                     <NavLink
