@@ -58,6 +58,22 @@ const createContact = asyncHandler(async (req, res, next) => {
 
 
 
+const getContact = asyncHandler(async (req, res, next) => {
+
+
+
+    const contacts = await Contact.find().sort({ createdAt: -1 })
+    res.status(200).json({
+        success: true,
+        count: contact.length,
+        contacts
+    })
+
+})
+
+
+
 module.exports = {
-    createContact
+    createContact,
+    getContact
 }
