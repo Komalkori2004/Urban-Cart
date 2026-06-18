@@ -1,0 +1,24 @@
+
+
+
+const mongoose = require("mongoose")
+
+
+const newsletterSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: [true, "Email is required"],
+        unique: true,
+        lowercase: true,
+        trim: true
+
+    },
+    status: {
+        type: String,
+        default: "homepage"
+    }
+}, { timestamps: true })
+
+
+
+module.exports = mongoose.model("Newsletter", newsletterSchema)

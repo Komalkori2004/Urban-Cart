@@ -1,187 +1,163 @@
-import React,{ useState }from "react"
+import React, { useState } from "react"
 
-import {useDispatch,useSelector} from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
-import {useParams,useNavigate,Link} from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import "../Auth/auth.css"
 
 import {
-resetPassword
+   resetPassword
 }
 
-from "../redux/thunks/authThunks"
+   from "../redux/thunks/authThunks"
 
 
 
-function ResetPassword(){
+function ResetPassword() {
 
-   const [password,setPassword] = useState("")
-
-
-
-   const [confirmPassword,setConfirmPassword]= useState("")
+   const [password, setPassword] = useState("")
 
 
 
-   const dispatch =
-   useDispatch()
+   const [confirmPassword, setConfirmPassword] = useState("")
 
 
 
-   const navigate =
-   useNavigate()
+   const dispatch = useDispatch()
 
 
 
-   const { token } =
-   useParams()
+   const navigate = useNavigate()
 
 
 
-   const {
-      loading,
-      error,
-      message
-   }
-   =
-   useSelector(
-   (state)=>state.auth
-   )
+   const { token } = useParams()
+
+
+
+   const { loading, error, message } = useSelector((state) => state.auth)
 
 
 
    const handleSubmit =
-   async(e)=>{
+      async (e) => {
 
-      e.preventDefault()
+         e.preventDefault()
 
 
 
-      if(
-         password !==
-         confirmPassword
-      ){
+         if (password !== confirmPassword) {
 
-         return alert(
-            "Passwords do not match"
-         )
+            return alert(
+               "Passwords do not match"
+            )
+         }
+
+
+
+         const result =
+            await dispatch(
+
+               resetPassword({ token, password }))
+
+
+
+         if (result.payload?.success) { 
+            navigate("/login")
+          }
       }
 
 
 
-      const result =
-      await dispatch(
 
-         resetPassword({
+   return (
 
-            token,
+      <div className="auth-container">
 
-            password
+         <div className="auth-box">
 
-         })
-      )
-
-
-
-      if(
-         result.payload?.success
-      ){
-
-         navigate("/login")
-      }
-   }
-
-
-
-  
-return(
-
-   <div className="auth-container">
-
-      <div className="auth-box">
-
-         <img
-            src="/logo/nav-logo.png"
-            alt="UrbanCart"
-            className="auth-logo"
-         />
-
-         <h2 className="auth-title">
-            Create New Password
-         </h2>
-
-         <p className="auth-subtitle">
-            Your new password should be secure and
-            different from previously used passwords.
-         </p>
-
-         <form
-            onSubmit={handleSubmit}
-            className="auth-form"
-         >
-
-            <input
-               type="password"
-               className="auth-input"
-               placeholder="New Password"
-               value={password}
-               onChange={(e)=>
-                  setPassword(e.target.value)
-               }
+            <img
+               src="/logo/nav-logo.png"
+               alt="UrbanCart"
+               className="auth-logo"
             />
 
-            <input
-               type="password"
-               className="auth-input"
-               placeholder="Confirm Password"
-               value={confirmPassword}
-               onChange={(e)=>
-                  setConfirmPassword(e.target.value)
-               }
-            />
+            <h2 className="auth-title">
+               Create New Password
+            </h2>
 
-            <button
-               type="submit"
-               className="auth-btn"
+            <p className="auth-subtitle">
+               Your new password should be secure and
+               different from previously used passwords.
+            </p>
+
+            <form
+               onSubmit={handleSubmit}
+               className="auth-form"
             >
 
-               {
-                  loading
-                  ?
-                  "Updating..."
-                  :
-                  "Reset Password"
-               }
+               <input
+                  type="password"
+                  className="auth-input"
+                  placeholder="New Password"
+                  value={password}
+                  onChange={(e) =>
+                     setPassword(e.target.value)
+                  }
+               />
 
-            </button>
+               <input
+                  type="password"
+                  className="auth-input"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) =>
+                     setConfirmPassword(e.target.value)
+                  }
+               />
 
-         </form>
+               <button
+                  type="submit"
+                  className="auth-btn"
+               >
 
-         <p className="auth-link">
-            Back to
-            <Link to="/login">
-               Login
-            </Link>
-         </p>
+                  {
+                     loading
+                        ?
+                        "Updating..."
+                        :
+                        "Reset Password"
+                  }
 
-         {
-            message &&
-            <p className="auth-success">
-               {message}
+               </button>
+
+            </form>
+
+            <p className="auth-link">
+               Back to
+               <Link to="/login">
+                  Login
+               </Link>
             </p>
-         }
 
-         {
-            error &&
-            <p className="auth-error">
-               {error}
-            </p>
-         }
+            {
+               message &&
+               <p className="auth-success">
+                  {message}
+               </p>
+            }
+
+            {
+               error &&
+               <p className="auth-error">
+                  {error}
+               </p>
+            }
+
+         </div>
 
       </div>
-
-   </div>
-)
+   )
 
 
 }
