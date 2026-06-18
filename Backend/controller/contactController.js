@@ -72,8 +72,22 @@ const getContact = asyncHandler(async (req, res, next) => {
 })
 
 
+const markAsRead = asyncHandler(async(req,res,next)=>{
+    const contact = await Contact.findById(req.params.id)
+    if(!contact){
+        return next(new ErrorHandler(404," Message not found"))
+    }
 
+    contact.isRead = true 
+    await contact.save()
+    res.status(200).json({
+        success:true,
+        message:"Message marked as read"
+    })
+
+})
 module.exports = {
     createContact,
-    getContact
+    getContact,
+    markAsRead
 }
