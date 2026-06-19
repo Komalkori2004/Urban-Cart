@@ -1,4 +1,7 @@
 import React from 'react'
+import { lazy, Suspense } from "react";
+
+
 
 import Hero from '../home/hero'
 import FeatureBar from '../home/FeatureBar'
@@ -8,12 +11,26 @@ import CategoryCarousel from '../components/CategoryCarousel'
 import OfferBanner from '../home/OfferBanner'
 import NewArrivals from '../home/NewArrivals'
 
-import BrandStory from '../home/BrandStory'
-import Testimonials from '../home/testimonials'
-import CollectionShowcase from '../home/collectionshow'
-import InstagramGallery from '../home/InstagramGallery'
-import NewsletterSection from '../home/NewsletterSection'
-import ContactUs from '../components/ContactUs'
+const BrandStory = lazy(() =>
+  import("../home/BrandStory")
+);
+
+const Testimonials = lazy(() =>
+  import("../home/testimonials")
+)
+const CollectionShowcase = lazy(() =>
+  import("../home/collectionshow")
+);
+const InstagramGallery = lazy(() =>
+  import("../home/InstagramGallery")
+);
+const NewsletterSection = lazy(() =>
+  import("../home/NewsletterSection")
+);
+
+const ContactUs = lazy(() =>
+  import("../components/ContactUs")
+);
 function HomePage() {
   return (
     <>
@@ -22,12 +39,14 @@ function HomePage() {
     <CategoryCarousel/>
         <FeatureProduct/>
     <OfferBanner/>
-       <BrandStory/>
-      <Testimonials/>
-      <CollectionShowcase/>
-      <InstagramGallery/>
-<NewsletterSection/>
-<ContactUs/>
+      <Suspense fallback={null}>
+    <BrandStory />
+    <Testimonials />
+    <CollectionShowcase />
+    <InstagramGallery />
+    <NewsletterSection />
+    <ContactUs />
+</Suspense>
       {/* <NewArrivals/> */}
     
     </>
