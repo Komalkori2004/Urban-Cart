@@ -34,11 +34,14 @@ const SingleProduct = () => {
 
     const { singleProduct, products, loading, error } = useSelector((state) => state.products)
 
-    useEffect(() => {
-        dispatch(getsingleProduct(slug))
-        dispatch(getAllproduct())
+useEffect(() => {
+    dispatch(getsingleProduct(slug))
 
-    }, [slug, dispatch])
+    if (products.length === 0) {
+        dispatch(getAllproduct())
+    }
+
+}, [slug, dispatch, products.length])
 
 
     const incressQty = () => {

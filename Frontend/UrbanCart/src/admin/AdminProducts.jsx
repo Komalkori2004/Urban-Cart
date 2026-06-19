@@ -17,10 +17,13 @@ const AdminProducts = () => {
     const [deleteLoading, setDeleteLoading] = useState(null)
     const { products, loading, error } = useSelector((state) => state.products)
 
-    useEffect(() => {
-        dispatch(getAllproduct())
-    }, [dispatch])
+useEffect(() => {
 
+    if (products.length === 0) {
+        dispatch(getAllproduct())
+    }
+
+}, [dispatch, products.length])
 
     const handleDelete = (id) => {
         Swal.fire({

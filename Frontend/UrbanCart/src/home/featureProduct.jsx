@@ -16,10 +16,13 @@ const FeatureProduct = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { products = [] } = useSelector((state) => state.products)
-    useEffect(() => {
-        dispatch(getAllproduct())
-    }, [dispatch])
+useEffect(() => {
 
+    if(products.length === 0){
+        dispatch(getAllproduct())
+    }
+
+}, [dispatch, products.length])
     return (
         <>
 

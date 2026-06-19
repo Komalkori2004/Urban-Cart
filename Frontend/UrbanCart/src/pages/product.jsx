@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { getAllproduct } from "../redux/thunks/productThunks"
 import { addToCart } from "../redux/thunks/cartThunks"
 import { getAllCategory } from "../redux/thunks/categoryThunks"
@@ -45,43 +45,58 @@ const Product = () => {
         }, 500)
         return () => clearTimeout(timer)
     }, [search])
+    const filteredProducts = useMemo(() => {
 
-    const filteredProducts =
-        products.filter((product) => {
-            const matchCategory = selectedCategory === "All" || product.category === selectedCategory
+        return products.filter((product) => {
 
-            const matchSearch = product.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+            const matchCategory =
+                selectedCategory === "All" ||
+                product.category === selectedCategory
+
+            const matchSearch =
+                product.name
+                    .toLowerCase()
+                    .includes(
+                        debouncedSearch.toLowerCase()
+                    )
 
             return matchCategory && matchSearch
-
-
         })
 
-
-    const ShortedProducts =
-        [...filteredProducts].sort((a, b) => {
-            if (SortOption === "lowToHigh") {
-                return a.price - b.price
-            }
-            if (SortOption === "highToLow") {
-                return b.price - a.price
-            }
-            return 0
-        })
+    }, [
+        products,
+        selectedCategory,
+        debouncedSearch
+    ])
 
 
+const ShortedProducts = useMemo(() => {
+
+    return [...filteredProducts].sort((a, b) => {
+
+        if (SortOption === "lowToHigh") {
+            return a.price - b.price
+        }
+
+        if (SortOption === "highToLow") {
+            return b.price - a.price
+        }
+
+        return 0
+
+    })
+
+}, [
+    filteredProducts,
+    SortOption
+])
 
 
 
 
 
-    if (loading) {
-        return <h2>Loading....</h2>
-    }
 
-    if (error) {
-        return <h2>{error}</h2>
-    }
+
 
     return (<>
 
