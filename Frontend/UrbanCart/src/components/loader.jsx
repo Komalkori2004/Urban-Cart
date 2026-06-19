@@ -1,24 +1,24 @@
 import "./style/loader.css";
 
+
+
 function Loader() {
   return (
-    <div className="loader-container">
+<div className="loader-container">
 
-      <div className="loader-content">
+  <div className="loader-bg"></div>
 
-        <img
-           src="/logo/loadingLogo.png"
-          alt="UrbanCart"
-          className="loader-logo"
-        />
+  <div className="loader-content">
 
-        <p className="loader-text">
-          Loading Luxury Experience...
-        </p>
+    <img
+       src="/logo/loadingLogo.png"
+      alt="UrbanCart"
+      className="loader-logo"
+    />
 
-      </div>
+  </div>
 
-    </div>
+</div>
   );
 }
 
