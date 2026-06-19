@@ -1,3 +1,6 @@
+
+
+import React from "react";
 import { Link } from "react-router-dom";
 
 function ProductCard({
@@ -80,4 +83,4 @@ function ProductCard({
     );
 }
 
-export default ProductCard;
+export default React.memo(ProductCard);

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useCallback } from "react"
 import { getAllproduct } from "../redux/thunks/productThunks"
 import { addToCart } from "../redux/thunks/cartThunks"
 import { getAllCategory } from "../redux/thunks/categoryThunks"
@@ -70,31 +70,73 @@ const Product = () => {
     ])
 
 
-const ShortedProducts = useMemo(() => {
+    const ShortedProducts = useMemo(() => {
 
-    return [...filteredProducts].sort((a, b) => {
+        return [...filteredProducts].sort((a, b) => {
 
-        if (SortOption === "lowToHigh") {
-            return a.price - b.price
-        }
+            if (SortOption === "lowToHigh") {
+                return a.price - b.price
+            }
 
-        if (SortOption === "highToLow") {
-            return b.price - a.price
-        }
+            if (SortOption === "highToLow") {
+                return b.price - a.price
+            }
 
-        return 0
+            return 0
 
-    })
+        })
 
-}, [
-    filteredProducts,
-    SortOption
-])
-
-
+    }, [
+        filteredProducts,
+        SortOption
+    ])
 
 
 
+
+    const handleAddToCart = useCallback(
+        (e, productId) => {
+
+            e.preventDefault();
+
+            dispatch(
+                addToCart({
+                    productId,
+                    quantity: 1
+                })
+            );
+
+        },
+        [dispatch]
+    );
+
+
+    const handleWishlist = useCallback(
+        async (
+            e,
+            productId,
+            isWishlisted
+        ) => {
+
+            e.preventDefault();
+
+            if (isWishlisted) {
+
+                dispatch(
+                    removeWishlist(productId)
+                );
+
+            } else {
+
+                await dispatch(
+                    addToWishlist(productId)
+                );
+
+                dispatch(getWishlist());
+            }
+        },
+        [dispatch]
+    );
 
 
 
@@ -213,38 +255,19 @@ const ShortedProducts = useMemo(() => {
                                     key={product._id}
                                     product={product}
                                     isWishlisted={isWishlisted}
-
-                                    onWishlist={async (e) => {
-
-                                        e.preventDefault();
-
-                                        if (isWishlisted) {
-
-                                            dispatch(
-                                                removeWishlist(product._id)
-                                            );
-
-                                        } else {
-
-                                            await dispatch(
-                                                addToWishlist(product._id)
-                                            );
-
-                                            dispatch(getWishlist());
-                                        }
-                                    }}
-
-                                    onAddToCart={(e) => {
-
-                                        e.preventDefault();
-
-                                        dispatch(
-                                            addToCart({
-                                                productId: product._id,
-                                                quantity: 1
-                                            })
-                                        );
-                                    }}
+                                    onWishlist={(e) =>
+                                        handleWishlist(
+                                            e,
+                                            product._id,
+                                            isWishlisted
+                                        )
+                                    }
+                                    onAddToCart={(e) =>
+                                        handleAddToCart(
+                                            e,
+                                            product._id
+                                        )
+                                    }
                                 />
                             );
                         })
