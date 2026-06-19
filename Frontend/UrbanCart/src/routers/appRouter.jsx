@@ -20,8 +20,33 @@ const ResetPassword = lazy(() =>
 
 import VerifyAccount from '../pages/VerifyAccount'
 
-import AdminProfile from '../admin/admin'
+const AdminProfile = lazy(() =>
+  import("../admin/admin")
+);
 
+const AdminProducts = lazy(() =>
+  import("../admin/AdminProducts")
+);
+
+const AdminOrder = lazy(() =>
+  import("../admin/AdminOrder")
+);
+
+const AdminUsers = lazy(() =>
+  import("../admin/AdminUsers")
+);
+
+const Subscribers = lazy(() =>
+  import("../admin/Subscribers")
+);
+
+const CreateCategory = lazy(() =>
+  import("../admin/CreateCategory")
+);
+
+const UpdateProduct = lazy(() =>
+  import("../admin/UpdateProduct")
+);
 
 
 
@@ -29,9 +54,7 @@ import AdminProfile from '../admin/admin'
 import Product from '../pages/product'
 import SingleProduct from '../pages/singleProduct'
 import NavBar from '../components/navbar'
-import CreateProduct from '../admin/UpdateProduct'
-import AdminProducts from '../admin/AdminProducts'
-import UpdateProduct from '../admin/UpdateProduct'
+
 
 import AdminLayout from '../layout/AdminLayout'
 
@@ -61,23 +84,21 @@ const WishlistPage = lazy(() =>
 const AddAddressPage = lazy(() =>
   import("../components/AddAddressPage")
 );
+const CreateProduct = lazy(() =>
+  import("../admin/CreateProduct")
+);
 
 
 // 
 
 import HomePage from '../pages/home'
 
-import AdminOrder from '../admin/AdminOrder'
-
-
-import CreateCategory from '../admin/CreateCategory'
 
 
 
 
-import AdminUsers from '../admin/AdminUsers'
 import Footer from '../components/Footer'
-import Subscribers from "../admin/Subscribers"
+
 
 import Loader from '../components/Loader'
 
