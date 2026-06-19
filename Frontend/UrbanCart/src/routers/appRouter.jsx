@@ -3,6 +3,7 @@
 
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import ProtectRoute from './protectRoute'
 
 // auth
 const Signup = lazy(() => import("../Auth/signup"));
@@ -19,13 +20,14 @@ const ResetPassword = lazy(() =>
 
 import VerifyAccount from '../pages/VerifyAccount'
 
-
-import ProtectRoute from './protectRoute'
-import UserProfile from '../pages/userD'
 import AdminProfile from '../admin/admin'
+
+
+
+
+
 import Product from '../pages/product'
 import SingleProduct from '../pages/singleProduct'
-import CartPage from '../pages/cart'
 import NavBar from '../components/navbar'
 import CreateProduct from '../admin/UpdateProduct'
 import AdminProducts from '../admin/AdminProducts'
@@ -34,18 +36,44 @@ import UpdateProduct from '../admin/UpdateProduct'
 import AdminLayout from '../layout/AdminLayout'
 
 
+// 
+
+const UserProfile = lazy(() =>
+  import("../pages/userD")
+);
+
+const CartPage = lazy(() =>
+  import("../pages/cart")
+);
+
+const MyOrders = lazy(() =>
+  import("../pages/MyOrders")
+);
+
+const CheckoutPage = lazy(() =>
+  import("../pages/CheckoutPage")
+);
+
+const WishlistPage = lazy(() =>
+  import("../pages/WishlistPage")
+);
+
+const AddAddressPage = lazy(() =>
+  import("../components/AddAddressPage")
+);
+
+
+// 
+
 import HomePage from '../pages/home'
 
 import AdminOrder from '../admin/AdminOrder'
 
-import MyOrders from '../pages/MyOrders'
 
-import CheckoutPage from '../pages/CheckoutPage'
 import CreateCategory from '../admin/CreateCategory'
 
-import WishlistPage from '../pages/WishlistPage'
 
-import AddAddressPage from '../components/AddAddressPage'
+
 
 import AdminUsers from '../admin/AdminUsers'
 import Footer from '../components/Footer'
