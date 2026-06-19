@@ -1,10 +1,25 @@
 
 
 
-import React from 'react'
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Signup from '../Auth/signup'
-import Login from '../Auth/login'
+
+// auth
+const Signup = lazy(() => import("../Auth/signup"));
+
+const Login = lazy(() => import("../Auth/login"));
+
+const ForgotPassword = lazy(() =>
+    import("../pages/ForgotPassword")
+);
+
+const ResetPassword = lazy(() =>
+    import("../pages/ResetPassword")
+);
+
+import VerifyAccount from '../pages/VerifyAccount'
+
+
 import ProtectRoute from './protectRoute'
 import UserProfile from '../pages/userD'
 import AdminProfile from '../admin/admin'
@@ -17,11 +32,7 @@ import AdminProducts from '../admin/AdminProducts'
 import UpdateProduct from '../admin/UpdateProduct'
 
 import AdminLayout from '../layout/AdminLayout'
-import VerifyAccount from '../pages/VerifyAccount'
 
-import ForgotPassword from '../pages/ForgotPassword'
-
-import ResetPassword from '../pages/ResetPassword'
 
 import HomePage from '../pages/home'
 
@@ -40,7 +51,7 @@ import AdminUsers from '../admin/AdminUsers'
 import Footer from '../components/Footer'
 import Subscribers from "../admin/Subscribers"
 
-
+import Loader from '../components/Loader'
 
 // 
 import { useEffect } from "react"
@@ -68,133 +79,135 @@ const AppRouter = () => {
             <BrowserRouter>
 
                 <NavBar />
+                <Suspense fallback={<Loader />}>
 
-                <Routes>
-
-
-
-                    {/* PUBLIC ROUTES */}
-                    <Route path="/" element={<HomePage />} />
-
-                    <Route path="/products" element={<Product />} />
-                    <Route path="/product/:slug" element={<SingleProduct />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route
-                        path="/verify/:token"
-                        element={<VerifyAccount />}
-                    />
-
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/reset-password/:token" element={<ResetPassword />} />
+                    <Routes>
 
 
 
-                    {/* USER ROUTES */}
+                        {/* PUBLIC ROUTES */}
+                        <Route path="/" element={<HomePage />} />
 
-                    <Route
-                        path="/profile"
-                        element={
-                            <ProtectRoute>
-                                <UserProfile />
-                            </ProtectRoute>
-                        }
-                    />
+                        <Route path="/products" element={<Product />} />
+                        <Route path="/product/:slug" element={<SingleProduct />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route
+                            path="/verify/:token"
+                            element={<VerifyAccount />}
+                        />
 
-                    <Route
-                        path="/cart"
-                        element={
-                            <ProtectRoute>
-                                <CartPage />
-                            </ProtectRoute>
-                        }
-                    />
-
-                    <Route
-                        path="/my-orders"
-                        element={
-                            <ProtectRoute>
-                                <MyOrders />
-                            </ProtectRoute>
-                        }
-                    />
-
-                    <Route
-                        path="/checkout"
-                        element={
-                            <ProtectRoute>
-                                <CheckoutPage />
-                            </ProtectRoute>
-                        }
-                    />
-                    <Route
-                        path="/add-address"
-                        element={
-                            <ProtectRoute>
-                                <AddAddressPage />
-                            </ProtectRoute>
-                        }
-                    />
-
-                    <Route
-                        path="/wishlist"
-                        element={
-                            <ProtectRoute>
-                                <WishlistPage />
-                            </ProtectRoute>
-                        }
-                    />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
 
 
-                    {/* ADMIN ROUTES */}
-
-                    <Route
-                        path="/admin"
-                        element={
-                            <ProtectRoute role="admin">
-                                <AdminLayout />
-                            </ProtectRoute>
-                        }
-                    >
-                        <Route index element={<AdminProfile />} />
+                        {/* USER ROUTES */}
 
                         <Route
-                            path="add-product"
-                            element={<CreateProduct />}
+                            path="/profile"
+                            element={
+                                <ProtectRoute>
+                                    <UserProfile />
+                                </ProtectRoute>
+                            }
                         />
 
                         <Route
-                            path="all-product"
-                            element={<AdminProducts />}
+                            path="/cart"
+                            element={
+                                <ProtectRoute>
+                                    <CartPage />
+                                </ProtectRoute>
+                            }
                         />
 
                         <Route
-                            path="update-product/:id"
-                            element={<UpdateProduct />}
-                        />
-                        <Route
-                            path="orders"
-                            element={<AdminOrder />}
-                        />
-                        <Route
-                            path='add-Category'
-                            element={<CreateCategory />}
-                        />
-                        <Route
-                            path='all-users'
-                            element={<AdminUsers />}
-                        />
-                          <Route
-                            path='all-Subscribers'
-                            element={<Subscribers />}
+                            path="/my-orders"
+                            element={
+                                <ProtectRoute>
+                                    <MyOrders />
+                                </ProtectRoute>
+                            }
                         />
 
-                    </Route>
+                        <Route
+                            path="/checkout"
+                            element={
+                                <ProtectRoute>
+                                    <CheckoutPage />
+                                </ProtectRoute>
+                            }
+                        />
+                        <Route
+                            path="/add-address"
+                            element={
+                                <ProtectRoute>
+                                    <AddAddressPage />
+                                </ProtectRoute>
+                            }
+                        />
 
-                </Routes>
-                
-<Footer/>
+                        <Route
+                            path="/wishlist"
+                            element={
+                                <ProtectRoute>
+                                    <WishlistPage />
+                                </ProtectRoute>
+                            }
+                        />
+
+
+
+                        {/* ADMIN ROUTES */}
+
+                        <Route
+                            path="/admin"
+                            element={
+                                <ProtectRoute role="admin">
+                                    <AdminLayout />
+                                </ProtectRoute>
+                            }
+                        >
+                            <Route index element={<AdminProfile />} />
+
+                            <Route
+                                path="add-product"
+                                element={<CreateProduct />}
+                            />
+
+                            <Route
+                                path="all-product"
+                                element={<AdminProducts />}
+                            />
+
+                            <Route
+                                path="update-product/:id"
+                                element={<UpdateProduct />}
+                            />
+                            <Route
+                                path="orders"
+                                element={<AdminOrder />}
+                            />
+                            <Route
+                                path='add-Category'
+                                element={<CreateCategory />}
+                            />
+                            <Route
+                                path='all-users'
+                                element={<AdminUsers />}
+                            />
+                            <Route
+                                path='all-Subscribers'
+                                element={<Subscribers />}
+                            />
+
+                        </Route>
+
+                    </Routes>
+                </Suspense>
+
+                <Footer />
             </BrowserRouter>
         </>
     )
