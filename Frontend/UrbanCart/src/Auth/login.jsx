@@ -54,6 +54,8 @@ const Login = () => {
 
                         src="/logo/nav-logo.png"
                         alt="UrbanCart"
+                          loading="lazy"
+                            loading="lazy"
 
 
                         className="auth-logo"

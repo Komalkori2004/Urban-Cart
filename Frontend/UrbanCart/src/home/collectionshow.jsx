@@ -35,6 +35,7 @@ function CollectionShowcase() {
           <img
             src="/images/showcase2.avif"
             alt="UrbanCart Luxury Collection"
+             loading="lazy"
           />
         </div>
 

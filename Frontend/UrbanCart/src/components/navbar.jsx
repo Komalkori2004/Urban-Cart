@@ -71,6 +71,8 @@ const NavBar = () => {
             <img
               src="/logo/nav-logo.png"
               alt="UrbanCart"
+                loading="lazy"
+
             />
           </Link>
 

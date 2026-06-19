@@ -131,6 +131,7 @@ const AdminProducts = () => {
                                             src={product.images?.[0]?.url}
                                             alt={product.name}
                                             className='product-image'
+                                              loading="lazy"
                                         />
 
 

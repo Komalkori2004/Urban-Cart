@@ -24,6 +24,7 @@ const RelatedProducts = ({ products }) => {
                 <img
                   src={product.images?.[0]?.url}
                   alt={product.name}
+                   loading="lazy"
                 />
 
                 <h3>{product.name}</h3>

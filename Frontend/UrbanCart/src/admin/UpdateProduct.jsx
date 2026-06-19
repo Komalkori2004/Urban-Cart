@@ -290,6 +290,7 @@ function UpdateProduct() {
                                     <img
                                         key={index}
                                         src={img}
+                                          loading="lazy"
                                         alt='preview'
                                         className='preview-image'
                                     />

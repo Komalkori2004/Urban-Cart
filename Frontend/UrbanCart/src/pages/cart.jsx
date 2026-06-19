@@ -101,6 +101,7 @@ const CartPage = () => {
                                         <img
                                             src={item.product.images[0]?.url}
                                             alt={item.product.name}
+                                             loading="lazy"
                                         />
                                     </div>
 

@@ -14,6 +14,7 @@ function Footer() {
                         src="/logo/nav-logo.png"
                         alt="UrbanCart"
                         className="footer-logo"
+                          loading="lazy"
                     />
 
                     <p>

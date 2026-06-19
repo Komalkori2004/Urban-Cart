@@ -34,6 +34,7 @@ return (
                 src="/logo/nav-logo.png"
                 alt="UrbanCart"
                 className="auth-logo"
+                 loading="lazy"
             />
 
             <h2 className="auth-title">

@@ -81,6 +81,7 @@ function Hero() {
                         src="/images/hero1.avif"
 
                         alt="Luxury Fashion"
+                         loading="lazy"
 
                     />
 

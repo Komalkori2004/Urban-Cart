@@ -72,6 +72,7 @@ function CreateCategory() {
                                 src={preview}
                                 alt="preview"
                                 width="200"
+                                  loading="lazy"
                             />
 
                         )

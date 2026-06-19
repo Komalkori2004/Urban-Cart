@@ -46,6 +46,7 @@ const MyOrders = () => {
                                     <img
                                         src={order.items?.[0]?.image}
                                         alt={order.items?.[0]?.name}
+                                         loading="lazy"
                                     />
                                 </div>
 
@@ -303,6 +304,7 @@ const MyOrders = () => {
                                                 src={item.image}
                                                 alt={item.name}
                                                 width="80"
+                                                 loading="lazy"
                                             />
                                             <div className="product-details">
 

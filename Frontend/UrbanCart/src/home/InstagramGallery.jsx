@@ -46,7 +46,9 @@ function InstagramGallery() {
             >
               <img
                 src={image}
+                
                 alt="UrbanCart Gallery"
+                 loading="lazy"
               />
             </div>
           ))}

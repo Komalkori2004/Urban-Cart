@@ -93,6 +93,7 @@ const FeatureProduct = () => {
                                         <img
                                             src={product.images?.[0]?.url}
                                             alt={product.name}
+                                             loading="lazy"
                                         />
 
                                     </div>

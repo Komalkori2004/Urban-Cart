@@ -176,6 +176,7 @@ const AdminOrder = () => {
                       <img
                         src={item.image}
                         alt={item.name}
+                          loading="lazy"
                       />
 
                       <div>

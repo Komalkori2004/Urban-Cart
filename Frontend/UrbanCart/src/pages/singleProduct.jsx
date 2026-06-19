@@ -172,6 +172,7 @@ const SingleProduct = () => {
                                 <img
                                     key={image.public_id}
                                     src={image.url}
+                                     loading="lazy"
                                     alt="thumbnail"
                                     className={
                                         activeImage === image.url
@@ -192,6 +193,7 @@ const SingleProduct = () => {
                                 <img
                                     src={activeImage}
                                     alt={singleProduct.name}
+                                     loading="lazy"
                                 />
                             )}
                         </div>
