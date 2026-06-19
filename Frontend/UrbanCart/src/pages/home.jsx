@@ -13,6 +13,7 @@ import Testimonials from '../home/testimonials'
 import CollectionShowcase from '../home/collectionshow'
 import InstagramGallery from '../home/InstagramGallery'
 import NewsletterSection from '../home/NewsletterSection'
+import ContactUs from '../components/ContactUs'
 function HomePage() {
   return (
     <>
@@ -26,6 +27,7 @@ function HomePage() {
       <CollectionShowcase/>
       <InstagramGallery/>
 <NewsletterSection/>
+<ContactUs/>
       {/* <NewArrivals/> */}
     
     </>
