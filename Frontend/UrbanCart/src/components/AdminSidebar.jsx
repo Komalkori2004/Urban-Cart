@@ -8,12 +8,12 @@ const AdminSidebar = () => {
         <>
             <div className="admin-sidebar">
 
-            <NavLink to="/">
-                 <h2 className='sidebar-logo'>  
-                    urbanCart
-                </h2>
-            </NavLink>
-               
+                <NavLink to="/">
+                    <h2 className='sidebar-logo'>
+                        urbanCart
+                    </h2>
+                </NavLink>
+
 
                 <nav className="sidebar-links">
                     <NavLink
@@ -33,7 +33,7 @@ const AdminSidebar = () => {
                     >
                         add-Product
                     </NavLink>
-                          <NavLink to="/admin/add-Category"
+                    <NavLink to="/admin/add-Category"
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>
@@ -63,12 +63,24 @@ const AdminSidebar = () => {
                         Users
                     </NavLink>
 
-                         <NavLink to="/admin/all-Subscribers"
+                    <NavLink to="/admin/all-Subscribers"
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>
-                      Subscribers
+                        Subscribers
                     </NavLink>
+
+
+                    <NavLink to="/admin/contact-messages"
+                        className={({ isActive }) =>
+                            isActive ? "active-link" : ""
+                        }>
+                        Contact Messages
+                    </NavLink>
+
+
+
+
 
 
 

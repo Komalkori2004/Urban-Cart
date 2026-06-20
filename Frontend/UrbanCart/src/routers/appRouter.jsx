@@ -21,31 +21,31 @@ const ResetPassword = lazy(() =>
 import VerifyAccount from '../pages/VerifyAccount'
 
 const AdminProfile = lazy(() =>
-  import("../admin/admin")
+    import("../admin/admin")
 );
 
 const AdminProducts = lazy(() =>
-  import("../admin/AdminProducts")
+    import("../admin/AdminProducts")
 );
 
 const AdminOrder = lazy(() =>
-  import("../admin/AdminOrder")
+    import("../admin/AdminOrder")
 );
 
 const AdminUsers = lazy(() =>
-  import("../admin/AdminUsers")
+    import("../admin/AdminUsers")
 );
 
 const Subscribers = lazy(() =>
-  import("../admin/Subscribers")
+    import("../admin/Subscribers")
 );
 
 const CreateCategory = lazy(() =>
-  import("../admin/CreateCategory")
+    import("../admin/CreateCategory")
 );
 
 const UpdateProduct = lazy(() =>
-  import("../admin/UpdateProduct")
+    import("../admin/UpdateProduct")
 );
 
 
@@ -62,30 +62,30 @@ import AdminLayout from '../layout/AdminLayout'
 // 
 
 const UserProfile = lazy(() =>
-  import("../pages/userD")
+    import("../pages/userD")
 );
 
 const CartPage = lazy(() =>
-  import("../pages/cart")
+    import("../pages/cart")
 );
 
 const MyOrders = lazy(() =>
-  import("../pages/MyOrders")
+    import("../pages/MyOrders")
 );
 
 const CheckoutPage = lazy(() =>
-  import("../pages/CheckoutPage")
+    import("../pages/CheckoutPage")
 );
 
 const WishlistPage = lazy(() =>
-  import("../pages/WishlistPage")
+    import("../pages/WishlistPage")
 );
 
 const AddAddressPage = lazy(() =>
-  import("../components/AddAddressPage")
+    import("../components/AddAddressPage")
 );
 const CreateProduct = lazy(() =>
-  import("../admin/CreateProduct")
+    import("../admin/CreateProduct")
 );
 
 
@@ -101,6 +101,9 @@ import Footer from '../components/Footer'
 
 
 import Loader from '../components/Loader'
+
+
+import ContactMessages from "../admin/ContactMessages";
 
 // 
 import { useEffect } from "react"
@@ -216,8 +219,8 @@ const AppRouter = () => {
                                 <ProtectRoute role="admin">
                                     <AdminLayout />
                                 </ProtectRoute>
-                            }
-                        >
+                            }  >
+
                             <Route index element={<AdminProfile />} />
 
                             <Route
@@ -249,6 +252,10 @@ const AppRouter = () => {
                             <Route
                                 path='all-Subscribers'
                                 element={<Subscribers />}
+                            />
+                              <Route
+                                path='contact-messages'
+                                element={<ContactMessages />}
                             />
 
                         </Route>
