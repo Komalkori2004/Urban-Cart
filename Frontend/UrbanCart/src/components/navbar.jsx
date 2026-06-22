@@ -11,9 +11,20 @@ import { clearCart } from "../redux/feature/cartSlice"
 
 import { clearWishlist } from "../redux/feature/wishlistSlice"
 import { HiMenu, HiX } from "react-icons/hi";
+import {
+  FiHome,
+  FiShoppingBag,
+  FiHeart,
+  FiShoppingCart,
+  FiUser,
+  FiLogOut,
+  FiSearch
+} from "react-icons/fi";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showAccountMenu, setShowAccountMenu] =
+    useState(false);
 
   const location = useLocation()
 
@@ -42,6 +53,7 @@ const NavBar = () => {
 
 
 
+
   const handleLogout = () => {
     dispatch(logoutUser())
 
@@ -58,11 +70,19 @@ const NavBar = () => {
       <nav className="navbar">
 
         <div className="nav-left">
+          <button className="search-btn">
+            <FiSearch />
+          </button>
+          <Link to="/">
+            <FiHome />
+            Home
+          </Link>
 
-          <Link to="/">Home</Link>
-
-          <Link to="/products">Shop</Link>
-
+          <Link to="/products">
+            <FiShoppingBag />
+            Shop
+          </Link>
+         
         </div>
 
         <div className="nav-logo">
@@ -71,7 +91,7 @@ const NavBar = () => {
             <img
               src="/logo/nav-logo.png"
               alt="UrbanCart"
-                loading="lazy"
+              loading="lazy"
 
             />
           </Link>
@@ -79,29 +99,72 @@ const NavBar = () => {
         </div>
 
         <div className="nav-right">
-          {user?.role === "admin" && (
+          {/* {user?.role === "admin" && (
             <Link to="/admin">
+              <FiUser />
               Dashboard
             </Link>
-          )}
-
-          <Link to="/wishlist">
-            Wishlist ({wishlistcount})
-          </Link>
-
-          <Link to="/cart">
+          )} */}
+           <Link to="/cart">
+            <FiShoppingCart />
             Cart ({cartCount})
           </Link>
 
-          <Link to="/profile">
-            Profile
+          <Link to="/wishlist">
+            <FiHeart />
+            Wishlist ({wishlistcount})
           </Link>
-          <button
-            className="logout-btn"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+
+          <div className="account-dropdown">
+
+            <button
+              className="account-btn"
+              onClick={() =>
+                setShowAccountMenu(!showAccountMenu)
+              }
+            >
+              <FiUser />
+              Account
+            </button>
+
+            {showAccountMenu && (
+
+              <div className="account-menu">
+
+                <Link
+                  to="/profile"
+                  onClick={() =>
+                    setShowAccountMenu(false)
+                  }
+                >
+                  Profile
+                </Link>
+
+                {user?.role === "admin" && (
+                  <Link
+                    to="/admin"
+                    onClick={() =>
+                      setShowAccountMenu(false)
+                    }
+                  >
+                    Dashboard
+                  </Link>
+                )}
+
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setShowAccountMenu(false);
+                  }}
+                >
+                  Logout
+                </button>
+
+              </div>
+
+            )}
+
+          </div>
 
         </div>
 
