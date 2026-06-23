@@ -23,6 +23,7 @@ import {
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showSearch, setShowSearch] = useState(false);
   const [showAccountMenu, setShowAccountMenu] =
     useState(false);
 
@@ -70,9 +71,14 @@ const NavBar = () => {
       <nav className="navbar">
 
         <div className="nav-left">
-          <button className="search-btn">
+          <button
+            className="search-btn"
+            onClick={() => setShowSearch(true)}
+          >
             <FiSearch />
+
           </button>
+
           <Link to="/">
             <FiHome />
             Home
@@ -82,7 +88,7 @@ const NavBar = () => {
             <FiShoppingBag />
             Shop
           </Link>
-         
+
         </div>
 
         <div className="nav-logo">
@@ -105,7 +111,7 @@ const NavBar = () => {
               Dashboard
             </Link>
           )} */}
-           <Link to="/cart">
+          <Link to="/cart">
             <FiShoppingCart />
             Cart ({cartCount})
           </Link>
@@ -230,6 +236,37 @@ const NavBar = () => {
         </div>
 
       </nav>
+
+
+      {
+    showSearch && (
+        <div className="search-overlay">
+
+            <div className="search-modal">
+
+                <button
+                    className="search-close"
+                    onClick={() =>
+                        setShowSearch(false)
+                    }
+                >
+                    ✕
+                </button>
+
+                <h2>
+                    Search Products
+                </h2>
+
+                <input
+                    type="text"
+                    placeholder="Search luxury products..."
+                />
+
+            </div>
+
+        </div>
+    )
+}
 
 
     </>
