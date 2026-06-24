@@ -1,6 +1,6 @@
 import './style/navbar.css'
 
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,6 +27,12 @@ const NavBar = () => {
   const [showAccountMenu, setShowAccountMenu] =
     useState(false);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // const [search, setSearch] = useState("")
+
+
+  
   const location = useLocation()
 
   const dispatch = useDispatch()
@@ -65,6 +71,26 @@ const NavBar = () => {
   }
 
   const wishlistcount = wishlist.length
+
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    if (!searchTerm.trim()) return;
+
+    navigate(
+      `/products?keyword=${encodeURIComponent(
+        searchTerm
+      )}`
+    );
+
+    setShowSearch(false);
+  };
+
+
+
+
+
   return (
     <>
 
@@ -239,34 +265,42 @@ const NavBar = () => {
 
 
       {
-    showSearch && (
-        <div className="search-overlay">
+        showSearch && (
+          <div className="search-overlay">
 
             <div className="search-modal">
 
-                <button
-                    className="search-close"
-                    onClick={() =>
-                        setShowSearch(false)
-                    }
-                >
-                    ✕
-                </button>
+              <button
+                className="search-close"
+                onClick={() =>
+                  setShowSearch(false)
+                }
+              >
+                ✕
+              </button>
 
-                <h2>
-                    Search Products
-                </h2>
+              <h2>
+                Search Products
+              </h2>
+
+              <form onSubmit={handleSearch}>
 
                 <input
-                    type="text"
-                    placeholder="Search luxury products..."
+                  type="text"
+                  placeholder="Search luxury products..."
+                  value={searchTerm}
+                  onChange={(e) =>
+                    setSearchTerm(e.target.value)
+                  }
                 />
+
+              </form>
 
             </div>
 
-        </div>
-    )
-}
+          </div>
+        )
+      }
 
 
     </>
