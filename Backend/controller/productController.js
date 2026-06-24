@@ -312,7 +312,7 @@ const searchProducts = asyncHandler(async (req, res, next) => {
             $options: "i"
         }
 
-    }).select("name images price").limit(10)
+    }).select("name slug price images").limit(10)
     res.status(200).json({
         success: true,
         product

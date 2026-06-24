@@ -193,7 +193,7 @@ export const searchProducts = createAsyncThunk(
     async (keyword, thunkAPI) => {
         try {
             const { data } = await api.get(`/products/search?keyword=${keyword}`)
-            return data.products
+            return data.product
         } catch (error) {
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message ||

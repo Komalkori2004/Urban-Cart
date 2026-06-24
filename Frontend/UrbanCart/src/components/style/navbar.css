@@ -359,3 +359,23 @@
 
     cursor: pointer;
 }
+
+
+.search-results {
+  margin-top: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-item {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.search-item:hover {
+  background: rgba(212, 175, 55, 0.08);
+  color: #d4af37;
+}

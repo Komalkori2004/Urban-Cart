@@ -1,6 +1,6 @@
 import './style/navbar.css'
 
-import React, { useState} from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +10,10 @@ import { logoutUser } from "../redux/feature/authSlice"
 import { clearCart } from "../redux/feature/cartSlice"
 
 import { clearWishlist } from "../redux/feature/wishlistSlice"
+
+
+
+import { searchProducts } from "../redux/thunks/productThunks"
 import { HiMenu, HiX } from "react-icons/hi";
 import {
   FiHome,
@@ -32,7 +36,7 @@ const NavBar = () => {
   // const [search, setSearch] = useState("")
 
 
-  
+
   const location = useLocation()
 
   const dispatch = useDispatch()
@@ -49,6 +53,8 @@ const NavBar = () => {
   const user = JSON.parse(
     localStorage.getItem("user")
   )
+
+  const { searchResults, searchLoading } = useSelector((state) => state.products)
 
   if (location.pathname.includes("/admin")) {
     return null
@@ -84,13 +90,31 @@ const NavBar = () => {
       )}`
     );
 
+
     setShowSearch(false);
   };
 
 
+  useEffect(() => {
 
+    const timer = setTimeout(() => {
 
+      if (searchTerm.trim()) {
 
+        dispatch(
+          searchProducts(searchTerm)
+        )
+
+      }
+
+    }, 500)
+
+    return () =>
+      clearTimeout(timer)
+
+  }, [searchTerm, dispatch])
+
+  console.log("Results:", searchResults);
   return (
     <>
 
@@ -132,11 +156,11 @@ const NavBar = () => {
 
         <div className="nav-right">
           {/* {user?.role === "admin" && (
-            <Link to="/admin">
-              <FiUser />
-              Dashboard
-            </Link>
-          )} */}
+              <Link to="/admin">
+                <FiUser />
+                Dashboard
+              </Link>
+            )} */}
           <Link to="/cart">
             <FiShoppingCart />
             Cart ({cartCount})
@@ -295,6 +319,28 @@ const NavBar = () => {
                 />
 
               </form>
+              <div className="search-results">
+
+                {searchLoading && (
+                  <p>Searching...</p>
+                )}
+
+                {searchResults?.map((product) => (
+
+                  <div
+                    key={product._id}
+                    className="search-item"
+                    onClick={() => {
+                      navigate(`/product/${product.slug}`);
+                      setShowSearch(false);
+                    }}
+                  >
+                    {product.name}
+                  </div>
+
+                ))}
+
+              </div>
 
             </div>
 
