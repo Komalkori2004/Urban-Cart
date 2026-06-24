@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllproduct, getsingleProduct, createProduct, deleteProduct, updateProduct ,getSingleProductById} from "../thunks/productThunks";
+import { getAllproduct, getsingleProduct, createProduct, deleteProduct, updateProduct, getSingleProductById, searchProducts } from "../thunks/productThunks";
 
 
 const initialState = {
@@ -8,7 +8,10 @@ const initialState = {
     products: [],
     singleProduct: {},
     loading: false,
-    error: null
+    error: null,
+    searchResults: [],
+    searchLoading: false,
+    searchError: null
 
 }
 
@@ -132,6 +135,20 @@ const productSlice = createSlice({
             .addCase(getSingleProductById.rejected, (state, action) => {
                 state.loading = false,
                     state.error = action.payload
+            })
+            .addCase(searchProducts.pending, (state) => {
+                state.searchLoading = true;
+                state.searchError = null;
+            })
+
+            .addCase(searchProducts.fulfilled, (state, action) => {
+                state.searchLoading = false;
+                state.searchResults = action.payload;
+            })
+
+            .addCase(searchProducts.rejected, (state, action) => {
+                state.searchLoading = false;
+                state.searchError = action.payload;
             })
     }
 

@@ -183,3 +183,22 @@ export const getSingleProductById =
             }
         }
     );
+
+
+// search product 
+
+
+export const searchProducts = createAsyncThunk(
+    "product/searchProducts",
+    async (keyword, thunkAPI) => {
+        try {
+            const { data } = await api.get(`/products/search?keyword=${keyword}`)
+            return data.products
+        } catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Something went wrong"
+            );
+        }
+    }
+)
