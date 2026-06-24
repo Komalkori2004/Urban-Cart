@@ -225,7 +225,7 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
 
 
 const getSingleProductById =
-    asyncHandler(async (req, res,next) => {
+    asyncHandler(async (req, res, next) => {
 
         const product =
             await productModel.findById(
@@ -259,7 +259,7 @@ const getSingleProductById =
 const CreateReview = asyncHandler(async (req, res, next) => {
     const { rating, comment } = req.body
 
-    const product = await productModel.findById( req.params.id)
+    const product = await productModel.findById(req.params.id)
     const currentUser = await userModel.findById(
         req.user.id
     )
@@ -275,13 +275,13 @@ const CreateReview = asyncHandler(async (req, res, next) => {
         comment
     }
 
-    const  alreadyReviewed = product.reviews.find(
+    const alreadyReviewed = product.reviews.find(
         (rev) => rev.user.toString() === currentUser._id.toString()
     )
 
     if (alreadyReviewed) {
-       alreadyReviewed.rating = Number(rating)
-            alreadyReviewed.comment=comment
+        alreadyReviewed.rating = Number(rating)
+        alreadyReviewed.comment = comment
     }
     else {
         product.reviews.push(review)
@@ -297,4 +297,26 @@ const CreateReview = asyncHandler(async (req, res, next) => {
     })
 })
 
-module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct, getSingleProductById, CreateReview }
+
+
+
+
+// 
+
+const searchProducts = asyncHandler(async (req, res, next) => {
+    const keyword = req.query.keyword || ""
+
+    const product = await productModel.find({
+        name: {
+            $regex: keyword,
+            $options: "i"
+        }
+
+    }).select("name images price").limit(10)
+    res.status(200).json({
+        success: true,
+        product
+    })
+})
+
+module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct, getSingleProductById, CreateReview ,searchProducts}
