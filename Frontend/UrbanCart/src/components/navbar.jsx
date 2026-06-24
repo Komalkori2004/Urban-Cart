@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { logoutUser } from "../redux/feature/authSlice"
-
+import { useCallback } from "react";
 import { clearCart } from "../redux/feature/cartSlice"
 
 import { clearWishlist } from "../redux/feature/wishlistSlice"
@@ -114,7 +114,11 @@ const NavBar = () => {
 
   }, [searchTerm, dispatch])
 
-  console.log("Results:", searchResults);
+  const closeSearchModal = () => {
+    setShowSearch(false);
+    setSearchTerm("");
+  };
+
   return (
     <>
 
@@ -296,9 +300,7 @@ const NavBar = () => {
 
               <button
                 className="search-close"
-                onClick={() =>
-                  setShowSearch(false)
-                }
+                onClick={closeSearchModal}
               >
                 ✕
               </button>
@@ -308,39 +310,69 @@ const NavBar = () => {
               </h2>
 
               <form onSubmit={handleSearch}>
-
-                <input
-                  type="text"
-                  placeholder="Search luxury products..."
-                  value={searchTerm}
-                  onChange={(e) =>
-                    setSearchTerm(e.target.value)
-                  }
-                />
-
-              </form>
-              <div className="search-results">
-
-                {searchLoading && (
-                  <p>Searching...</p>
+                {searchResults.length > 0 && (
+                  <p className="search-count">
+                    {searchResults.length} products found
+                  </p>
                 )}
 
-                {searchResults?.map((product) => (
+              <div className="search-input-wrapper">
 
-                  <div
-                    key={product._id}
-                    className="search-item"
-                    onClick={() => {
-                      navigate(`/product/${product.slug}`);
-                      setShowSearch(false);
-                    }}
-                  >
-                    {product.name}
-                  </div>
+  <FiSearch className="search-input-icon" />
 
-                ))}
+  <input
+    type="text"
+    placeholder="Search luxury products..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+  />
 
-              </div>
+</div>
+              </form>
+
+              {searchTerm.trim() && (
+                <div className="search-results">
+
+                  {searchLoading && (
+                    <p>Searching...</p>
+                  )}
+                  {searchTerm.trim() &&
+                    !searchLoading &&
+                    searchResults.length === 0 && (
+                      <p className="no-results">
+                        No products found
+                      </p>
+                    )}
+
+                  {searchResults?.map((product) => (
+
+                    <div
+                      key={product._id}
+                      className="search-item"
+                      onClick={() => {
+                        navigate(`/product/${product.slug}`);
+                        closeSearchModal();
+                      }}
+                    >
+
+                      <img
+                        src={product.images?.[0]?.url}
+                        alt={product.name}
+                        className="search-item-image"
+                      />
+
+                      <div className="search-item-info">
+                        <h4>{product.name}</h4>
+                        <p>₹{product.price}</p>
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+              )}
+
 
             </div>
 
