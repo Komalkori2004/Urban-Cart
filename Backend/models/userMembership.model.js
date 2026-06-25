@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose=require("mongoose")
 
 const userMembershipSchema = new mongoose.Schema(
   {
@@ -73,9 +73,10 @@ const userMembershipSchema = new mongoose.Schema(
   }
 );
 
-const UserMembership = mongoose.model(
+module.exports = mongoose.model(
   "UserMembership",
   userMembershipSchema
 );
 
-export default UserMembership;
+
+

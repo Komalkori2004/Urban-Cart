@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const membershipPlanSchema = new mongoose.Schema(
   {
@@ -95,9 +95,5 @@ const membershipPlanSchema = new mongoose.Schema(
   }
 );
 
-const MembershipPlan = mongoose.model(
-  "MembershipPlan",
-  membershipPlanSchema
-);
 
-export default MembershipPlan;
+module.exports = mongoose.model("MemberShip", membershipPlanSchema);
