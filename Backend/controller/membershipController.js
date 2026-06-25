@@ -40,10 +40,10 @@ const createMembershipPlan = asyncHandler(async (req, res, next) => {
         lower: true,
         trim: true
     })
-    const existingPlan= await MemberShip.findOne({
-        $or:[
-            {name},
-            {slug}
+    const existingPlan = await MemberShip.findOne({
+        $or: [
+            { name },
+            { slug }
         ]
     })
 
@@ -54,7 +54,7 @@ const createMembershipPlan = asyncHandler(async (req, res, next) => {
     }
 
 
-       // Create Membership Plan
+    // Create Membership Plan
     const membershipPlan = await MemberShip.create({
         name,
         slug,
@@ -74,7 +74,7 @@ const createMembershipPlan = asyncHandler(async (req, res, next) => {
 
 
     res.status(201).json({
-           success: true,
+        success: true,
         message: "Membership plan created successfully.",
         membershipPlan
     })
@@ -83,7 +83,20 @@ const createMembershipPlan = asyncHandler(async (req, res, next) => {
 })
 
 
+const getAllMembershipPlans = asyncHandler(async (req, res, next) => {
+    const membershipPlans = await MemberShip.find({
+        isActive: true
+    }).sort({ price: 1 });s
 
-module.exports= {
-    createMembershipPlan
+    res.status(200).json({
+        success: true,
+        membershipPlans
+    });
+})
+
+
+
+module.exports = {
+    createMembershipPlan,
+    getAllMembershipPlans
 }
