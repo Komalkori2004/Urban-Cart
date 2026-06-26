@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllMembership, purchaseMembership, verifyMembershipPayment, getMyMembership, getMembershipHistory } from "../redux/thunks/membershipThunk";
+import {
+    getAllMembership, purchaseMembership, verifyMembershipPayment, getMyMembership,
+    getMembershipHistory, cancelMembership
+} from "../redux/thunks/membershipThunk";
 
 function MembershipPlans() {
 
@@ -175,6 +178,17 @@ function MembershipPlans() {
                 }
             >
                 Get Membership History
+            </button>
+
+
+            <button
+                onClick={() =>
+                    dispatch(
+                        cancelMembership()
+                    )
+                }
+            >
+                Cancel Membership
             </button>
         </div>
     );
