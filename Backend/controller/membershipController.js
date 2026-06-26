@@ -497,14 +497,62 @@ const getMembershipHistory = asyncHandler(async (req, res, next) => {
         });
 
 
-        if(memberships.length===0){
-            return next(new ErrorHandler(404, "No membership history found"))
-        }
+    if (memberships.length === 0) {
+        return next(new ErrorHandler(404, "No membership history found"))
+    }
 
     res.status(200).json({
         success: true,
-       memberships
+        memberships
     })
+})
+
+
+
+
+// 
+
+const cancelMembership = asyncHandler(async (req, res, next) => {
+    const membership =
+        await UserMembership.findOne({
+            user: req.user.id,
+            status: "active",
+            expiryDate: {
+                $gt: new Date()
+            }
+        });
+
+
+    if (!membership) {
+        return next(
+            new ErrorHandler(
+                404,
+                "No active membership found"
+            )
+        );
+    }
+
+    membership.status = "cancelled"
+    await membership.save()
+
+
+    await User.findByIdAndUpdate(
+        req.user.id,
+        {
+            membership: null
+        }
+    );
+
+
+    res.status(200).json({
+        success: true,
+        message:
+            "Membership cancelled successfully",
+        membership
+    });
+
+
+
 })
 
 module.exports = {
@@ -516,5 +564,7 @@ module.exports = {
     purchaseMembership,
     verifyMembershipPayment,
     getMyMembership,
-    getMembershipHistory
+    getMembershipHistory,
+    cancelMembership
+
 }
