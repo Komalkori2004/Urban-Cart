@@ -1,7 +1,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getAllMembership, purchaseMembership, verifyMembershipPayment ,getMyMembership} from "../thunks/membershipThunk";
+import { getAllMembership, purchaseMembership, verifyMembershipPayment, getMyMembership, getMembershipHistory } from "../thunks/membershipThunk";
 
 
 
@@ -11,7 +11,7 @@ const initialState = {
     membershipOrder: null,
     verifiedMembership: null,
     myMembership: null,
-
+    membershipHistory: [],
 
     loading: false,
     error: null,
@@ -86,6 +86,21 @@ const membershipSlice = createSlice({
                 }
             )
             .addCase(getMyMembership.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+            .addCase(getMembershipHistory.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(getMembershipHistory.fulfilled, (state, action) => {
+                state.loading = false;
+                 state.success = true;
+                state.membershipHistory =
+                    action.payload;
+            })
+            .addCase(getMembershipHistory.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
             })

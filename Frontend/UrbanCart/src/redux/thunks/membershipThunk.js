@@ -99,3 +99,28 @@ export const getMyMembership= createAsyncThunk(
         }
     }
 )
+
+
+
+export const  getMembershipHistory = createAsyncThunk(
+    "membership/getMembershipHistory",
+    async(_,thunkAPI)=>{
+        try{
+            const token=thunkAPI.getState().auth.token
+            const config={
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+            const {data}=await api.get("/membership/history",config)
+                               return data.memberships;
+
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data ?.message ||
+                "Failed to fetch memberships"
+            );
+        }
+    }
+)

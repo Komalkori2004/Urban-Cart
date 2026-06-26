@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllMembership, purchaseMembership, verifyMembershipPayment,getMyMembership } from "../redux/thunks/membershipThunk";
+import { getAllMembership, purchaseMembership, verifyMembershipPayment, getMyMembership, getMembershipHistory } from "../redux/thunks/membershipThunk";
 
 function MembershipPlans() {
 
@@ -32,6 +32,17 @@ function MembershipPlans() {
     console.log(
         "MY MEMBERSHIP",
         myMembership
+    );
+
+    const {
+        membershipHistory
+    } = useSelector(
+        state => state.membership
+    );
+
+    console.log(
+        "MEMBERSHIP HISTORY",
+        membershipHistory
     );
 
     useEffect(() => {
@@ -152,7 +163,19 @@ function MembershipPlans() {
             >
                 Get My Membership
             </button>
+            <br />
 
+
+
+            <button
+                onClick={() =>
+                    dispatch(
+                        getMembershipHistory()
+                    )
+                }
+            >
+                Get Membership History
+            </button>
         </div>
     );
 }
