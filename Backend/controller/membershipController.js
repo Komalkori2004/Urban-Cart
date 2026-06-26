@@ -610,6 +610,39 @@ const getMembershipStats = asyncHandler(async (req, res, next) => {
 
 })
 
+
+const checkPremiumStatus =
+    asyncHandler(async (req, res, next) => {
+
+        const membership =
+            await UserMembership
+                .findOne({
+                    user: req.user.id,
+                    status: "active",
+                    expiryDate: {
+                        $gt: new Date()
+                    }
+                })
+                .populate(
+                    "membershipPlan"
+                );
+
+        if (!membership) {
+            return res.status(200).json({
+                success: true,
+                isPremium: false,
+                membership: null
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            isPremium: true,
+            membership
+        });
+
+});
+
 module.exports = {
     createMembershipPlan,
     getAllMembershipPlans,
@@ -621,6 +654,7 @@ module.exports = {
     getMyMembership,
     getMembershipHistory,
     cancelMembership,
-    getMembershipStats
+    getMembershipStats,
+    checkPremiumStatus
 
 }

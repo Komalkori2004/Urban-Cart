@@ -7,7 +7,7 @@ const { authMiddleware, authorizeRoles } = require("../middleware/authMiddlewar"
 
 const {createMembershipPlan,getAllMembershipPlans,getSingleMembershipPlan, updateMembershipPlan,
      deleteMembershipPlan,purchaseMembership, verifyMembershipPayment, getMyMembership,getMembershipHistory,cancelMembership,
-     getMembershipStats
+     getMembershipStats, checkPremiumStatus
 
 }= require("../controller/membershipController")
 
@@ -20,6 +20,7 @@ router.get("/",getAllMembershipPlans)
 
 router.get("/history",authMiddleware,getMembershipHistory)
 router.get("/admin/stats",authMiddleware,authorizeRoles("admin"), getMembershipStats)
+router.get("/premium-status",authMiddleware,checkPremiumStatus)
 
 router.patch("/cancel",authMiddleware,cancelMembership)
 
