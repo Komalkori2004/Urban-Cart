@@ -193,9 +193,40 @@ const updateMembershipPlan = asyncHandler(async (req, res, next) => {
 });
 
 
+
+
+
+const deleteMembershipPlan = asyncHandler(async (req, res, next) => {
+
+    const membershipPlan = await MemberShip.findById(
+        req.params.id
+    );
+
+    if (!membershipPlan) {
+        return next(
+            new ErrorHandler(
+                404,
+                "Membership plan not found."
+            )
+        );
+    }
+
+    membershipPlan.isActive = false;
+
+    await membershipPlan.save();
+
+    res.status(200).json({
+        success: true,
+        message: "Membership plan deleted successfully."
+    });
+
+});
+
+
 module.exports = {
     createMembershipPlan,
     getAllMembershipPlans,
     getSingleMembershipPlan,
-    updateMembershipPlan
+    updateMembershipPlan,
+    deleteMembershipPlan
 }
