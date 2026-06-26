@@ -86,7 +86,7 @@ const createMembershipPlan = asyncHandler(async (req, res, next) => {
 const getAllMembershipPlans = asyncHandler(async (req, res, next) => {
     const membershipPlans = await MemberShip.find({
         isActive: true
-    }).sort({ price: 1 });s
+    }).sort({ price: 1 });
 
     res.status(200).json({
         success: true,
@@ -96,7 +96,29 @@ const getAllMembershipPlans = asyncHandler(async (req, res, next) => {
 
 
 
+
+const getSingleMembershipPlan = asyncHandler(async (req, res, next) => {
+    const membershipPlan = await MemberShip.findOne({
+        slug: req.params.slug,
+        isActive: true
+    });
+
+    if (!membershipPlan) {
+
+        return next(new ErrorHandler(404, "Membership plan not found"))
+    }
+
+    res.status(200).json({
+        success: true,
+        membershipPlan
+    })
+
+})
+
+
+
 module.exports = {
     createMembershipPlan,
-    getAllMembershipPlans
+    getAllMembershipPlans,
+    getSingleMembershipPlan
 }
