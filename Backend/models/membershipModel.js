@@ -6,8 +6,8 @@ const membershipPlanSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true,
-      enum: ["Silver", "Gold", "Platinum"],
+      trim: true
+    
     },
 
     slug: {
