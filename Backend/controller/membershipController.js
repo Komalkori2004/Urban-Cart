@@ -1,3 +1,6 @@
+
+const rozerpay = require("../config/rozerpay")
+
 const slugify = require("slugify")
 // const membershipModel = require("../models/membershipPlan.model")
 
@@ -7,6 +10,7 @@ const asyncHandler = require("../middleware/asyncHandler")
 const ErrorHandler = require("../utils/errorHandler")
 const User = require("../models/userModel");
 const UserMembership = require("../models/userMembership.model");
+
 
 
 
@@ -268,13 +272,30 @@ const purchaseMembership = asyncHandler(async (req, res, next) => {
     //     expiryDate: new Date(Date.now() + membershipPlan.durationInDays * 24 * 60 * 60 * 1000)
     // })
 
-    res.status(200).json({
-        success: true,
-        message:
-            "Membership purchase initiated",
-        membershipPlan
-    });
+    const options = {
+        amount: membershipPlan.price * 100,
+        currency: "INR",
+        receipt: `receipt_${Date.now()}`,
+        payment_capture: 1
+    }
+    const response = await rozerpay.orders.create(options);
+   
 
+    if (!response) {
+        return next(
+            new ErrorHandler(
+                500,
+                "Failed to create Razorpay order"
+            )
+        )
+    }
+
+res.status(200).json({
+    success: true,
+    message: "Membership order created successfully",
+    membershipPlan,
+    order: response
+});
 
 })
 
