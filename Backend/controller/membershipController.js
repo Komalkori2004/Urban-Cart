@@ -487,6 +487,25 @@ const getMyMembership = asyncHandler(async (req, res, next) => {
 
 
 
+const getMembershipHistory = asyncHandler(async (req, res, next) => {
+    const memberships = await UserMembership.find({
+        user: req.user.id
+    })
+        .populate("membershipPlan")
+        .sort({
+            createdAt: -1
+        });
+
+
+        if(memberships.length===0){
+            return next(new ErrorHandler(404, "No membership history found"))
+        }
+
+    res.status(200).json({
+        success: true,
+       memberships
+    })
+})
 
 module.exports = {
     createMembershipPlan,
@@ -496,5 +515,6 @@ module.exports = {
     deleteMembershipPlan,
     purchaseMembership,
     verifyMembershipPayment,
-    getMyMembership
+    getMyMembership,
+    getMembershipHistory
 }
