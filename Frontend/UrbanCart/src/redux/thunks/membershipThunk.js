@@ -76,3 +76,26 @@ export const verifyMembershipPayment = createAsyncThunk(
 
     }
 )
+
+
+export const getMyMembership= createAsyncThunk(
+    "membership/getMyMembership",
+    async(_,thunkAPI)=>{
+        try{
+            const token=thunkAPI.getState().auth.token
+            const config={
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+            const {data}=await api.get("/membership/my-membership",config)
+                 return data.membership;
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data ?.message ||
+                "Failed to fetch memberships"
+            );
+        }
+    }
+)
