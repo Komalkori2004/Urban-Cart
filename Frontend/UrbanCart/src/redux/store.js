@@ -12,6 +12,8 @@ import couponReducer from "./feature/couponSlice"
 import newsletterReducer from "./feature/newsletterSlice"
 import contactReducer from "./feature/contactSlice"
 
+import membershipReducer from "./feature/membershipSlice"
+
 export const store = configureStore({
 
     reducer: {
@@ -25,7 +27,9 @@ export const store = configureStore({
         coupon:couponReducer,
         newsletter:newsletterReducer,
 
-        contact:contactReducer
+        contact:contactReducer,
+
+        membership:membershipReducer   
 
 
 

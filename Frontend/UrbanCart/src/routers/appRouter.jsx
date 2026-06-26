@@ -105,11 +105,16 @@ import Loader from '../components/Loader'
 
 import ContactMessages from "../admin/ContactMessages";
 
+import MembershipPlans from "../components/MembershipPlans";
+
 // 
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { getWishlist } from '../redux/thunks/wishlistThunks'
 import { getCart } from '../redux/thunks/cartThunks'
+
+
+
 
 
 
@@ -151,6 +156,7 @@ const AppRouter = () => {
 
                         <Route path="/forgot-password" element={<ForgotPassword />} />
                         <Route path="/reset-password/:token" element={<ResetPassword />} />
+                         <Route path="/plan" element={<MembershipPlans/>} />
 
 
 
