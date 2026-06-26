@@ -1,5 +1,6 @@
 
 const rozerpay = require("../config/rozerpay")
+const crypto = require("crypto");
 
 const slugify = require("slugify")
 // const membershipModel = require("../models/membershipPlan.model")
@@ -279,7 +280,7 @@ const purchaseMembership = asyncHandler(async (req, res, next) => {
         payment_capture: 1
     }
     const response = await rozerpay.orders.create(options);
-   
+
 
     if (!response) {
         return next(
@@ -290,12 +291,151 @@ const purchaseMembership = asyncHandler(async (req, res, next) => {
         )
     }
 
-res.status(200).json({
-    success: true,
-    message: "Membership order created successfully",
-    membershipPlan,
-    order: response
-});
+    res.status(200).json({
+        success: true,
+        message: "Membership order created successfully",
+        membershipPlan,
+        order: response
+    });
+
+})
+
+
+
+
+
+const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
+
+
+    const {
+        membershipPlanId,
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature
+    } = req.body;
+
+
+    // step 1 
+    if (!membershipPlanId || !razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+        return next(new ErrorHandler(400, "Please provide all required fields"))
+    }
+
+    //    step 2
+
+    const generatedSignature =
+        crypto
+            .createHmac(
+                "sha256",
+                process.env.RAZORPAY_KEY_SECRET
+            )
+            .update(
+                razorpay_order_id +
+                "|" +
+                razorpay_payment_id
+            )
+            .digest("hex");
+
+
+    // if (
+    //     generatedSignature !==
+    //     razorpay_signature
+    // ) {
+    //     return next(
+    //         new ErrorHandler(
+    //             400,
+    //             "Invalid payment signature"
+    //         )
+    //     );
+    // }
+
+
+    const membershipPlan =
+        await MemberShip.findOne({
+            _id: membershipPlanId,
+            isActive: true
+        });
+
+    if (!membershipPlan) {
+        return next(
+            new ErrorHandler(
+                404,
+                "Membership plan not found"
+            )
+        );
+    }
+
+    const existingMembership =
+        await UserMembership.findOne({
+            user: req.user.id,
+            status: "active",
+            expiryDate: {
+                $gt: new Date()
+            }
+        });
+
+    if (existingMembership) {
+        return next(
+            new ErrorHandler(
+                400,
+                "User already has an active membership"
+            )
+        );
+    }
+
+
+    const userMembership =
+        await UserMembership.create({
+
+            user: req.user.id,
+
+            membershipPlan:
+                membershipPlan._id,
+
+            amountPaid:
+                membershipPlan.price,
+
+            paymentMethod:
+                "razorpay",
+
+            paymentStatus:
+                "paid",
+
+            razorpayOrderId:
+                razorpay_order_id,
+
+            razorpayPaymentId:
+                razorpay_payment_id,
+
+            razorpaySignature:
+                razorpay_signature,
+
+            expiryDate:
+                new Date(
+                    Date.now() +
+                    membershipPlan.durationInDays *
+                    24 *
+                    60 *
+                    60 *
+                    1000
+                )
+        });
+
+
+    await User.findByIdAndUpdate(
+        req.user.id,
+        {
+            membership:
+                userMembership._id
+        }
+    );
+
+    res.status(200).json({
+        success: true,
+        message:
+            "Membership activated successfully",
+        userMembership
+    });
+
 
 })
 
@@ -306,5 +446,6 @@ module.exports = {
     getSingleMembershipPlan,
     updateMembershipPlan,
     deleteMembershipPlan,
-    purchaseMembership
+    purchaseMembership,
+    verifyMembershipPayment
 }
