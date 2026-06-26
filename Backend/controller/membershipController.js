@@ -440,6 +440,54 @@ const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
 })
 
 
+
+
+// 
+
+
+const getMyMembership = asyncHandler(async (req, res, next) => {
+
+    console.log("REQ USER:", req.user);
+
+    const allMemberships =
+        await UserMembership.find();
+
+    console.log(
+        "ALL MEMBERSHIPS:",
+        allMemberships
+    );
+    const membership =
+        await UserMembership
+            .findOne({
+                user: req.user.id,
+                status: "active",
+                expiryDate: {
+                    $gt: new Date()
+                }
+            })
+            .populate("membershipPlan");
+
+    if (!membership) {
+        return next(
+            new ErrorHandler(
+                404,
+                "Membership not found"
+            )
+        );
+    }
+
+    res.status(200).json({
+        success: true,
+        membership
+    })
+
+
+
+})
+
+
+
+
 module.exports = {
     createMembershipPlan,
     getAllMembershipPlans,
@@ -447,5 +495,6 @@ module.exports = {
     updateMembershipPlan,
     deleteMembershipPlan,
     purchaseMembership,
-    verifyMembershipPayment
+    verifyMembershipPayment,
+    getMyMembership
 }
