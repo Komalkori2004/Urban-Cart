@@ -5,6 +5,8 @@ const MemberShip = require("../models/membershipModel")
 
 const asyncHandler = require("../middleware/asyncHandler")
 const ErrorHandler = require("../utils/errorHandler")
+const User = require("../models/userModel");
+const UserMembership = require("../models/userMembership.model");
 
 
 
@@ -223,10 +225,65 @@ const deleteMembershipPlan = asyncHandler(async (req, res, next) => {
 });
 
 
+
+// /
+
+
+
+
+
+const purchaseMembership = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id)
+
+    if (!user) {
+        return next(new ErrorHandler(404, "User not found"))
+    }
+
+
+    const membershipPlan = await MemberShip.findOne({
+        _id: req.params.planId,
+        isActive: true
+    })
+
+    if (!membershipPlan) {
+        return next(new ErrorHandler(404, "Membership plan not found"))
+    }
+    const existingMembership = await UserMembership.findOne({
+        user: user._id,
+        status: "active",
+        expiryDate: { $gt: Date.now() }
+
+    })
+
+    if (existingMembership) {
+        return next(new ErrorHandler(400, "You already have an active membership plan"))
+    }
+
+    // const userMembership = await UserMembership.create({
+    //     user: user._id,
+    //     membershipPlan: membershipPlan._id,
+    //     amountPaid: membershipPlan.price,
+    //     paymentMethod: "razorpay",
+    //     paymentStatus: "pending",
+    //     expiryDate: new Date(Date.now() + membershipPlan.durationInDays * 24 * 60 * 60 * 1000)
+    // })
+
+    res.status(200).json({
+        success: true,
+        message:
+            "Membership purchase initiated",
+        membershipPlan
+    });
+
+
+})
+
+
 module.exports = {
     createMembershipPlan,
     getAllMembershipPlans,
     getSingleMembershipPlan,
     updateMembershipPlan,
-    deleteMembershipPlan
+    deleteMembershipPlan,
+    purchaseMembership
 }
