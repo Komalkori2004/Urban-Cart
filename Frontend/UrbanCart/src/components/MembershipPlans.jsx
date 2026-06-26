@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllMembership } from "../redux/thunks/membershipThunk";
+import { getAllMembership , purchaseMembership} from "../redux/thunks/membershipThunk";
 
 function MembershipPlans() {
 
@@ -14,6 +14,13 @@ function MembershipPlans() {
     } = useSelector(
         (state) => state.membership
     );
+
+    const {
+        membershipOrder
+    } = useSelector(
+        (state) => state.membership
+    );
+    console.log("MEMBERSHIP ORDER", membershipOrder);
 
     useEffect(() => {
         dispatch(getAllMembership());
@@ -79,7 +86,15 @@ function MembershipPlans() {
                                 }
                             </ul>
 
-                            <button>
+                            <button
+                                onClick={() =>
+                                    dispatch(
+                                        purchaseMembership(
+                                            plan._id
+                                        )
+                                    )
+                                }
+                            >
                                 Buy Membership
                             </button>
                         </div>
