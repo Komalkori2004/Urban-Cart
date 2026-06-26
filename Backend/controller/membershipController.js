@@ -555,6 +555,61 @@ const cancelMembership = asyncHandler(async (req, res, next) => {
 
 })
 
+
+const getMembershipStats = asyncHandler(async (req, res, next) => {
+    const totalMemberships = await UserMembership.countDocuments()
+
+    const activeMemberships = await UserMembership.countDocuments({
+        status: "active",
+        expiryDate: { $gt: Date.now() }
+
+    })
+
+    const cancelledMemberships = await UserMembership.countDocuments({
+        status: "cancelled"
+    })
+
+    const expiredMemberships = await UserMembership.countDocuments({
+        status: "active",
+        expiryDate: { $lt: Date.now() }
+    })
+
+    const revenue =
+        await UserMembership.aggregate([
+            {
+                $match: {
+                    paymentStatus: "paid"
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalRevenue: {
+                        $sum: "$amountPaid"
+                    }
+                }
+            }
+        ]);
+
+
+
+
+
+    res.status(200).json({
+        success: true,
+        stats: {
+            totalMemberships,
+            activeMemberships,
+            cancelledMemberships,
+            expiredMemberships,
+            totalRevenue:
+                revenue[0]?.totalRevenue || 0
+        }
+    });
+
+
+})
+
 module.exports = {
     createMembershipPlan,
     getAllMembershipPlans,
@@ -565,6 +620,7 @@ module.exports = {
     verifyMembershipPayment,
     getMyMembership,
     getMembershipHistory,
-    cancelMembership
+    cancelMembership,
+    getMembershipStats
 
 }
