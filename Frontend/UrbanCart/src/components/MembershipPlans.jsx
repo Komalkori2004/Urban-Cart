@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllMembership , purchaseMembership} from "../redux/thunks/membershipThunk";
+import { getAllMembership, purchaseMembership, verifyMembershipPayment } from "../redux/thunks/membershipThunk";
 
 function MembershipPlans() {
 
@@ -97,6 +97,36 @@ function MembershipPlans() {
                             >
                                 Buy Membership
                             </button>
+
+                            {
+                                membershipOrder?.membershipPlan?._id ===
+                                plan._id && (
+
+                                    <button
+                                        onClick={() =>
+                                            dispatch(
+                                                verifyMembershipPayment({
+                                                    razorpay_order_id:
+                                                        membershipOrder.order.id,
+
+                                                    razorpay_payment_id:
+                                                        "pay_test_123",
+
+                                                    razorpay_signature:
+                                                        "test_signature",
+
+                                                    membershipPlanId:
+                                                        membershipOrder
+                                                            .membershipPlan
+                                                            ._id
+                                                })
+                                            )
+                                        }
+                                    >
+                                        Verify Payment
+                                    </button>
+                                )
+                            }
                         </div>
                     )
                 )

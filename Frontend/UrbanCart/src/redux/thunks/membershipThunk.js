@@ -48,3 +48,31 @@ export const purchaseMembership = createAsyncThunk(
         }
     }
 )
+
+
+
+
+export const verifyMembershipPayment = createAsyncThunk(
+    "membership/verifyMembershipPayment",
+
+
+    async(paymentData,thunkAPI)=>{
+        try{
+            const token=thunkAPI.getState().auth.token
+            const config={
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+            const {data}=await api.post("/membership/verify-payment",paymentData,config)
+            return data
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data ?.message ||
+                "Failed to fetch memberships"
+            );
+        }
+
+    }
+)
