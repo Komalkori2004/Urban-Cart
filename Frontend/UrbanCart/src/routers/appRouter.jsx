@@ -105,7 +105,7 @@ import Loader from '../components/Loader'
 
 import ContactMessages from "../admin/ContactMessages";
 
-import MembershipPlans from "../components/MembershipPlans";
+import MembershipPlans from "../pages/membership/MembershipPlans";
 
 // 
 import { useEffect } from "react"
