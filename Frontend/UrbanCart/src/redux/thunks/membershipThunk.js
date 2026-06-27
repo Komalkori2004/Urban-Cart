@@ -151,3 +151,32 @@ export const cancelMembership = createAsyncThunk(
         }
     }
 )
+
+
+
+
+export const checkPremiumStatus = createAsyncThunk(
+    "membership/checkPremiumStatus",
+
+
+
+    async (_, thunkAPI) => {
+        try {
+
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { data } = await api.get("/membership/premium-status", {}, config)
+            return data.membership;
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Failed to fetch memberships"
+            );
+        }
+    }
+)

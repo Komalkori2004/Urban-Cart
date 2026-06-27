@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
     getAllMembership, purchaseMembership, verifyMembershipPayment, getMyMembership,
-    getMembershipHistory, cancelMembership
+    getMembershipHistory, cancelMembership, checkPremiumStatus
 } from "../redux/thunks/membershipThunk";
 
 function MembershipPlans() {
@@ -47,7 +47,16 @@ function MembershipPlans() {
         "MEMBERSHIP HISTORY",
         membershipHistory
     );
+const {
+    premiumStatus
+} = useSelector(
+    state => state.membership
+);
 
+console.log(
+    "PREMIUM STATUS",
+    premiumStatus
+);
     useEffect(() => {
         dispatch(getAllMembership());
     }, [dispatch]);
@@ -178,7 +187,7 @@ function MembershipPlans() {
                 }
             >
                 Get Membership History
-            </button>
+            </button><br />
 
 
             <button
@@ -189,6 +198,17 @@ function MembershipPlans() {
                 }
             >
                 Cancel Membership
+            </button>
+            <br />
+
+            <button
+                onClick={() =>
+                    dispatch(
+                        checkPremiumStatus()
+                    )
+                }
+            >
+                Check Premium
             </button>
         </div>
     );
