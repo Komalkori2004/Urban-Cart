@@ -109,6 +109,8 @@ import MembershipPlans from "../pages/membership/MembershipPlans";
 
 import MyMembership from "../pages/membership/MyMembership";
 
+import MembershipHistory from "../pages/membership/MembershipHistory";
+
 // 
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
@@ -158,7 +160,7 @@ const AppRouter = () => {
 
                         <Route path="/forgot-password" element={<ForgotPassword />} />
                         <Route path="/reset-password/:token" element={<ResetPassword />} />
-                         <Route path="/plan" element={<MembershipPlans/>} />
+                        <Route path="/plan" element={<MembershipPlans />} />
 
 
 
@@ -216,7 +218,7 @@ const AppRouter = () => {
                                 </ProtectRoute>
                             }
                         />
-                              <Route
+                        <Route
                             path="/my-membership"
                             element={
                                 <ProtectRoute>
@@ -224,6 +226,15 @@ const AppRouter = () => {
                                 </ProtectRoute>
                             }
                         />
+                        <Route
+                            path="/my-membershipHistory"
+                            element={
+                                <ProtectRoute>
+                                    <MembershipHistory />
+                                </ProtectRoute>
+                            }
+                        />
+
 
 
 
@@ -269,7 +280,7 @@ const AppRouter = () => {
                                 path='all-Subscribers'
                                 element={<Subscribers />}
                             />
-                              <Route
+                            <Route
                                 path='contact-messages'
                                 element={<ContactMessages />}
                             />
