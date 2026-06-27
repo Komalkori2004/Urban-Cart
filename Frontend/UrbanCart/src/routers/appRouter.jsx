@@ -107,6 +107,8 @@ import ContactMessages from "../admin/ContactMessages";
 
 import MembershipPlans from "../pages/membership/MembershipPlans";
 
+import MyMembership from "../pages/membership/MyMembership";
+
 // 
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
@@ -211,6 +213,14 @@ const AppRouter = () => {
                             element={
                                 <ProtectRoute>
                                     <WishlistPage />
+                                </ProtectRoute>
+                            }
+                        />
+                              <Route
+                            path="/my-membership"
+                            element={
+                                <ProtectRoute>
+                                    <MyMembership />
                                 </ProtectRoute>
                             }
                         />
