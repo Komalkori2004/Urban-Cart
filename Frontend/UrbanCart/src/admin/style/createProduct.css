@@ -257,8 +257,15 @@
     }
 
     .product-title{
-        font-size: 2.2rem;
-        margin-bottom: 10px;
+  color: var(--gold);
+
+    font-family: var(--heading-font);
+
+    font-size: clamp(2.5rem,5vw,4rem);
+       word-break: normal;
+    overflow-wrap: break-word;
+
+    margin-bottom: 12px;
     }
 
     .product-subtitle{

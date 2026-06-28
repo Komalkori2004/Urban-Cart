@@ -5,6 +5,9 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createCategory } from '../redux/thunks/categoryThunks'
 
+import "../admin/style/createCategory.css"
+// import "./style/createCategory.css"
+
 function CreateCategory() {
 
     const dispatch = useDispatch()
@@ -28,14 +31,27 @@ function CreateCategory() {
 
     return (
         <>
-            <div>
+           <div className="admin-category-page">
+    <div className="admin-container">
 
-                <h1>Create Category</h1>
+        <div className="category-header">
+            <h1 className="category-title">
+                Create Category
+            </h1>
 
-                <form onSubmit={handleSubmi}>
+            <p className="category-subtitle">
+                Add a new category to your UrbanCart store
+            </p>
+        </div>
 
-                    <input
+        <div className="category-form-card">
+            <form
+                className="category-form"
+                onSubmit={handleSubmi}
+            >
+               <input
                         type="text"
+                        className='category-input'
                         placeholder="Category Name"
                         value={name}
                         onChange={(e) =>
@@ -43,11 +59,10 @@ function CreateCategory() {
                         }
                     />
 
-                    <br />
-                    <br />
-
+                 
                     <input
                         type="file"
+                           className='category-file'
                         accept="image/*"
                         onChange={(e) => {
 
@@ -62,13 +77,13 @@ function CreateCategory() {
                         }}
                     />
 
-                    <br />
-                    <br />
+                   
 
                     {
                         preview && (
 
                             <img
+                            className='category-preview'
                                 src={preview}
                                 alt="preview"
                                 width="200"
@@ -78,16 +93,17 @@ function CreateCategory() {
                         )
                     }
 
-                    <br />
-                    <br />
+                   
 
-                    <button type="submit">
+                    <button type="submit" className='category-btn'>
                         Create Category
                     </button>
+            </form>
+        </div>
 
-                </form>
+    </div>
+</div>
 
-            </div>
         </>
     )
 }

@@ -27,7 +27,7 @@
 
     font-family:var(--heading-font);
 
-    font-size:clamp(2.5rem,5vw,4rem);
+     font-size: clamp(2.5rem,5vw,4rem);
 
     margin-bottom:12px;
 }
