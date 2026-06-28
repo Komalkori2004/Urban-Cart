@@ -281,3 +281,20 @@ export const getMembershipStats = createAsyncThunk(
 
 
 
+
+export const getSingleMembership = createAsyncThunk(
+    "membership/getSingleMembership",
+    async (slug, thunkAPI) => {
+        try {
+          
+            const { data } = await api.get(`/membership/${slug}`)
+            return data.membershipPlan;
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Failed to fetch memberships"
+            );
+        }
+    }
+)

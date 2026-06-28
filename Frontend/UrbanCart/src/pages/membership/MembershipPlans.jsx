@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./membership.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate  , Link} from "react-router-dom";
 import { toast } from "sonner";
 
 import {
@@ -229,6 +229,13 @@ function MembershipPlans() {
                                 >
                                     Become Premium
                                 </button>
+                                <Link
+                                    to={
+                                        `/membership/${plan.slug}`
+                                    }
+                                >
+                                    View Details
+                                </Link>
 
                             </div>
                         ))

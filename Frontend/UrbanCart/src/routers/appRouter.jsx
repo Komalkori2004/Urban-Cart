@@ -117,6 +117,8 @@ import EditMembership from "../admin/EditMembership"
 
 
 import MembershipStats from "../admin/MembershipStats";
+import SingleMembership from "../pages/membership/SingleMembership";
+
 
 // 
 import { useEffect } from "react"
@@ -241,6 +243,16 @@ const AppRouter = () => {
                                 </ProtectRoute>
                             }
                         />
+
+                        <Route
+                            path="/membership/:slug"
+                            element={
+                                <ProtectRoute>
+                                    <SingleMembership/>
+                                </ProtectRoute>
+                            }
+                        />
+
 
 
 
