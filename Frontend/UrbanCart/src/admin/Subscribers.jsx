@@ -1,38 +1,72 @@
 
-import { getSubscribers } from "../redux/thunks/newsletterThunk";
-import { useDispatch,useSelector } from "react-redux";
-import { useEffect } from "react";
+    import { getSubscribers } from "../redux/thunks/newsletterThunk";
+    import { useDispatch,useSelector } from "react-redux";
+    import { useEffect } from "react";
 
-function Subscribers() {
+    import "./style/admin.css"
 
-    const dispatch = useDispatch();
+    function Subscribers() {
 
-    const {
-        subscribers,
-        loading,
-    } = useSelector(
-        (state) => state.newsletter
-    );
+        const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getSubscribers());
-    }, [dispatch]);
+        const {
+            subscribers,
+            loading,
+        } = useSelector(
+            (state) => state.newsletter
+        );
+
+        useEffect(() => {
+            dispatch(getSubscribers());
+        }, [dispatch]);
 
     return (
-        <div>
 
-            <h2>
+    <div className="subscribers-container">
+
+        <div className="subscribers-header">
+
+            <h1>
                 Newsletter Subscribers
-            </h2>
+            </h1>
 
-            {subscribers.map((subscriber) => (
-                <div key={subscriber._id}>
-                    {subscriber.email}
-                </div>
-            ))}
+            <p>
+                Manage and view all newsletter
+                subscribers.
+            </p>
 
         </div>
-    );
-}
 
-export default Subscribers
+        <div className="subscribers-grid">
+
+            {
+                subscribers?.map(
+                    (subscriber) => (
+
+                        <div
+                            key={subscriber._id}
+                            className="subscriber-card"
+                        >
+
+                            <h3>
+                                Subscriber
+                            </h3>
+
+                            <p>
+                                {
+                                    subscriber.email
+                                }
+                            </p>
+
+                        </div>
+                    )
+                )
+            }
+
+        </div>
+
+    </div>
+);
+    }
+
+    export default Subscribers

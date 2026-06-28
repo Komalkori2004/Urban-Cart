@@ -542,3 +542,125 @@
         grid-template-columns:1fr;
     }
 }
+
+
+
+
+
+
+
+/*  all subscription */
+
+
+
+/* =====================
+   SUBSCRIBERS
+===================== */
+
+.subscribers-container{
+
+    min-height:100vh;
+
+    background:var(--black);
+
+    padding:40px;
+}
+
+.subscribers-header{
+
+    margin-bottom:40px;
+}
+
+.subscribers-header h1{
+
+    color:var(--gold);
+
+    font-family:
+        var(--heading-font);
+
+    font-size:3rem;
+
+    margin-bottom:10px;
+}
+
+.subscribers-header p{
+
+    color:rgba(255,255,255,.7);
+}
+
+.subscribers-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(300px,1fr)
+        );
+
+    gap:25px;
+}
+
+.subscriber-card{
+
+    background:
+        rgba(255,255,255,.02);
+
+    border:
+        1px solid
+        rgba(212,175,55,.15);
+
+    border-radius:
+        20px;
+
+    padding:
+        25px;
+
+    backdrop-filter:
+        blur(10px);
+
+    transition:
+        .3s ease;
+}
+
+.subscriber-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        var(--gold);
+}
+
+.subscriber-card h3{
+
+    color:
+        var(--gold);
+
+    margin-bottom:
+        15px;
+}
+
+.subscriber-card p{
+
+    color:
+        var(--white);
+
+    word-break:
+        break-word;
+}
+
+@media(max-width:768px){
+
+    .subscribers-container{
+        padding:20px;
+    }
+
+    .subscribers-header h1{
+        font-size:2rem;
+    }
+
+    .subscribers-grid{
+        grid-template-columns:1fr;
+    }
+}
