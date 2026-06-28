@@ -4,7 +4,7 @@ import { createProduct } from "../redux/thunks/productThunks";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { getAllCategory } from '../redux/thunks/categoryThunks'
-
+import "../admin/style/createProduct.css"
 
 import { toast }
     from "sonner";
@@ -47,7 +47,7 @@ const CreateProduct = () => {
 
         let newError = {}
         if (!formData.name.trim()) {
-            newError.naime = "product name is required "
+            newError.name = "product name is required "
         }
         if (!formData.description.trim()) {
             newError.description = "product description is required "
@@ -181,77 +181,84 @@ const CreateProduct = () => {
     }
 
 
-    return (
-        <>
-            <div>
+ return (
+    <div className="admin-product-page">
 
-                <h1>
+        <div className="admin-container">
+
+            <div className="product-header">
+
+                <h1 className="product-title">
                     Create Product
                 </h1>
 
+                <p className="product-subtitle">
+                    Add a new product to your UrbanCart store
+                </p>
 
+            </div>
+
+            <div className="product-form-card">
 
                 <form
+                    className="product-form"
                     onSubmit={handleSubmit}
                 >
 
                     <input
-
+                        className="product-input"
                         type="text"
-
                         name="name"
-
                         placeholder="Product Name"
-
                         value={formData.name}
-
                         onChange={handleChange}
-
                     />
-                    {error.name && <p className='error-text'>{error.name}</p>}
 
-
-                    <br />
-
+                    {
+                        error.name &&
+                        <p className="error-text">
+                            {error.name}
+                        </p>
+                    }
 
 
                     <textarea
-
+                        className="product-input product-textarea"
                         name="description"
-
                         placeholder="Description"
-
                         value={formData.description}
-
                         onChange={handleChange}
                     />
-                    {error.description && <p className='error-text'>{error.description}</p>}
-                    <br />
 
+                    {
+                        error.description &&
+                        <p className="error-text">
+                            {error.description}
+                        </p>
+                    }
 
 
                     <input
-
+                        className="product-input"
                         type="number"
-
                         name="price"
-
                         placeholder="Price"
-
                         value={formData.price}
-
                         onChange={handleChange}
                     />
-                    {error.price && <p className='error-text'>{error.price}</p>}
-                    <br />
+
+                    {
+                        error.price &&
+                        <p className="error-text">
+                            {error.price}
+                        </p>
+                    }
 
 
                     <select
-
+                        className="product-input"
                         name="category"
-
                         value={formData.category}
-
                         onChange={handleChange}
                     >
 
@@ -260,117 +267,136 @@ const CreateProduct = () => {
                         </option>
 
                         {
-                            categories.map((category) => (
+                            categories.map(
+                                category => (
 
-                                <option
-                                    key={category._id}
-                                    value={category.name}
-                                >
-                                    {category.name}
-                                </option>
-
-                            ))
+                                    <option
+                                        key={category._id}
+                                        value={category.name}
+                                    >
+                                        {category.name}
+                                    </option>
+                                )
+                            )
                         }
 
                     </select>
-                    {error.category && <p className='error-text' >{error.category}</p>}
-                    <br />
 
+                    {
+                        error.category &&
+                        <p className="error-text">
+                            {error.category}
+                        </p>
+                    }
 
 
                     <input
-
+                        className="product-input"
                         type="text"
-
                         name="brand"
-
                         placeholder="Brand"
-
                         value={formData.brand}
-
                         onChange={handleChange}
-
                     />
-                    {error.brand && <p className='error-text'>{error.brand}</p>}
-                    <br />
 
+                    {
+                        error.brand &&
+                        <p className="error-text">
+                            {error.brand}
+                        </p>
+                    }
 
 
                     <input
-
+                        className="product-input"
                         type="number"
-
                         name="stock"
-
                         placeholder="Stock"
-
                         value={formData.stock}
-
                         onChange={handleChange}
                     />
-                    {error.stock && <p className='error-text'>{error.stock}</p>}
-                    <br />
+
+                    {
+                        error.stock &&
+                        <p className="error-text">
+                            {error.stock}
+                        </p>
+                    }
 
 
-
-                    <label>
-
-                        Shipping
+                    <label
+                        className="shipping-check"
+                    >
 
                         <input
-
                             type="checkbox"
-
                             name="shipping"
-
-                            checked={formData.shipping}
-
-                            onChange={handleChange}
+                            checked={
+                                formData.shipping
+                            }
+                            onChange={
+                                handleChange
+                            }
                         />
 
-                    </label>
-                    <br />
+                        Free Shipping
 
+                    </label>
 
 
                     <input
-
+                        className="product-input"
                         type="file"
-
                         multiple
-
                         accept="image/*"
-
-                        onChange={handleImageChange}
+                        onChange={
+                            handleImageChange
+                        }
                     />
-                    {error.images && <p className='error-text'>{error.images}</p>}
-                    <div className='preview-container'>
+
+                    {
+                        error.images &&
+                        <p className="error-text">
+                            {error.images}
+                        </p>
+                    }
+
+
+                    <div
+                        className="preview-container"
+                    >
 
                         {
-                            previewImages.map((img, index) => (
+                            previewImages.map(
+                                (
+                                    img,
+                                    index
+                                ) => (
 
-                                <img
-                                    key={index}
-                                    src={img}
-                                      loading="lazy"
-                                    alt='preview'
-                                    className='preview-image'
-                                />
-
-                            ))
+                                    <img
+                                        key={index}
+                                        src={img}
+                                        alt="preview"
+                                        loading="lazy"
+                                        className="preview-image"
+                                    />
+                                )
+                            )
                         }
 
                     </div>
-                    <br />
 
 
-
-                    <button type="submit"
+                    <button
+                        className="product-submit-btn"
+                        type="submit"
                         disabled={loading}
                     >
 
                         {
-                            loading ? "creating...." : "create product"
+                            loading
+                                ? "Creating..."
+                                : "Create Product"
                         }
 
                     </button>
@@ -378,8 +404,11 @@ const CreateProduct = () => {
                 </form>
 
             </div>
-        </>
-    )
+
+        </div>
+
+    </div>
+);
 }
 
 export default CreateProduct

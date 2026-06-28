@@ -1,0 +1,306 @@
+/* ===========================
+   CREATE PRODUCT
+=========================== */
+
+.admin-product-page{
+    min-height:100vh;
+
+    background:var(--black);
+
+    padding:40px 20px;
+}
+
+.admin-container{
+    max-width:1400px;
+
+    margin:0 auto;
+}
+
+/* Header */
+
+.product-header{
+    margin-bottom:35px;
+}
+
+.product-title{
+    color:var(--gold);
+
+    font-family:
+        var(--heading-font);
+
+    font-size:3rem;
+
+    margin-bottom:10px;
+}
+
+.product-subtitle{
+    color:rgba(255,255,255,.7);
+
+    font-size:1rem;
+}
+
+/* Card */
+
+.product-form-card{
+    background:
+        linear-gradient(
+            145deg,
+            #161616,
+            #0f0f0f
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.15);
+
+    border-radius:24px;
+
+    padding:35px;
+
+    backdrop-filter:
+        blur(15px);
+}
+
+/* Form */
+
+.product-form{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+}
+
+/* Inputs */
+
+.product-input{
+    width:100%;
+
+    padding:16px 18px;
+
+    background:
+        rgba(255,255,255,.03);
+
+    border:
+        1px solid
+        rgba(212,175,55,.15);
+
+    border-radius:14px;
+
+    color:var(--white);
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.3s ease;
+}
+
+.product-input:focus{
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 0 15px
+        rgba(212,175,55,.15);
+}
+
+.product-input::placeholder{
+    color:
+        rgba(255,255,255,.4);
+}
+
+/* Select */
+
+.product-input option{
+    background:
+        #111;
+
+    color:
+        var(--white);
+}
+
+/* Textarea */
+
+.product-textarea{
+    min-height:140px;
+
+    resize:none;
+}
+
+/* Checkbox */
+
+.shipping-check{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:var(--champagne);
+
+    font-size:15px;
+}
+
+.shipping-check input{
+    width:18px;
+    height:18px;
+
+    accent-color:
+        var(--gold);
+}
+
+/* Image Preview */
+
+.preview-container{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin-top:10px;
+}
+
+.preview-image{
+    width:110px;
+    height:110px;
+
+    object-fit:cover;
+
+    border-radius:14px;
+
+    border:
+        2px solid
+        rgba(212,175,55,.15);
+
+    transition:.3s ease;
+}
+
+.preview-image:hover{
+    transform:scale(1.05);
+
+    border-color:
+        var(--gold);
+}
+
+/* Button */
+
+.product-submit-btn{
+    background:
+        var(--gold);
+
+    color:
+        var(--black);
+
+    border:none;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+    margin-top:10px;
+}
+
+.product-submit-btn:hover{
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 20px
+        rgba(212,175,55,.25);
+}
+
+.product-submit-btn:disabled{
+    opacity:.7;
+
+    cursor:not-allowed;
+}
+
+/* Error */
+
+.error-text{
+    color:#ff5c5c;
+
+    font-size:14px;
+
+    margin-top:-10px;
+}
+
+/* Responsive */
+
+@media (max-width:768px){
+
+    .admin-product-page{
+        padding: 15px;
+    }
+
+    .admin-container{
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .product-form-card{
+        padding: 25px 18px;   
+        border-radius: 20px;
+         width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .product-title{
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+    }
+
+    .product-subtitle{
+        font-size: 1rem;
+        margin-bottom: 25px;
+    }
+
+    .product-input{
+        padding: 18px 16px;   /* thoda bada */
+        font-size: 16px;
+    }
+
+    .product-textarea{
+        min-height: 150px;
+    }
+
+    .preview-container{
+        gap: 12px;
+    }
+
+    .preview-image{
+        width: 90px;
+        height: 90px;
+    }
+
+    .product-submit-btn{
+        padding: 18px;
+        font-size: 16px;
+    }
+}
+
+@media(max-width:576px){
+
+    .product-title{
+        font-size:1.7rem;
+    }
+
+    .product-input{
+        padding:14px;
+    }
+
+    .product-submit-btn{
+        padding:14px;
+    }
+}
