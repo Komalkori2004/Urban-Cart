@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
     getAllMembership, purchaseMembership, verifyMembershipPayment, getMyMembership,
-    getMembershipHistory, cancelMembership, checkPremiumStatus, createMembershipPlan, updateMembershipPlan, deleteMembershipPlan
+    getMembershipHistory, cancelMembership, checkPremiumStatus, createMembershipPlan, updateMembershipPlan, deleteMembershipPlan, getMembershipStats
 } from "../thunks/membershipThunk";
 
 
@@ -25,6 +25,12 @@ const initialState = {
     createSuccess: false,
     createError: null,
 
+    membershipStats: null,
+
+    statsLoading: false,
+    statsSuccess: false,
+    statsError: null,
+
     updateLoading: false,
     updateSuccess: false,
     updateError: null,
@@ -32,6 +38,10 @@ const initialState = {
     deleteLoading: false,
     deleteSuccess: false,
     deleteError: null,
+
+
+
+
 
     loading: false,
     error: null,
@@ -312,6 +322,45 @@ const membershipSlice = createSlice({
                     state.deleteLoading = false;
 
                     state.deleteError =
+                        action.payload;
+                }
+            )
+
+
+
+
+            .addCase(
+                getMembershipStats.pending,
+                (state) => {
+
+                    state.statsLoading = true;
+
+                    state.statsError = null;
+
+                    state.statsSuccess = false;
+                }
+            )
+
+            .addCase(
+                getMembershipStats.fulfilled,
+                (state, action) => {
+
+                    state.statsLoading = false;
+
+                    state.statsSuccess = true;
+
+                    state.membershipStats =
+                        action.payload;
+                }
+            )
+
+            .addCase(
+                getMembershipStats.rejected,
+                (state, action) => {
+
+                    state.statsLoading = false;
+
+                    state.statsError =
                         action.payload;
                 }
             )

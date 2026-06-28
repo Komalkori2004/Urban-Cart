@@ -253,3 +253,31 @@ export const deleteMembershipPlan = createAsyncThunk(
         }
     }    
 )
+
+
+
+
+export const getMembershipStats = createAsyncThunk(
+    "membership/getMembershipStats",
+    async (_, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { data } = await api.get("/membership/admin/stats", config)
+            return data.stats;
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Failed to fetch memberships"
+            );
+        }
+    }    
+)
+
+
+
