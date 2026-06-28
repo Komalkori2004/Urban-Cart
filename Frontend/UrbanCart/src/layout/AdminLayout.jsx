@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import "./adminLayout.css"
 
@@ -7,15 +7,24 @@ import AdminNavbar from '../components/AdminNavbar'
 
 const AdminLayout = () => {
 
-    return (
-        <div className="admin-layout">
+   const [sidebarOpen,
+    setSidebarOpen] =
+    useState(false);
 
-            <AdminSidebar />
+
+    return (
+
+        <div className="admin-layout">
+<AdminSidebar
+    sidebarOpen={sidebarOpen}
+    setSidebarOpen={setSidebarOpen}
+/>
 
             <div className="admin-main">
 
-                <AdminNavbar />
-
+           <AdminNavbar
+    setSidebarOpen={setSidebarOpen}
+/>
                 <div className="admin-content">
 
                     <Outlet />

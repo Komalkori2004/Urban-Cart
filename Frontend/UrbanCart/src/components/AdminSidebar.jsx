@@ -3,11 +3,27 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import "./style/adminSidebar.css"
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
+
+
+
     return (
         <>
-            <div className="admin-sidebar">
+            <div
+                className={`admin-sidebar ${sidebarOpen
+                    ? "open"
+                    : ""
+                    }`}
+            >
 
+                <button
+                    className="close-sidebar"
+                    onClick={() =>
+                        setSidebarOpen(false)
+                    }
+                >
+                    ✕
+                </button>
                 <NavLink to="/">
                     <h2 className='sidebar-logo'>
                         urbanCart
@@ -19,14 +35,22 @@ const AdminSidebar = () => {
                     <NavLink
                         to="/admin"
                         end
-                        className={({ isActive }) =>
-                            isActive ? "active-link" : ''
+                        onClick={() =>
+                            setSidebarOpen(false)
                         }
-
-                    >Dashboard</NavLink>
-
+                        className={({ isActive }) =>
+                            isActive
+                                ? "active-link"
+                                : ""
+                        }
+                    >
+                        Dashboard
+                    </NavLink>
                     <NavLink
                         to="/admin/add-product"
+                         onClick={() =>
+                            setSidebarOpen(false)
+                        }
                         className={({ isActive }) =>
                             isActive ? "active-link" : ''
                         }
@@ -34,6 +58,9 @@ const AdminSidebar = () => {
                         add-Product
                     </NavLink>
                     <NavLink to="/admin/add-Category"
+                     onClick={() =>
+                            setSidebarOpen(false)
+                        }
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>
@@ -42,6 +69,9 @@ const AdminSidebar = () => {
 
                     <NavLink
                         to="/admin/all-product"
+                         onClick={() =>
+                            setSidebarOpen(false)
+                        }
                         className={({ isActive }) =>
                             isActive ? "active-link" : ''
                         }
@@ -49,14 +79,25 @@ const AdminSidebar = () => {
                         Manage Product
                     </NavLink>
 
-                    <NavLink to="/admin/orders"
+                    <NavLink
+                        to="/admin/orders"
+                        
+                        onClick={() =>
+                            setSidebarOpen(false)
+                        }
                         className={({ isActive }) =>
-                            isActive ? "active-link" : ""
-                        }>
+                            isActive
+                                ? "active-link"
+                                : ""
+                        }
+                    >
                         Orders
                     </NavLink>
 
                     <NavLink to="/admin/all-users"
+                     onClick={() =>
+                            setSidebarOpen(false)
+                        }
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>
@@ -64,6 +105,9 @@ const AdminSidebar = () => {
                     </NavLink>
 
                     <NavLink to="/admin/all-Subscribers"
+                     onClick={() =>
+                            setSidebarOpen(false)
+                        }
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>
@@ -72,6 +116,9 @@ const AdminSidebar = () => {
 
 
                     <NavLink to="/admin/contact-messages"
+                     onClick={() =>
+                            setSidebarOpen(false)
+                        }
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>
@@ -102,11 +149,14 @@ const AdminSidebar = () => {
 
 
                     <NavLink to="/admin/membership-management"
+                     onClick={() =>
+                            setSidebarOpen(false)
+                        }
                         className={({ isActive }) =>
                             isActive ? "active-link" : ""
                         }>
-                        membership-management                   
-                         </NavLink>
+                        membership-management
+                    </NavLink>
 
 
 
