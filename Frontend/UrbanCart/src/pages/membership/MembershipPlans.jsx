@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./membership.css";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 import {
     getAllMembership, purchaseMembership, verifyMembershipPayment, getMyMembership,
@@ -8,6 +10,7 @@ import {
 } from "../../redux/thunks/membershipThunk";
 
 function MembershipPlans() {
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -19,48 +22,133 @@ function MembershipPlans() {
         (state) => state.membership
     );
 
-    //     const {
-    //         membershipOrder
-    //     } = useSelector(
-    //         (state) => state.membership
-    //     );
-
-
-    //     const {
-    //         myMembership
-    //     } = useSelector(
-    //         state => state.membership
-    //     );
-
-
-    //     console.log(
-    //         "MY MEMBERSHIP",
-    //         myMembership
-    //     );
-
-    //     const {
-    //         membershipHistory
-    //     } = useSelector(
-    //         state => state.membership
-    //     );
-
-    //     console.log(
-    //         "MEMBERSHIP HISTORY",
-    //         membershipHistory
-    //     );
-    // const {
-    //     premiumStatus
-    // } = useSelector(
-    //     state => state.membership
-    // );
-
-    // console.log(
-    //     "PREMIUM STATUS",
-    //     premiumStatus
-    // );
     useEffect(() => {
         dispatch(getAllMembership());
     }, [dispatch]);
+
+
+
+    const handlePurchase = async (planId) => {
+
+        const resultAction =
+            await dispatch(
+                purchaseMembership(planId)
+            );
+
+        if (
+            !purchaseMembership.fulfilled.match(
+                resultAction
+            )
+        ) {
+            toast.error("Failed to create order");
+            return;
+        }
+
+        const {
+            order,
+            membershipPlan
+        } = resultAction.payload;
+
+        const options = {
+
+            key:
+                import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+            amount:
+                order.amount,
+
+            currency:
+                order.currency,
+
+            order_id:
+                order.id,
+
+            name:
+                "UrbanCart",
+
+            description:
+                membershipPlan.name,
+
+            handler:
+                async function (
+                    response
+                ) {
+
+                    const verifyResult =
+                        console.log({
+                            membershipPlanId: membershipPlan._id,
+                            razorpay_payment_id:
+                                response.razorpay_payment_id,
+                            razorpay_order_id:
+                                response.razorpay_order_id,
+                            razorpay_signature:
+                                response.razorpay_signature,
+                        });
+                    await dispatch(
+                        verifyMembershipPayment({
+
+                            membershipPlanId:
+                                membershipPlan._id,
+
+                            razorpay_payment_id:
+                                response.razorpay_payment_id,
+
+                            razorpay_order_id:
+                                response.razorpay_order_id,
+
+                            razorpay_signature:
+                                response.razorpay_signature,
+                        })
+                    );
+
+                    if (
+                        verifyMembershipPayment.rejected.match(
+                            verifyResult
+                        )
+                    ) {
+
+                        toast.error(
+                            "Payment verification failed"
+                        );
+
+                        return;
+                    }
+
+                    await dispatch(
+                        getMyMembership()
+                    );
+
+                    await dispatch(
+                        checkPremiumStatus()
+                    );
+
+                    toast.success(
+                        "Membership Activated"
+                    );
+
+                    navigate(
+                        "/my-membership"
+                    );
+                },
+
+            modal: {
+
+                ondismiss: function () {
+
+                    toast.error(
+                        "Payment cancelled"
+                    );
+                }
+            }
+        };
+
+        const razorpay =
+            new window.Razorpay(
+                options
+            );
+
+        razorpay.open();
+    };
 
 
     return (
@@ -134,10 +222,8 @@ function MembershipPlans() {
                                 <button
                                     className="membership-btn"
                                     onClick={() =>
-                                        dispatch(
-                                            purchaseMembership(
-                                                plan._id
-                                            )
+                                        handlePurchase(
+                                            plan._id
                                         )
                                     }
                                 >

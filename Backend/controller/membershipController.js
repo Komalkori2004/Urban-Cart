@@ -276,9 +276,9 @@ const purchaseMembership = asyncHandler(async (req, res, next) => {
     const options = {
         amount: membershipPlan.price * 100,
         currency: "INR",
-        receipt: `receipt_${Date.now()}`,
-        payment_capture: 1
-    }
+        receipt: `receipt_${Date.now()}`
+    };
+
     const response = await rozerpay.orders.create(options);
 
 
@@ -305,6 +305,7 @@ const purchaseMembership = asyncHandler(async (req, res, next) => {
 
 
 const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
+ 
 
 
     const {
@@ -336,17 +337,17 @@ const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
             .digest("hex");
 
 
-    // if (
-    //     generatedSignature !==
-    //     razorpay_signature
-    // ) {
-    //     return next(
-    //         new ErrorHandler(
-    //             400,
-    //             "Invalid payment signature"
-    //         )
-    //     );
-    // }
+    if (
+        generatedSignature !==
+        razorpay_signature
+    ) {
+        return next(
+            new ErrorHandler(
+                400,
+                "Invalid payment signature"
+            )
+        );
+    }
 
 
     const membershipPlan =
@@ -447,15 +448,11 @@ const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
 
 const getMyMembership = asyncHandler(async (req, res, next) => {
 
-    console.log("REQ USER:", req.user);
 
     const allMemberships =
         await UserMembership.find();
 
-    console.log(
-        "ALL MEMBERSHIPS:",
-        allMemberships
-    );
+ ;
     const membership =
         await UserMembership
             .findOne({
@@ -641,7 +638,7 @@ const checkPremiumStatus =
             membership
         });
 
-});
+    });
 
 module.exports = {
     createMembershipPlan,
