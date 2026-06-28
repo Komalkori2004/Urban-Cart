@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
+import "../pages/membership/membership.css"
 
+import "../Auth/auth.css"
+import { useLocation } from "react-router-dom";
 import { updateMembershipPlan, deleteMembershipPlan }
     from "../redux/thunks/membershipThunk";
 
@@ -10,6 +13,8 @@ function EditMembership() {
 
     const dispatch =
         useDispatch();
+
+    const location = useLocation();
 
     const {
         updateLoading,
@@ -114,229 +119,244 @@ function EditMembership() {
             );
         };
 
-   return (
 
-    <div
-        style={{
-            padding: "40px"
-        }}
-    >
 
-        <h1>
-            Edit Membership
-        </h1>
+    useEffect(() => {
 
-        <form
-            onSubmit={handleSubmit}
-        >
+        if (location.state?.plan) {
 
-            <input
-                type="text"
-                name="name"
-                placeholder="Membership Name"
-                value={formData.name}
-                onChange={handleChange}
-            />
+            const plan =
+                location.state.plan;
 
-            <br /><br />
+            setFormData({
+                name: plan.name,
+                description: plan.description,
+                price: plan.price,
+                durationInDays: plan.durationInDays,
+                features: plan.features?.join(", "),
+                discountPercentage: plan.discountPercentage,
+                freeShipping: plan.freeShipping,
+                prioritySupport: plan.prioritySupport,
+                earlyAccess: plan.earlyAccess,
+                premiumBadge: plan.premiumBadge,
+                maxDiscountAmount: plan.maxDiscountAmount,
+                isPopular: plan.isPopular,
+                isRecommended: plan.isRecommended,
+                isActive: plan.isActive
+            });
+        }
 
-            <textarea
-                name="description"
-                placeholder="Description"
-                value={formData.description}
-                onChange={handleChange}
-            />
+    }, [location]);
+    return (
 
-            <br /><br />
+        <div className="auth-container">
 
-            <input
-                type="number"
-                name="price"
-                placeholder="Price"
-                value={formData.price}
-                onChange={handleChange}
-            />
+            <div className="auth-box">
 
-            <br /><br />
+                <h1 className="auth-title">
+                    Edit Membership
+                </h1>
 
-            <input
-                type="number"
-                name="durationInDays"
-                placeholder="Duration In Days"
-                value={formData.durationInDays}
-                onChange={handleChange}
-            />
+                <p className="auth-subtitle">
+                    Update your premium membership plan details.
+                </p>
 
-            <br /><br />
+                <form
+                    className="auth-form"
+                    onSubmit={handleSubmit}
+                >
 
-            <textarea
-                name="features"
-                placeholder="Feature1, Feature2, Feature3"
-                value={formData.features}
-                onChange={handleChange}
-            />
+                    <input
+                        className="auth-input"
+                        type="text"
+                        name="name"
+                        placeholder="Membership Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                    />
 
-            <br /><br />
+                    <textarea
+                        className="auth-input"
+                        name="description"
+                        placeholder="Description"
+                        value={formData.description}
+                        onChange={handleChange}
+                    />
 
-            <input
-                type="number"
-                name="discountPercentage"
-                placeholder="Discount Percentage"
-                value={formData.discountPercentage}
-                onChange={handleChange}
-            />
+                    <input
+                        className="auth-input"
+                        type="number"
+                        name="price"
+                        placeholder="Price"
+                        value={formData.price}
+                        onChange={handleChange}
+                    />
 
-            <br /><br />
+                    <input
+                        className="auth-input"
+                        type="number"
+                        name="durationInDays"
+                        placeholder="Duration In Days"
+                        value={formData.durationInDays}
+                        onChange={handleChange}
+                    />
 
-            <input
-                type="text"
-                name="premiumBadge"
-                placeholder="Premium Badge"
-                value={formData.premiumBadge}
-                onChange={handleChange}
-            />
+                    <textarea
+                        className="auth-input"
+                        name="features"
+                        placeholder="Feature1, Feature2, Feature3"
+                        value={formData.features}
+                        onChange={handleChange}
+                    />
 
-            <br /><br />
+                    <input
+                        className="auth-input"
+                        type="number"
+                        name="discountPercentage"
+                        placeholder="Discount Percentage"
+                        value={formData.discountPercentage}
+                        onChange={handleChange}
+                    />
 
-            <input
-                type="number"
-                name="maxDiscountAmount"
-                placeholder="Max Discount Amount"
-                value={formData.maxDiscountAmount}
-                onChange={handleChange}
-            />
+                    <input
+                        className="auth-input"
+                        type="text"
+                        name="premiumBadge"
+                        placeholder="Premium Badge"
+                        value={formData.premiumBadge}
+                        onChange={handleChange}
+                    />
 
-            <br /><br />
+                    <input
+                        className="auth-input"
+                        type="number"
+                        name="maxDiscountAmount"
+                        placeholder="Max Discount Amount"
+                        value={formData.maxDiscountAmount}
+                        onChange={handleChange}
+                    />
 
-            <label>
-                <input
-                    type="checkbox"
-                    name="freeShipping"
-                    checked={formData.freeShipping}
-                    onChange={handleChange}
-                />
-                Free Shipping
-            </label>
+                    <div className="membership-checkboxes">
 
-            <br /><br />
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="freeShipping"
+                                checked={formData.freeShipping}
+                                onChange={handleChange}
+                            />
+                            Free Shipping
+                        </label>
 
-            <label>
-                <input
-                    type="checkbox"
-                    name="prioritySupport"
-                    checked={formData.prioritySupport}
-                    onChange={handleChange}
-                />
-                Priority Support
-            </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="prioritySupport"
+                                checked={formData.prioritySupport}
+                                onChange={handleChange}
+                            />
+                            Priority Support
+                        </label>
 
-            <br /><br />
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="earlyAccess"
+                                checked={formData.earlyAccess}
+                                onChange={handleChange}
+                            />
+                            Early Access
+                        </label>
 
-            <label>
-                <input
-                    type="checkbox"
-                    name="earlyAccess"
-                    checked={formData.earlyAccess}
-                    onChange={handleChange}
-                />
-                Early Access
-            </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="isPopular"
+                                checked={formData.isPopular}
+                                onChange={handleChange}
+                            />
+                            Popular
+                        </label>
 
-            <br /><br />
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="isRecommended"
+                                checked={formData.isRecommended}
+                                onChange={handleChange}
+                            />
+                            Recommended
+                        </label>
 
-            <label>
-                <input
-                    type="checkbox"
-                    name="isPopular"
-                    checked={formData.isPopular}
-                    onChange={handleChange}
-                />
-                Popular
-            </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="isActive"
+                                checked={formData.isActive}
+                                onChange={handleChange}
+                            />
+                            Active
+                        </label>
 
-            <br /><br />
+                    </div>
 
-            <label>
-                <input
-                    type="checkbox"
-                    name="isRecommended"
-                    checked={formData.isRecommended}
-                    onChange={handleChange}
-                />
-                Recommended
-            </label>
+                    <button
+                        className="auth-btn"
+                        type="submit"
+                    >
+                        {
+                            updateLoading
+                                ? "Updating..."
+                                : "Update Membership"
+                        }
+                    </button>
 
-            <br /><br />
+                    <button
+                        className="auth-btn delete-btn"
+                        type="button"
+                        onClick={handleDelete}
+                    >
+                        {
+                            deleteLoading
+                                ? "Deleting..."
+                                : "Delete Membership"
+                        }
+                    </button>
 
-            <label>
-                <input
-                    type="checkbox"
-                    name="isActive"
-                    checked={formData.isActive}
-                    onChange={handleChange}
-                />
-                Active
-            </label>
+                </form>
 
-            <br /><br />
-
-            <button
-                type="submit"
-            >
                 {
-                    updateLoading
-                        ? "Updating..."
-                        : "Update Membership"
+                    updateSuccess &&
+                    <p className="auth-success">
+                        Membership updated successfully
+                    </p>
                 }
-            </button>
 
-            <button
-                type="button"
-                onClick={handleDelete}
-            >
                 {
-                    deleteLoading
-                        ? "Deleting..."
-                        : "Delete Membership"
+                    updateError &&
+                    <p className="auth-error">
+                        {updateError}
+                    </p>
                 }
-            </button>
 
-        </form>
+                {
+                    deleteSuccess &&
+                    <p className="auth-success">
+                        Membership deleted successfully
+                    </p>
+                }
 
-        {
-            updateSuccess && (
-                <p>
-                    Membership updated successfully
-                </p>
-            )
-        }
+                {
+                    deleteError &&
+                    <p className="auth-error">
+                        {deleteError}
+                    </p>
+                }
 
-        {
-            updateError && (
-                <p>
-                    {updateError}
-                </p>
-            )
-        }
+            </div>
 
-        {
-            deleteSuccess && (
-                <p>
-                    Membership deleted successfully
-                </p>
-            )
-        }
-
-        {
-            deleteError && (
-                <p>
-                    {deleteError}
-                </p>
-            )
-        }
-
-    </div>
-);
+        </div>
+    );
 }
 
 export default EditMembership;

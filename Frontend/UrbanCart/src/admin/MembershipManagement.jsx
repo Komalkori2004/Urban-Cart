@@ -64,7 +64,7 @@ function MembershipManagement() {
                     >
                         Create
                     </button>
-                  
+
 
                     <button
                         onClick={() =>
@@ -88,8 +88,8 @@ function MembershipManagement() {
                         <div
                             key={plan._id}
                             className={`membership-card ${plan.isPopular
-                                    ? "popular"
-                                    : ""
+                                ? "popular"
+                                : ""
                                 }`}
                         >
 
@@ -170,20 +170,23 @@ function MembershipManagement() {
                                 className="membership-btn"
                                 onClick={() =>
                                     navigate(
-                                        `/admin/edit-membership/${plan._id}`
+                                        `/admin/edit-membership/${plan._id}`,
+                                        {
+                                            state: { plan }
+                                        }
                                     )
                                 }
                             >
-                                Edit Membership
-                            </button>
+                            Edit Membership
+                        </button>
 
                         </div>
-                    )
+            )
                 )}
 
-            </div>
-
         </div>
+
+        </div >
     );
 
 
