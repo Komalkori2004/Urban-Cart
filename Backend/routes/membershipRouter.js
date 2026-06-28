@@ -26,7 +26,7 @@ router.patch("/cancel",authMiddleware,cancelMembership)
 
 router.get("/:slug",getSingleMembershipPlan)
 
-router.put("/:id",authMiddleware,authorizeRoles("admin"),updateMembershipPlan)
+router.patch("/:id",authMiddleware,authorizeRoles("admin"),updateMembershipPlan)
 
 router.delete("/:id",authMiddleware,authorizeRoles("admin"),deleteMembershipPlan)
 

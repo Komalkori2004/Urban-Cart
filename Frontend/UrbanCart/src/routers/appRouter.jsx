@@ -113,6 +113,8 @@ import MembershipHistory from "../pages/membership/MembershipHistory";
 
 import CreateMembership from "../admin/CreateMembership"
 
+import EditMembership from "../admin/EditMembership"
+
 // 
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
@@ -290,6 +292,11 @@ const AppRouter = () => {
                               <Route
                                 path='create-membership'
                                 element={<CreateMembership />}
+                            />
+
+                            <Route
+                                path='edit-membership'
+                                element={<EditMembership />}
                             />
 
                         </Route>

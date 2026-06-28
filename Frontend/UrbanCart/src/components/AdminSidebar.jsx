@@ -85,6 +85,13 @@ const AdminSidebar = () => {
                         Contact membership
                     </NavLink>
 
+                    <NavLink to="/admin/edit-membership"
+                        className={({ isActive }) =>
+                            isActive ? "active-link" : ""
+                        }>
+                  update membership 
+                    </NavLink>
+
 
 
 

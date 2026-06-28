@@ -205,3 +205,27 @@ export const createMembershipPlan = createAsyncThunk(
         }
     }
 )
+
+
+
+export const updateMembershipPlan = createAsyncThunk(
+    "membership/updateMembershipPlan",
+    async ({id, membershipData},thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { data } = await api.patch(`/membership/${id}`, membershipData, config)
+            return data.membershipPlan
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Failed to update membership plan"
+            );
+        }
+    }
+)
