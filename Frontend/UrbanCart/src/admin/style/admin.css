@@ -364,3 +364,46 @@
 
     font-weight: 600;
 }
+
+
+
+
+
+/* create embership  */
+
+
+.membership-checkbox-group{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin:10px 0;
+}
+
+.membership-check{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    color:var(--white);
+
+    background:rgba(255,255,255,.03);
+
+    border:1px solid rgba(212,175,55,.15);
+
+    padding:12px;
+
+    border-radius:10px;
+}
+
+.membership-check input{
+    width:18px;
+    height:18px;
+    accent-color:var(--gold);
+}
+
+@media(max-width:576px){
+
+    .membership-checkbox-group{
+        grid-template-columns:1fr;
+    }
+}
