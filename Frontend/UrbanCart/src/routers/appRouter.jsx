@@ -111,6 +111,8 @@ import MyMembership from "../pages/membership/MyMembership";
 
 import MembershipHistory from "../pages/membership/MembershipHistory";
 
+import CreateMembership from "../admin/CreateMembership"
+
 // 
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
@@ -283,6 +285,11 @@ const AppRouter = () => {
                             <Route
                                 path='contact-messages'
                                 element={<ContactMessages />}
+                            />
+
+                              <Route
+                                path='create-membership'
+                                element={<CreateMembership />}
                             />
 
                         </Route>

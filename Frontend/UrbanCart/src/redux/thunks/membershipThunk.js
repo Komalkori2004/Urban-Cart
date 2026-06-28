@@ -180,3 +180,28 @@ export const checkPremiumStatus = createAsyncThunk(
         }
     }
 )
+
+
+
+
+export const createMembershipPlan = createAsyncThunk(
+    "membership/createMembershipPlan",
+    async (membershipData, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { data } = await api.post("/membership/create", membershipData, config)
+            return data.membershipPlan
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Failed to create membership plan"
+            );
+        }
+    }
+)

@@ -78,6 +78,13 @@ const AdminSidebar = () => {
                         Contact Messages
                     </NavLink>
 
+                       <NavLink to="/admin/create-membership"
+                        className={({ isActive }) =>
+                            isActive ? "active-link" : ""
+                        }>
+                        Contact membership
+                    </NavLink>
+
 
 
 
