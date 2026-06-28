@@ -3,7 +3,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllOrders, updateOrderStatus, getOrderById } from "../redux/thunks/orderThunks";
-import "./style/admin.css"
+import "./style/orders.css"
+// import "./style/admin.css"
 
 
 
@@ -34,7 +35,19 @@ const AdminOrder = () => {
   return (
     <>
       <div className="admin-orders">
-        <h1 className="orders-title">Manage Orders</h1>
+        <div className="orders-header">
+
+          <div>
+            <h1 className="orders-title">
+              Manage Orders
+            </h1>
+
+            <p className="orders-subtitle">
+              Track and manage customer orders.
+            </p>
+          </div>
+
+        </div>
 
         <div className="orders-table-wrapper">
           <table className="orders-table">
@@ -79,37 +92,38 @@ const AdminOrder = () => {
                       {item.paymentMethod}
                     </td>
                     <td>
-                      <button
-                        onClick={() => {
+                      <div className="order-actions">
 
-                          dispatch(
-                            getOrderById(item._id)
-                          )
-                          setShowModal(true)
-                        }}
-                      >
-                        View
-                      </button>
+                        <button
+                          className="view-order-btn"
+                          onClick={() => {
+                            dispatch(getOrderById(item._id));
+                            setShowModal(true);
+                          }}
+                        >
+                          View
+                        </button>
 
-                      <select
-                        className="order-status-select"
-                        value={item.orderStatus}
-                        onChange={(e) =>
-                          dispatch(
-                            updateOrderStatus({
-                              id: item._id,
-                              orderStatus: e.target.value
-                            })
-                          )
-                        }
-                      >
-                        <option value="Pending">Pending</option>
-                        <option value="Processing">Processing</option>
-                        <option value="Shipped">Shipped</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Cancelled">Cancelled</option>
-                      </select>
+                        <select
+                          className="order-status-select"
+                          value={item.orderStatus}
+                          onChange={(e) =>
+                            dispatch(
+                              updateOrderStatus({
+                                id: item._id,
+                                orderStatus: e.target.value
+                              })
+                            )
+                          }
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
+                          <option value="Cancelled">Cancelled</option>
+                        </select>
 
+                      </div>
                     </td>
 
                   </tr>
@@ -176,7 +190,7 @@ const AdminOrder = () => {
                       <img
                         src={item.image}
                         alt={item.name}
-                          loading="lazy"
+                        loading="lazy"
                       />
 
                       <div>

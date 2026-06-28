@@ -1,16 +1,18 @@
 .admin-sidebar {
     width: 280px;
+    flex-shrink: 0;
+
     min-height: 100vh;
 
     background: linear-gradient(
         180deg,
-        var(--charcoal),
-        var(--black)
+        #141414,
+        #0d0d0d
     );
 
-    border-right: 1px solid rgba(212, 175, 55, 0.15);
+    border-right: 1px solid rgba(212,175,55,.12);
 
-    padding: 35px 25px;
+    padding: 30px 20px;
 
     position: sticky;
     top: 0;
@@ -19,87 +21,72 @@
 /* Logo */
 
 .sidebar-logo {
-    font-family: var(--heading-font);
-
     color: var(--gold);
 
-    font-size: 2rem;
+    font-family: var(--heading-font);
 
-    font-weight: 700;
+    font-size: 2.2rem;
 
     text-align: center;
 
-    letter-spacing: 1px;
-
-    margin-bottom: 50px;
-
-    text-transform: capitalize;
+    margin-bottom: 40px;
 }
 
-/* Navigation */
+/* Links */
 
 .sidebar-links {
     display: flex;
+
     flex-direction: column;
-    gap: 12px;
+
+    gap: 10px;
 }
 
 .sidebar-links a {
+    color: var(--champagne);
+
     padding: 14px 18px;
 
     border-radius: 14px;
 
-    color: var(--champagne);
-
-    font-size: 0.95rem;
-
-    font-weight: 500;
-
-    transition: var(--transition);
+    transition: .3s ease;
 
     position: relative;
 
+    white-space: nowrap;
+
     overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
-/* Hover */
-
 .sidebar-links a:hover {
-    background: rgba(212, 175, 55, 0.08);
+    background: rgba(212,175,55,.08);
 
     color: var(--gold);
 
-    transform: translateX(6px);
-
-    box-shadow:
-        0 0 15px rgba(212, 175, 55, 0.12);
+    transform: translateX(4px);
 }
 
-/* Active Link */
+/* Active */
 
 .active-link {
-    background: linear-gradient(
-        90deg,
-        rgba(212, 175, 55, 0.15),
-        rgba(212, 175, 55, 0.05)
-    );
+    background: rgba(212,175,55,.10);
 
     color: var(--gold) !important;
 
     border-left: 3px solid var(--gold);
 
     box-shadow:
-        0 0 18px rgba(212, 175, 55, 0.18);
+        0 0 20px rgba(212,175,55,.15);
 }
-
-/* Active glow dot */
 
 .active-link::before {
     content: "";
 
     position: absolute;
 
-    left: 8px;
+    left: 10px;
     top: 50%;
 
     width: 6px;
@@ -112,19 +99,47 @@
     transform: translateY(-50%);
 }
 
-/* Mobile */
+/* Tablet */
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
 
     .admin-sidebar {
-        width: 100%;
-        min-height: auto;
-
+        width: 220px;
         padding: 20px;
     }
 
     .sidebar-logo {
-        margin-bottom: 25px;
+        font-size: 1.8rem;
+    }
+
+    .sidebar-links a {
+        padding: 12px 14px;
+        font-size: .9rem;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+
+        min-height: auto;
+
+        position: relative;
+
+        border-right: none;
+
+        border-bottom: 1px solid rgba(212,175,55,.12);
+    }
+
+    .sidebar-logo {
+        margin-bottom: 20px;
     }
 
     .sidebar-links {
@@ -132,6 +147,6 @@
     }
 
     .sidebar-links a {
-        padding: 12px 15px;
+        padding: 12px;
     }
 }
