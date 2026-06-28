@@ -915,3 +915,115 @@
             2rem;
     }
 }
+
+
+
+
+
+
+/* admin side csss  */
+
+
+
+.membership-management {
+    padding: 40px;
+    min-height: 100vh;
+    background: #0a0a0a;
+    color: white;
+}
+
+.management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.management-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.management-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.management-actions button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #d4af37;
+    color: black;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.membership-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(320px,1fr)
+        );
+    gap: 25px;
+}
+
+.membership-card {
+    background: #151515;
+    border: 1px solid #d4af37;
+    border-radius: 15px;
+    padding: 25px;
+    transition: .3s;
+}
+
+.membership-card:hover {
+    transform: translateY(-5px);
+}
+
+.membership-card h2 {
+    color: #d4af37;
+    margin-bottom: 10px;
+}
+
+.membership-card p {
+    color: #bbb;
+    margin-bottom: 10px;
+}
+
+.membership-card h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.membership-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.membership-card button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #d4af37;
+    color: black;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+
+.membership-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 20px 0;
+    color: #d6d6d6;
+}
+
+.membership-meta span {
+    font-size: 15px;
+}

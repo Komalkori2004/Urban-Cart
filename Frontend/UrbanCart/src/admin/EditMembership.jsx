@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
 
 import { updateMembershipPlan, deleteMembershipPlan }
     from "../redux/thunks/membershipThunk";
@@ -20,11 +22,11 @@ function EditMembership() {
         state => state.membership
     );
 
-    const [formData,
-        setFormData] =
-        useState({
+    const { id } = useParams();
 
-            id: "",
+    console.log(id);
+    const [formData, setFormData] =
+        useState({
 
             name: "",
 
@@ -32,21 +34,48 @@ function EditMembership() {
 
             price: "",
 
-            durationInDays: ""
+            durationInDays: "",
+
+            features: "",
+
+            discountPercentage: "",
+
+            freeShipping: false,
+
+            prioritySupport: false,
+
+            earlyAccess: false,
+
+            premiumBadge: "",
+
+            maxDiscountAmount: "",
+
+            isPopular: false,
+
+            isRecommended: false,
+
+            isActive: true
         });
 
-    const handleChange =
-        (e) => {
+    const handleChange = (e) => {
 
-            setFormData({
+        const {
+            name,
+            value,
+            type,
+            checked
+        } = e.target;
 
-                ...formData,
+        setFormData({
 
-                [e.target.name]:
-                    e.target.value
-            });
-        };
+            ...formData,
 
+            [name]:
+                type === "checkbox"
+                    ? checked
+                    : value
+        });
+    };
     const handleSubmit =
         async (e) => {
 
@@ -55,26 +84,13 @@ function EditMembership() {
             await dispatch(
                 updateMembershipPlan({
 
-                    id:
-                        formData.id,
+                    id,
 
                     membershipData: {
-
-                        name:
-                            formData.name,
-
-                        description:
-                            formData.description,
-
-                        price:
-                            Number(
-                                formData.price
-                            ),
-
-                        durationInDays:
-                            Number(
-                                formData.durationInDays
-                            )
+                        name: formData.name,
+                        description: formData.description,
+                        price: Number(formData.price),
+                        durationInDays: Number(formData.durationInDays)
                     }
                 })
             );
@@ -94,157 +110,233 @@ function EditMembership() {
                 return;
 
             await dispatch(
-                deleteMembershipPlan(
-                    formData.id
-                )
+                deleteMembershipPlan(id)
             );
         };
 
-    return (
+   return (
 
-        <div
-            style={{
-                padding: "40px"
-            }}
+    <div
+        style={{
+            padding: "40px"
+        }}
+    >
+
+        <h1>
+            Edit Membership
+        </h1>
+
+        <form
+            onSubmit={handleSubmit}
         >
 
-            <h1>
-                Edit Membership
-            </h1>
+            <input
+                type="text"
+                name="name"
+                placeholder="Membership Name"
+                value={formData.name}
+                onChange={handleChange}
+            />
 
-            <form
-                onSubmit={
-                    handleSubmit
-                }
+            <br /><br />
+
+            <textarea
+                name="description"
+                placeholder="Description"
+                value={formData.description}
+                onChange={handleChange}
+            />
+
+            <br /><br />
+
+            <input
+                type="number"
+                name="price"
+                placeholder="Price"
+                value={formData.price}
+                onChange={handleChange}
+            />
+
+            <br /><br />
+
+            <input
+                type="number"
+                name="durationInDays"
+                placeholder="Duration In Days"
+                value={formData.durationInDays}
+                onChange={handleChange}
+            />
+
+            <br /><br />
+
+            <textarea
+                name="features"
+                placeholder="Feature1, Feature2, Feature3"
+                value={formData.features}
+                onChange={handleChange}
+            />
+
+            <br /><br />
+
+            <input
+                type="number"
+                name="discountPercentage"
+                placeholder="Discount Percentage"
+                value={formData.discountPercentage}
+                onChange={handleChange}
+            />
+
+            <br /><br />
+
+            <input
+                type="text"
+                name="premiumBadge"
+                placeholder="Premium Badge"
+                value={formData.premiumBadge}
+                onChange={handleChange}
+            />
+
+            <br /><br />
+
+            <input
+                type="number"
+                name="maxDiscountAmount"
+                placeholder="Max Discount Amount"
+                value={formData.maxDiscountAmount}
+                onChange={handleChange}
+            />
+
+            <br /><br />
+
+            <label>
+                <input
+                    type="checkbox"
+                    name="freeShipping"
+                    checked={formData.freeShipping}
+                    onChange={handleChange}
+                />
+                Free Shipping
+            </label>
+
+            <br /><br />
+
+            <label>
+                <input
+                    type="checkbox"
+                    name="prioritySupport"
+                    checked={formData.prioritySupport}
+                    onChange={handleChange}
+                />
+                Priority Support
+            </label>
+
+            <br /><br />
+
+            <label>
+                <input
+                    type="checkbox"
+                    name="earlyAccess"
+                    checked={formData.earlyAccess}
+                    onChange={handleChange}
+                />
+                Early Access
+            </label>
+
+            <br /><br />
+
+            <label>
+                <input
+                    type="checkbox"
+                    name="isPopular"
+                    checked={formData.isPopular}
+                    onChange={handleChange}
+                />
+                Popular
+            </label>
+
+            <br /><br />
+
+            <label>
+                <input
+                    type="checkbox"
+                    name="isRecommended"
+                    checked={formData.isRecommended}
+                    onChange={handleChange}
+                />
+                Recommended
+            </label>
+
+            <br /><br />
+
+            <label>
+                <input
+                    type="checkbox"
+                    name="isActive"
+                    checked={formData.isActive}
+                    onChange={handleChange}
+                />
+                Active
+            </label>
+
+            <br /><br />
+
+            <button
+                type="submit"
             >
+                {
+                    updateLoading
+                        ? "Updating..."
+                        : "Update Membership"
+                }
+            </button>
 
-                <input
-                    type="text"
-                    name="id"
-                    placeholder="Membership Id"
-                    value={
-                        formData.id
-                    }
-                    onChange={
-                        handleChange
-                    }
-                />
+            <button
+                type="button"
+                onClick={handleDelete}
+            >
+                {
+                    deleteLoading
+                        ? "Deleting..."
+                        : "Delete Membership"
+                }
+            </button>
 
-                <br /><br />
+        </form>
 
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    value={
-                        formData.name
-                    }
-                    onChange={
-                        handleChange
-                    }
-                />
+        {
+            updateSuccess && (
+                <p>
+                    Membership updated successfully
+                </p>
+            )
+        }
 
-                <br /><br />
+        {
+            updateError && (
+                <p>
+                    {updateError}
+                </p>
+            )
+        }
 
-                <textarea
-                    name="description"
-                    placeholder="Description"
-                    value={
-                        formData.description
-                    }
-                    onChange={
-                        handleChange
-                    }
-                />
+        {
+            deleteSuccess && (
+                <p>
+                    Membership deleted successfully
+                </p>
+            )
+        }
 
-                <br /><br />
+        {
+            deleteError && (
+                <p>
+                    {deleteError}
+                </p>
+            )
+        }
 
-                <input
-                    type="number"
-                    name="price"
-                    placeholder="Price"
-                    value={
-                        formData.price
-                    }
-                    onChange={
-                        handleChange
-                    }
-                />
-
-                <br /><br />
-
-                <input
-                    type="number"
-                    name="durationInDays"
-                    placeholder="Duration"
-                    value={
-                        formData.durationInDays
-                    }
-                    onChange={
-                        handleChange
-                    }
-                />
-
-                <br /><br />
-
-                <button
-                    type="submit"
-                >
-                    {
-                        updateLoading
-                            ?
-                            "Updating..."
-                            :
-                            "Update Membership"
-                    }
-                </button>
-
-
-
-                <br />
-                <br />
-
-                <button
-                    type="button"
-                    onClick={
-                        handleDelete
-                    }
-                >
-                    {
-                        deleteLoading
-                            ?
-                            "Deleting..."
-                            :
-                            "Delete Membership"
-                    }
-                </button>
-
-            </form>
-
-            {
-                updateSuccess &&
-                (
-                    <p>
-                        Membership
-                        updated
-                        successfully
-                    </p>
-                )
-            }
-
-            {
-                updateError &&
-                (
-                    <p>
-                        {
-                            updateError
-                        }
-                    </p>
-                )
-            }
-
-        </div>
-    );
+    </div>
+);
 }
 
 export default EditMembership;

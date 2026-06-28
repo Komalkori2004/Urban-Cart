@@ -119,6 +119,8 @@ import EditMembership from "../admin/EditMembership"
 import MembershipStats from "../admin/MembershipStats";
 import SingleMembership from "../pages/membership/SingleMembership";
 
+import MembershipManagement from "../admin/MembershipManagement";
+
 
 // 
 import { useEffect } from "react"
@@ -310,13 +312,18 @@ const AppRouter = () => {
                             />
 
                             <Route
-                                path='edit-membership'
+                                path='edit-membership/:id'
                                 element={<EditMembership />}
                             />
 
                             <Route
                                 path='membership-stats'
                                 element={<MembershipStats />}
+                            />
+
+                                 <Route
+                                path='membership-management'
+                                element={<MembershipManagement />}
                             />
 
                         </Route>
