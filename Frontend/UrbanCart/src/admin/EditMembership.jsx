@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { updateMembershipPlan }
-from "../redux/thunks/membershipThunk";
+import { updateMembershipPlan, deleteMembershipPlan }
+    from "../redux/thunks/membershipThunk";
 
 function EditMembership() {
 
@@ -12,7 +12,10 @@ function EditMembership() {
     const {
         updateLoading,
         updateSuccess,
-        updateError
+        updateError,
+        deleteLoading,
+        deleteSuccess,
+        deleteError
     } = useSelector(
         state => state.membership
     );
@@ -74,6 +77,26 @@ function EditMembership() {
                             )
                     }
                 })
+            );
+        };
+
+
+
+    const handleDelete =
+        async () => {
+
+            const confirmDelete =
+                window.confirm(
+                    "Are you sure you want to delete this membership?"
+                );
+
+            if (!confirmDelete)
+                return;
+
+            await dispatch(
+                deleteMembershipPlan(
+                    formData.id
+                )
             );
         };
 
@@ -169,10 +192,30 @@ function EditMembership() {
                 >
                     {
                         updateLoading
-                        ?
-                        "Updating..."
-                        :
-                        "Update Membership"
+                            ?
+                            "Updating..."
+                            :
+                            "Update Membership"
+                    }
+                </button>
+
+
+
+                <br />
+                <br />
+
+                <button
+                    type="button"
+                    onClick={
+                        handleDelete
+                    }
+                >
+                    {
+                        deleteLoading
+                            ?
+                            "Deleting..."
+                            :
+                            "Delete Membership"
                     }
                 </button>
 

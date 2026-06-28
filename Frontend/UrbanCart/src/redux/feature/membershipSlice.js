@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
     getAllMembership, purchaseMembership, verifyMembershipPayment, getMyMembership,
-    getMembershipHistory, cancelMembership, checkPremiumStatus, createMembershipPlan, updateMembershipPlan,
+    getMembershipHistory, cancelMembership, checkPremiumStatus, createMembershipPlan, updateMembershipPlan, deleteMembershipPlan
 } from "../thunks/membershipThunk";
 
 
@@ -28,6 +28,10 @@ const initialState = {
     updateLoading: false,
     updateSuccess: false,
     updateError: null,
+
+    deleteLoading: false,
+    deleteSuccess: false,
+    deleteError: null,
 
     loading: false,
     error: null,
@@ -266,6 +270,48 @@ const membershipSlice = createSlice({
                     state.updateLoading = false;
 
                     state.updateError =
+                        action.payload;
+                }
+            )
+
+
+
+
+            .addCase(
+                deleteMembershipPlan.pending,
+                (state) => {
+
+                    state.deleteLoading = true;
+
+                    state.deleteError = null;
+
+                    state.deleteSuccess = false;
+                }
+            )
+
+            .addCase(
+                deleteMembershipPlan.fulfilled,
+                (state, action) => {
+
+                    state.deleteLoading = false;
+
+                    state.deleteSuccess = true;
+
+                    state.membershipPlans =
+                        state.membershipPlans.filter(
+                            plan =>
+                                plan._id !== action.payload
+                        );
+                }
+            )
+
+            .addCase(
+                deleteMembershipPlan.rejected,
+                (state, action) => {
+
+                    state.deleteLoading = false;
+
+                    state.deleteError =
                         action.payload;
                 }
             )

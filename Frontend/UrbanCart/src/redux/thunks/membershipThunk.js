@@ -229,3 +229,27 @@ export const updateMembershipPlan = createAsyncThunk(
         }
     }
 )
+
+
+
+export const deleteMembershipPlan = createAsyncThunk(
+    "membership/deleteMembershipPlan",
+    async (id, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            const { data } = await api.delete(`/membership/${id}`, config)
+            return data.membershipPlan
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Failed to delete membership plan"
+            );
+        }
+    }    
+)
