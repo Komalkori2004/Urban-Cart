@@ -41,40 +41,136 @@ function SingleMembership() {
     if (singleError)
         return <h2>{singleError}</h2>;
 
-    return (
+ return (
 
-        <div>
+    <div className="membership-container">
+
+        <div className="membership-header">
 
             <h1>
-                {
-                    singleMembership?.name
-                }
+                Membership Details
             </h1>
 
             <p>
-                {
-                    singleMembership?.description
-                }
-            </p>
-
-            <h2>
-                ₹
-                {
-                    singleMembership?.price
-                }
-            </h2>
-
-            <p>
-                Duration:
-                {
-                    singleMembership
-                    ?.durationInDays
-                }
-                days
+                Explore premium benefits and
+                exclusive rewards.
             </p>
 
         </div>
-    );
+
+        <div className="membership-grid">
+
+            <div
+                className={`membership-card ${
+                    singleMembership?.isPopular
+                        ? "popular"
+                        : ""
+                }`}
+            >
+
+                {
+                    singleMembership?.isPopular && (
+                        <span className="membership-badge">
+                            Popular
+                        </span>
+                    )
+                }
+
+                <h2 className="membership-name">
+                    {
+                        singleMembership?.name
+                    }
+                </h2>
+
+                <p className="membership-description">
+                    {
+                        singleMembership?.description
+                    }
+                </p>
+
+                <div className="membership-price">
+
+                    <h2>
+                        ₹{
+                            singleMembership?.price
+                        }
+                    </h2>
+
+                    <span>
+                        /
+                        {
+                            singleMembership
+                                ?.durationInDays
+                        }
+                        Days
+                    </span>
+
+                </div>
+
+                <ul className="membership-features">
+
+                    {
+                        singleMembership?.features?.map(
+                            (feature, index) => (
+                                <li key={index}>
+                                    ✓ {feature}
+                                </li>
+                            )
+                        )
+                    }
+
+                    <li>
+                        Discount:
+                        {
+                            singleMembership
+                                ?.discountPercentage
+                        }%
+                    </li>
+
+                    <li>
+                        Free Shipping:
+                        {
+                            singleMembership
+                                ?.freeShipping
+                                ? " Yes"
+                                : " No"
+                        }
+                    </li>
+
+                    <li>
+                        Priority Support:
+                        {
+                            singleMembership
+                                ?.prioritySupport
+                                ? " Yes"
+                                : " No"
+                        }
+                    </li>
+
+                    <li>
+                        Early Access:
+                        {
+                            singleMembership
+                                ?.earlyAccess
+                                ? " Yes"
+                                : " No"
+                        }
+                    </li>
+
+                </ul>
+
+                <button
+                    className="membership-btn"
+                >
+                    Become Premium
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+);
 }
 
 export default SingleMembership;
