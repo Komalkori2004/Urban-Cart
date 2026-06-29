@@ -1,72 +1,74 @@
 
-    import { getSubscribers } from "../redux/thunks/newsletterThunk";
-    import { useDispatch,useSelector } from "react-redux";
-    import { useEffect } from "react";
+import { getSubscribers } from "../redux/thunks/newsletterThunk";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
-    import "./style/admin.css"
+import "./style/subscribers.css"
 
-    function Subscribers() {
+function Subscribers() {
 
-        const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-        const {
-            subscribers,
-            loading,
-        } = useSelector(
-            (state) => state.newsletter
-        );
+    const {
+        subscribers,
+        loading,
+    } = useSelector(
+        (state) => state.newsletter
+    );
 
-        useEffect(() => {
-            dispatch(getSubscribers());
-        }, [dispatch]);
+    useEffect(() => {
+        dispatch(getSubscribers());
+    }, [dispatch]);
 
     return (
 
-    <div className="subscribers-container">
+        <div className="subscribers-container">
 
-        <div className="subscribers-header">
+            <div className="subscribers-header">
 
-            <h1>
-                Newsletter Subscribers
-            </h1>
+                <h1>
+                    Newsletter Subscribers
+                </h1>
 
-            <p>
-                Manage and view all newsletter
-                subscribers.
-            </p>
+                <p>
+                    Manage and view all newsletter
+                    subscribers.
+                </p>
 
-        </div>
+            </div>
 
-        <div className="subscribers-grid">
+            <div className="subscribers-grid">
 
-            {
-                subscribers?.map(
-                    (subscriber) => (
+                {
+                    subscribers?.map(
+                        (subscriber) => (
 
-                        <div
-                            key={subscriber._id}
-                            className="subscriber-card"
-                        >
+                            <div
+                                key={subscriber._id}
+                                className="subscriber-card"
+                            >
 
-                            <h3>
-                                Subscriber
-                            </h3>
+                                <div className="subscriber-icon">
+                                    ✉️
+                                </div>
 
-                            <p>
-                                {
-                                    subscriber.email
-                                }
-                            </p>
+                                <h3>
+                                    Newsletter Subscriber
+                                </h3>
 
-                        </div>
+                                <p>
+                                    {subscriber.email}
+                                </p>
+
+                            </div>
+                        )
                     )
-                )
-            }
+                }
+
+            </div>
 
         </div>
+    );
+}
 
-    </div>
-);
-    }
-
-    export default Subscribers
+export default Subscribers

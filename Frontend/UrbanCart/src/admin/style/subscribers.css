@@ -1,0 +1,219 @@
+/* ==========================
+   SUBSCRIBERS PAGE
+========================== */
+
+.subscribers-container{
+
+    padding:2rem 0;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+.subscribers-header{
+
+    margin-bottom:3rem;
+
+    text-align:center;
+}
+
+.subscribers-header h1{
+
+    color:var(--white);
+
+    font-size:
+    clamp(2rem,5vw,4rem);
+
+    font-family:
+    var(--heading-font);
+
+    margin-bottom:1rem;
+}
+
+.subscribers-header p{
+
+    color:#bdbdbd;
+
+    font-size:1rem;
+
+    max-width:500px;
+
+    margin:auto;
+
+    line-height:1.7;
+}
+
+/* ==========================
+   GRID
+========================== */
+
+.subscribers-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(
+        auto-fit,
+        minmax(280px,1fr)
+    );
+
+    gap:2rem;
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.subscriber-card{
+
+    background:
+    linear-gradient(
+        180deg,
+        #151515,
+        #0d0d0d
+    );
+
+    border:
+    1px solid
+    rgba(212,175,55,.12);
+
+    border-radius:20px;
+
+    padding:2rem;
+
+    transition:.3s ease;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.subscriber-card:hover{
+
+    transform:
+    translateY(-5px);
+
+    border-color:
+    rgba(212,175,55,.35);
+
+    box-shadow:
+    0 15px 40px
+    rgba(0,0,0,.35);
+}
+
+/* gold glow */
+
+.subscriber-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:3px;
+
+    background:var(--gold);
+
+    opacity:.7;
+}
+
+/* ==========================
+   CONTENT
+========================== */
+
+.subscriber-card h3{
+
+    color:var(--gold);
+
+    font-size:1.2rem;
+
+    margin-bottom:1rem;
+
+    font-family:
+    var(--heading-font);
+}
+
+.subscriber-card p{
+
+    color:var(--white);
+
+    font-size:.95rem;
+
+    word-break:break-word;
+
+    line-height:1.6;
+}
+
+/* ==========================
+   EMPTY STATE
+========================== */
+
+.empty-subscribers{
+
+    text-align:center;
+
+    padding:5rem 1rem;
+}
+
+.empty-subscribers h2{
+
+    color:var(--gold);
+
+    margin-bottom:1rem;
+}
+
+.empty-subscribers p{
+
+    color:#bdbdbd;
+}
+
+.subscriber-icon{
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    background:
+    rgba(212,175,55,.1);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:1.5rem;
+
+    margin-bottom:1rem;
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+    .subscribers-container{
+        padding:1rem 0;
+    }
+
+    .subscribers-header{
+        margin-bottom:2rem;
+    }
+
+    .subscribers-grid{
+        gap:1rem;
+    }
+
+    .subscriber-card{
+        padding:1.5rem;
+    }
+
+    .subscribers-header h1{
+        font-size:2rem;
+    }
+}
