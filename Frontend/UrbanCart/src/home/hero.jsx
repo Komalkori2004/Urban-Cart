@@ -8,87 +8,102 @@ function Hero() {
         <>
 
 
-            <section
-                className="hero-section">
-                       <div className="container">
+          <section className="hero-section">
 
-                <div
-                    className="hero-content">
-                    <span className="hero-badge">
+    <div className="container hero-wrapper">
 
-                        Premium Collection 2026
+        {/* LEFT */}
+        <div className="hero-content">
 
-                    </span>
-                    <p
-                        className="hero-subtitle">
+            <span className="hero-badge">
+                NEW COLLECTION
+            </span>
 
-                        ELEVATE YOUR STYLE
+            <h1 className="hero-title">
+                THE ART OF
+                <span>Luxury</span>
+            </h1>
 
-                    </p>
+            <p className="hero-text">
+                Discover timeless elegance and premium quality
+                in every detail. Elevate your style with UrbanCart.
+            </p>
 
+            <div className="hero-buttons">
 
+                <button className="primary-btn">
+                    Shop Now
+                </button>
 
-                    <h1>
+                <button className="secondary-btn">
+                    Explore Collection
+                </button>
 
-                        Luxury Fashion
-                        For Modern Elegance
+            </div>
 
-                    </h1>
+        <div className="hero-features">
 
+    <div className="feature-item">
+        <h4>Free Shipping</h4>
+        <p>On all orders</p>
+    </div>
 
+    <div className="feature-item">
+        <h4>Premium Quality</h4>
+        <p>100% Original</p>
+    </div>
 
-                    <p
-                        className="hero-text">
+    <div className="feature-item">
+        <h4>Exclusive Benefits</h4>
+        <p>For members</p>
+    </div>
 
-                        Discover premium
-                        collections crafted
-                        for timeless style
-                        and sophistication.
+</div>
 
-                    </p>
-
-
-
-                    <div
-                        className="hero-buttons">
-
-                        <button>
-
-                            Shop Now
-
-                        </button>
-
-
-
-                        <button
-                            className="outline-btn">
-
-                            View Collection
-
-                        </button>
-
-                    </div>
-
-                </div>
+        </div>
 
 
+        {/* RIGHT */}
+       <div className="hero-showcase">
 
-                <div
-                    className="hero-image">
+    <div className="hero-circle"></div>
 
-                    <img
+    <div className="main-card">
+        <img
+            src="/images/bag.avif"
+            alt=""
+        />
+    </div>
 
-                        src="/images/hero1.avif"
+    <div className="bottom-items">
 
-                        alt="Luxury Fashion"
-                         loading="lazy"
+        <div className="mini-card">
+            <img
+                src="/images/perfume1.avif"
+                alt=""
+            />
+        </div>
 
-                    />
+        <div className="mini-card">
+            <img
+                src="/images/jwellery2.avif"
+                alt=""
+            />
+        </div>
 
-                </div>
-                </div>
+    </div>
 
-            </section>
+    <div className="discount-badge">
+        <span>UP TO</span>
+        <h2>30%</h2>
+        <span>OFF</span>
+    </div>
+
+</div>
+
+    </div>
+
+</section>
         </>
     )
 }
