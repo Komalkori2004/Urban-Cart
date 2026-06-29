@@ -11,6 +11,7 @@ import {
     from "react-icons/fa"
 
 import "../home/style/featureProduct.css"
+
 const FeatureProduct = () => {
 
     const navigate = useNavigate()
