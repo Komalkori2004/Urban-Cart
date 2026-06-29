@@ -72,6 +72,29 @@
 
    --text-muted:
       #999999;
+
+
+
+
+       --dark-card:#131313;
+
+   --dark-card-2:#0B0B0B;
+
+   --gold-opacity-light:
+      rgba(212,175,55,.08);
+
+   --gold-opacity-md:
+      rgba(212,175,55,.12);
+
+   --gold-opacity-dark:
+      rgba(212,175,55,.35);
+
+   --glass-bg:
+      linear-gradient(
+         145deg,
+         rgba(255,255,255,.02),
+         rgba(255,255,255,.01)
+      );
 }
 
 
