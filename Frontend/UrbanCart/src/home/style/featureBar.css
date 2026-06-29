@@ -3,8 +3,8 @@
 ========================== */
 
 .feature-bar-section{
-    padding: 4rem 0;
-  background: var(--black);
+    padding:4rem 0;
+    background:var(--black);
 }
 
 /* ==========================
@@ -13,28 +13,24 @@
 
 .feature-bar{
 
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.02),
-            rgba(255,255,255,.01)
-        );
+    background:var(--glass-bg);
 
-    border: 1px solid rgba(212,175,55,.4);
+    border:var(--border-gold-hover);
 
-    border-radius: 30px;
+    border-radius:var(--radius-xl);
 
-    overflow: hidden;
+    overflow:hidden;
 
-    backdrop-filter: blur(20px);
+    backdrop-filter:blur(20px);
 
     box-shadow:
-        0 0 40px rgba(212,175,55,.08);
+        0 0 40px
+        var(--gold-opacity-light);
 
-    position: relative;
+    position:relative;
 }
 
 /* ==========================
@@ -43,33 +39,32 @@
 
 .feature-card{
 
-    padding: 3rem 2rem;
+    padding:3rem 2rem;
 
-    text-align: center;
+    text-align:center;
 
-    position: relative;
+    position:relative;
 
-    transition: .4s;
+    transition:
+        var(--transition);
 }
 
 /* separator */
 
 .feature-card:not(:last-child)::after{
 
-    content: "";
+    content:"";
 
-    position: absolute;
+    position:absolute;
 
-    top: 20%;
+    top:20%;
+    right:0;
 
-    right: 0;
-
-    width: 1px;
-
-    height: 60%;
+    width:1px;
+    height:60%;
 
     background:
-        rgba(212,175,55,.25);
+        var(--gold-opacity-dark);
 }
 
 /* hover */
@@ -89,30 +84,35 @@
 
 .feature-icon{
 
-    display: inline-flex;
+    display:inline-flex;
 
-    align-items: center;
-    justify-content: center;
+    align-items:center;
+    justify-content:center;
 
-    font-size: 3rem;
+    font-size:3rem;
 
-    color: var(--gold);
+    color:
+        var(--gold);
 
-    margin-bottom: 1.5rem;
+    margin-bottom:1.5rem;
 
-    transition: .4s;
+    transition:
+        var(--transition);
 
     text-shadow:
-        0 0 25px rgba(212,175,55,.4);
+        0 0 25px
+        var(--gold-opacity-dark);
 }
 
-.feature-card:hover .feature-icon{
+.feature-card:hover
+.feature-icon{
 
     transform:
         scale(1.1);
 
     text-shadow:
-        0 0 40px rgba(212,175,55,.7);
+        0 0 40px
+        var(--gold);
 }
 
 /* ==========================
@@ -121,46 +121,46 @@
 
 .feature-content h3{
 
-    color: #fff;
+    color:
+        var(--white);
 
-    font-size: 1.35rem;
+    font-size:1.35rem;
 
     font-family:
-        "Playfair Display",
-        serif;
+        var(--heading-font);
 
-    letter-spacing: 1px;
+    letter-spacing:1px;
 
-    margin-bottom: .8rem;
+    margin-bottom:.8rem;
 }
 
 .feature-content p{
 
     color:
-        rgba(212,175,55,.9);
+        var(--gold-light);
 
-    font-size: 1rem;
+    font-size:1rem;
 
-    line-height: 1.6;
+    line-height:1.6;
 }
 
-/* small gold line */
+/* gold line */
 
 .feature-content::after{
 
-    content: "";
+    content:"";
 
-    display: block;
+    display:block;
 
-    width: 50px;
-    height: 2px;
+    width:50px;
+    height:2px;
 
-    margin: 1.5rem auto 0;
+    margin:1.5rem auto 0;
 
     background:
         var(--gold);
 
-    opacity: .7;
+    opacity:.7;
 }
 
 /* ==========================
@@ -170,15 +170,15 @@
 @media(max-width:1200px){
 
     .feature-card{
-        padding: 2.5rem 1rem;
+        padding:2.5rem 1rem;
     }
 
     .feature-icon{
-        font-size: 2.5rem;
+        font-size:2.5rem;
     }
 
     .feature-content h3{
-        font-size: 1.1rem;
+        font-size:1.1rem;
     }
 }
 
@@ -189,7 +189,6 @@
 @media(max-width:992px){
 
     .feature-bar{
-
         grid-template-columns:
             repeat(2,1fr);
     }
@@ -199,10 +198,8 @@
     }
 
     .feature-card{
-
         border-bottom:
-            1px solid
-            rgba(212,175,55,.15);
+            var(--border-gold);
     }
 }
 
@@ -217,12 +214,12 @@
         grid-template-columns:
             1fr;
 
-        border-radius: 20px;
+        border-radius:
+            var(--radius-md);
     }
 
     .feature-card{
-
-        padding: 2rem 1rem;
+        padding:2rem 1rem;
     }
 
     .feature-card::after{
@@ -230,14 +227,14 @@
     }
 
     .feature-icon{
-        font-size: 2.2rem;
+        font-size:2.2rem;
     }
 
     .feature-content h3{
-        font-size: 1rem;
+        font-size:1rem;
     }
 
     .feature-content p{
-        font-size: .9rem;
+        font-size:.9rem;
     }
 }
