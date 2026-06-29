@@ -7,9 +7,11 @@ import {
 
 
 
-import "./style/admin.css"
+// import "./style/admin.css"
 
-import "../Auth/auth.css"
+// import "../Auth/auth.css"
+
+import "./style/membership.css"
 function CreateMembership() {
 
     const dispatch = useDispatch();
@@ -106,29 +108,32 @@ function CreateMembership() {
                 )
             );
         };
+return (
 
- return (
+    <div className="membership-container">
 
-    <div className="auth-container">
+        <div className="membership-card">
 
-        <div className="auth-box">
-
-            <h1 className="auth-title">
+            <h1 className="membership-title">
                 Create Membership
             </h1>
 
-            <p className="auth-subtitle">
+            <p className="membership-subtitle">
                 Create a new premium membership plan
                 for UrbanCart customers.
             </p>
 
             <form
-                className="auth-form"
+                className="membership-form"
                 onSubmit={handleSubmit}
             >
 
+                <h3 className="membership-section-title">
+                    Basic Information
+                </h3>
+
                 <input
-                    className="auth-input"
+                    className="membership-input"
                     type="text"
                     name="name"
                     placeholder="Membership Name"
@@ -137,50 +142,71 @@ function CreateMembership() {
                 />
 
                 <textarea
-                    className="auth-input"
+                    className="membership-input membership-textarea"
                     name="description"
                     placeholder="Description"
                     value={formData.description}
                     onChange={handleChange}
                 />
 
-                <input
-                    className="auth-input"
-                    type="number"
-                    name="price"
-                    placeholder="Price"
-                    value={formData.price}
-                    onChange={handleChange}
-                />
+                <div className="membership-grid">
 
-                <input
-                    className="auth-input"
-                    type="number"
-                    name="durationInDays"
-                    placeholder="Duration In Days"
-                    value={formData.durationInDays}
-                    onChange={handleChange}
-                />
+                    <input
+                        className="membership-input"
+                        type="number"
+                        name="price"
+                        placeholder="Price"
+                        value={formData.price}
+                        onChange={handleChange}
+                    />
+
+                    <input
+                        className="membership-input"
+                        type="number"
+                        name="durationInDays"
+                        placeholder="Duration In Days"
+                        value={formData.durationInDays}
+                        onChange={handleChange}
+                    />
+
+                </div>
+
+                <h3 className="membership-section-title">
+                    Membership Benefits
+                </h3>
 
                 <textarea
-                    className="auth-input"
+                    className="membership-input membership-textarea"
                     name="features"
                     placeholder="Free Shipping, Priority Support"
                     value={formData.features}
                     onChange={handleChange}
                 />
 
-                <input
-                    className="auth-input"
-                    type="number"
-                    name="discountPercentage"
-                    placeholder="Discount Percentage"
-                    value={formData.discountPercentage}
-                    onChange={handleChange}
-                />
+                <div className="membership-grid">
+
+                    <input
+                        className="membership-input"
+                        type="number"
+                        name="discountPercentage"
+                        placeholder="Discount Percentage"
+                        value={formData.discountPercentage}
+                        onChange={handleChange}
+                    />
+
+                    <input
+                        className="membership-input"
+                        type="number"
+                        name="maxDiscountAmount"
+                        placeholder="Max Discount Amount"
+                        value={formData.maxDiscountAmount}
+                        onChange={handleChange}
+                    />
+
+                </div>
 
                 <input
-                    className="auth-input"
+                    className="membership-input"
                     type="text"
                     name="premiumBadge"
                     placeholder="Premium Badge"
@@ -188,81 +214,94 @@ function CreateMembership() {
                     onChange={handleChange}
                 />
 
-                <input
-                    className="auth-input"
-                    type="number"
-                    name="maxDiscountAmount"
-                    placeholder="Max Discount Amount"
-                    value={formData.maxDiscountAmount}
-                    onChange={handleChange}
-                />
+                <h3 className="membership-section-title">
+                    Membership Settings
+                </h3>
 
                 <div className="membership-checkbox-group">
 
                     <label className="membership-check">
+
                         <input
                             type="checkbox"
                             name="freeShipping"
                             checked={formData.freeShipping}
                             onChange={handleChange}
                         />
+
                         Free Shipping
+
                     </label>
 
                     <label className="membership-check">
+
                         <input
                             type="checkbox"
                             name="prioritySupport"
                             checked={formData.prioritySupport}
                             onChange={handleChange}
                         />
+
                         Priority Support
+
                     </label>
 
                     <label className="membership-check">
+
                         <input
                             type="checkbox"
                             name="earlyAccess"
                             checked={formData.earlyAccess}
                             onChange={handleChange}
                         />
+
                         Early Access
+
                     </label>
 
                     <label className="membership-check">
+
                         <input
                             type="checkbox"
                             name="isPopular"
                             checked={formData.isPopular}
                             onChange={handleChange}
                         />
+
                         Popular
+
                     </label>
 
                     <label className="membership-check">
+
                         <input
                             type="checkbox"
                             name="isRecommended"
                             checked={formData.isRecommended}
                             onChange={handleChange}
                         />
+
                         Recommended
+
                     </label>
 
                     <label className="membership-check">
+
                         <input
                             type="checkbox"
                             name="isActive"
                             checked={formData.isActive}
                             onChange={handleChange}
                         />
+
                         Active
+
                     </label>
 
                 </div>
 
                 <button
-                    className="auth-btn"
+                    className="membership-btn"
                     type="submit"
                 >
                     {
@@ -275,17 +314,19 @@ function CreateMembership() {
             </form>
 
             {
-                createSuccess &&
-                <p className="auth-success">
-                    Membership created successfully
-                </p>
+                createSuccess && (
+                    <p className="membership-success">
+                        Membership created successfully
+                    </p>
+                )
             }
 
             {
-                createError &&
-                <p className="auth-error">
-                    {createError}
-                </p>
+                createError && (
+                    <p className="membership-error">
+                        {createError}
+                    </p>
+                )
             }
 
         </div>
