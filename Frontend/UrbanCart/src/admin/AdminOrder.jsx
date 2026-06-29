@@ -42,6 +42,54 @@ const AdminOrder = () => {
               Manage Orders
             </h1>
 
+            <div className="order-stats">
+
+              <div className="order-stat-card">
+
+                <h3>
+                  {orders.length}
+                </h3>
+
+                <p>
+                  Total Orders
+                </p>
+
+              </div>
+
+              <div className="order-stat-card">
+
+                <h3>
+                  {
+                    orders.filter(
+                      o => o.orderStatus === "Pending"
+                    ).length
+                  }
+                </h3>
+
+                <p>
+                  Pending
+                </p>
+
+              </div>
+
+              <div className="order-stat-card">
+
+                <h3>
+                  {
+                    orders.filter(
+                      o => o.orderStatus === "Delivered"
+                    ).length
+                  }
+                </h3>
+
+                <p>
+                  Delivered
+                </p>
+
+              </div>
+
+            </div>
+
             <p className="orders-subtitle">
               Track and manage customer orders.
             </p>
@@ -132,6 +180,64 @@ const AdminOrder = () => {
 
             </tbody>
           </table>
+
+
+        </div>
+
+        <div className="mobile-orders">
+
+          {
+            orders?.map((item) => (
+
+              <div
+                className="mobile-order-card"
+                key={item._id}
+              >
+
+                <h3>
+                  Order #{item._id.slice(-6)}
+                </h3>
+
+                <p>
+                  <strong>Customer:</strong>
+                  {item.shippingAddress?.fullName}
+                </p>
+
+                <p>
+                  <strong>Amount:</strong>
+                  ₹{item.totalAmount}
+                </p>
+
+                <p>
+                  <strong>Status:</strong>
+
+                  <span
+                    className={`status-badge ${item.orderStatus.toLowerCase()}`}
+                  >
+                    {item.orderStatus}
+                  </span>
+                </p>
+
+                <p>
+                  <strong>Payment:</strong>
+                  {item.paymentMethod}
+                </p>
+
+                <button
+                  className="view-order-btn"
+                  onClick={() => {
+                    dispatch(getOrderById(item._id))
+                    setShowModal(true)
+                  }}
+                >
+                  View Order
+                </button>
+
+              </div>
+
+            ))
+          }
+
         </div>
       </div>
 
