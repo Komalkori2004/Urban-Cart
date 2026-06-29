@@ -371,3 +371,265 @@
         font-size:.95rem;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* stats */
+
+
+
+
+
+/* ==========================
+   MEMBERSHIP STATS
+========================== */
+
+.membership-stats{
+    padding:2rem 0;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+.stats-header{
+    text-align:center;
+    margin-bottom:3rem;
+}
+
+.stats-header h1{
+    color:var(--white);
+
+    font-size:
+        clamp(2rem,5vw,4rem);
+
+    font-family:
+        var(--heading-font);
+
+    margin-bottom:1rem;
+}
+
+.stats-header p{
+    color:#bdbdbd;
+
+    max-width:500px;
+
+    margin:auto;
+
+    line-height:1.7;
+}
+
+/* ==========================
+   GRID
+========================== */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(240px,1fr));
+
+    gap:2rem;
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.stats-card{
+
+    background:
+        linear-gradient(
+            180deg,
+            #151515,
+            #0d0d0d
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.12);
+
+    border-radius:20px;
+
+    padding:2rem;
+
+    transition:.3s ease;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.stats-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:3px;
+
+    background:var(--gold);
+
+    opacity:.6;
+}
+
+.stats-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(212,175,55,.3);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.35);
+}
+
+.stats-card h4{
+
+    color:#bdbdbd;
+
+    font-size:1rem;
+
+    margin-bottom:1rem;
+
+    font-weight:500;
+}
+
+.stats-card h2{
+
+    color:var(--gold);
+
+    font-size:2.2rem;
+
+    font-family:
+        var(--heading-font);
+}
+
+/* ==========================
+   REVENUE CARD
+========================== */
+
+.revenue-card{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(212,175,55,.08),
+            rgba(212,175,55,.02)
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.25);
+}
+
+.revenue-card h2{
+
+    color:var(--champagne);
+}
+
+
+
+
+
+.stats-icon{
+
+    width:60px;
+    height:60px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        rgba(212,175,55,.1);
+
+    color:var(--gold);
+
+    font-size:1.5rem;
+
+    margin-bottom:1.5rem;
+}
+
+.active-icon{
+    background:rgba(34,197,94,.12);
+    color:#22c55e;
+}
+
+.cancelled-icon{
+    background:rgba(239,68,68,.12);
+    color:#ef4444;
+}
+
+.expired-icon{
+    background:rgba(249,115,22,.12);
+    color:#f97316;
+}
+
+.revenue-icon{
+    background:rgba(212,175,55,.15);
+    color:var(--gold);
+}
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+    .membership-stats{
+        padding:1rem 0;
+    }
+
+    .stats-grid{
+        gap:1rem;
+    }
+
+    .stats-card{
+        padding:1.5rem;
+    }
+
+    .stats-card h2{
+        font-size:1.8rem;
+    }
+}
+
+@media(max-width:576px){
+
+    .stats-header h1{
+        font-size:2rem;
+    }
+
+    .stats-header p{
+        font-size:.95rem;
+    }
+}
