@@ -13,51 +13,33 @@ import "../home/style/featureBar.css"
 
 function FeatureBar() {
 
-   const features = [
+ const features = [
 
-      {
-         icon: <FaGem />,
+   {
+      icon: <FaGem />,
+      title: "PREMIUM QUALITY",
+      description: "100% authentic luxury products"
+   },
 
-         title: "PREMIUM QUALITY",
+   {
+      icon: <FaLock />,
+      title: "SECURE PAYMENT",
+      description: "Encrypted & trusted checkout"
+   },
 
-         description:
-            "Finest ingredients sourced globally"
-      },
+   {
+      icon: <FaTruck />,
+      title: "FAST DELIVERY",
+      description: "Express shipping worldwide"
+   },
 
+   {
+      icon: <FaUndo />,
+      title: "EASY RETURNS",
+      description: "7-day hassle free returns"
+   }
 
-
-      {
-         icon: <FaLock />,
-
-         title: "SECURE PAYMENT",
-
-         description:
-            "100% secure & trusted checkout experience"
-      },
-
-
-
-      {
-         icon: <FaTruck />,
-
-         title: "FAST DELIVERY",
-
-         description:
-            "Swift & safe delivery at your doorstep"
-      },
-
-
-
-      {
-         icon: <FaUndo />,
-
-         title: "EASY RETURNS",
-
-         description:
-            "Hassle-free returns within 7 days"
-      }
-
-   ]
+]
 
 
 
