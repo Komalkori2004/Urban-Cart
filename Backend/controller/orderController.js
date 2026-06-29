@@ -184,7 +184,7 @@ const placeOrder = asyncHandler(async (req, res, next) => {
         originalAmount: totalAmount, // before discount
 
 
-        totashippingCharge,
+       shippingCharge,
         discountAmount,
         totalAmount: finalAmount + shippingCharge,  // after discount
 
@@ -224,6 +224,19 @@ const placeOrder = asyncHandler(async (req, res, next) => {
     })
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const getMyOrder = asyncHandler(async (req, res, next) => {
     const userID = req.user.id
