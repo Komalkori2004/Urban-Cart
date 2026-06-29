@@ -4,38 +4,54 @@
 
 :root {
 
+   /* COLORS */
    --gold: #D4AF37;
+   --gold-light: #E5C867;
+   --gold-dark: #B8921F;
 
    --black: #0D0D0D;
-
    --charcoal: #1A1A1A;
+   --dark-card: #131313;
+   --dark-hover: #1F1F1F;
 
    --burgundy: #5C0D1A;
 
    --champagne: #F5E6C8;
-
    --white: #FFFFFF;
 
+   --gray: #B0B0B0;
+   --gray-light: #D2D2D2;
 
+   /* FONTS */
+   --heading-font: "Playfair Display", serif;
+   --body-font: "Poppins", sans-serif;
 
-   --heading-font:
-      "Playfair Display", serif;
+   /* BORDER RADIUS */
+   --radius-sm: 10px;
+   --radius-md: 18px;
+   --radius-lg: 24px;
+   --radius-xl: 30px;
 
-   --body-font:
-      "Poppins", sans-serif;
-
-
-
-   --transition:
-      all 0.3s ease;
-
-
-
+   /* SHADOW */
    --shadow-sm:
-      0 2px 8px rgba(0, 0, 0, 0.25);
+      0 2px 8px rgba(0,0,0,.25);
 
    --shadow-md:
-      0 8px 24px rgba(0, 0, 0, 0.35);
+      0 8px 24px rgba(0,0,0,.35);
+
+   --shadow-lg:
+      0 15px 40px rgba(0,0,0,.45);
+
+   /* BORDER */
+   --border-gold:
+      1px solid rgba(212,175,55,.2);
+
+   --border-gold-hover:
+      1px solid rgba(212,175,55,.45);
+
+   /* TRANSITION */
+   --transition:
+      all .3s ease;
 }
 
 

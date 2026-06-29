@@ -1,154 +1,253 @@
-
 .container {
    width: 100%;
    max-width: 1280px;
    margin: 0 auto;
    padding: 0 1rem;
 }
+
+/* =========================
+   SECTION
+========================= */
+
 .category-showcase-section {
-
- 
-   padding:90px 0;
-
-  background:var(--black);
-
-  overflow:hidden;
+   padding: 90px 0;
+   background: var(--black);
+   overflow: hidden;
+   position: relative;
 }
+
+.category-showcase-section::before {
+   content: "";
+   position: absolute;
+   top: -150px;
+   right: -150px;
+   width: 300px;
+   height: 300px;
+   background: radial-gradient(
+      rgba(212,175,55,.08),
+      transparent 70%
+   );
+   filter: blur(80px);
+}
+
+/* =========================
+   HEADER
+========================= */
 
 .category-showcase-header {
-  text-align: center;
- margin:0 auto 55px;
+   text-align: center;
+   margin: 0 auto 60px;
 }
- 
+
 .category-subtitle {
-  color: #d4af37;
-  letter-spacing: 4px;
-  font-size: 12px;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 12px;
+   color: var(--gold);
+   letter-spacing: 5px;
+   font-size: 12px;
+   text-transform: uppercase;
+   display: block;
+   margin-bottom: 14px;
 }
 
 .category-title {
-  color: #f5e6c8;
-  font-size: 46px;
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
+   color: var(--champagne);
+   font-size: 46px;
+   font-family: "Playfair Display", serif;
+   font-weight: 600;
 }
 
-/* CARD */
+/* =========================
+   CARD
+========================= */
 
 .luxury-category-card {
-  background: linear-gradient(
-    145deg,
-    #131313,
-    #0c0c0c
-  );
+   background: linear-gradient(
+      145deg,
+      #131313,
+      #0b0b0b
+   );
 
-  border-radius: 24px;
-  padding: 28px 20px;
+   border-radius: 26px;
+   padding: 30px 20px;
 
-  text-align: center;
-  cursor: pointer;
+   text-align: center;
+   cursor: pointer;
 
-  transition: all 0.45s ease;
+   transition: all .4s ease;
 
-  border: 1px solid rgba(212, 175, 55, 0.12);
+   border: 1px solid
+      rgba(212,175,55,.12);
 
-  backdrop-filter: blur(10px);
+   backdrop-filter: blur(10px);
 
-  height: 100%;
+   height: 100%;
+
+   position: relative;
+
+   overflow: hidden;
+}
+
+/* subtle gold glow */
+.luxury-category-card::before {
+   content: "";
+
+   position: absolute;
+   inset: 0;
+
+   background: linear-gradient(
+      135deg,
+      transparent,
+      rgba(212,175,55,.05)
+   );
+
+   opacity: 0;
+   transition: .4s;
+}
+
+.luxury-category-card:hover::before {
+   opacity: 1;
 }
 
 .luxury-category-card:hover {
-  transform: translateY(-10px);
+   transform: translateY(-8px);
 
-  border-color: rgba(212, 175, 55, 0.45);
+   border-color:
+      rgba(212,175,55,.35);
 
-  box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(212, 175, 55, 0.18);
+   box-shadow:
+      0 20px 40px rgba(0,0,0,.5),
+      0 0 20px rgba(212,175,55,.12);
 }
 
-/* IMAGE */
+/* =========================
+   IMAGE
+========================= */
 
 .category-image-wrapper {
-  width: 150px;
+   width: 150px;
    height: 150px;
-   margin: 0 auto 22px;
-   border-radius: 50%;
-   overflow: hidden;
-   position: relative;
-   padding: 4px;
-  
-  
-  background: linear-gradient(
-    135deg,
-    #d4af37,
-    #f5e6c8,
-    #d4af37
-  );
 
-  transition: all 0.5s ease;
+   margin: 0 auto 24px;
+
+   border-radius: 50%;
+
+   overflow: hidden;
+
+   position: relative;
+
+   padding: 4px;
+
+   background: linear-gradient(
+      135deg,
+      #d4af37,
+      #f5e6c8,
+      #d4af37
+   );
+
+   transition: all .4s ease;
 }
 
-.luxury-category-card:hover .category-image-wrapper {
-  box-shadow:
-    0 0 25px rgba(212, 175, 55, 0.35);
+.luxury-category-card:hover
+.category-image-wrapper {
+
+   transform: scale(1.04);
+
+   box-shadow:
+      0 0 25px
+      rgba(212,175,55,.28);
 }
 
 .category-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+   width: 100%;
+   height: 100%;
 
-  transition: transform 0.6s ease;
+   object-fit: cover;
+
+   border-radius: 50%;
+
+   transition: transform .5s ease;
 }
 
-.luxury-category-card:hover .category-image {
-  transform: scale(1.08);
+.luxury-category-card:hover
+.category-image {
+   transform: scale(1.08);
 }
 
-/* TITLE */
+/* =========================
+   TITLE
+========================= */
 
 .category-name {
-  color: #f5e6c8;
-  font-size: 22px;
+   color: var(--champagne);
 
-  font-family: "Playfair Display", serif;
-  font-weight: 500;
+   font-size: 22px;
 
-  transition: all 0.4s ease;
+   font-family:
+      "Playfair Display",
+      serif;
+
+   font-weight: 500;
+
+   transition: .3s;
 }
 
-.luxury-category-card:hover .category-name {
-  color: #d4af37;
+.category-name::after {
+   content: "Luxury Collection";
+
+   display: block;
+
+   margin-top: 8px;
+
+   font-size: 11px;
+
+   letter-spacing: 2px;
+
+   color:
+      rgba(212,175,55,.7);
+
+   font-family:
+      "Poppins",
+      sans-serif;
+
+   text-transform: uppercase;
 }
 
-/* SWIPER */
-
-.swiper {
-  padding-bottom: 10px !important;
+.luxury-category-card:hover
+.category-name {
+   color: var(--gold);
 }
 
-/* MOBILE */
+/* =========================
+   SWIPER
+========================= */
 
-@media (max-width: 768px) {
-  .category-title {
-    font-size: 34px;
-  }
+.category-carousel-wrapper .swiper {
+   padding-bottom: 20px !important;
+}
 
-  .category-image-wrapper {
-    width: 120px;
-    height: 120px;
-  }
+/* =========================
+   TABLET
+========================= */
 
-  .category-name {
-    font-size: 18px;
-  }
+@media (max-width:768px) {
 
-  .luxury-category-card {
-    padding: 22px 15px;
-  }
+   .category-title {
+      font-size: 34px;
+   }
+
+   .category-image-wrapper {
+      width: 120px;
+      height: 120px;
+   }
+
+   .category-name {
+      font-size: 18px;
+   }
+
+   .luxury-category-card {
+      padding: 22px 15px;
+   }
+
+   .category-name::after {
+      font-size: 10px;
+   }
 }

@@ -4,7 +4,7 @@
 
 .feature-bar-section{
     padding: 4rem 0;
-    background: #000;
+  background: var(--black);
 }
 
 /* ==========================
