@@ -9,6 +9,8 @@ import { deleteProduct } from '../redux/thunks/productThunks';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
+import "./style/adminPro.css"
+
 
 const AdminProducts = () => {
 
@@ -17,13 +19,13 @@ const AdminProducts = () => {
     const [deleteLoading, setDeleteLoading] = useState(null)
     const { products, loading, error } = useSelector((state) => state.products)
 
-useEffect(() => {
+    useEffect(() => {
 
-    if (products.length === 0) {
-        dispatch(getAllproduct())
-    }
+        if (products.length === 0) {
+            dispatch(getAllproduct())
+        }
 
-}, [dispatch, products.length])
+    }, [dispatch, products.length])
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -82,34 +84,27 @@ useEffect(() => {
         return "In Stock"
 
     }
-
-
     const getStockClass = (stock) => {
-        if (stock === 0) {
-            return "out-stock"
-        }
-        if (stock < 5) {
-            return "low-stock"
-        }
-        return "in-stock"
-
-    }
-
+        if (stock === 0) return "admin-out-stock";
+        if (stock < 5) return "admin-low-stock";
+        return "admin-in-stock";
+    };
 
     return (
         <>
 
+        <div className="admin-container">
+
             <div className="admin-products-page">
 
-                <h1 className='admin-title'>
+                <h1 className="admin-title">
                     Admin Products
                 </h1>
-
 
                 {
                     products.length === 0 ? (
 
-                        <div className='empty-products'>
+                        <div className="admin-empty-products">
 
                             <h2>
                                 No Products Found
@@ -119,90 +114,95 @@ useEffect(() => {
 
                     ) : (
 
-                        <div className='product-container'>
-
+                        <div className="admin-product-container">
 
                             {
                                 products.map((product) => (
 
                                     <div
-                                        className='product-card'
+                                        className="admin-product-card"
                                         key={product._id}
                                     >
 
                                         <img
                                             src={product.images?.[0]?.url}
                                             alt={product.name}
-                                            className='product-image'
-                                              loading="lazy"
+                                            className="admin-product-image"
+                                            loading="lazy"
                                         />
 
-
-
-                                        <div className='product-info'>
+                                        <div className="admin-product-info">
 
                                             <h3>
                                                 {product.name}
                                             </h3>
 
-
-                                            <p className='product-brand'>
+                                            <p className="admin-product-category">
                                                 {product.category}
                                             </p>
 
+                                            {
+                                                product.brand && (
+                                                    <p className="admin-product-brand">
+                                                        {product.brand}
+                                                    </p>
+                                                )
+                                            }
 
-                                            <div className='price-section'>
+                                            <div className="admin-price-section">
 
-                                                <span className='price'>
+                                                <span className="admin-price">
                                                     ₹{product.price}
                                                 </span>
 
                                             </div>
 
-
-
-                                            {/* <p className='stock'>
-
-                                                Stock:
-                                                {product.stock}
-
-                                            </p> */}
-                                            <p className={`stock ${getStockClass(product.stock)}`}>
+                                            <p
+                                                className={`admin-stock ${getStockClass(
+                                                    product.stock
+                                                )}`}
+                                            >
                                                 {getStockText(product.stock)}
                                                 ({product.stock})
                                             </p>
 
+                                            {
+                                                product.shipping && (
+                                                    <span className="admin-shipping-badge">
+                                                        Free Shipping
+                                                    </span>
+                                                )
+                                            }
 
-
-                                            <div className='admin-btns'>
+                                            <div className="admin-btns">
 
                                                 <Link
                                                     to={`/admin/update-product/${product._id}`}
                                                 >
 
                                                     <button
-                                                        className='edit-btn'
+                                                        className="admin-edit-btn"
                                                     >
                                                         Edit
                                                     </button>
 
                                                 </Link>
 
-
-
                                                 <button
-
-                                                    className='delete-btn'
-                                                    disabled={deleteLoading===product._id}
-
+                                                    className="admin-delete-btn"
+                                                    disabled={
+                                                        deleteLoading === product._id
+                                                    }
                                                     onClick={() => {
                                                         handleDelete(product._id)
                                                     }}
                                                 >
 
-                                                   {
-                                                    deleteLoading===product._id ? "Deleting..." : "Delete"
-                                                   }
+                                                    {
+                                                        deleteLoading === product._id
+                                                            ? "Deleting..."
+                                                            : "Delete"
+                                                    }
 
                                                 </button>
 
@@ -218,6 +218,7 @@ useEffect(() => {
                     )
                 }
 
+            </div>
             </div>
 
         </>

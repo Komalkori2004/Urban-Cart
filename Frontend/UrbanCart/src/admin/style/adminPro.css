@@ -1,0 +1,520 @@
+/* ===========================
+   ADMIN PRODUCTS PAGE
+=========================== */
+
+.admin-container{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 20px;
+}
+
+.admin-products-page {
+    padding: 2rem 0;
+}
+
+.admin-title {
+    color: var(--gold);
+  
+    font-family:var(--heading-font);
+
+     font-size: clamp(2.5rem,5vw,4rem);
+    margin-bottom: 2rem;
+}
+
+
+/* ===========================
+   EMPTY STATE
+=========================== */
+
+.admin-empty-products {
+    text-align: center;
+    padding: 5rem 1rem;
+}
+
+.admin-empty-products h2 {
+    color: var(--gold);
+}
+
+
+/* ===========================
+   PRODUCT GRID
+=========================== */
+
+.admin-product-container {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+
+/* ===========================
+   PRODUCT CARD
+=========================== */
+
+.admin-product-card {
+
+    background:
+        linear-gradient(
+            180deg,
+            #121212,
+            #0d0d0d
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,.15);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    transition: .3s ease;
+}
+
+.admin-product-card:hover {
+
+    border-color:
+        rgba(212,175,55,.4);
+
+    box-shadow:
+        0 0 30px
+        rgba(212,175,55,.15);
+
+    transform:
+        translateY(-5px);
+}
+
+
+/* ===========================
+   IMAGE
+=========================== */
+
+.admin-product-image {
+
+    width: 100%;
+
+    height: 280px;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: .4s ease;
+}
+
+.admin-product-card:hover
+.admin-product-image {
+
+    transform: scale(1.05);
+}
+
+
+/* ===========================
+   PRODUCT INFO
+=========================== */
+
+.admin-product-info {
+
+    padding: 1.5rem;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .8rem;
+}
+
+.admin-product-info h3 {
+
+    color: var(--white);
+
+    font-size: 1.4rem;
+
+    font-family: var(--heading-font);
+
+    line-height: 1.4;
+}
+
+
+/* ===========================
+   CATEGORY
+=========================== */
+
+.admin-product-category {
+
+    color: var(--gold);
+
+    font-size: .95rem;
+}
+
+
+/* ===========================
+   BRAND
+=========================== */
+
+.admin-product-brand {
+
+    color: #bdbdbd;
+
+    font-size: .9rem;
+}
+
+
+/* ===========================
+   PRICE
+=========================== */
+
+.admin-price-section {
+
+    display: flex;
+
+    align-items: center;
+}
+
+.admin-price {
+
+    color: var(--gold);
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+}
+
+
+/* ===========================
+   STOCK
+=========================== */
+
+.admin-stock {
+
+    width: fit-content;
+
+    padding: .45rem 1rem;
+
+    border-radius: 30px;
+
+    font-size: .85rem;
+
+    font-weight: 600;
+}
+
+.admin-in-stock {
+
+    background:
+        rgba(46,204,113,.1);
+
+    color:
+        #2ecc71;
+}
+
+.admin-low-stock {
+
+    background:
+        rgba(241,196,15,.1);
+
+    color:
+        #f1c40f;
+}
+
+.admin-out-stock {
+
+    background:
+        rgba(231,76,60,.1);
+
+    color:
+        #e74c3c;
+}
+
+
+/* ===========================
+   SHIPPING
+=========================== */
+
+.admin-shipping-badge {
+
+    width: fit-content;
+
+    background: var(--gold);
+
+    color: var(--black);
+
+    padding: .45rem 1rem;
+
+    border-radius: 20px;
+
+    font-size: .8rem;
+
+    font-weight: 600;
+}
+
+
+/* ===========================
+   ACTION BUTTONS
+=========================== */
+
+.admin-btns{
+    display:flex;
+    gap:1rem;
+
+    margin-top:1.5rem;
+    padding-top:1.2rem;
+
+    border-top:
+    1px solid rgba(212,175,55,.12);
+}
+
+.admin-btns a{
+    flex:1;
+    display:flex;
+    text-decoration:none;
+}
+
+.admin-edit-btn,
+.admin-delete-btn{
+
+    flex:1;
+
+    width:100%;
+
+    min-width:0;
+
+    height:50px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:1rem;
+    font-weight:600;
+}
+
+
+/* ===========================
+   EDIT BUTTON
+=========================== */
+
+.admin-edit-btn{
+
+    border:1px solid rgba(212,175,55,.4);
+
+    background:
+        rgba(212,175,55,.08);
+
+    color:var(--gold);
+}
+
+.admin-edit-btn:hover{
+
+    background:var(--gold);
+
+    color:var(--black);
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 0 20px
+        rgba(212,175,55,.25);
+}
+
+
+/* ===========================
+   DELETE BUTTON
+=========================== */
+
+.admin-delete-btn{
+
+    border:1px solid rgba(255,59,92,.5);
+
+    background:transparent;
+
+    color:#ff3b5c;
+}
+
+.admin-delete-btn:hover{
+
+    background:#ff3b5c;
+
+    color:white;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 0 20px
+        rgba(255,59,92,.25);
+}
+
+
+/* ===========================
+   DISABLED
+=========================== */
+
+.admin-delete-btn:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width: 992px) {
+
+    .admin-product-container {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .admin-product-image {
+        height: 240px;
+    }
+
+    .admin-product-info h3 {
+        font-size: 1.2rem;
+    }
+}
+
+
+/* ===========================
+   MOBILE
+=========================== */
+@media(min-width:769px){
+
+    .admin-btns{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:1rem;
+    }
+
+    .admin-btns a{
+        display:block;
+    }
+}
+/* 
+@media(max-width:768px){
+
+    .admin-btns{
+        display:flex;
+        flex-direction:column;
+        gap:.8rem;
+    }
+
+    .admin-btns a{
+        width:100%;
+    }
+} */
+
+@media (max-width: 768px) {
+
+    .admin-products-page {
+        padding: 1rem 0;
+    }
+
+    .admin-title {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .admin-product-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .admin-product-card {
+        border-radius: 16px;
+    }
+
+    .admin-product-image {
+        height: 220px;
+    }
+
+    .admin-product-info {
+        padding: 1.2rem;
+    }
+
+    .admin-product-info h3 {
+        font-size: 1.1rem;
+        min-height: auto;
+    }
+
+    .admin-price {
+        font-size: 1.3rem;
+    }
+
+      .admin-btns{
+        display:flex;
+        flex-direction:column;
+        gap:.8rem;
+    }
+
+    .admin-btns a{
+        width:100%;
+    }
+
+    .admin-edit-btn,
+    .admin-delete-btn{
+        width:100%;
+        flex:none;
+        height:46px;
+        font-size:.95rem;
+    }
+}
+
+
+/* ===========================
+   SMALL MOBILE
+=========================== */
+
+@media (max-width: 480px) {
+
+    .admin-title {
+        font-size: 1.7rem;
+    }
+
+    .admin-product-image {
+        height: 190px;
+    }
+
+    .admin-product-info {
+        padding: 1rem;
+    }
+
+    .admin-product-info h3 {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    .admin-product-category,
+    .admin-product-brand {
+        font-size: .85rem;
+    }
+
+    .admin-price {
+        font-size: 1.15rem;
+    }
+
+    .admin-stock,
+    .admin-shipping-badge {
+        font-size: .75rem;
+        padding: .4rem .8rem;
+    }
+
+    .admin-edit-btn,
+    .admin-delete-btn {
+        padding: .8rem;
+        font-size: .9rem;
+    }
+}    
