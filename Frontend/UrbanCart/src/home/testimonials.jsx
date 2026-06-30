@@ -1,61 +1,124 @@
-
-
 import "../home/style/testimonials.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 function Testimonials() {
+
     const reviews = [
         {
             name: "Priya Sharma",
-            text: "The quality exceeded my expectations. Packaging felt truly premium.",
+            image: "/images/user1.avif",
+            text: "The craftsmanship and premium packaging exceeded my expectations. Every detail reflects true luxury."
         },
+
         {
             name: "Rahul Mehta",
-            text: "Fast delivery and elegant products. Definitely shopping again.",
+            image: "/images/users3.avif",
+            text: "Exceptional quality and fast delivery. UrbanCart offers a shopping experience that feels truly premium."
         },
+
         {
             name: "Ananya Kapoor",
-            text: "UrbanCart gives a luxury shopping experience at every step.",
+            image: "/images/user2.avif",
+            text: "From elegant designs to flawless service, UrbanCart has become my favorite luxury destination."
         },
+
+        {
+            name: "Arjun Malhotra",
+            image: "/images/user4.avif",
+            text: "The attention to detail, authentic products, and premium presentation make every purchase memorable."
+        }
     ];
 
     return (
         <section className="testimonials-section">
+
             <div className="container">
-              <div className="testimonials-header">
 
-  <span className="testimonials-tag">
-    TESTIMONIALS
-  </span>
+                <div className="testimonials-header">
 
-  <h2 className="testimonials-title">
-    What Our Customers Say
-  </h2>
+                    <span className="testimonials-tag">
+                        TESTIMONIALS
+                    </span>
 
-</div>
+                    <h2 className="testimonials-title">
+                        What Our Customers Say
+                    </h2>
 
+                </div>
                 <div className="testimonials-grid">
 
-                    {reviews.map((review, index) => (
-                        <div
-                            key={index}
-                            className="testimonial-card"
-                        >
-                            <div className="stars">
-                                ★★★★★
-                            </div>
+                    <Swiper
+                        modules={[Autoplay]}
+                        slidesPerView={3}
+                        spaceBetween={30}
+                        centeredSlides={false}
+                        watchOverflow={true}
+                        loop={true}
+                        speed={1000}
+                        autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        }}
+                        breakpoints={{
+                            0: {
+                                slidesPerView: 1,
+                                spaceBetween: 20,
+                            },
 
-                            <p className="testimonial-text">
-                                "{review.text}"
-                            </p>
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 25,
+                            },
 
-                            <h4>
-                                {review.name}
-                            </h4>
-                        </div>
-                    ))}
+                            1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 30,
+                            },
+                        }}
+                    >
+
+                        {reviews.map((review, index) => (
+
+                            <SwiperSlide key={index}>
+
+                                <div className="testimonial-card">
+
+                                    <div className="testimonial-avatar">
+
+                                        <img
+                                            src={review.image}
+                                            alt={review.name}
+                                        />
+
+                                    </div>
+
+                                    <div className="stars">
+                                        ★★★★★
+                                    </div>
+
+                                    <p className="testimonial-text">
+                                        "{review.text}"
+                                    </p>
+
+                                    <div className="testimonial-line"></div>
+
+                                    <h4>
+                                        {review.name}
+                                    </h4>
+
+                                </div>
+
+                            </SwiperSlide>
+
+                        ))}
+
+                    </Swiper>
 
                 </div>
 
             </div>
+
         </section>
     );
 }
