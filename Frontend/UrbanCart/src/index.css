@@ -69,7 +69,14 @@
    --text-muted:
       #999999;
 
+--gold-border:
+   rgba(212,175,55,.2);
 
+--gold-border-light:
+   rgba(212,175,55,.08);
+
+--gold-border-hover:
+   rgba(212,175,55,.45);
 
 
 
