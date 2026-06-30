@@ -3,43 +3,81 @@ import "../home/style/collectionShow.css"
 
 
 
+
 function CollectionShowcase() {
   return (
     <section className="collection-showcase">
-      <div className="collection-container">
 
-        <div className="collection-content">
+      <div className="container">
 
-          <span className="collection-label">
-            NEW SEASON COLLECTION
-          </span>
+        <div className="collection-wrapper">
 
-          <h2>
-            Crafted For
-            <span> Modern Luxury</span>
-          </h2>
+          {/* IMAGE */}
 
-          <p>
-            Discover premium essentials curated for
-            individuals who appreciate timeless design,
-            superior craftsmanship, and elevated style.
-          </p>
+          <div className="collection-image-section">
 
-          <button className="collection-btn">
-            Explore Collection
-          </button>
+            <img
+              src="/images/showcase2.avif"
+              alt="Luxury Collection"
+              className="collection-main-image"
+              loading="lazy"
+            />
 
-        </div>
+            <div className="collection-badge">
+              NEW
+            </div>
 
-        <div className="collection-image">
-          <img
-            src="/images/showcase2.avif"
-            alt="UrbanCart Luxury Collection"
-             loading="lazy"
-          />
+          </div>
+
+          {/* CONTENT */}
+
+          <div className="collection-content">
+
+            <span className="collection-label">
+              NEW SEASON COLLECTION
+            </span>
+
+            <h2 className="collection-title">
+              Crafted For
+              <span> Modern Luxury</span>
+            </h2>
+
+            <p className="collection-description">
+              Discover premium essentials curated for
+              individuals who appreciate timeless
+              design, superior craftsmanship,
+              and elevated style.
+            </p>
+
+           <div className="collection-features">
+
+    <div className="feature">
+        <span>✓</span>
+        Premium Craftsmanship
+    </div>
+
+    <div className="feature">
+        <span>✓</span>
+        Exclusive Collections
+    </div>
+
+    <div className="feature">
+        <span>✓</span>
+        Luxury Experience
+    </div>
+
+</div>
+
+            <button className="collection-btn">
+              Explore Collection
+            </button>
+
+          </div>
+
         </div>
 
       </div>
+
     </section>
   );
 }
