@@ -1,71 +1,136 @@
-
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../home/style/instagramGallery.css";
+
 const galleryImages = [
-  "/images/gallery1.avif",
-  "/images/gallery2.avif",
-  "/images/gallery3.avif",
-   "/images/gallery4.avif",
-  "/images/gallery5.avif",  
-  "/images/jwellery1.avif",
-   "/images/jwellery2.avif",
-      "/images/jwellery3.avif",
-      "/images/perfume1.avif",
+    {
+        image: "/images/gallery1.avif",
+        category: "Fashion",
+        title: "Luxury Fashion"
+    },
+    {
+        image: "/images/gallery2.avif",
+        category: "Beauty",
+        title: "Beauty Collection"
+    },
+    {
+        image: "/images/gallery3.avif",
+        category: "Fashion",
+        title: "Premium Style"
+    },
+    {
+        image: "/images/gallery4.avif",
+        category: "Accessories",
+        title: "Luxury Accessories"
+    },
+    {
+        image: "/images/gallery5.avif",
+        category: "Fashion",
+        title: "New Arrival"
+    },
+    {
+        image: "/images/jwellery1.avif",
+        category: "Jewellery",
+        title: "Fine Jewellery"
+    },
+    {
+        image: "/images/jwellery2.avif",
+        category: "Jewellery",
+        title: "Elegant Collection"
+    },
+    {
+        image: "/images/jwellery3.avif",
+        category: "Jewellery",
+        title: "Exclusive Pieces"
+    },
+    {
+        image: "/images/perfume1.avif",
+        category: "Perfume",
+        title: "Luxury Perfumes"
+    }
 ];
 
 function InstagramGallery() {
-  return (
-    <section className="instagram-gallery">
 
-      <div className="gallery-container">
+    const navigate = useNavigate();
 
-        <div className="gallery-header">
+    return (
+        <section className="instagram-gallery">
 
-          <span>
-            FOLLOW OUR JOURNEY
-          </span>
+            <div className="gallery-container">
 
-          <h2>
-            Inspired By Luxury,
-            Worn With Confidence
-          </h2>
+                <div className="gallery-header">
 
-          <p>
-            Explore the UrbanCart aesthetic through
-            curated fashion moments and timeless style.
-          </p>
+                    <span className="gallery-tag">
+                        FOLLOW OUR JOURNEY
+                    </span>
 
-        </div>
+                    <h2 className="gallery-title">
+                        Inspired By Luxury,
+                        Worn With Confidence
+                    </h2>
 
-        <div className="gallery-grid">
+                    <p>
+                        Explore the UrbanCart aesthetic through
+                        curated fashion moments and timeless style.
+                    </p>
 
-          {galleryImages.map((image, index) => (
-            <div
-              key={index}
-              className={`gallery-item item-${index + 1}`}
-            >
-              <img
-                src={image}
-                
-                alt="UrbanCart Gallery"
-                 loading="lazy"
-              />
+                </div>
+
+                <div className="gallery-grid">
+
+                    {galleryImages.map((item, index) => (
+
+                        <div
+                            key={index}
+                            className={`gallery-item item-${index + 1}`}
+                            onClick={() =>
+                                navigate(
+                                    `/shop?category=${encodeURIComponent(item.category)}`
+                                )
+                            }
+                        >
+
+                            <img
+                                src={item.image}
+                                alt={item.title}
+                                loading="lazy"
+                            />
+
+                            <div className="gallery-overlay">
+
+                                <span className="gallery-category">
+                                    {item.category}
+                                </span>
+
+                                <h4>
+                                    {item.title}
+                                </h4>
+
+                                <p>
+                                    Shop Collection →
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    ))}
+
+                </div>
+
+                <div className="gallery-footer">
+
+                    <button>
+                        Follow @UrbanCart →
+                    </button>
+
+                </div>
+
             </div>
-          ))}
 
-        </div>
-
-        <div className="gallery-footer">
-          <button>
-            Follow @UrbanCart →
-          </button>
-        </div>
-
-      </div>
-
-    </section>
-  );
+        </section>
+    );
 }
 
 export default InstagramGallery;
-
