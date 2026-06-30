@@ -1,109 +1,317 @@
-.brand-story {
-    padding: 4rem 0;
+/* =========================
+   BRAND STORY SECTION
+========================= */
+
+.brand-story{
+   padding:100px 0;
+   background:var(--black);
+   position:relative;
+   overflow:hidden;
 }
 
-.brand-story-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 3rem;
-    align-items: center;
+.brand-story::before{
+   content:"";
 
-    background: linear-gradient(
-        135deg,
-        rgba(212,175,55,0.08),
-        rgba(255,255,255,0.02)
-    );
+   position:absolute;
 
-    border: 1px solid rgba(212,175,55,0.2);
-    border-radius: 28px;
-    padding: 4rem;
+   top:-150px;
+   left:-150px;
+
+   width:350px;
+   height:350px;
+
+   background:
+      radial-gradient(
+         var(--gold-opacity-light),
+         transparent 70%
+      );
+
+   filter:blur(90px);
 }
 
-.story-tag {
-    color: var(--gold);
-    letter-spacing: 3px;
-    font-size: 0.85rem;
-    font-weight: 600;
+/* =========================
+   GRID
+========================= */
+
+.brand-story-grid{
+   display:grid;
+   grid-template-columns:1.2fr 1fr;
+   gap:60px;
+   align-items:center;
 }
 
-.brand-story-left h2 {
-    font-family: var(--heading-font);
-    font-size: 4rem;
-    line-height: 1.1;
-    margin: 1rem 0;
+/* =========================
+   LEFT
+========================= */
+
+.story-tag{
+   display:inline-block;
+
+   color:var(--gold);
+
+   letter-spacing:5px;
+
+   font-size:.85rem;
+
+   margin-bottom:25px;
+
+   text-transform:uppercase;
 }
 
-.brand-story-left h2 span {
-    color: var(--gold);
+.brand-story-left h2{
+   font-family:var(--heading-font);
+
+   font-size:4rem;
+
+   color:var(--white);
+
+   line-height:1.1;
+
+   margin-bottom:25px;
 }
 
-.brand-story-left p {
-    color: rgba(255,255,255,0.8);
-    line-height: 1.9;
-    max-width: 550px;
+.brand-story-left h2 span{
+   color:var(--gold);
+   font-style:italic;
 }
 
-.story-btn {
-    display: inline-flex;
+.brand-story-left p{
+   color:var(--gray-light);
 
-    margin-top: 1rem;
+   font-size:1.1rem;
 
-    background: var(--gold);
-    color: var(--black);
+   line-height:1.9;
 
-    padding: 1rem 2rem;
+   max-width:520px;
 
-    border-radius: 999px;
-
-    font-weight: 600;
-        box-shadow:
-        0 10px 25px rgba(212,175,55,0.25);
+   margin-bottom:40px;
 }
 
-.story-btn:hover {
-   transform: translateY(-3px);
+/* BUTTON */
 
-    box-shadow:
-        0 15px 35px rgba(212,175,55,0.35);
+.story-btn{
+   display:inline-flex;
+
+   align-items:center;
+   justify-content:center;
+
+   padding:16px 36px;
+
+   border-radius:var(--radius-xl);
+
+   background:transparent;
+
+   border:var(--border-gold);
+
+   color:var(--gold);
+
+   font-weight:500;
+
+   transition:var(--transition);
 }
 
-.brand-story-right {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 1.5rem;
+.story-btn:hover{
+   background:var(--gold);
+   color:var(--black);
+
+   transform:translateY(-3px);
+
+   box-shadow:
+      0 15px 35px
+      rgba(212,175,55,.25);
 }
 
-.story-stat {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(212,175,55,0.15);
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
+/* =========================
+   RIGHT
+========================= */
+
+.brand-story-right{
+   display:grid;
+
+   grid-template-columns:
+      repeat(2,1fr);
+
+   gap:25px;
 }
 
-.story-stat h3 {
-    font-family: var(--heading-font);
-    font-size: 2.2rem;
-    color: var(--gold);
-    margin-bottom: .5rem;
+/* CARD */
+
+.story-stat{
+   background:
+      linear-gradient(
+         145deg,
+         var(--dark-card),
+         var(--dark-card-2)
+      );
+
+   border-radius:
+      var(--radius-lg);
+
+   padding:40px 25px;
+
+   text-align:center;
+
+   border:
+      var(--border-gold);
+
+   transition:
+      var(--transition);
+
+   position:relative;
+
+   overflow:hidden;
 }
 
-.story-stat p {
-    color: rgba(255,255,255,0.75);
+.story-stat::before{
+   content:"";
+
+   position:absolute;
+   inset:0;
+
+   background:
+      linear-gradient(
+         135deg,
+         transparent,
+         rgba(212,175,55,.05)
+      );
+
+   opacity:0;
+
+   transition:var(--transition);
 }
 
-@media (max-width: 900px) {
+.story-stat:hover::before{
+   opacity:1;
+}
 
-    .brand-story-grid {
-        grid-template-columns: 1fr;
-        padding: 2rem;
-    }
+.story-stat:hover{
+   transform:
+      translateY(-8px);
 
-    .brand-story-left h2 {
-        font-size: 2.8rem;
-    }
+   border:
+      var(--border-gold-hover);
 
-    .brand-story-right {
-        grid-template-columns: 1fr 1fr;
-    }
+   box-shadow:
+      var(--shadow-lg);
+}
+
+/* NUMBER */
+
+.story-stat h3{
+   font-family:
+      var(--heading-font);
+
+   font-size:3rem;
+
+   color:
+      var(--gold);
+
+   margin-bottom:15px;
+}
+
+/* TEXT */
+
+.story-stat p{
+   color:
+      var(--champagne);
+
+   font-size:1rem;
+
+   letter-spacing:1px;
+}
+
+/* =========================
+   1200px
+========================= */
+
+@media(max-width:1200px){
+
+   .brand-story-left h2{
+      font-size:3.5rem;
+   }
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:992px){
+
+   .brand-story-grid{
+      grid-template-columns:1fr;
+      gap:50px;
+   }
+
+   .brand-story-left{
+      text-align:center;
+   }
+
+   .brand-story-left p{
+      margin:
+         0 auto 35px;
+   }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+   .brand-story{
+      padding:50px 0;
+   }
+
+   .brand-story-left h2{
+      font-size:2.8rem;
+   }
+
+   .brand-story-right{
+      grid-template-columns:1fr;
+      gap:20px;
+   }
+
+   .story-stat{
+      padding:35px 20px;
+   }
+
+   .story-stat h3{
+      font-size:2.5rem;
+   }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:480px){
+
+   .brand-story{
+      padding:60px 0;
+   }
+
+   .story-tag{
+      letter-spacing:3px;
+      font-size:.75rem;
+   }
+
+   .brand-story-left h2{
+      font-size:2.2rem;
+   }
+
+   .brand-story-left p{
+      font-size:1rem;
+   }
+
+   .story-btn{
+      width:100%;
+   }
+
+   .story-stat h3{
+      font-size:2rem;
+   }
+
+   .story-stat p{
+      font-size:.9rem;
+   }
 }
