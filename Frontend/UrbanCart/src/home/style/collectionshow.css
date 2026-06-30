@@ -53,7 +53,8 @@
 
     object-fit:cover;
 
-    border-radius:40px;
+    border-radius:
+        var(--radius-xl);
 
     border:var(--border-gold);
 
@@ -78,15 +79,14 @@
 
     padding:12px 22px;
 
-    border-radius:50px;
+   border-radius:
+        var(--radius-xl);
 
     font-size:.85rem;
 
     font-weight:600;
-
-    box-shadow:
-        0 10px 25px
-        rgba(212,175,55,.3);
+ box-shadow:
+        var(--shadow-md);
 }
 
 /* =========================
@@ -239,17 +239,14 @@
 
     transition:var(--transition);
 
-    box-shadow:
-        0 10px 25px
-        rgba(212,175,55,.2);
+ box-shadow:
+        var(--shadow-md);
 }
 
 .collection-btn:hover{
     transform:translateY(-4px);
-
-    box-shadow:
-        0 15px 35px
-        rgba(212,175,55,.3);
+  box-shadow:
+        var(--shadow-lg);
 }
 
 /* =========================

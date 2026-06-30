@@ -78,7 +78,8 @@
 --gold-border-hover:
    rgba(212,175,55,.45);
 
-
+--gold-overlay-light:
+   rgba(212,175,55,.05);
 
 
    --dark-card-2: #0B0B0B;
