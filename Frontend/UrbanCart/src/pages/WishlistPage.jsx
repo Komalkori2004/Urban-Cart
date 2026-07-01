@@ -1,10 +1,14 @@
 
 
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 
 import { getWishlist, removeWishlist } from "../redux/thunks/wishlistThunks";
+
+import ProductCard from "../components/productCard";
+import { addToCart } from "../redux/thunks/cartThunks"
 
 import "../style/product.css"
 const WishlistPage = () => {
@@ -18,31 +22,132 @@ const WishlistPage = () => {
         dispatch(getWishlist())
     }, [dispatch])
 
-    if (error) {
-    return (
-        <div className="empty-state">
-            <h2>Something went wrong</h2>
-            <p>{error}</p>
-        </div>
-    );
-}
-if (loading) {
-    return <h2>Loading...</h2>;
-}
 
-  if (!loading && wishlist?.length === 0){
+
+
+
+    const handleAddToCart = useCallback(
+        async (
+            e,
+            productId
+        ) => {
+
+            e.preventDefault();
+
+            const result =
+                await dispatch(
+                    addToCart({
+                        productId,
+                        quantity: 1
+                    })
+                );
+
+            if (
+                result.meta.requestStatus ===
+                "fulfilled"
+            ) {
+
+                toast.success(
+                    "Product added to cart"
+                );
+            }
+
+            if (
+                result.meta.requestStatus ===
+                "rejected"
+            ) {
+
+                toast.error(
+                    result.payload ||
+                    "Failed to add product"
+                );
+            }
+
+        },
+        [dispatch]
+    );
+
+
+    const handleRemoveWishlist =
+        async (
+            e,
+            productId
+        ) => {
+
+            e.preventDefault();
+
+            const result =
+                await dispatch(
+                    removeWishlist(
+                        productId
+                    )
+                );
+
+            if (
+                result.meta.requestStatus ===
+                "fulfilled"
+            ) {
+
+                toast.success(
+                    "Removed from wishlist"
+                );
+            }
+
+            if (
+                result.meta.requestStatus ===
+                "rejected"
+            ) {
+
+                toast.error(
+                    "Failed to remove"
+                );
+            }
+        };
+
+
+
+
+    if (error) {
         return (
             <div className="empty-state">
+                <h2>Something went wrong</h2>
+                <p>{error}</p>
+            </div>
+        );
+    }
+    if (loading) {
+        return <h2>Loading...</h2>;
+    }
+
+    if (!loading && wishlist?.length === 0) {
+
+        return (
+
+            <div className="empty-state">
+
+                <div className="empty-icon">
+                    ♡
+                </div>
 
                 <h2>
-                    Your Wishlist Is Empty
+                    Your Wishlist Awaits
                 </h2>
 
                 <p>
-                    Save your favorite products here.
+                    Discover luxury pieces
+                    and save your favorites
+                    for later.
                 </p>
 
+                <a
+                    href="/products"
+                    className="empty-btn"
+                >
+                    Explore Collection
+                </a>
+
             </div>
+
         )
     }
 
@@ -53,62 +158,104 @@ if (loading) {
             <div className="container">
 
                 <div className="shop-header">
-                    ...
+
+                    <p className="shop-subtitle">
+                        CURATED COLLECTION
+                    </p>
+
+                    <h1 className="shop-title">
+                        Your Wishlist
+                    </h1>
+
+                    <p className="shop-description">
+
+                        Save your favorite luxury
+                        fashion, beauty and lifestyle
+                        pieces for future purchase.
+
+                    </p>
+
                 </div>
 
-                <p className="product-count">
-                    {wishlist.length} Products Found
-                </p>
+                {/* <div className="wishlist-summary">
+
+                    <div className="wishlist-count">
+
+                        <span>
+                            {wishlist.length}
+                        </span>
+
+                        <p>
+                            SAVED ITEMS
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div className="wishlist-section-title">
+
+                    <span></span>
+
+                    <h3>
+                        Recently Saved
+                    </h3>
+
+                    <span></span>
+
+                </div> */}
 
 
+                <div className="wishlist-info">
+
+    <div className="wishlist-pill">
+
+        <span>
+            ♥ {wishlist.length}
+        </span>
+
+        <p>
+            SAVED ITEMS
+        </p>
+
+    </div>
+
+</div>
+
+<h3 className="wishlist-heading">
+    Recently Saved Products
+</h3>
                 <div className="product-container">
 
-                    {wishlist.map((product) => (
+                    {
+                        wishlist.map((product) => (
 
-                        <div
-                            className="product-card"
-                            key={product._id}
-                        >
+                            <ProductCard
 
-                            <img
-                                src={product.images[0]?.url}
-                                alt={product.name}
-                                className="product-image"
-                                 loading="lazy"
+                                key={product._id}
+
+                                product={product}
+
+                                isWishlisted={true}
+
+                                onWishlist={(e) =>
+                                    handleRemoveWishlist(
+                                        e,
+                                        product._id
+                                    )
+                                }
+
+                                onAddToCart={(e) =>
+                                    handleAddToCart(
+                                        e,
+                                        product._id
+                                    )
+                                }
+
                             />
 
-                            <div className="product-info">
-
-                                <h3>{product.name}</h3>
-
-                                <p className="product-brand">
-                                    {product.brand}
-                                </p>
-
-                                <div className="price-section">
-
-                                    <span className="price">
-                                        ₹ {product.price}
-                                    </span>
-
-                                </div>
-
-                                <button
-                                    className="remove-btn"
-                                    onClick={() =>
-                                        dispatch(
-                                            removeWishlist(product._id)
-                                        )
-                                    }
-                                >
-                                    Remove From Wishlist
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    ))}
+                        ))
+                    }
 
                 </div>
 
