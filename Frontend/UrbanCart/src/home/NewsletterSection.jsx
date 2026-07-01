@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,7 +5,7 @@ import "../home/style/NewsletterSection.css";
 
 import { toast } from "react-toastify";
 
-import {subscribeNewsletter } from "../redux/thunks/newsletterThunk"
+import { subscribeNewsletter } from "../redux/thunks/newsletterThunk";
 
 import {
   resetNewsletterState,
@@ -16,84 +14,122 @@ import {
 function NewsletterSection() {
 
   const [email, setEmail] = useState("");
+
   const dispatch = useDispatch();
-  const { loading ,success } = useSelector((state) => state.newsletter);
 
-
+  const { loading, success } =
+    useSelector((state) => state.newsletter);
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
 
-    if (!email.trim()) {
+    const trimmedEmail =
+      email.trim().toLowerCase();
+
+    if (!trimmedEmail) {
       return toast.error(
         "Email is required"
       );
     }
 
-    dispatch(
-      subscribeNewsletter(email)
-    );
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    
+    if (!emailRegex.test(trimmedEmail)) {
+      return toast.error(
+        "Please enter a valid email"
+      );
+    }
+
+    dispatch(
+      subscribeNewsletter(
+        trimmedEmail
+      )
+    );
   };
 
   useEffect(() => {
-  if (success) {
-    setEmail("");
-    dispatch(resetNewsletterState());
-  }
-}, [success, dispatch]);
+
+    if (success) {
+
+      toast.success(
+        "Welcome to UrbanCart"
+      );
+
+      setEmail("");
+
+      dispatch(
+        resetNewsletterState()
+      );
+    }
+
+  }, [success, dispatch]);
+
   return (
-    <section className="newsletter">
-      <div className="container">
+
+<section className="newsletter">
+
+    <div className="container">
 
         <div className="newsletter-card">
 
-          <span className="newsletter-tag">
-            EXCLUSIVE ACCESS
-          </span>
+            <div className="newsletter-badge-wrapper">
 
-          <h2>
-            Become An Insider
-          </h2>
+                <span className="badge-line"></span>
 
-          <p>
-            Join the UrbanCart circle and receive early
-            access to new collections, private offers,
-            luxury drops, and curated style inspiration.
-          </p>
+                <span className="newsletter-badge">
+                    ✦ EXCLUSIVE ACCESS ✦
+                </span>
 
-          <form
-            className="newsletter-form"
-            onSubmit={handleSubmit}
-          >
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
-            />
-            <button
-              type="submit"
-              disabled={loading}
-            >
-              {
-                loading
-                  ? "Joining..."
-                  : "Join The Circle →"
-              }
-            </button>
+                <span className="badge-line"></span>
 
-          </form>
+            </div>
+
+            <h2 className="newsletter-title">
+                Join The UrbanCart Circle
+            </h2>
+
+            <p className="newsletter-description">
+                Discover private launches, luxury collections,
+                curated fashion inspiration and members-only
+                experiences.
+            </p>
+
+            <form className="newsletter-form">
+
+                <div className="newsletter-input">
+
+                    <span className="mail-icon">
+                        ✉
+                    </span>
+
+                    <input
+                        type="email"
+                        placeholder="Enter your email address"
+                    />
+
+                </div>
+
+                <button
+                    className="newsletter-btn"
+                >
+                    Join The Circle
+                </button>
+
+            </form>
+
+            <p className="newsletter-privacy">
+                We respect your privacy.
+                Unsubscribe anytime.
+            </p>
 
         </div>
 
-      </div>
-    </section>
+    </div>
+
+</section>
   );
 }
 
 export default NewsletterSection;
-
