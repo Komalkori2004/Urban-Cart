@@ -6,6 +6,7 @@ import { resetCoupon } from '../redux/feature/couponSlice'
 import { getCart, updateCart, removeCart } from '../redux/thunks/cartThunks'
 import { applyCoupon } from '../redux/thunks/couponThunk'
 import { useEffect, useState } from 'react'
+import { toast } from "sonner";
 
 
 import "../style/cart.css"
@@ -40,20 +41,154 @@ const CartPage = () => {
     // if (loading) {
     //     return <h2>Loading...</h2>
     // }
-    if (error) {
-        return <h2>{error}</h2>
-    }
-    if (items.length == 0) {
-        return (
-            <div>
+    // if (error) {
+    //     return <h2>{error}</h2>
+    // }
+    // if (items.length == 0) {
+    //     return (
+    //         <div>
 
-                <h2>
-                    Cart is Empty
-                </h2>
+    //             <h2>
+    //                 Cart is Empty
+    //             </h2>
 
-            </div>
-        )
-    }
+    //         </div>
+    //     )
+    // }
+
+
+
+    const handleRemoveCart = async (
+        productId
+    ) => {
+
+        const result =
+            await dispatch(
+                removeCart(
+                    productId
+                )
+            );
+
+        dispatch(
+            resetCoupon()
+        );
+
+        if (
+            result.meta.requestStatus ===
+            "fulfilled"
+        ) {
+
+            toast.success(
+                "Product removed from cart"
+            );
+        }
+
+        if (
+            result.meta.requestStatus ===
+            "rejected"
+        ) {
+
+            toast.error(
+                "Failed to remove product"
+            );
+        }
+    };
+
+
+
+
+    // 
+
+    const handleIncrease =
+        async (productId) => {
+
+            const result =
+                await dispatch(
+                    updateCart({
+                        productId,
+                        action:
+                            "increase"
+                    })
+                );
+
+            dispatch(
+                resetCoupon()
+            );
+
+            if (
+                result.meta.requestStatus ===
+                "rejected"
+            ) {
+
+                toast.error(
+                    "Unable to update quantity"
+                );
+            }
+        };
+
+
+
+
+    const handleDecrease =
+        async (productId) => {
+
+            const result =
+                await dispatch(
+                    updateCart({
+                        productId,
+                        action:
+                            "decrease"
+                    })
+                );
+
+            dispatch(
+                resetCoupon()
+            );
+
+            if (
+                result.meta.requestStatus ===
+                "rejected"
+            ) {
+
+                toast.error(
+                    "Unable to update quantity"
+                );
+            }
+        };
+
+
+
+    const handleApplyCoupon =
+        async () => {
+
+            const result =
+                await dispatch(
+                    applyCoupon({
+                        couponCode
+                    })
+                );
+
+            if (
+                result.meta.requestStatus ===
+                "fulfilled"
+            ) {
+
+                toast.success(
+                    "Coupon applied successfully"
+                );
+            }
+
+            if (
+                result.meta.requestStatus ===
+                "rejected"
+            ) {
+
+                toast.error(
+                    result.payload ||
+                    "Invalid coupon"
+                );
+            }
+        };
 
 
     const totalItem = items.reduce((acc, item) => {
@@ -78,119 +213,209 @@ const CartPage = () => {
             : subTotal + shipping;
     return (
         <>
-            <div className="container">
+            <div className="cart-page">
 
-                <div className="cart-container">
+                <div className="container">
 
-                    <h1 className="cart-title">
-                        My Cart
-                    </h1>
+                    {/* HERO */}
+
+                    <div className="cart-hero">
+
+                        <p className="cart-subtitle">
+                            PREMIUM CHECKOUT
+                        </p>
+
+                        <h1 className="cart-title">
+                            Your Shopping Cart
+                        </h1>
+
+                        <p className="cart-description">
+                            Review your curated luxury selections before proceeding to checkout.
+                        </p>
+
+                    </div>
+
+
+
+                    {/* STATS */}
+
+                    <div className="cart-stats">
+
+                        <div className="cart-pill">
+
+                            <span>
+                                {totalItem}
+                            </span>
+
+                            <p>
+                                ITEMS
+                            </p>
+
+                        </div>
+
+                        <div className="cart-divider"></div>
+
+                        <div className="cart-pill">
+
+                            <span>
+                                ₹{subTotal}
+                            </span>
+
+                            <p>
+                                SUBTOTAL
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    {/* MAIN SECTION */}
 
                     <div className="cart-content">
 
+                        {/* LEFT SIDE */}
+
                         <div className="cart-items">
 
-                            {items?.map((item) => (
+                            {
+                                items?.map((item) => (
 
-                                <div
-                                    key={item.product._id}
-                                    className="cart-item-card"
-                                >
+                                    <div
+                                        key={item.product._id}
+                                        className="cart-item-card"
+                                    >
 
-                                    <div className="cart-item-image">
-                                        <img
-                                            src={item.product.images[0]?.url}
-                                            alt={item.product.name}
-                                             loading="lazy"
-                                        />
-                                    </div>
+                                        {/* IMAGE */}
 
-                                    <div className="cart-item-details">
+                                        <div className="cart-item-image">
 
-                                        <h3 className="cart-item-name">
-                                            {item.product.name}
-                                        </h3>
+                                            <img
+                                                src={
+                                                    item.product.images?.[0]?.url
+                                                }
+                                                alt={
+                                                    item.product.name
+                                                }
+                                                loading="lazy"
+                                            />
 
-                                        <p className="cart-item-price">
-                                            ₹{item.product.price}
-                                        </p>
+                                        </div>
 
-                                        <div className="cart-quantity-controls">
 
+
+                                        {/* DETAILS */}
+
+                                        <div className="cart-item-details">
+
+                                            <p className="cart-brand">
+
+                                                {
+                                                    item.product.brand
+                                                }
+
+                                            </p>
+
+                                            <h3 className="cart-item-name">
+
+                                                {
+                                                    item.product.name
+                                                }
+
+                                            </h3>
+
+                                            <div className="cart-rating">
+
+                                                ★★★★★
+                                                <span>
+                                                    (24)
+                                                </span>
+
+                                            </div>
+
+                                            <div className="cart-price">
+
+                                                ₹{
+                                                    item.product.price
+                                                }
+
+                                            </div>
+
+                                            <div className="cart-stock">
+
+                                                ✓ In Stock
+
+                                            </div>
+
+
+
+                                            {/* QUANTITY */}
+
+                                            <div className="cart-quantity-controls">
+
+                                                <button
+                                                    className="qty-btn"
+                                                    disabled={
+                                                        item.quantity <= 1
+                                                    }
+                                                    onClick={() =>
+                                                        handleDecrease(
+                                                            item.product._id
+                                                        )
+                                                    }
+                                                >
+                                                    -
+                                                </button>
+
+                                                <span className="qty-value">
+
+                                                    {
+                                                        item.quantity
+                                                    }
+
+                                                </span>
+
+                                                <button
+                                                    className="qty-btn"
+                                                    onClick={() =>
+                                                        handleIncrease(
+                                                            item.product._id
+                                                        )
+                                                    }
+                                                >
+                                                    +
+                                                </button>
+
+                                            </div>
+
+
+
+                                            {/* REMOVE */}
 
                                             <button
-                                                type="button"
-                                                className="qty-btn"
-                                                disabled={item.quantity <= 1}
-
-                                                onClick={() => {
-                                                    dispatch(
-                                                        updateCart({
-                                                            productId: item.product._id,
-                                                            action: "decrease"
-                                                        })
-                                                    );
-
-                                                    dispatch(resetCoupon());
-                                                }}
+                                                className="remove-btn"
+                                                onClick={() =>
+                                                    handleRemoveCart(
+                                                        item.product._id
+                                                    )
+                                                }
                                             >
-                                                -
-                                            </button>
-
-
-
-                                            <span className="qty-value">
-                                                {item.quantity}
-                                            </span>
-
-
-
-                                            <button
-                                                type="button"
-                                                className="qty-btn"
-                                                onClick={() => {
-                                                    dispatch(
-                                                        updateCart({
-                                                            productId: item.product._id,
-                                                            action: "increase"
-                                                        })
-                                                    );
-
-                                                    dispatch(resetCoupon());
-                                                }}
-
-                                            >
-                                                +
+                                                Remove Item
                                             </button>
 
                                         </div>
 
-                                        <button
-
-                                            type="button"
-                                            className="remove-btn"
-
-                                            onClick={() => {
-                                                dispatch(
-                                                    removeCart(item.product._id)
-                                                );
-
-                                                dispatch(resetCoupon());
-                                            }}
-                                        >
-
-                                            Remove
-
-                                        </button>
-
                                     </div>
 
-                                </div>
-
-                            ))}
+                                ))
+                            }
 
                         </div>
 
+
+
+                        {/* RIGHT SIDE */}
 
                         <div className="cart-summary">
 
@@ -198,61 +423,147 @@ const CartPage = () => {
                                 Order Summary
                             </h2>
 
-                            <div className="summary-row">
-                                <span>Total Items</span>
-                                <span>{totalItem}</span>
-                            </div>
+
 
                             <div className="summary-row">
-                                <span>Subtotal</span>
-                                <span>₹{subTotal}</span>
+
+                                <span>
+                                    Total Items
+                                </span>
+
+                                <span>
+                                    {totalItem}
+                                </span>
+
                             </div>
 
+
+
                             <div className="summary-row">
-                                <span>Shipping</span>
-                                <span>₹{shipping}</span>
+
+                                <span>
+                                    Subtotal
+                                </span>
+
+                                <span>
+                                    ₹{subTotal}
+                                </span>
+
                             </div>
+
+
+
+                            <div className="summary-row">
+
+                                <span>
+                                    Shipping
+                                </span>
+
+                                <span>
+                                    {
+                                        shipping === 0
+                                            ? "FREE"
+                                            : `₹${shipping}`
+                                    }
+                                </span>
+
+                            </div>
+
+
+
+                            {/* COUPON */}
+
                             <div className="coupon-section">
 
                                 <input
                                     type="text"
-                                    placeholder="Enter Coupon Code"
-                                    className="coupon-input"
                                     value={couponCode}
-                                    onChange={(e) => setCouponCode(e.target.value)}
+                                    className="coupon-input"
+                                    placeholder="Enter Coupon Code"
+                                    onChange={(e) =>
+                                        setCouponCode(
+                                            e.target.value
+                                        )
+                                    }
                                 />
 
                                 <button
-                                    type="button"
                                     className="apply-coupon-btn"
                                     disabled={couponLoading}
-                                    onClick={() =>
-                                        dispatch(
-                                            applyCoupon({
-                                                couponCode
-                                            })
-                                        )
+                                    onClick={
+                                        handleApplyCoupon
                                     }
                                 >
-                                    {couponLoading ? "Applying..." : "Apply"}
+                                    {
+                                        couponLoading
+                                            ? "Applying..."
+                                            : "Apply"
+                                    }
                                 </button>
 
                             </div>
-                            {discount > 0 && (
-                                <div className="summary-row">
-                                    <span>Discount</span>
-                                    <span>-₹{discount}</span>
-                                </div>
-                            )}
+
+
+
+                            {
+                                discount > 0 && (
+
+                                    <div className="summary-row">
+
+                                        <span>
+                                            Discount
+                                        </span>
+
+                                        <span>
+                                            -₹{discount}
+                                        </span>
+
+                                    </div>
+
+                                )
+                            }
+
+
+
                             <div className="summary-row grand-total">
-                                <span>Grand Total</span>
-                                <span>₹{grandTotal}</span>
+
+                                <span>
+                                    Grand Total
+                                </span>
+
+                                <span>
+                                    ₹{grandTotal}
+                                </span>
+
                             </div>
+
+
+
+                            {/* BENEFITS */}
+
+                            <div className="cart-benefits">
+
+                                <p>
+                                    ✓ Free Luxury Shipping
+                                </p>
+
+                                <p>
+                                    ✓ Secure Payments
+                                </p>
+
+                                <p>
+                                    ✓ Easy Returns
+                                </p>
+
+                            </div>
+
+
 
                             <button
                                 className="checkout-btn"
-                                onClick={() => navigate("/checkout")}
-
+                                onClick={() =>
+                                    navigate("/checkout")
+                                }
                             >
                                 Proceed To Checkout
                             </button>
@@ -260,6 +571,7 @@ const CartPage = () => {
                         </div>
 
                     </div>
+
                 </div>
 
             </div>
