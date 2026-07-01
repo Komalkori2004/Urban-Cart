@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import ProductCard from "../components/productCard"
 
+import { toast } from "sonner";
+
 import "../style/product.css"
 
 
@@ -94,190 +96,324 @@ const Product = () => {
 
 
 
-    const handleAddToCart = useCallback(
-        (e, productId) => {
+const handleAddToCart = useCallback(
+    async (e, productId) => {
 
-            e.preventDefault();
+        e.preventDefault();
 
-            dispatch(
-                addToCart({
-                    productId,
-                    quantity: 1
-                })
+        const result = await dispatch(
+            addToCart({
+                productId,
+                quantity: 1
+            })
+        );
+
+        if (
+            result.meta.requestStatus ===
+            "fulfilled"
+        ) {
+
+            toast.success(
+                "Product added to cart"
             );
+        }
 
-        },
-        [dispatch]
-    );
+        if (
+            result.meta.requestStatus ===
+            "rejected"
+        ) {
+
+            toast.error(
+                result.payload
+            );
+        }
+
+    },
+    [dispatch]
+);
 
 
-    const handleWishlist = useCallback(
-        async (
-            e,
-            productId,
-            isWishlisted
-        ) => {
+  const handleWishlist = useCallback(
+    async (
+        e,
+        productId,
+        isWishlisted
+    ) => {
 
-            e.preventDefault();
+        e.preventDefault();
 
-            if (isWishlisted) {
+        if (isWishlisted) {
+
+            const result =
+                await dispatch(
+                    removeWishlist(
+                        productId
+                    )
+                );
+
+            if (
+                result.meta.requestStatus
+                === "fulfilled"
+            ) {
+
+                toast.success(
+                    "Removed from wishlist"
+                );
+            }
+
+        } else {
+
+            const result =
+                await dispatch(
+                    addToWishlist(
+                        productId
+                    )
+                );
+
+            if (
+                result.meta.requestStatus
+                === "fulfilled"
+            ) {
+
+                toast.success(
+                    "Added to wishlist"
+                );
 
                 dispatch(
-                    removeWishlist(productId)
+                    getWishlist()
                 );
-
-            } else {
-
-                await dispatch(
-                    addToWishlist(productId)
-                );
-
-                dispatch(getWishlist());
             }
-        },
-        [dispatch]
-    );
+        }
+
+    },
+    [dispatch]
+);
 
 
 
-    return (<>
+  return (
+  <div className="shop-page">
 
-        <div className="shop-page">
+    <div className="container">
 
-            <div className="container">
+      {/* HERO */}
 
-                <div className="shop-header">
+      <section className="shop-hero">
 
-                    <p className="shop-subtitle">
-                        PREMIUM COLLECTION
-                    </p>
+        <span className="shop-badge">
+          PREMIUM COLLECTION
+        </span>
 
-                    <h1 className="shop-title">
-                        Discover Luxury Products
-                    </h1>
+        <h1 className="shop-title">
+          Discover Luxury Products
+        </h1>
 
-                </div>
+        <p className="shop-description">
+          Curated fashion, beauty and lifestyle collections
+          designed for modern luxury.
+        </p>
 
-
-
-                <div className="filter-section">
-
-                    <input
-                        type="text"
-                        placeholder="Search Product"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="search-input"
-                    />
+      </section>
 
 
+      {/* FILTER BAR */}
 
-                    <select
-                        value={SortOption}
-                        onChange={(e) =>
-                            setSortOption(e.target.value)
-                        }
+      <section className="shop-filter-bar">
 
-                        className="sort-select"
-                    >
+        <div className="shop-search">
 
-                        <option value="">
-                            Sort Product
-                        </option>
-
-                        <option value="lowToHigh">
-                            Price: Low to High
-                        </option>
-
-                        <option value="highToLow">
-                            Price: High to Low
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <div className="category-buttons">
-
-                    <button
-                        className={
-                            selectedCategory === "All"
-                                ? "active-category"
-                                : ""
-                        }
-                        onClick={() =>
-                            setSelectedCategory("All")
-                        }
-                    >
-                        All
-                    </button>
-
-                    {
-                        categories.map((category) => (
-
-                            <button
-                                key={category._id}
-                                className={
-                                    selectedCategory === category.name
-                                        ? "active-category"
-                                        : ""
-                                }
-                                onClick={() =>
-                                    setSelectedCategory(category.name)
-                                }
-                            >
-                                {category.name}
-                            </button>
-
-                        ))
-                    }
-
-                </div>
-                <p className="product-count">
-                    {ShortedProducts.length} Products Found
-                </p>
-
-                <div className="product-container">
-
-                    {
-                        ShortedProducts?.map((product) => {
-
-                            const isWishlisted =
-                                wishlist.some(
-                                    item => item._id === product._id
-                                );
-
-                            return (
-
-                                <ProductCard
-                                    key={product._id}
-                                    product={product}
-                                    isWishlisted={isWishlisted}
-                                    onWishlist={(e) =>
-                                        handleWishlist(
-                                            e,
-                                            product._id,
-                                            isWishlisted
-                                        )
-                                    }
-                                    onAddToCart={(e) =>
-                                        handleAddToCart(
-                                            e,
-                                            product._id
-                                        )
-                                    }
-                                />
-                            );
-                        })
-                    }
-
-                </div>
-            </div>
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+          />
 
         </div>
-    </>)
+
+
+        <div className="shop-sort">
+
+          <select
+            value={SortOption}
+            onChange={(e) =>
+              setSortOption(
+                e.target.value
+              )
+            }
+          >
+            <option value="">
+              Sort By
+            </option>
+
+            <option value="lowToHigh">
+              Price : Low To High
+            </option>
+
+            <option value="highToLow">
+              Price : High To Low
+            </option>
+
+          </select>
+
+        </div>
+
+      </section>
+
+
+      {/* CATEGORY */}
+
+      <section className="category-buttons">
+
+        <button
+          className={
+            selectedCategory === "All"
+              ? "active-category"
+              : ""
+          }
+          onClick={() =>
+            setSelectedCategory("All")
+          }
+        >
+          All
+        </button>
+
+        {categories.map((category) => (
+
+          <button
+            key={category._id}
+            className={
+              selectedCategory === category.name
+                ? "active-category"
+                : ""
+            }
+            onClick={() =>
+              setSelectedCategory(
+                category.name
+              )
+            }
+          >
+            {category.name}
+          </button>
+
+        ))}
+
+      </section>
+
+
+      {/* PRODUCT COUNT */}
+
+   <div className="product-stats">
+
+    <div className="stats-item">
+        <span>{ShortedProducts.length}</span>
+        <p>Exclusive Pieces</p>
+    </div>
+
+    <div className="stats-divider"></div>
+
+    <div className="stats-item">
+        <span>{selectedCategory}</span>
+        <p>Collection</p>
+    </div>
+
+</div>
+
+
+      {/* PRODUCTS */}
+
+      <section className="product-container">
+
+        {ShortedProducts.map((product) => {
+
+          const isWishlisted =
+            wishlist.some(
+              (item) =>
+                item._id === product._id
+            );
+
+          return (
+
+            <ProductCard
+              key={product._id}
+              product={product}
+              isWishlisted={isWishlisted}
+              onWishlist={(e) =>
+                handleWishlist(
+                  e,
+                  product._id,
+                  isWishlisted
+                )
+              }
+              onAddToCart={(e) =>
+                handleAddToCart(
+                  e,
+                  product._id
+                )
+              }
+            />
+
+          );
+        })}
+
+      </section>
+
+
+      {/* EMPTY STATE */}
+
+      {!loading &&
+        ShortedProducts.length === 0 && (
+
+          <div className="empty-products">
+
+            <h2>
+              No Products Found
+            </h2>
+
+            <p>
+              Try another search or category.
+            </p>
+
+          </div>
+
+        )}
+
+
+      {/* LOADER */}
+
+      {loading && (
+
+        <div className="shop-loader">
+
+          <p>
+            Loading Products...
+          </p>
+
+        </div>
+
+      )}
+
+
+      {/* ERROR */}
+
+      {error && (
+
+        <div className="shop-error">
+
+          <p>
+            {error}
+          </p>
+
+        </div>
+
+      )}
+
+    </div>
+
+  </div>
+)
 }
 
 export default Product

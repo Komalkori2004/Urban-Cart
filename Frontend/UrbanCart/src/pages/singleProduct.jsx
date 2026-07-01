@@ -34,14 +34,14 @@ const SingleProduct = () => {
 
     const { singleProduct, products, loading, error } = useSelector((state) => state.products)
 
-useEffect(() => {
-    dispatch(getsingleProduct(slug))
+    useEffect(() => {
+        dispatch(getsingleProduct(slug))
 
-    if (products.length === 0) {
-        dispatch(getAllproduct())
-    }
+        if (products.length === 0) {
+            dispatch(getAllproduct())
+        }
 
-}, [slug, dispatch, products.length])
+    }, [slug, dispatch, products.length])
 
 
     const incressQty = () => {
@@ -56,15 +56,29 @@ useEffect(() => {
         }
     }
 
-    const handleAddToCart = () => {
-        dispatch(
-            addToCart({
-                productId: singleProduct._id,
-                quantity
-            })
-        )
-        navigate("/cart")
-    }
+    const handleAddToCart = async () => {
+
+        const result =
+            await dispatch(
+                addToCart({
+                    productId:
+                        singleProduct._id,
+                    quantity
+                })
+            );
+
+        if (
+            result.meta.requestStatus
+            === "fulfilled"
+        ) {
+
+            toast.success(
+                "Product added to cart"
+            );
+
+            navigate("/cart");
+        }
+    };
 
     const relatedProducts = products.filter((product) =>
 
@@ -137,12 +151,17 @@ useEffect(() => {
             "fulfilled"
         ) {
 
+            toast.success(
+                "Review submitted successfully"
+            );
+
             dispatch(
                 getsingleProduct(slug)
-            )
+            );
 
-            setRating(0)
-            setComment("")
+            setRating(0);
+
+            setComment("");
         }
     }
     // dispatch(addToReview({rating,comment,singleProduct._id}))
@@ -175,7 +194,7 @@ useEffect(() => {
                                 <img
                                     key={image.public_id}
                                     src={image.url}
-                                     loading="lazy"
+                                    loading="lazy"
                                     alt="thumbnail"
                                     className={
                                         activeImage === image.url
@@ -196,7 +215,7 @@ useEffect(() => {
                                 <img
                                     src={activeImage}
                                     alt={singleProduct.name}
-                                     loading="lazy"
+                                    loading="lazy"
                                 />
                             )}
                         </div>
@@ -311,7 +330,7 @@ useEffect(() => {
             <ProductReviews
                 reviews={singleProduct.reviews}
             />
-            
+
             {/* <section className="related-products-section">
 
                 <div className="container">
@@ -355,7 +374,7 @@ useEffect(() => {
             <RelatedProducts
                 products={relatedProducts}
             />
-    
+
 
 
 
