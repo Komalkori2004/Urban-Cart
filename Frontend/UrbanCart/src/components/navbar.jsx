@@ -122,166 +122,139 @@ const NavBar = () => {
   return (
     <>
 
-      <nav className="navbar">
+   <nav className="navbar">
 
-        <div className="nav-left">
-          <button
-            className="search-btn"
-            onClick={() => setShowSearch(true)}
-          >
-            <FiSearch />
+  <div className="container navbar-container">
 
-          </button>
+    {/* LEFT */}
+    <div className="navbar-left">
 
-          <Link to="/">
-            <FiHome />
-            Home
-          </Link>
+      <button
+        className="search-btn"
+        onClick={() => setShowSearch(true)}
+      >
+        <FiSearch />
+      </button>
 
-          <Link to="/products">
-            <FiShoppingBag />
-            Shop
-          </Link>
+      <Link className="nav-item" to="/">
+        <FiHome />
+        <span>Home</span>
+      </Link>
 
-        </div>
+      <Link className="nav-item" to="/products">
+        <FiShoppingBag />
+        <span>Shop</span>
+      </Link>
 
-        <div className="nav-logo">
+    </div>
 
-          <Link to="/">
-            <img
-              src="/logo/nav-logo.png"
-              alt="UrbanCart"
-              loading="lazy"
 
-            />
-          </Link>
+    {/* LOGO */}
 
-        </div>
+    <div className="navbar-logo">
 
-        <div className="nav-right">
-          {/* {user?.role === "admin" && (
-              <Link to="/admin">
-                <FiUser />
-                Dashboard
-              </Link>
-            )} */}
-          <Link to="/cart">
-            <FiShoppingCart />
-            Cart ({cartCount})
-          </Link>
+      <Link to="/">
+        <img
+          src="/logo/nav-logo.png"
+          alt="logo"
+        />
+      </Link>
 
-          <Link to="/wishlist">
-            <FiHeart />
-            Wishlist ({wishlistcount})
-          </Link>
+    </div>
 
-          <div className="account-dropdown">
 
-            <button
-              className="account-btn"
-              onClick={() =>
-                setShowAccountMenu(!showAccountMenu)
-              }
-            >
-              <FiUser />
-              Account
-            </button>
+    {/* RIGHT */}
 
-            {showAccountMenu && (
+    <div className="navbar-right">
 
-              <div className="account-menu">
+      <Link
+        className="nav-item badge-item"
+        to="/wishlist"
+      >
+        <FiHeart />
 
-                <Link
-                  to="/profile"
-                  onClick={() =>
-                    setShowAccountMenu(false)
-                  }
-                >
-                  Profile
-                </Link>
+        <span>Wishlist</span>
 
-                {user?.role === "admin" && (
-                  <Link
-                    to="/admin"
-                    onClick={() =>
-                      setShowAccountMenu(false)
-                    }
-                  >
-                    Dashboard
-                  </Link>
-                )}
+        {
+          wishlistcount > 0 && (
+            <div className="nav-badge">
+              {wishlistcount}
+            </div>
+          )
+        }
 
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setShowAccountMenu(false);
-                  }}
-                >
-                  Logout
-                </button>
+      </Link>
 
-              </div>
 
-            )}
+      <Link
+        className="nav-item badge-item"
+        to="/cart"
+      >
+        <FiShoppingCart />
 
-          </div>
+        <span>Cart</span>
 
-        </div>
+        {
+          cartCount > 0 && (
+            <div className="nav-badge">
+              {cartCount}
+            </div>
+          )
+        }
 
-        <div
-          className="menu-toggle"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {
-            menuOpen
-              ? <HiX />
-              : <HiMenu />
-          }
-        </div>
+      </Link>
 
-        <div
-          className={`mobile-menu ${menuOpen ? "active" : ""}`}
-        >
 
-          <Link
-            to="/"
-            onClick={() => setMenuOpen(false)}
-          >
-            Home
-          </Link>
+    {
+  user ? (
 
-          <Link
-            to="/products"
-            onClick={() => setMenuOpen(false)}
-          >
-            Shop
-          </Link>
+    <div className="account-dropdown">
 
-          <Link
-            to="/wishlist"
-            onClick={() => setMenuOpen(false)}
-          >
-            Wishlist ({wishlistcount})
-          </Link>
+      <button
+        className="account-btn"
+        onClick={() =>
+          setShowAccountMenu(
+            !showAccountMenu
+          )
+        }
+      >
+        <FiUser />
+        <span>My Account</span>
+      </button>
 
-          <Link
-            to="/cart"
-            onClick={() => setMenuOpen(false)}
-          >
-            Cart ({cartCount})
-          </Link>
+      {showAccountMenu && (
+
+        <div className="account-menu">
 
           <Link
             to="/profile"
-            onClick={() => setMenuOpen(false)}
+            onClick={() =>
+              setShowAccountMenu(false)
+            }
           >
             Profile
           </Link>
+
+          {user?.role === "admin" && (
+
+            <Link
+              to="/admin"
+              onClick={() =>
+                setShowAccountMenu(false)
+              }
+            >
+              Dashboard
+            </Link>
+
+          )}
+
           <button
-            className="logout-btn"
             onClick={() => {
-              handleLogout()
-              setMenuOpen(false)
+
+              handleLogout();
+
+              setShowAccountMenu(false);
+
             }}
           >
             Logout
@@ -289,7 +262,291 @@ const NavBar = () => {
 
         </div>
 
-      </nav>
+      )}
+
+    </div>
+
+  ) : (
+
+    <div className="auth-buttons">
+
+      <Link
+        className="login-btn"
+        to="/login"
+      >
+        <FiUser />
+        <span>Login</span>
+      </Link>
+
+      <Link
+        className="register-btn"
+        to="/signup"
+      >
+        Register
+      </Link>
+
+    </div>
+
+  )
+}
+
+    </div>
+
+
+    {/* MOBILE */}
+
+    <button
+      className="mobile-toggle"
+      onClick={() =>
+        setMenuOpen(!menuOpen)
+      }
+    >
+      {
+        menuOpen
+          ? <HiX />
+          : <HiMenu />
+      }
+    </button>
+
+
+    
+
+  </div>
+
+</nav>
+
+
+{/* MOBILE MENU */}
+
+<div
+  className={`mobile-menu ${
+    menuOpen ? "active" : ""
+  }`}
+>
+
+  {/* HEADER */}
+
+  <div className="mobile-header">
+
+    <img
+      src="/logo/nav-logo.png"
+      alt="UrbanCart"
+    />
+
+    <button
+      className="mobile-close"
+      onClick={() => setMenuOpen(false)}
+    >
+      <HiX />
+    </button>
+
+  </div>
+
+
+  {/* LINKS */}
+
+  <div className="mobile-links">
+
+    <button
+      className="mobile-link"
+      onClick={() => {
+
+        setShowSearch(true)
+
+        setMenuOpen(false)
+
+      }}
+    >
+      <FiSearch />
+
+      <span>
+        Search
+      </span>
+
+    </button>
+
+
+    <Link
+      className="mobile-link"
+      to="/"
+      onClick={() =>
+        setMenuOpen(false)
+      }
+    >
+      <FiHome />
+
+      <span>
+        Home
+      </span>
+
+    </Link>
+
+
+    <Link
+      className="mobile-link"
+      to="/products"
+      onClick={() =>
+        setMenuOpen(false)
+      }
+    >
+      <FiShoppingBag />
+
+      <span>
+        Shop
+      </span>
+
+    </Link>
+
+
+    <Link
+      className="mobile-link"
+      to="/wishlist"
+      onClick={() =>
+        setMenuOpen(false)
+      }
+    >
+      <FiHeart />
+
+      <span>
+        Wishlist
+      </span>
+
+      {
+        wishlistcount > 0 && (
+
+          <div className="mobile-badge">
+            {wishlistcount}
+          </div>
+
+        )
+      }
+
+    </Link>
+
+
+    <Link
+      className="mobile-link"
+      to="/cart"
+      onClick={() =>
+        setMenuOpen(false)
+      }
+    >
+      <FiShoppingCart />
+
+      <span>
+        Cart
+      </span>
+
+      {
+        cartCount > 0 && (
+
+          <div className="mobile-badge">
+            {cartCount}
+          </div>
+
+        )
+      }
+
+    </Link>
+
+
+    <Link
+      className="mobile-link"
+      to="/profile"
+      onClick={() =>
+        setMenuOpen(false)
+      }
+    >
+      <FiUser />
+
+      <span>
+        Profile
+      </span>
+
+    </Link>
+
+
+   {user ? (
+  <>
+    <Link
+      className="mobile-link"
+      to="/profile"
+      onClick={() => setMenuOpen(false)}
+    >
+      <FiUser />
+      <span>Profile</span>
+    </Link>
+
+    {user?.role === "admin" && (
+      <Link
+        className="mobile-link"
+        to="/admin"
+        onClick={() => setMenuOpen(false)}
+      >
+        <FiUser />
+        <span>Dashboard</span>
+      </Link>
+    )}
+
+    <button
+      className="mobile-link mobile-logout"
+      onClick={() => {
+        handleLogout();
+        setMenuOpen(false);
+      }}
+    >
+      <FiLogOut />
+      <span>Logout</span>
+    </button>
+  </>
+) : (
+  <>
+    <Link
+      className="mobile-link"
+      to="/login"
+      onClick={() => setMenuOpen(false)}
+    >
+      <FiUser />
+      <span>Login</span>
+    </Link>
+
+    <Link
+      className="mobile-link"
+      to="/signup"
+      onClick={() => setMenuOpen(false)}
+    >
+      <FiUser />
+      <span>Register</span>
+    </Link>
+  </>
+)}
+
+  </div>
+
+
+  {/* LOGOUT */}
+
+  {/* <button
+    className="mobile-logout"
+    onClick={() => {
+
+      handleLogout()
+
+      setMenuOpen(false)
+
+    }}
+  >
+    <FiLogOut />
+
+    <span>
+      Logout
+    </span>
+
+  </button> */}
+
+  
+
+</div>
 
 
       {
@@ -316,18 +573,18 @@ const NavBar = () => {
                   </p>
                 )}
 
-              <div className="search-input-wrapper">
+                <div className="search-input-wrapper">
 
-  <FiSearch className="search-input-icon" />
+                  <FiSearch className="search-input-icon" />
 
-  <input
-    type="text"
-    placeholder="Search luxury products..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-  />
+                  <input
+                    type="text"
+                    placeholder="Search luxury products..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
 
-</div>
+                </div>
               </form>
 
               {searchTerm.trim() && (

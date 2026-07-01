@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllproduct } from "../redux/thunks/productThunks";
 
-import "./style/dashboard.css"
+import "./style/admin.css"
 
 
 
