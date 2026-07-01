@@ -44,19 +44,53 @@ const CartPage = () => {
     // if (error) {
     //     return <h2>{error}</h2>
     // }
-    // if (items.length == 0) {
-    //     return (
-    //         <div>
+   if (!loading && items?.length === 0) {
 
-    //             <h2>
-    //                 Cart is Empty
-    //             </h2>
+    return (
 
-    //         </div>
-    //     )
-    // }
+        <div className="cart-empty-page">
 
+            <div className="container">
 
+                <div className="cart-empty-card">
+
+                    <div className="cart-empty-icon">
+                        🛍️
+                    </div>
+
+                    <p className="cart-empty-subtitle">
+                        PREMIUM SHOPPING
+                    </p>
+
+                    <h1 className="cart-empty-title">
+                        Your Cart Is Empty
+                    </h1>
+
+                    <p className="cart-empty-description">
+
+                        Looks like you haven't added
+                        any luxury items yet.
+                        Discover our curated collection
+                        and find something special.
+
+                    </p>
+
+                    <button
+                        className="continue-shopping-btn"
+                        onClick={() =>
+                            navigate("/products")
+                        }
+                    >
+                        Continue Shopping
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    )
+}
 
     const handleRemoveCart = async (
         productId
