@@ -76,7 +76,7 @@ const payableAmount =
 
             if (placeOrder.fulfilled.match(result)) {
                 toast.success("Order placed successfully");
-                navigate("/my-orders");
+                navigate("/dashboard/orders");
             }
 
             if (placeOrder.rejected.match(result)) {
@@ -139,7 +139,7 @@ const payableAmount =
 
                 if (placeOrder.fulfilled.match(orderResult)) {
                     toast.success("Order placed successfully");
-                    navigate("/my-orders");
+                    navigate("/dashboard/orders");
                 }
 
                 if (placeOrder.rejected.match(orderResult)) {

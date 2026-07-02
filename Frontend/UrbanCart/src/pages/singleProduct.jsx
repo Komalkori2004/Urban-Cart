@@ -76,7 +76,7 @@ const SingleProduct = () => {
                 "Product added to cart"
             );
 
-            navigate("/cart");
+            navigate("/dashboard/cart");
         }
     };
 

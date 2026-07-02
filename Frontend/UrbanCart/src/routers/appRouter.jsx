@@ -129,6 +129,7 @@ import { getWishlist } from '../redux/thunks/wishlistThunks'
 import { getCart } from '../redux/thunks/cartThunks'
 
 
+import UserLayout from "../layout/userLayout";
 
 
 
@@ -177,6 +178,64 @@ const AppRouter = () => {
 
                         {/* USER ROUTES */}
 
+
+                        {/* USER ROUTES */}
+
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <ProtectRoute>
+                                    <UserLayout />
+                                </ProtectRoute>
+                            }
+                        >
+
+                            {/* Dashboard */}
+                            <Route
+                                index
+                                element={<UserProfile />}
+                            />
+
+                            {/* Orders */}
+                            <Route
+                                path="orders"
+                                element={<MyOrders />}
+                            />
+
+                            {/* Wishlist */}
+                            <Route
+                                path="wishlist"
+                                element={<WishlistPage />}
+                            />
+
+                            {/* Cart */}
+                            <Route
+                                path="cart"
+                                element={<CartPage />}
+                            />
+
+                            {/* Address */}
+                            <Route
+                                path="address"
+                                element={<AddAddressPage />}
+                            />
+
+                            {/* Membership */}
+                            <Route
+                                path="membership"
+                                element={<MyMembership />}
+                            />
+
+                            {/* Membership History */}
+                            <Route
+                                path="membership-history"
+                                element={<MembershipHistory />}
+                            />
+
+                        </Route>
+
+
+                        {/* 
                         <Route
                             path="/profile"
                             element={
@@ -184,22 +243,31 @@ const AppRouter = () => {
                                     <UserProfile />
                                 </ProtectRoute>
                             }
-                        />
+                        /> */}
 
-                        <Route
+                        {/* <Route
                             path="/cart"
                             element={
                                 <ProtectRoute>
                                     <CartPage />
                                 </ProtectRoute>
                             }
-                        />
+                        /> */}
 
-                        <Route
+                        {/* <Route
                             path="/my-orders"
                             element={
                                 <ProtectRoute>
                                     <MyOrders />
+                                </ProtectRoute>
+                            }
+                        /> */}
+
+                           <Route
+                            path="/my-membershipHistory"
+                            element={
+                                <ProtectRoute>
+                                    <MembershipHistory />
                                 </ProtectRoute>
                             }
                         />
@@ -212,45 +280,14 @@ const AppRouter = () => {
                                 </ProtectRoute>
                             }
                         />
-                        <Route
-                            path="/add-address"
-                            element={
-                                <ProtectRoute>
-                                    <AddAddressPage />
-                                </ProtectRoute>
-                            }
-                        />
-
-                        <Route
-                            path="/wishlist"
-                            element={
-                                <ProtectRoute>
-                                    <WishlistPage />
-                                </ProtectRoute>
-                            }
-                        />
-                        <Route
-                            path="/my-membership"
-                            element={
-                                <ProtectRoute>
-                                    <MyMembership />
-                                </ProtectRoute>
-                            }
-                        />
-                        <Route
-                            path="/my-membershipHistory"
-                            element={
-                                <ProtectRoute>
-                                    <MembershipHistory />
-                                </ProtectRoute>
-                            }
-                        />
+         
+                     
 
                         <Route
                             path="/membership/:slug"
                             element={
                                 <ProtectRoute>
-                                    <SingleMembership/>
+                                    <SingleMembership />
                                 </ProtectRoute>
                             }
                         />
@@ -306,7 +343,7 @@ const AppRouter = () => {
                                 element={<ContactMessages />}
                             />
 
-                              <Route
+                            <Route
                                 path='create-membership'
                                 element={<CreateMembership />}
                             />
@@ -321,7 +358,7 @@ const AppRouter = () => {
                                 element={<MembershipStats />}
                             />
 
-                                 <Route
+                            <Route
                                 path='membership-management'
                                 element={<MembershipManagement />}
                             />

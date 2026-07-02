@@ -1,0 +1,409 @@
+/* =========================
+   USER DASHBOARD LAYOUT
+========================= */
+
+.user-dashboard-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+    padding: 40px 0;
+    min-height: 100vh;
+}
+
+/* =========================
+   USER SIDEBAR
+========================= */
+
+.user-sidebar {
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.02),
+        rgba(255,255,255,0.01)
+    );
+
+    border: 1px solid
+        rgba(212,175,55,0.15);
+
+    border-radius: 24px;
+
+    padding: 30px 20px;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.5);
+
+    position: sticky;
+    top: 100px;
+
+    height: fit-content;
+}
+
+/* =========================
+   PROFILE SECTION
+========================= */
+
+.sidebar-profile {
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid
+        rgba(255,255,255,.08);
+}
+
+.sidebar-avatar {
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+
+    border: 2px solid
+        var(--gold);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: auto;
+
+    font-size: 38px;
+    font-family: var(--heading-font);
+
+    color: var(--gold);
+
+    background:
+        rgba(212,175,55,.05);
+
+    margin-bottom: 15px;
+}
+
+.sidebar-profile h3 {
+    color: var(--white);
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.sidebar-profile p {
+    color: var(--gray);
+    font-size: 14px;
+    word-break: break-word;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 16px 18px;
+
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    color: var(--white);
+
+    transition: .3s ease;
+}
+
+.sidebar-menu a svg {
+    font-size: 20px;
+}
+
+.sidebar-menu a:hover {
+    background:
+        rgba(212,175,55,.08);
+
+    color: var(--gold);
+
+    transform: translateX(5px);
+}
+
+.sidebar-menu a.active {
+    background:
+        rgba(212,175,55,.12);
+
+    color: var(--gold);
+
+    border: 1px solid
+        rgba(212,175,55,.2);
+
+    box-shadow:
+        inset 0 0 30px
+        rgba(212,175,55,.05);
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.logout-btn {
+    margin-top: 40px;
+
+    width: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    color: #ff6b6b;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 16px 18px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.logout-btn:hover {
+    background:
+        rgba(255,0,0,.08);
+}
+
+/* =========================
+   RIGHT CONTENT
+========================= */
+
+.user-dashboard-content {
+    width: 100%;
+}
+
+/* =========================
+   PROFILE HERO
+========================= */
+
+.profile-hero {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.02),
+            rgba(212,175,55,.03)
+        );
+
+    border: 1px solid
+        rgba(212,175,55,.15);
+
+    border-radius: 30px;
+
+    padding: 60px;
+
+    display: flex;
+    align-items: center;
+    gap: 60px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    margin-bottom: 40px;
+}
+
+.profile-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(212,175,55,.05);
+
+    right: -120px;
+    top: -120px;
+}
+
+.profile-avatar {
+    width: 160px;
+    height: 160px;
+
+    border-radius: 50%;
+
+    border: 3px solid
+        var(--gold);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 70px;
+
+    color: var(--gold);
+
+    flex-shrink: 0;
+}
+
+.profile-info h5 {
+    color: var(--gold);
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+}
+
+.profile-info h1 {
+    font-size: 72px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.profile-info span {
+    color: var(--gold);
+}
+
+.profile-info p {
+    color: var(--gray);
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   VERIFIED
+========================= */
+
+.verified-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 12px 22px;
+
+    background: #0d4729;
+
+    color: #31d16b;
+
+    border-radius: 999px;
+
+    font-weight: 600;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 25px;
+
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background:
+        rgba(255,255,255,.02);
+
+    border: 1px solid
+        rgba(212,175,55,.15);
+
+    border-radius: 22px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    transition: .3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 15px 40px
+        rgba(212,175,55,.12);
+}
+
+.stat-card h3 {
+    color: var(--gold);
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gray);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:1200px) {
+
+    .user-dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .user-sidebar {
+        position: relative;
+        top: auto;
+    }
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+}
+
+@media (max-width:768px) {
+
+    .profile-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .profile-info h1 {
+        font-size: 46px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-avatar {
+        width: 70px;
+        height: 70px;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        font-size: 50px;
+    }
+}
+
+@media (max-width:480px) {
+
+    .user-dashboard-layout {
+        padding: 20px 0;
+    }
+
+    .profile-info h1 {
+        font-size: 36px;
+    }
+
+    .sidebar-menu a {
+        padding: 14px;
+    }
+}

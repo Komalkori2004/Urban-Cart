@@ -122,335 +122,334 @@ const NavBar = () => {
   return (
     <>
 
-   <nav className="navbar">
+      <nav className="navbar">
 
-  <div className="container navbar-container">
+        <div className="container navbar-container">
 
-    {/* LEFT */}
-    <div className="navbar-left">
+          {/* LEFT */}
+          <div className="navbar-left">
 
-      <button
-        className="search-btn"
-        onClick={() => setShowSearch(true)}
-      >
-        <FiSearch />
-      </button>
-
-      <Link className="nav-item" to="/">
-        <FiHome />
-        <span>Home</span>
-      </Link>
-
-      <Link className="nav-item" to="/products">
-        <FiShoppingBag />
-        <span>Shop</span>
-      </Link>
-
-    </div>
-
-
-    {/* LOGO */}
-
-    <div className="navbar-logo">
-
-      <Link to="/">
-        <img
-          src="/logo/nav-logo.png"
-          alt="logo"
-        />
-      </Link>
-
-    </div>
-
-
-    {/* RIGHT */}
-
-    <div className="navbar-right">
-
-      <Link
-        className="nav-item badge-item"
-        to="/wishlist"
-      >
-        <FiHeart />
-
-        <span>Wishlist</span>
-
-        {
-          wishlistcount > 0 && (
-            <div className="nav-badge">
-              {wishlistcount}
-            </div>
-          )
-        }
-
-      </Link>
-
-
-      <Link
-        className="nav-item badge-item"
-        to="/cart"
-      >
-        <FiShoppingCart />
-
-        <span>Cart</span>
-
-        {
-          cartCount > 0 && (
-            <div className="nav-badge">
-              {cartCount}
-            </div>
-          )
-        }
-
-      </Link>
-
-
-    {
-  user ? (
-
-    <div className="account-dropdown">
-
-      <button
-        className="account-btn"
-        onClick={() =>
-          setShowAccountMenu(
-            !showAccountMenu
-          )
-        }
-      >
-        <FiUser />
-        <span>My Account</span>
-      </button>
-
-      {showAccountMenu && (
-
-        <div className="account-menu">
-
-          <Link
-            to="/profile"
-            onClick={() =>
-              setShowAccountMenu(false)
-            }
-          >
-            Profile
-          </Link>
-
-          {user?.role === "admin" && (
-
-            <Link
-              to="/admin"
-              onClick={() =>
-                setShowAccountMenu(false)
-              }
+            <button
+              className="search-btn"
+              onClick={() => setShowSearch(true)}
             >
-              Dashboard
+              <FiSearch />
+            </button>
+
+            <Link className="nav-item" to="/">
+              <FiHome />
+              <span>Home</span>
             </Link>
 
-          )}
+            <Link className="nav-item" to="/products">
+              <FiShoppingBag />
+              <span>Shop</span>
+            </Link>
+
+          </div>
+
+
+          {/* LOGO */}
+
+          <div className="navbar-logo">
+
+            <Link to="/">
+              <img
+                src="/logo/nav-logo.png"
+                alt="logo"
+              />
+            </Link>
+
+          </div>
+
+
+          {/* RIGHT */}
+
+          <div className="navbar-right">
+
+            <Link
+              className="nav-item badge-item"
+              to="/wishlist"
+            >
+              <FiHeart />
+
+              <span>Wishlist</span>
+
+              {
+                wishlistcount > 0 && (
+                  <div className="nav-badge">
+                    {wishlistcount}
+                  </div>
+                )
+              }
+
+            </Link>
+
+
+            <Link
+              className="nav-item badge-item"
+              to="/dashboard/cart"
+            >
+              <FiShoppingCart />
+
+              <span>Cart</span>
+
+              {
+                cartCount > 0 && (
+                  <div className="nav-badge">
+                    {cartCount}
+                  </div>
+                )
+              }
+
+            </Link>
+
+
+            {
+              user ? (
+
+                <div className="account-dropdown">
+
+                  <button
+                    className="account-btn"
+                    onClick={() =>
+                      setShowAccountMenu(
+                        !showAccountMenu
+                      )
+                    }
+                  >
+                    <FiUser />
+                    <span>My Account</span>
+                  </button>
+
+                  {showAccountMenu && (
+
+                    <div className="account-menu">
+
+                      <Link
+                        to="/dashboard"
+                        onClick={() =>
+                          setShowAccountMenu(false)
+                        }
+                      >
+                        Profile
+                      </Link>
+
+                      {user?.role === "admin" && (
+
+                        <Link
+                          to="/admin"
+                          onClick={() =>
+                            setShowAccountMenu(false)
+                          }
+                        >
+                          Dashboard
+                        </Link>
+
+                      )}
+
+                      <button
+                        onClick={() => {
+
+                          handleLogout();
+
+                          setShowAccountMenu(false);
+
+                        }}
+                      >
+                        Logout
+                      </button>
+
+                    </div>
+
+                  )}
+
+                </div>
+
+              ) : (
+
+                <div className="auth-buttons">
+
+                  <Link
+                    className="login-btn"
+                    to="/login"
+                  >
+                    <FiUser />
+                    <span>Login</span>
+                  </Link>
+
+                  <Link
+                    className="register-btn"
+                    to="/signup"
+                  >
+                    Register
+                  </Link>
+
+                </div>
+
+              )
+            }
+
+          </div>
+
+
+          {/* MOBILE */}
 
           <button
-            onClick={() => {
-
-              handleLogout();
-
-              setShowAccountMenu(false);
-
-            }}
+            className="mobile-toggle"
+            onClick={() =>
+              setMenuOpen(!menuOpen)
+            }
           >
-            Logout
+            {
+              menuOpen
+                ? <HiX />
+                : <HiMenu />
+            }
+          </button>
+
+
+
+
+        </div>
+
+      </nav>
+
+
+      {/* MOBILE MENU */}
+
+      <div
+        className={`mobile-menu ${menuOpen ? "active" : ""
+          }`}
+      >
+
+        {/* HEADER */}
+
+        <div className="mobile-header">
+
+          <img
+            src="/logo/nav-logo.png"
+            alt="UrbanCart"
+          />
+
+          <button
+            className="mobile-close"
+            onClick={() => setMenuOpen(false)}
+          >
+            <HiX />
           </button>
 
         </div>
 
-      )}
 
-    </div>
+        {/* LINKS */}
 
-  ) : (
+        <div className="mobile-links">
 
-    <div className="auth-buttons">
+          <button
+            className="mobile-link"
+            onClick={() => {
 
-      <Link
-        className="login-btn"
-        to="/login"
-      >
-        <FiUser />
-        <span>Login</span>
-      </Link>
+              setShowSearch(true)
 
-      <Link
-        className="register-btn"
-        to="/signup"
-      >
-        Register
-      </Link>
+              setMenuOpen(false)
 
-    </div>
+            }}
+          >
+            <FiSearch />
 
-  )
-}
+            <span>
+              Search
+            </span>
 
-    </div>
+          </button>
 
 
-    {/* MOBILE */}
+          <Link
+            className="mobile-link"
+            to="/"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+            <FiHome />
 
-    <button
-      className="mobile-toggle"
-      onClick={() =>
-        setMenuOpen(!menuOpen)
-      }
-    >
-      {
-        menuOpen
-          ? <HiX />
-          : <HiMenu />
-      }
-    </button>
+            <span>
+              Home
+            </span>
 
-
-    
-
-  </div>
-
-</nav>
+          </Link>
 
 
-{/* MOBILE MENU */}
+          <Link
+            className="mobile-link"
+            to="/products"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+            <FiShoppingBag />
 
-<div
-  className={`mobile-menu ${
-    menuOpen ? "active" : ""
-  }`}
->
+            <span>
+              Shop
+            </span>
 
-  {/* HEADER */}
-
-  <div className="mobile-header">
-
-    <img
-      src="/logo/nav-logo.png"
-      alt="UrbanCart"
-    />
-
-    <button
-      className="mobile-close"
-      onClick={() => setMenuOpen(false)}
-    >
-      <HiX />
-    </button>
-
-  </div>
+          </Link>
 
 
-  {/* LINKS */}
+          <Link
+            className="mobile-link"
+            to="/wishlist"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+            <FiHeart />
 
-  <div className="mobile-links">
+            <span>
+              Wishlist
+            </span>
 
-    <button
-      className="mobile-link"
-      onClick={() => {
+            {
+              wishlistcount > 0 && (
 
-        setShowSearch(true)
+                <div className="mobile-badge">
+                  {wishlistcount}
+                </div>
 
-        setMenuOpen(false)
+              )
+            }
 
-      }}
-    >
-      <FiSearch />
-
-      <span>
-        Search
-      </span>
-
-    </button>
-
-
-    <Link
-      className="mobile-link"
-      to="/"
-      onClick={() =>
-        setMenuOpen(false)
-      }
-    >
-      <FiHome />
-
-      <span>
-        Home
-      </span>
-
-    </Link>
+          </Link>
 
 
-    <Link
-      className="mobile-link"
-      to="/products"
-      onClick={() =>
-        setMenuOpen(false)
-      }
-    >
-      <FiShoppingBag />
+          <Link
+            className="mobile-link"
+            to="/dashboard/cart"
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+            <FiShoppingCart />
 
-      <span>
-        Shop
-      </span>
+            <span>
+              Cart
+            </span>
 
-    </Link>
+            {
+              cartCount > 0 && (
 
+                <div className="mobile-badge">
+                  {cartCount}
+                </div>
 
-    <Link
-      className="mobile-link"
-      to="/wishlist"
-      onClick={() =>
-        setMenuOpen(false)
-      }
-    >
-      <FiHeart />
+              )
+            }
 
-      <span>
-        Wishlist
-      </span>
-
-      {
-        wishlistcount > 0 && (
-
-          <div className="mobile-badge">
-            {wishlistcount}
-          </div>
-
-        )
-      }
-
-    </Link>
+          </Link>
 
 
-    <Link
-      className="mobile-link"
-      to="/cart"
-      onClick={() =>
-        setMenuOpen(false)
-      }
-    >
-      <FiShoppingCart />
-
-      <span>
-        Cart
-      </span>
-
-      {
-        cartCount > 0 && (
-
-          <div className="mobile-badge">
-            {cartCount}
-          </div>
-
-        )
-      }
-
-    </Link>
-
-
-    <Link
+          {/* <Link
       className="mobile-link"
       to="/profile"
       onClick={() =>
@@ -463,70 +462,72 @@ const NavBar = () => {
         Profile
       </span>
 
-    </Link>
+    </Link> */}
 
 
-   {user ? (
-  <>
-    <Link
-      className="mobile-link"
-      to="/profile"
-      onClick={() => setMenuOpen(false)}
-    >
-      <FiUser />
-      <span>Profile</span>
-    </Link>
+          {user ? (
+            <>
+              <Link
+                className="mobile-link"
+                to="/dashboard"
+                onClick={() =>
+                  setMenuOpen(false)
+                }
+              >
+                <FiUser />
+                <span>Profile</span>
+              </Link>
 
-    {user?.role === "admin" && (
-      <Link
-        className="mobile-link"
-        to="/admin"
-        onClick={() => setMenuOpen(false)}
-      >
-        <FiUser />
-        <span>Dashboard</span>
-      </Link>
-    )}
+              {user?.role === "admin" && (
+                <Link
+                  className="mobile-link"
+                  to="/admin"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <FiUser />
+                  <span>Dashboard</span>
+                </Link>
+              )}
 
-    <button
-      className="mobile-link mobile-logout"
-      onClick={() => {
-        handleLogout();
-        setMenuOpen(false);
-      }}
-    >
-      <FiLogOut />
-      <span>Logout</span>
-    </button>
-  </>
-) : (
-  <>
-    <Link
-      className="mobile-link"
-      to="/login"
-      onClick={() => setMenuOpen(false)}
-    >
-      <FiUser />
-      <span>Login</span>
-    </Link>
+              <button
+                className="mobile-link mobile-logout"
+                onClick={() => {
+                  handleLogout();
+                  setMenuOpen(false);
+                }}
+              >
+                <FiLogOut />
+                <span>Logout</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                className="mobile-link"
+                to="/login"
+                onClick={() => setMenuOpen(false)}
+              >
+                <FiUser />
+                <span>Login</span>
+              </Link>
 
-    <Link
-      className="mobile-link"
-      to="/signup"
-      onClick={() => setMenuOpen(false)}
-    >
-      <FiUser />
-      <span>Register</span>
-    </Link>
-  </>
-)}
+              <Link
+                className="mobile-link"
+                to="/signup"
+                onClick={() => setMenuOpen(false)}
+              >
+                <FiUser />
+                <span>Register</span>
+              </Link>
+            </>
+          )}
 
-  </div>
+        </div>
 
 
-  {/* LOGOUT */}
+        {/* LOGOUT */}
 
-  {/* <button
+        {/* <button
     className="mobile-logout"
     onClick={() => {
 
@@ -544,9 +545,9 @@ const NavBar = () => {
 
   </button> */}
 
-  
 
-</div>
+
+      </div>
 
 
       {
