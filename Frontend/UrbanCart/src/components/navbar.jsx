@@ -169,7 +169,7 @@ const NavBar = () => {
 
             <Link
               className="nav-item badge-item"
-              to="/wishlist"
+              to="/dashboard/wishlist"
             >
               <FiHeart />
 
@@ -399,7 +399,7 @@ const NavBar = () => {
 
           <Link
             className="mobile-link"
-            to="/wishlist"
+            to="/dashboard/wishlist"
             onClick={() =>
               setMenuOpen(false)
             }

@@ -34,9 +34,17 @@ const CartPage = () => {
         finalAmount
     });
 
-    useEffect(() => {
-        dispatch(getCart())
-    }, [dispatch])
+    
+useEffect(() => {
+
+    const token =
+        localStorage.getItem("token");
+
+    if (token) {
+        dispatch(getCart());
+    }
+
+}, [dispatch]);
 
     // if (loading) {
     //     return <h2>Loading...</h2>

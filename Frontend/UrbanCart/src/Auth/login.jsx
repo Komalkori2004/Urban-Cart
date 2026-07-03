@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../redux/thunks/authThunks'
 import { useNavigate, Link } from 'react-router-dom'
+import { toast } from "sonner";
+
 
 const Login = () => {
 
@@ -28,20 +30,52 @@ const Login = () => {
     }
 
     const handleSubmite = async (e) => {
-        e.preventDefault()
-        const result = await dispatch(loginUser(formData))
 
-        if (result.meta.requestStatus === "fulfilled") {
-            if (result.payload.user.role === "admin") {
-                navigate("/admin")
+        e.preventDefault();
+
+        const result =
+            await dispatch(
+                loginUser(formData)
+            );
+
+        if (
+            result.meta.requestStatus ===
+            "fulfilled"
+        ) {
+
+            toast.success(
+                `Welcome back, ${result.payload.user.name}!`
+            );
+
+            if (
+                result.payload.user.role ===
+                "admin"
+            ) {
+
+                navigate("/admin", {
+                    replace: true
+                });
+
             } else {
-                navigate("/profile")
+
+                navigate("/dashboard", {
+                    replace: true
+                });
+
             }
-
-
         }
 
-    }
+        if (
+            result.meta.requestStatus ===
+            "rejected"
+        ) {
+
+            toast.error(
+                result.payload ||
+                "Invalid email or password"
+            );
+        }
+    };
 
 
     return (
@@ -54,8 +88,8 @@ const Login = () => {
 
                         src="/logo/nav-logo.png"
                         alt="UrbanCart"
-                          loading="lazy"
-                            loading="lazy"
+                        loading="lazy"
+
 
 
                         className="auth-logo"

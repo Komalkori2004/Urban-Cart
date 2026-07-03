@@ -7,6 +7,7 @@ import { addToWishlist, removeWishlist, getWishlist } from "../redux/thunks/wish
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import ProductCard from "../components/productCard"
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "sonner";
 
@@ -14,85 +15,92 @@ import "../style/product.css"
 
 
 const Product = () => {
+  const navigate = useNavigate();
 
-    const dispatch = useDispatch()
-    const [selectedCategory, setSelectedCategory] = useState("All")
-    const { wishlist } = useSelector(state => state.wishlist)
+  const dispatch = useDispatch()
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const { wishlist } = useSelector(state => state.wishlist)
 
-    const { products, loading, error } = useSelector(state => state.products)
+  const { products, loading, error } = useSelector(state => state.products)
 
-    const [debouncedSearch, setDebouncedSearch] = useState("")
+  const [debouncedSearch, setDebouncedSearch] = useState("")
 
-    const [search, setSearch] = useState("")
-    const [SortOption, setSortOption] = useState("")
+  const [search, setSearch] = useState("")
+  const [SortOption, setSortOption] = useState("")
 
-    const { categories } = useSelector((state) => state.category)
-
-
-
-
-
-    useEffect(() => {
-        dispatch(getAllproduct())
-        dispatch(getAllCategory())
-        dispatch(getWishlist())
-    }, [dispatch])
+  const { categories } = useSelector((state) => state.category)
 
 
 
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setDebouncedSearch(search)
-        }, 500)
-        return () => clearTimeout(timer)
-    }, [search])
-    const filteredProducts = useMemo(() => {
 
-        return products.filter((product) => {
+useEffect(() => {
 
-            const matchCategory =
-                selectedCategory === "All" ||
-                product.category === selectedCategory
+    dispatch(getAllproduct());
+    dispatch(getAllCategory());
 
-            const matchSearch =
-                product.name
-                    .toLowerCase()
-                    .includes(
-                        debouncedSearch.toLowerCase()
-                    )
+    const token =
+        localStorage.getItem("token");
 
-            return matchCategory && matchSearch
-        })
+    if (token) {
+        dispatch(getWishlist());
+    }
 
-    }, [
-        products,
-        selectedCategory,
-        debouncedSearch
-    ])
+}, [dispatch]);
 
 
-    const ShortedProducts = useMemo(() => {
 
-        return [...filteredProducts].sort((a, b) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search)
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [search])
+  const filteredProducts = useMemo(() => {
 
-            if (SortOption === "lowToHigh") {
-                return a.price - b.price
-            }
+    return products.filter((product) => {
 
-            if (SortOption === "highToLow") {
-                return b.price - a.price
-            }
+      const matchCategory =
+        selectedCategory === "All" ||
+        product.category === selectedCategory
 
-            return 0
+      const matchSearch =
+        product.name
+          .toLowerCase()
+          .includes(
+            debouncedSearch.toLowerCase()
+          )
 
-        })
+      return matchCategory && matchSearch
+    })
 
-    }, [
-        filteredProducts,
-        SortOption
-    ])
+  }, [
+    products,
+    selectedCategory,
+    debouncedSearch
+  ])
 
+
+  const ShortedProducts = useMemo(() => {
+
+    return [...filteredProducts].sort((a, b) => {
+
+      if (SortOption === "lowToHigh") {
+        return a.price - b.price
+      }
+
+      if (SortOption === "highToLow") {
+        return b.price - a.price
+      }
+
+      return 0
+
+    })
+
+  }, [
+    filteredProducts,
+    SortOption
+  ])
 
 
 
@@ -100,40 +108,49 @@ const handleAddToCart = useCallback(
     async (e, productId) => {
 
         e.preventDefault();
+        e.stopPropagation();
 
-        const result = await dispatch(
-            addToCart({
-                productId,
-                quantity: 1
-            })
-        );
+        const token =
+            localStorage.getItem("token");
+
+        if (!token) {
+
+            toast.warning(
+                "Please login to add products to cart"
+            );
+
+            setTimeout(() => {
+                navigate("/login");
+            }, 700);
+
+            return;
+        }
+
+        const result =
+            await dispatch(
+                addToCart({
+                    productId,
+                    quantity: 1
+                })
+            );
 
         if (
             result.meta.requestStatus ===
             "fulfilled"
         ) {
-
             toast.success(
                 "Product added to cart"
             );
         }
 
-        if (
-            result.meta.requestStatus ===
-            "rejected"
-        ) {
-
-            toast.error(
-                result.payload
-            );
-        }
-
     },
-    [dispatch]
+    [dispatch, navigate]
 );
 
 
-  const handleWishlist = useCallback(
+
+
+const handleWishlist = useCallback(
     async (
         e,
         productId,
@@ -141,239 +158,229 @@ const handleAddToCart = useCallback(
     ) => {
 
         e.preventDefault();
+        e.stopPropagation();
 
-        if (isWishlisted) {
+        const token =
+            localStorage.getItem("token");
 
-            const result =
-                await dispatch(
-                    removeWishlist(
-                        productId
-                    )
-                );
+        if (!token) {
 
-            if (
-                result.meta.requestStatus
-                === "fulfilled"
-            ) {
+            toast.warning(
+                "Please login to access wishlist"
+            );
 
-                toast.success(
-                    "Removed from wishlist"
-                );
-            }
+            setTimeout(() => {
+                navigate("/login");
+            }, 700);
 
-        } else {
-
-            const result =
-                await dispatch(
-                    addToWishlist(
-                        productId
-                    )
-                );
-
-            if (
-                result.meta.requestStatus
-                === "fulfilled"
-            ) {
-
-                toast.success(
-                    "Added to wishlist"
-                );
-
-                dispatch(
-                    getWishlist()
-                );
-            }
+            return;
         }
 
+        // existing logic
     },
-    [dispatch]
+    [dispatch, navigate]
 );
 
 
 
   return (
-  <div className="shop-page">
+    <div className="shop-page">
 
-    <div className="container">
+      <div className="container">
 
-      {/* HERO */}
+        {/* HERO */}
 
-      <section className="shop-hero">
+        <section className="shop-hero">
 
-        <span className="shop-badge">
-          PREMIUM COLLECTION
-        </span>
+          <span className="shop-badge">
+            PREMIUM COLLECTION
+          </span>
 
-        <h1 className="shop-title">
-          Discover Luxury Products
-        </h1>
+          <h1 className="shop-title">
+            Discover Luxury Products
+          </h1>
 
-        <p className="shop-description">
-          Curated fashion, beauty and lifestyle collections
-          designed for modern luxury.
-        </p>
+          <p className="shop-description">
+            Curated fashion, beauty and lifestyle collections
+            designed for modern luxury.
+          </p>
 
-      </section>
-
-
-      {/* FILTER BAR */}
-
-      <section className="shop-filter-bar">
-
-        <div className="shop-search">
-
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-          />
-
-        </div>
+        </section>
 
 
-        <div className="shop-sort">
+        {/* FILTER BAR */}
 
-          <select
-            value={SortOption}
-            onChange={(e) =>
-              setSortOption(
-                e.target.value
-              )
-            }
-          >
-            <option value="">
-              Sort By
-            </option>
+        <section className="shop-filter-bar">
 
-            <option value="lowToHigh">
-              Price : Low To High
-            </option>
+          <div className="shop-search">
 
-            <option value="highToLow">
-              Price : High To Low
-            </option>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
+            />
 
-          </select>
-
-        </div>
-
-      </section>
+          </div>
 
 
-      {/* CATEGORY */}
+          <div className="shop-sort">
 
-      <section className="category-buttons">
+            <select
+              value={SortOption}
+              onChange={(e) =>
+                setSortOption(
+                  e.target.value
+                )
+              }
+            >
+              <option value="">
+                Sort By
+              </option>
 
-        <button
-          className={
-            selectedCategory === "All"
-              ? "active-category"
-              : ""
-          }
-          onClick={() =>
-            setSelectedCategory("All")
-          }
-        >
-          All
-        </button>
+              <option value="lowToHigh">
+                Price : Low To High
+              </option>
 
-        {categories.map((category) => (
+              <option value="highToLow">
+                Price : High To Low
+              </option>
+
+            </select>
+
+          </div>
+
+        </section>
+
+
+        {/* CATEGORY */}
+
+        <section className="category-buttons">
 
           <button
-            key={category._id}
             className={
-              selectedCategory === category.name
+              selectedCategory === "All"
                 ? "active-category"
                 : ""
             }
             onClick={() =>
-              setSelectedCategory(
-                category.name
-              )
+              setSelectedCategory("All")
             }
           >
-            {category.name}
+            All
           </button>
 
-        ))}
+          {categories.map((category) => (
 
-      </section>
+            <button
+              key={category._id}
+              className={
+                selectedCategory === category.name
+                  ? "active-category"
+                  : ""
+              }
+              onClick={() =>
+                setSelectedCategory(
+                  category.name
+                )
+              }
+            >
+              {category.name}
+            </button>
+
+          ))}
+
+        </section>
 
 
-      {/* PRODUCT COUNT */}
+        {/* PRODUCT COUNT */}
 
-   <div className="product-stats">
+        <div className="product-stats">
 
-    <div className="stats-item">
-        <span>{ShortedProducts.length}</span>
-        <p>Exclusive Pieces</p>
-    </div>
+          <div className="stats-item">
+            <span>{ShortedProducts.length}</span>
+            <p>Exclusive Pieces</p>
+          </div>
 
-    <div className="stats-divider"></div>
+          <div className="stats-divider"></div>
 
-    <div className="stats-item">
-        <span>{selectedCategory}</span>
-        <p>Collection</p>
-    </div>
+          <div className="stats-item">
+            <span>{selectedCategory}</span>
+            <p>Collection</p>
+          </div>
 
-</div>
+        </div>
 
 
-      {/* PRODUCTS */}
+        {/* PRODUCTS */}
 
-      <section className="product-container">
+        <section className="product-container">
 
-        {ShortedProducts.map((product) => {
+          {ShortedProducts.map((product) => {
 
-          const isWishlisted =
-            wishlist.some(
-              (item) =>
-                item._id === product._id
+            const isWishlisted =
+              wishlist.some(
+                (item) =>
+                  item._id === product._id
+              );
+
+            return (
+
+              <ProductCard
+                key={product._id}
+                product={product}
+                isWishlisted={isWishlisted}
+                onWishlist={(e) =>
+                  handleWishlist(
+                    e,
+                    product._id,
+                    isWishlisted
+                  )
+                }
+                onAddToCart={(e) =>
+                  handleAddToCart(
+                    e,
+                    product._id
+                  )
+                }
+              />
+
             );
+          })}
 
-          return (
-
-            <ProductCard
-              key={product._id}
-              product={product}
-              isWishlisted={isWishlisted}
-              onWishlist={(e) =>
-                handleWishlist(
-                  e,
-                  product._id,
-                  isWishlisted
-                )
-              }
-              onAddToCart={(e) =>
-                handleAddToCart(
-                  e,
-                  product._id
-                )
-              }
-            />
-
-          );
-        })}
-
-      </section>
+        </section>
 
 
-      {/* EMPTY STATE */}
+        {/* EMPTY STATE */}
 
-      {!loading &&
-        ShortedProducts.length === 0 && (
+        {!loading &&
+          ShortedProducts.length === 0 && (
 
-          <div className="empty-products">
+            <div className="empty-products">
 
-            <h2>
-              No Products Found
-            </h2>
+              <h2>
+                No Products Found
+              </h2>
+
+              <p>
+                Try another search or category.
+              </p>
+
+            </div>
+
+          )}
+
+
+        {/* LOADER */}
+
+        {loading && (
+
+          <div className="shop-loader">
 
             <p>
-              Try another search or category.
+              Loading Products...
             </p>
 
           </div>
@@ -381,39 +388,24 @@ const handleAddToCart = useCallback(
         )}
 
 
-      {/* LOADER */}
+        {/* ERROR */}
 
-      {loading && (
+        {error && (
 
-        <div className="shop-loader">
+          <div className="shop-error">
 
-          <p>
-            Loading Products...
-          </p>
+            <p>
+              {error}
+            </p>
 
-        </div>
+          </div>
 
-      )}
+        )}
 
-
-      {/* ERROR */}
-
-      {error && (
-
-        <div className="shop-error">
-
-          <p>
-            {error}
-          </p>
-
-        </div>
-
-      )}
+      </div>
 
     </div>
-
-  </div>
-)
+  )
 }
 
 export default Product

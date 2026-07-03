@@ -1,27 +1,44 @@
-import React from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate } from "react-router-dom";
 
+const ProtectRoute = ({
+    children,
+    role
+}) => {
 
-const ProtectRoute = ({ children, role }) => {
+    const token =
+        localStorage.getItem("token");
 
-    const token = localStorage.getItem("token")
+    const user =
+        JSON.parse(
+            localStorage.getItem("user")
+        );
 
-    
-    const user = JSON.parse(
-        localStorage.getItem("user")
-    )
     if (!token) {
-        return <Navigate to="/login" />
+        return (
+            <Navigate
+                to="/login"
+                replace
+            />
+        );
     }
 
-    // role check
-    if (role && user?.role !== role) {
-        return <Navigate to="/profile" />
+    if (!user) {
+        return null;
     }
 
+    if (
+        role &&
+        user.role !== role
+    ) {
+        return (
+            <Navigate
+                to="/"
+                replace
+            />
+        );
+    }
 
+    return children;
+};
 
-    return children
-}
-
-export default ProtectRoute
+export default ProtectRoute;
