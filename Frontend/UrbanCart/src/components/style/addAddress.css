@@ -1,140 +1,343 @@
-.address-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 4rem 0;
+/* ==================================
+            ADDRESS PAGE
+================================== */
+
+.address-page{
+    min-height:100vh;
+    padding:50px 0 80px;
 }
 
-.address-page h1 {
-    text-align: center;
-    color: var(--gold);
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-family: var(--heading-font);
-    margin-bottom: 3rem;
+
+/* ==================================
+            HEADER
+================================== */
+.address-header{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+    gap:20px;
+}
+.address-badge{
+    display:inline-block;
+
+    padding:10px 20px;
+
+    background:
+        var(--gold-opacity-light);
+
+    border:
+        var(--border-gold);
+
+    border-radius:50px;
+
+    color:
+        var(--gold);
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
 }
 
-.checkout-form {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
+.address-title{
 
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(212,175,55,.15);
-    border-radius: 20px;
+    font-family:
+        var(--heading-font);
 
-    padding: 2rem;
+    font-size:48px;
 
-    backdrop-filter: blur(10px);
+    color:
+        var(--white);
+
+    margin-bottom:15px;
 }
 
-.checkout-form input {
-    width: 100%;
+.address-subtitle{
 
-    background: var(--charcoal);
+    color:
+        var(--gray);
 
-    border: 1px solid rgba(212,175,55,.15);
+    max-width:550px;
 
-    color: var(--white);
+    margin:auto;
 
-    padding: 1rem;
-
-    border-radius: 12px;
-
-    outline: none;
-
-    transition: .3s ease;
+    line-height:1.8;
 }
 
-.checkout-form input::placeholder {
-    color: rgba(255,255,255,.5);
-}
 
-.checkout-form input:focus {
-    border-color: var(--gold);
+/* ==================================
+            CARD
+================================== */
+
+.address-card{
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:45px;
+
+    background:
+        var(--glass-bg);
+
+    border:
+        var(--border-gold);
+
+    border-radius:
+        var(--radius-lg);
 
     box-shadow:
-        0 0 12px rgba(212,175,55,.15);
+        var(--shadow-lg);
+
+    backdrop-filter:
+        blur(20px);
 }
 
-.full-width {
-    grid-column: span 2;
+
+/* ==================================
+            FORM
+================================== */
+
+.checkout-form{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:25px;
 }
 
-.place-order-btn {
-    grid-column: span 2;
 
-    width: 100%;
+/* ==================================
+            INPUTS
+================================== */
 
-    background: var(--gold);
+.checkout-form input{
 
-    color: var(--black);
+    width:100%;
 
-    border: none;
+    background:
+        var(--dark-card);
 
-    padding: 1rem;
+    border:
+        var(--border-gold);
 
-    border-radius: 12px;
+    border-radius:
+        var(--radius-md);
 
-    font-size: 1rem;
+    padding:
+        18px 20px;
 
-    font-weight: 600;
+    color:
+        var(--white);
 
-    cursor: pointer;
+    font-size:15px;
 
-    transition: .3s ease;
+    font-family:
+        var(--body-font);
 
-    margin-top: .5rem;
+    transition:
+        var(--transition);
+
+    outline:none;
 }
 
-.place-order-btn:hover {
-    transform: translateY(-2px);
+.checkout-form input::placeholder{
+
+    color:
+        var(--text-muted);
+}
+
+.checkout-form input:hover{
+
+    border:
+        var(--border-gold-hover);
+}
+
+.checkout-form input:focus{
+
+    border:
+        1px solid var(--gold);
 
     box-shadow:
-        0 0 20px rgba(212,175,55,.25);
+        0 0 20px
+        rgba(212,175,55,.15);
 }
 
-/* Card Effect */
 
-.checkout-form:hover {
-    border-color: rgba(212,175,55,.3);
+/* ==================================
+        FULL WIDTH
+================================== */
+
+.full-width{
+
+    grid-column:
+        span 2;
 }
 
-/* Tablet */
 
-@media (max-width: 768px) {
+/* ==================================
+        COUNTRY INPUT
+================================== */
 
-    .address-page {
-        padding: 3rem 0;
+.checkout-form input[readonly]{
+
+    background:
+        var(--charcoal);
+
+    cursor:
+        not-allowed;
+
+    color:
+        var(--gold);
+}
+
+
+/* ==================================
+            BUTTON
+================================== */
+
+.place-order-btn{
+
+    grid-column:
+        span 2;
+
+    height:60px;
+
+    border:none;
+
+    border-radius:
+        var(--radius-md);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold),
+            var(--gold-dark)
+        );
+
+    color:
+        var(--black);
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:
+        var(--transition);
+
+    margin-top:10px;
+}
+
+.place-order-btn:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(212,175,55,.25);
+}
+
+
+/* ==================================
+            RESPONSIVE
+================================== */
+
+@media(max-width:992px){
+
+    .address-card{
+
+        padding:35px;
     }
 
-    .checkout-form {
-        grid-template-columns: 1fr;
-        padding: 1.5rem;
-    }
+    .address-title{
 
-    .full-width,
-    .place-order-btn {
-        grid-column: span 1;
+        font-size:40px;
     }
 }
 
-/* Mobile */
 
-@media (max-width: 576px) {
+@media(max-width:768px){
 
-    .address-page h1 {
-        margin-bottom: 2rem;
+    .checkout-form{
+
+        grid-template-columns:
+            1fr;
     }
 
-    .checkout-form {
-        padding: 1.2rem;
-        gap: 1rem;
+    .full-width{
+
+        grid-column:
+            span 1;
     }
 
-    .checkout-form input {
-        padding: .9rem;
+    .place-order-btn{
+
+        grid-column:
+            span 1;
     }
 
-    .place-order-btn {
-        width: 100%;
+    .address-card{
+
+        padding:25px;
+    }
+
+    .address-title{
+
+        font-size:34px;
+    }
+
+    .address-subtitle{
+
+        font-size:14px;
+    }
+}
+
+
+@media(max-width:480px){
+
+    .address-page{
+
+        padding:30px 0 50px;
+    }
+
+    .address-title{
+
+        font-size:28px;
+    }
+
+    .address-card{
+
+        padding:20px;
+    }
+
+    .checkout-form{
+
+        gap:18px;
+    }
+
+    .checkout-form input{
+
+        padding:15px;
+    }
+
+    .place-order-btn{
+
+        height:55px;
     }
 }

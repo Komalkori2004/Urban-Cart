@@ -27,128 +27,213 @@ const AddAddressPage = () => {
             [e.target.name]: e.target.value,
         });
     };
+    
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
 
-        const result = await dispatch(
-            addAddress(address)
+    e.preventDefault();
+
+    if (address.fullName.trim().length < 3) {
+        return toast.error(
+            "Full name must be at least 3 characters"
+        );
+    }
+
+    if (!/^[6-9]\d{9}$/.test(address.phone)) {
+        return toast.error(
+            "Enter a valid 10 digit phone number"
+        );
+    }
+
+    if (address.addressLine1.trim().length < 10) {
+        return toast.error(
+            "Address should be at least 10 characters"
+        );
+    }
+
+    if (!/^[A-Za-z ]+$/.test(address.city)) {
+        return toast.error(
+            "Enter a valid city"
+        );
+    }
+
+    if (!/^[A-Za-z ]+$/.test(address.state)) {
+        return toast.error(
+            "Enter a valid state"
+        );
+    }
+
+    if (!/^\d{6}$/.test(address.pincode)) {
+        return toast.error(
+            "Enter a valid 6 digit pincode"
+        );
+    }
+
+    const result = await dispatch(
+        addAddress(address)
+    );
+
+    if (addAddress.fulfilled.match(result)) {
+
+        toast.success(
+            "Address added successfully"
         );
 
-        if (addAddress.fulfilled.match(result)) {
-            toast.success("Address added successfully");
-            navigate("/checkout");
-        }
+        navigate("/checkout");
+    }
 
-        if (addAddress.rejected.match(result)) {
-            toast.error(result.payload?.message);
-        }
-    };
+    if (addAddress.rejected.match(result)) {
 
-    return (
+        toast.error(
+            result.payload?.message ||
+            "Failed to add address"
+        );
+    }
+};
 
-        <div className="container">
-            <div className="address-page">
+  return (
 
-                <h1>Add New Address</h1>
+    <div className="container">
+
+        <div className="address-page">
+
+            {/* HEADER */}
+
+            <div className="address-header">
+
+                <span className="address-badge">
+                    SHIPPING DETAILS
+                </span>
+
+                <h1 className="address-title">
+                    Add New Address
+                </h1>
+
+                <p className="address-subtitle">
+                    Save your delivery address securely for faster checkout.
+                </p>
+
+            </div>
 
 
+            {/* CARD */}
+
+            <div className="address-card">
 
                 <form
                     className="checkout-form"
                     onSubmit={handleSubmit}
                 >
 
+                    {/* ROW 1 */}
+
                     <input
                         type="text"
-                        required
-                        placeholder="Full Name"
                         name="fullName"
-                        onChange={handleChange}
+                        placeholder="Full Name"
                         value={address.fullName}
+                        onChange={handleChange}
+                        autoComplete="name"
+                        required
                     />
 
                     <input
-                        type="text"
-                        placeholder="Phone Number"
+                        type="tel"
                         name="phone"
-                        onChange={handleChange}
+                        placeholder="Phone Number"
                         value={address.phone}
+                        onChange={handleChange}
+                        autoComplete="tel"
+                        maxLength={10}
                         required
                     />
 
+
+                    {/* ADDRESS */}
+
                     <input
                         type="text"
-                        placeholder="Address Line 1"
                         name="addressLine1"
+                        placeholder="House No, Street, Area"
                         className="full-width"
-                        onChange={handleChange}
                         value={address.addressLine1}
+                        onChange={handleChange}
+                        autoComplete="address-line1"
                         required
                     />
 
                     <input
                         type="text"
-                        placeholder="Address Line 2"
-                        className="full-width"
                         name="addressLine2"
-                        onChange={handleChange}
+                        placeholder="Landmark (Optional)"
+                        className="full-width"
                         value={address.addressLine2}
+                        onChange={handleChange}
+                        autoComplete="address-line2"
                     />
+
+
+                    {/* CITY STATE */}
 
                     <input
                         type="text"
-                        placeholder="City"
                         name="city"
-                        onChange={handleChange}
+                        placeholder="City"
                         value={address.city}
+                        onChange={handleChange}
+                        autoComplete="address-level2"
                         required
                     />
 
                     <input
                         type="text"
-                        placeholder="State"
                         name="state"
-                        onChange={handleChange}
+                        placeholder="State"
                         value={address.state}
-                        required
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Pincode"
-                        name="pincode"
                         onChange={handleChange}
-                        value={address.pincode}
+                        autoComplete="address-level1"
                         required
                     />
 
 
+                    {/* PINCODE COUNTRY */}
+
                     <input
                         type="text"
-                        placeholder="Country"
+                        name="pincode"
+                        placeholder="Pincode"
+                        value={address.pincode}
+                        onChange={handleChange}
+                        autoComplete="postal-code"
+                        maxLength={6}
+                        required
+                    />
+
+                    <input
+                        type="text"
                         name="country"
                         value={address.country}
-                        onChange={handleChange}
                         readOnly
                     />
 
 
+                    {/* BUTTON */}
+
                     <button
                         className="place-order-btn"
                         type="submit"
-
                     >
                         Save Address
                     </button>
 
                 </form>
 
-
-
             </div>
+
         </div>
-    );
+
+    </div>
+);
 };
 
 export default AddAddressPage;
