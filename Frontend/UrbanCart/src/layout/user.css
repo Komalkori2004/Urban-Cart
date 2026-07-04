@@ -348,48 +348,110 @@
    RESPONSIVE
 ========================= */
 
-@media (max-width:1200px) {
+/* =========================
+        TABLET
+========================= */
 
-    .user-dashboard-layout {
-        grid-template-columns: 1fr;
+@media(max-width:1200px){
+
+    .user-dashboard-layout{
+
+        display:block;
     }
 
-    .user-sidebar {
-        position: relative;
-        top: auto;
+    .user-sidebar{
+
+        position:fixed;
+
+        top:0;
+        left:-320px;
+
+        width:300px;
+        height:100vh;
+
+        z-index:9999;
+
+        overflow-y:auto;
+
+        border-radius:0;
+
+        transition:
+            all .35s ease;
+
+        padding-top:70px;
     }
 
-    .stats-grid {
+    .user-sidebar.open{
+
+        left:0;
+    }
+
+    .close-user-sidebar{
+
+        display:flex;
+
+        align-items:center;
+        justify-content:center;
+    }
+
+    .dashboard-toggle{
+
+        display:flex;
+
+        align-items:center;
+        justify-content:center;
+    }
+
+    .user-dashboard-content{
+
+        width:100%;
+    }
+
+    .stats-grid{
+
         grid-template-columns:
             repeat(2,1fr);
     }
 }
 
-@media (max-width:768px) {
+@media(max-width:768px){
 
-    .profile-hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 20px;
+    .user-sidebar{
+
+        width:280px;
     }
 
-    .profile-info h1 {
-        font-size: 46px;
+    .profile-hero{
+
+        flex-direction:column;
+
+        text-align:center;
+
+        padding:40px 20px;
     }
 
-    .stats-grid {
-        grid-template-columns: 1fr;
+    .profile-info h1{
+
+        font-size:46px;
     }
 
-    .sidebar-avatar {
-        width: 70px;
-        height: 70px;
+    .stats-grid{
+
+        grid-template-columns:1fr;
     }
 
-    .profile-avatar {
-        width: 120px;
-        height: 120px;
-        font-size: 50px;
+    .sidebar-avatar{
+
+        width:70px;
+        height:70px;
+    }
+
+    .profile-avatar{
+
+        width:120px;
+        height:120px;
+
+        font-size:50px;
     }
 }
 
@@ -405,5 +467,128 @@
 
     .sidebar-menu a {
         padding: 14px;
+    }
+}
+
+
+
+
+
+
+
+
+
+/* responsive toggler bar  */
+
+/* =========================
+    MOBILE SIDEBAR UI
+========================= */
+
+.close-user-sidebar{
+    display:none;
+
+    position:absolute;
+
+    top:20px;
+    right:20px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+        rgba(212,175,55,.1);
+
+    color:
+        var(--gold);
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+.sidebar-overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,.7);
+
+    backdrop-filter:
+        blur(5px);
+
+    z-index:9998;
+}
+
+.user-sidebar-toggle{
+    position: fixed;
+
+    top: 50%;
+    left: 0;
+
+    transform: translateY(-50%);
+
+    width: 40px;
+    height: 90px;
+
+    background: linear-gradient(
+        180deg,
+        rgba(212,175,55,.15),
+        rgba(212,175,55,.05)
+    );
+
+    border: 1px solid rgba(212,175,55,.25);
+    border-left: none;
+
+    border-radius: 0 18px 18px 0;
+
+    color: var(--gold);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow: var(--shadow-md);
+
+    z-index: 999;
+    
+    transition: var(--transition);
+}
+
+.user-sidebar-toggle:hover{
+    width: 50px;
+
+    background: rgba(212,175,55,.15);
+
+    box-shadow: var(--shadow-lg);
+}
+
+
+
+.user-sidebar-toggle span{
+    animation: slideArrow 1.5s infinite;
+}
+
+@keyframes slideArrow{
+    0%{
+        transform: translateX(0);
+    }
+
+    50%{
+        transform: translateX(5px);
+    }
+
+    100%{
+        transform: translateX(0);
     }
 }

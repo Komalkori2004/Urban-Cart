@@ -1,88 +1,169 @@
 import {
-    FiUser,
+    FiGrid,
     FiShoppingBag,
     FiHeart,
     FiShoppingCart,
     FiMapPin,
-    FiSettings,
+    FiCreditCard,
     FiLogOut,
-    FiCreditCard
+    FiX,
 } from "react-icons/fi";
 
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import "./user.css"
+import "./user.css";
 
-
-function UserSidebar() {
+function UserSidebar({
+    sidebarOpen,
+    setSidebarOpen,
+    onLogout,
+}) {
 
     const { user } = useSelector(
-        state => state.auth
+        (state) => state.auth
     );
 
+    const closeSidebar = () => {
+        setSidebarOpen(false);
+    };
+
+    const menuItems = [
+        {
+            path: "/dashboard",
+            icon: <FiGrid />,
+            label: "Dashboard",
+            end: true,
+        },
+        {
+            path: "/dashboard/orders",
+            icon: <FiShoppingBag />,
+            label: "Orders",
+        },
+        {
+            path: "/dashboard/wishlist",
+            icon: <FiHeart />,
+            label: "Wishlist",
+        },
+        {
+            path: "/dashboard/cart",
+            icon: <FiShoppingCart />,
+            label: "Cart",
+        },
+        {
+            path: "/dashboard/address",
+            icon: <FiMapPin />,
+            label: "Address",
+        },
+        {
+            path: "/dashboard/membership",
+            icon: <FiCreditCard />,
+            label: "Membership",
+        },
+        {
+            path: "/dashboard/membership-history",
+            icon: <FiCreditCard />,
+            label: "Membership History",
+        },
+    ];
+
     return (
+        <>
+            {/* Overlay */}
 
-        <aside className="user-sidebar">
+            {sidebarOpen && (
+                <div
+                    className="sidebar-overlay"
+                    onClick={closeSidebar}
+                />
+            )}
 
-            <div className="sidebar-profile">
+            {/* Sidebar */}
 
-                <div className="sidebar-avatar">
-                    {user?.name?.charAt(0)}
+            <aside
+                className={`user-sidebar ${
+                    sidebarOpen ? "open" : ""
+                }`}
+            >
+                {/* Close Button */}
+
+                <button
+                    className="close-user-sidebar"
+                    onClick={closeSidebar}
+                >
+                    <FiX />
+                </button>
+
+                {/* Profile */}
+
+                <div className="sidebar-profile">
+
+                    <div className="sidebar-avatar">
+                        {user?.name?.charAt(0)}
+                    </div>
+
+                    <h3>
+                        {user?.name}
+                    </h3>
+
+                    <p>
+                        {user?.email}
+                    </p>
+
                 </div>
 
-                <h3>
-                    {user?.name}
-                </h3>
+                {/* Menu */}
 
-                <p>
-                    {user?.email}
-                </p>
+                <div className="sidebar-menu">
 
-            </div>
+                    {menuItems.map((item) => (
 
-            <div className="sidebar-menu">
+                        <NavLink
+                            key={item.path}
+                            to={item.path}
+                            end={item.end}
+                            onClick={closeSidebar}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "active"
+                                    : ""
+                            }
+                        >
+                            {item.icon}
 
-                <NavLink to="/dashboard">
-                    Dashboard
-                </NavLink>
+                            <span>
+                                {item.label}
+                            </span>
 
-                <NavLink to="/dashboard/orders">
-                    Orders
-                </NavLink>
+                        </NavLink>
 
-                <NavLink to="/dashboard/wishlist">
-                    Wishlist
-                </NavLink>
+                    ))}
 
-                <NavLink to="/dashboard/cart">
-                    Cart
-                </NavLink>
+                </div>
 
-                <NavLink to="/dashboard/address">
-                    Address
-                </NavLink>
+                {/* Logout */}
 
-                <NavLink to="/dashboard/membership">
-                    Membership
-                </NavLink>
+                <button
+                    className="logout-btn"
+                    onClick={() => {
 
-                <NavLink to="/dashboard/membership-history">
-                    Membership History
-                </NavLink>
-                {/* 
-<NavLink to="/dashboard/settings">
-    Settings
-</NavLink> */}
+                        closeSidebar();
 
-            </div>
+                        if (onLogout) {
+                            onLogout();
+                        }
+                    }}
+                >
+                    <FiLogOut />
 
-            <button className="logout-btn">
-                <FiLogOut />
-                <span>Logout</span>
-            </button>
+                    <span>
+                        Logout
+                    </span>
 
-        </aside>
+                </button>
+
+            </aside>
+        </>
     );
 }
 

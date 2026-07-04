@@ -1,25 +1,33 @@
-// layout/UserLayout.jsx
-
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import UserSidebar from "./userSidebar";
+import UserSidebar from "./UserSidebar";
 
-import "./user.css"
+import "./user.css";
 
 function UserLayout() {
 
+    const [sidebarOpen, setSidebarOpen]
+        = useState(false);
+
     return (
 
-        <div className="container">
+        <div className="user-dashboard-layout">
 
-            <div className="user-dashboard-layout">
+            <UserSidebar
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+            />
 
-                <UserSidebar />
+            <div className="user-dashboard-content">
 
-                <div className="user-dashboard-content">
+             <button
+    className="user-sidebar-toggle"
+    onClick={() => setSidebarOpen(true)}
+>
+    <span>❯</span>
+</button>
 
-                    <Outlet />
-
-                </div>
+                <Outlet />
 
             </div>
 
