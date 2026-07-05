@@ -1,146 +1,259 @@
-.admin-sidebar {
-    width: 280px;
-    flex-shrink: 0;
+/* =========================
+   ADMIN SIDEBAR
+========================= */
 
-    min-height: 100vh;
+.admin-sidebar{
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.02),
+            rgba(255,255,255,.01)
+        );
 
-    background: linear-gradient(
-        180deg,
-        #141414,
-        #0d0d0d
-    );
+    border:
+        1px solid rgba(212,175,55,.15);
 
-    border-right: 1px solid rgba(212,175,55,.12);
+    border-radius:24px;
 
-    padding: 30px 20px;
+    padding:30px 20px;
 
-    position: sticky;
-    top: 0;
-}
-
-/* Logo */
-
-.sidebar-logo {
-    color: var(--gold);
-
-    font-family: var(--heading-font);
-
-    font-size: 2.2rem;
-
-    text-align: center;
-
-    margin-bottom: 40px;
-}
-
-/* Links */
-
-.sidebar-links {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-.sidebar-links a {
-    color: var(--champagne);
-
-    padding: 14px 18px;
-
-    border-radius: 14px;
-
-    transition: .3s ease;
-
-    position: relative;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-}
-
-.sidebar-links a:hover {
-    background: rgba(212,175,55,.08);
-
-    color: var(--gold);
-
-    transform: translateX(4px);
-}
-
-/* Active */
-
-.active-link {
-    background: rgba(212,175,55,.10);
-
-    color: var(--gold) !important;
-
-    border-left: 3px solid var(--gold);
+    backdrop-filter:blur(15px);
 
     box-shadow:
-        0 0 20px rgba(212,175,55,.15);
+        0 10px 40px rgba(0,0,0,.5);
+
+    position:sticky;
+
+    top:100px;
+
+    height:fit-content;
+
+    min-width:280px;
+    margin-left:20px;
+    margin-top:10px;
 }
 
-.active-link::before {
-    content: "";
 
-    position: absolute;
 
-    left: 10px;
-    top: 50%;
+/* =========================
+   ADMIN PROFILE
+========================= */
 
-    width: 6px;
-    height: 6px;
+.admin-profile-box{
+    text-align:center;
 
-    border-radius: 50%;
+    padding-bottom:30px;
 
-    background: var(--gold);
-
-    transform: translateY(-50%);
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
 }
 
-/* Tablet */
+.admin-avatar{
+    width:80px;
+    height:80px;
 
+    border-radius:50%;
 
-/* Mobile */
-.close-sidebar{
+    border:2px solid var(--gold);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:auto;
+
+    font-size:34px;
+    font-family:var(--heading-font);
+
+    color:var(--gold);
+
+    background:
+        rgba(212,175,55,.05);
+
+    margin-bottom:15px;
+}
+
+.admin-profile-box h3{
+    color:var(--white);
+
+    font-size:24px;
+
+    margin-bottom:5px;
+}
+
+.admin-profile-box p{
+    color:var(--gray);
+
+    font-size:14px;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.admin-sidebar-menu{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    margin-top:30px;
+}
+
+.admin-sidebar-menu a{
+    display:flex;
+
+    align-items:center;
+
+    padding:16px 18px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    color:var(--white);
+
+    transition:.3s ease;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+/* hover */
+
+.admin-sidebar-menu a:hover{
+    background:
+        rgba(212,175,55,.08);
+
+    color:var(--gold);
+
+    transform:
+        translateX(5px);
+}
+
+/* active */
+
+.admin-sidebar-menu a.active-link{
+    background:
+        rgba(212,175,55,.12);
+
+    color:
+        var(--gold);
+
+    border:
+        1px solid rgba(212,175,55,.2);
+
+    box-shadow:
+        inset 0 0 30px rgba(212,175,55,.05),
+        0 0 20px rgba(212,175,55,.08);
+}
+
+.admin-sidebar-menu a.active-link::before{
+    content:"";
+
+    position:absolute;
+
+    left:7px;
+    top:50%;
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:
+        var(--gold);
+
+    transform:
+        translateY(-50%);
+
+    box-shadow:
+        0 0 10px rgba(212,175,55,.8);
+}
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.close-admin-sidebar{
     display:none;
+
+    position:absolute;
+
+    top:20px;
+    right:20px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+        rgba(212,175,55,.1);
+
+    color:
+        var(--gold);
+
+    font-size:20px;
+
+    cursor:pointer;
 }
 
-@media(max-width:768px){
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1200px){
 
     .admin-sidebar{
-        position:fixed;
-        left:-100%;
-        top:0;
 
-        width:280px;
+        position:fixed;
+
+        top:0;
+        left:-320px;
+
+        width:300px;
+
         height:100vh;
 
-        z-index:999;
+        z-index:9999;
 
-        transition:.3s ease;
+        border-radius:0;
+
+        transition:
+            all .35s ease;
+
+        overflow-y:auto;
+
+        padding-top:70px;
     }
 
     .admin-sidebar.open{
         left:0;
     }
 
-    .close-sidebar{
-        display:block;
+    .close-admin-sidebar{
+        display:flex;
 
-        position:absolute;
+        align-items:center;
+        justify-content:center;
+    }
+}
 
-        top:20px;
-        right:20px;
+@media(max-width:768px){
 
-        background:none;
-        border:none;
+    .admin-sidebar{
+        width:280px;
+    }
 
-        color:var(--gold);
+    .admin-avatar{
+        width:70px;
+        height:70px;
 
-        font-size:24px;
-
-        cursor:pointer;
+        font-size:30px;
     }
 }

@@ -1,31 +1,80 @@
-import React from 'react'
-import "./style/adminNavbar.css"
+import {
+    FiBell,
+    FiLogOut,
+    FiSearch
+} from "react-icons/fi";
 
-const AdminNavbar = ({
+import "./style/adminNavbar.css";
+import { Link } from "react-router-dom";
+
+function AdminNavbar({
+    title,
+    subtitle,
     setSidebarOpen
-}) => {
+}) {
 
     return (
 
-        <div className='admin-navbar'>
+       <header className="admin-navbar">
 
-            <button
-                className="sidebar-toggle"
-                onClick={() =>
-                    setSidebarOpen(
-                        prev => !prev
-                    )
-                }
-            >
-                ☰
-            </button>
+    <div className="admin-navbar-left">
+    <button
+    className="admin-sidebar-toggle"
+    onClick={() => setSidebarOpen(true)}
+>
+    ❯
+</button>
 
-            <h2 className="admin-navbar-title">
-                UrbanCart Admin
-            </h2>
+        <Link
+            to="/"
+            className="admin-brand"
+        >
+            <img
+                src="/logo/nav-logo.png"
+                alt="UrbanCart"
+            />
+        </Link>
+
+        <div className="admin-divider"></div>
+
+        <div className="admin-page-info">
+
+            <h2>{title}</h2>
+
+            <p>{subtitle}</p>
 
         </div>
-    )
+
+    </div>
+
+
+    {/* <div className="admin-navbar-right">
+
+        <button className="admin-nav-icon">
+            <FiSearch />
+        </button>
+
+        <button className="admin-nav-icon">
+            <FiBell />
+        </button>
+
+        <div className="admin-profile">
+
+            <div className="admin-avatar">
+                A
+            </div>
+
+            <div>
+                <h4>Admin</h4>
+                <span>Super Admin</span>
+            </div>
+
+        </div>
+
+    </div> */}
+
+</header>
+    );
 }
 
-export default AdminNavbar
+export default AdminNavbar;

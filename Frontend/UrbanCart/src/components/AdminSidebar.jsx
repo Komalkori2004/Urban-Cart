@@ -9,29 +9,41 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
     return (
         <>
-            <div
-                className={`admin-sidebar ${sidebarOpen
-                    ? "open"
-                    : ""
+            <aside
+                className={`admin-sidebar ${sidebarOpen ? "open" : ""
                     }`}
             >
 
                 <button
-                    className="close-sidebar"
-                    onClick={() =>
-                        setSidebarOpen(false)
-                    }
+                    className="close-admin-sidebar"
+                    onClick={() => setSidebarOpen(false)}
                 >
                     ✕
                 </button>
-                <NavLink to="/">
-                    <h2 className='sidebar-logo'>
-                        urbanCart
-                    </h2>
-                </NavLink>
+
+                {/* ADMIN PROFILE */}
+
+                <div className="admin-profile-box">
+
+                    <div className="admin-avatar">
+                        A
+                    </div>
+
+                    <h3>
+                        Admin
+                    </h3>
+
+                    <p>
+                        Super Admin
+                    </p>
+
+                </div>
 
 
-                <nav className="sidebar-links">
+                {/* MENU */}
+
+                <div className="admin-sidebar-menu">
+
                     <NavLink
                         to="/admin"
                         end
@@ -46,9 +58,11 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     >
                         Dashboard
                     </NavLink>
+
+
                     <NavLink
                         to="/admin/add-product"
-                         onClick={() =>
+                        onClick={() =>
                             setSidebarOpen(false)
                         }
                         className={({ isActive }) =>
@@ -57,8 +71,9 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     >
                         add-Product
                     </NavLink>
+
                     <NavLink to="/admin/add-Category"
-                     onClick={() =>
+                        onClick={() =>
                             setSidebarOpen(false)
                         }
                         className={({ isActive }) =>
@@ -69,7 +84,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
                     <NavLink
                         to="/admin/all-product"
-                         onClick={() =>
+                        onClick={() =>
                             setSidebarOpen(false)
                         }
                         className={({ isActive }) =>
@@ -81,7 +96,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
                     <NavLink
                         to="/admin/orders"
-                        
+
                         onClick={() =>
                             setSidebarOpen(false)
                         }
@@ -95,7 +110,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     </NavLink>
 
                     <NavLink to="/admin/all-users"
-                     onClick={() =>
+                        onClick={() =>
                             setSidebarOpen(false)
                         }
                         className={({ isActive }) =>
@@ -105,7 +120,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     </NavLink>
 
                     <NavLink to="/admin/all-Subscribers"
-                     onClick={() =>
+                        onClick={() =>
                             setSidebarOpen(false)
                         }
                         className={({ isActive }) =>
@@ -114,9 +129,8 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         Subscribers
                     </NavLink>
 
-
                     <NavLink to="/admin/contact-messages"
-                     onClick={() =>
+                        onClick={() =>
                             setSidebarOpen(false)
                         }
                         className={({ isActive }) =>
@@ -125,31 +139,8 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         Contact Messages
                     </NavLink>
 
-                    {/* <NavLink to="/admin/create-membership"
-                        className={({ isActive }) =>
-                            isActive ? "active-link" : ""
-                        }>
-                  create membership
-                    </NavLink>
-
-                    <NavLink to="/admin/edit-membership"
-                        className={({ isActive }) =>
-                            isActive ? "active-link" : ""
-                        }>
-                  update membership 
-                    </NavLink>
-
-                    
-                    <NavLink to="/admin/membership-stats"
-                        className={({ isActive }) =>
-                            isActive ? "active-link" : ""
-                        }>
-                 membership stats
-                    </NavLink> */}
-
-
                     <NavLink to="/admin/membership-management"
-                     onClick={() =>
+                        onClick={() =>
                             setSidebarOpen(false)
                         }
                         className={({ isActive }) =>
@@ -159,15 +150,9 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     </NavLink>
 
 
+                </div>
 
-
-
-
-
-                </nav>
-
-
-            </div>
+            </aside>
 
 
 
@@ -175,6 +160,13 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
 
         </>
+
+
+
+
+
+
+
     )
 }
 

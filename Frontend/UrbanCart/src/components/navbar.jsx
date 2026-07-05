@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { logoutUser } from "../redux/feature/authSlice"
-import { useCallback } from "react";
+// import { useCallback } from "react";
 import { clearCart } from "../redux/feature/cartSlice"
 
 import { clearWishlist } from "../redux/feature/wishlistSlice"
@@ -56,9 +56,6 @@ const NavBar = () => {
 
   const { searchResults, searchLoading } = useSelector((state) => state.products)
 
-  if (location.pathname.includes("/admin")) {
-    return null
-  }
 
   const cartCount = items.reduce((acc, item) => {
     return acc + item.quantity
@@ -119,9 +116,16 @@ const NavBar = () => {
     setSearchTerm("");
   };
 
+
+    if (location.pathname.includes("/admin")) {
+    return null
+  }
+
+
   return (
     <>
 
+  
       <nav className="navbar">
 
         <div className="container navbar-container">
