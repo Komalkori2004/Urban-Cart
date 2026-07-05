@@ -3,8 +3,13 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import "./style/adminSidebar.css"
 
+import { useSelector } from "react-redux";
+
 const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
+    const { user } = useSelector(
+        state => state.auth
+    );
 
 
     return (
@@ -26,15 +31,21 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <div className="admin-profile-box">
 
                     <div className="admin-avatar">
-                        A
+                        {user?.name?.charAt(0)}
                     </div>
 
                     <h3>
-                        Admin
+                        {user?.name}
                     </h3>
 
+                    <span className="admin-badge">
+                        ADMIN PANEL
+                    </span>
+
                     <p>
-                        Super Admin
+                        {user?.role === "admin"
+                            ? "Administrator"
+                            : user?.role}
                     </p>
 
                 </div>
