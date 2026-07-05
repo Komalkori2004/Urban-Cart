@@ -67,23 +67,71 @@ function ContactMessages() {
 
     return (
         <>
+
+            <div className="contact-header">
+
+                <span className="contact-badge">
+                    CUSTOMER SUPPORT
+                </span>
+
+                <h1 className="contact-title">
+                    Contact Messages
+                </h1>
+
+                <p className="contact-subtitle">
+                    Manage customer inquiries, support requests and feedback submitted through UrbanCart.
+                </p>
+
+            </div>
             {/* Stats Cards */}
 
             <div className="contact-stats">
 
                 <div className="stat-card">
-                    <h4>Total Messages</h4>
-                    <h2>{totalMessages}</h2>
+
+                    <h4>
+                        Total Messages
+                    </h4>
+
+                    <h2>
+                        {totalMessages}
+                    </h2>
+
+                    <p>
+                        Customer inquiries
+                    </p>
+
                 </div>
 
                 <div className="stat-card">
-                    <h4>Unread Messages</h4>
-                    <h2>{unreadMessages}</h2>
-                </div>
 
+                    <h4>
+                        Unread Messages
+                    </h4>
+
+                    <h2>
+                        {unreadMessages}
+                    </h2>
+
+                    <p>
+                        Needs attention
+                    </p>
+
+                </div>
                 <div className="stat-card">
-                    <h4>Read Messages</h4>
-                    <h2>{readMessages}</h2>
+
+                    <h4>
+                        Read Messages
+                    </h4>
+
+                    <h2>
+                        {readMessages}
+                    </h2>
+
+                    <p>
+                        Already reviewed
+                    </p>
+
                 </div>
 
             </div>
@@ -91,6 +139,27 @@ function ContactMessages() {
             {/* Contact Table */}
 
             <div className="contact-table-wrapper">
+
+                <div className="contact-summary">
+
+                    <h3>
+                        Inbox Overview
+                    </h3>
+
+                    <p>
+
+                        You currently have
+
+                        <span>
+                            {" "}
+                            {unreadMessages}
+                        </span>
+
+                        unread customer messages.
+
+                    </p>
+
+                </div>
 
                 <table className="contact-table">
 
@@ -160,6 +229,23 @@ function ContactMessages() {
                 </table>
 
             </div>
+            <div className="contact-footer">
+
+                <p>
+
+                    Showing
+
+                    <strong>
+                        {" "}
+                        {contacts.length}
+                        {" "}
+                    </strong>
+
+                    customer messages.
+
+                </p>
+
+            </div>
 
 
             {
@@ -183,6 +269,39 @@ function ContactMessages() {
                                 >
                                     ✕
                                 </button>
+
+                            </div>
+                            <div className="message-meta">
+
+                                <div>
+
+                                    <span>
+                                        Customer
+                                    </span>
+
+                                    <h4>
+                                        {selectedMessage.name}
+                                    </h4>
+
+                                </div>
+
+                                <div>
+
+                                    <span>
+                                        Received
+                                    </span>
+
+                                    <h4>
+
+                                        {
+                                            new Date(
+                                                selectedMessage.createdAt
+                                            ).toLocaleDateString()
+                                        }
+
+                                    </h4>
+
+                                </div>
 
                             </div>
 

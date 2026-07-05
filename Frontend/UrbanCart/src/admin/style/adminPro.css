@@ -2,10 +2,10 @@
    ADMIN PRODUCTS PAGE
 =========================== */
 
-.admin-container{
-    max-width:1400px;
-    margin:0 auto;
-    padding:0 20px;
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .admin-products-page {
@@ -13,11 +13,9 @@
 }
 
 .admin-title {
-    color: var(--gold);
-  
-    font-family:var(--heading-font);
-
-     font-size: clamp(2.5rem,5vw,4rem);
+    color: var(--white);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-family: var(--heading-font);
     margin-bottom: 2rem;
 }
 
@@ -55,15 +53,12 @@
 .admin-product-card {
 
     background:
-        linear-gradient(
-            180deg,
+        linear-gradient(180deg,
             #121212,
-            #0d0d0d
-        );
+            #0d0d0d);
 
     border:
-        1px solid
-        rgba(212,175,55,.15);
+        1px solid rgba(212, 175, 55, .15);
 
     border-radius: 20px;
 
@@ -75,11 +70,10 @@
 .admin-product-card:hover {
 
     border-color:
-        rgba(212,175,55,.4);
+        rgba(212, 175, 55, .4);
 
     box-shadow:
-        0 0 30px
-        rgba(212,175,55,.15);
+        0 0 30px rgba(212, 175, 55, .15);
 
     transform:
         translateY(-5px);
@@ -103,8 +97,7 @@
     transition: .4s ease;
 }
 
-.admin-product-card:hover
-.admin-product-image {
+.admin-product-card:hover .admin-product-image {
 
     transform: scale(1.05);
 }
@@ -202,7 +195,7 @@
 .admin-in-stock {
 
     background:
-        rgba(46,204,113,.1);
+        rgba(46, 204, 113, .1);
 
     color:
         #2ecc71;
@@ -211,7 +204,7 @@
 .admin-low-stock {
 
     background:
-        rgba(241,196,15,.1);
+        rgba(241, 196, 15, .1);
 
     color:
         #f1c40f;
@@ -220,7 +213,7 @@
 .admin-out-stock {
 
     background:
-        rgba(231,76,60,.1);
+        rgba(231, 76, 60, .1);
 
     color:
         #e74c3c;
@@ -253,42 +246,42 @@
    ACTION BUTTONS
 =========================== */
 
-.admin-btns{
-    display:flex;
-    gap:1rem;
+.admin-btns {
+    display: flex;
+    gap: 1rem;
 
-    margin-top:1.5rem;
-    padding-top:1.2rem;
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
 
     border-top:
-    1px solid rgba(212,175,55,.12);
+        1px solid rgba(212, 175, 55, .12);
 }
 
-.admin-btns a{
-    flex:1;
-    display:flex;
-    text-decoration:none;
+.admin-btns a {
+    flex: 1;
+    display: flex;
+    text-decoration: none;
 }
 
 .admin-edit-btn,
-.admin-delete-btn{
+.admin-delete-btn {
 
-    flex:1;
+    flex: 1;
 
-    width:100%;
+    width: 100%;
 
-    min-width:0;
+    min-width: 0;
 
-    height:50px;
+    height: 50px;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    font-size:1rem;
-    font-weight:600;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 
@@ -296,27 +289,26 @@
    EDIT BUTTON
 =========================== */
 
-.admin-edit-btn{
+.admin-edit-btn {
 
-    border:1px solid rgba(212,175,55,.4);
+    border: 1px solid rgba(212, 175, 55, .4);
 
     background:
-        rgba(212,175,55,.08);
+        rgba(212, 175, 55, .08);
 
-    color:var(--gold);
+    color: var(--gold);
 }
 
-.admin-edit-btn:hover{
+.admin-edit-btn:hover {
 
-    background:var(--gold);
+    background: var(--gold);
 
-    color:var(--black);
+    color: var(--black);
 
-    transform:translateY(-2px);
+    transform: translateY(-2px);
 
     box-shadow:
-        0 0 20px
-        rgba(212,175,55,.25);
+        0 0 20px rgba(212, 175, 55, .25);
 }
 
 
@@ -324,26 +316,25 @@
    DELETE BUTTON
 =========================== */
 
-.admin-delete-btn{
+.admin-delete-btn {
 
-    border:1px solid rgba(255,59,92,.5);
+    border: 1px solid rgba(255, 59, 92, .5);
 
-    background:transparent;
+    background: transparent;
 
-    color:#ff3b5c;
+    color: #ff3b5c;
 }
 
-.admin-delete-btn:hover{
+.admin-delete-btn:hover {
 
-    background:#ff3b5c;
+    background: #ff3b5c;
 
-    color:white;
+    color: white;
 
-    transform:translateY(-2px);
+    transform: translateY(-2px);
 
     box-shadow:
-        0 0 20px
-        rgba(255,59,92,.25);
+        0 0 20px rgba(255, 59, 92, .25);
 }
 
 
@@ -351,13 +342,13 @@
    DISABLED
 =========================== */
 
-.admin-delete-btn:disabled{
+.admin-delete-btn:disabled {
 
-    opacity:.6;
+    opacity: .6;
 
-    cursor:not-allowed;
+    cursor: not-allowed;
 
-    transform:none;
+    transform: none;
 }
 
 
@@ -390,18 +381,19 @@
 /* ===========================
    MOBILE
 =========================== */
-@media(min-width:769px){
+@media(min-width:769px) {
 
-    .admin-btns{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:1rem;
+    .admin-btns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
     }
 
-    .admin-btns a{
-        display:block;
+    .admin-btns a {
+        display: block;
     }
 }
+
 /* 
 @media(max-width:768px){
 
@@ -454,22 +446,22 @@
         font-size: 1.3rem;
     }
 
-      .admin-btns{
-        display:flex;
-        flex-direction:column;
-        gap:.8rem;
+    .admin-btns {
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
     }
 
-    .admin-btns a{
-        width:100%;
+    .admin-btns a {
+        width: 100%;
     }
 
     .admin-edit-btn,
-    .admin-delete-btn{
-        width:100%;
-        flex:none;
-        height:46px;
-        font-size:.95rem;
+    .admin-delete-btn {
+        width: 100%;
+        flex: none;
+        height: 46px;
+        font-size: .95rem;
     }
 }
 
@@ -517,4 +509,4 @@
         padding: .8rem;
         font-size: .9rem;
     }
-}    
+}

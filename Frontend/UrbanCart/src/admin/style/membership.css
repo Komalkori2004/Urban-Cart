@@ -61,23 +61,17 @@
 
     text-align: center;
 
-    color: var(--gold);
-
-    font-size:
-        clamp(2rem,4vw,3rem);
-
-    font-family:
-        var(--heading-font);
-
-    margin-bottom: 1rem;
+       color:var(--white);
+    font-size:clamp(2.5rem,5vw,4rem);
+    font-family:var(--heading-font);
+    margin-bottom:2rem;
 }
 
 .membership-subtitle {
 
     text-align: center;
 
-    color:
-        rgba(255,255,255,.7);
+    color:var(--text-muted);
 
     line-height: 1.7;
 
