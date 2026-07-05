@@ -1,15 +1,13 @@
-Backend/node_modules
-Frontend/UrbanCart/node_modules
+# Node Modules
+Backend/node_modules/
+Frontend/node_modules/
 
-
-
-
-
-
-
+# Environment Files
 Backend/.env
-Frontend/UrbanCart/.env
+Frontend/.env
 
+# Build Folder
+Frontend/dist/
 
-
-Frontend/UrbanCart/dist/
+# Optional
+.DS_Store
