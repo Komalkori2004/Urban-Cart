@@ -1,125 +1,166 @@
-.container,
-.admin-container{
-    max-width: 1400px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 20px;
+/* =========================
+    ADMIN DASHBOARD
+========================= */
+
+.admin-dashboard{
+    display:flex;
+    flex-direction:column;
+    gap:40px;
 }
 
 
+/* =========================
+    HERO
+========================= */
 
-.dashboard-page{
-    min-height:100vh;
+.admin-hero{
+    position:relative;
 
-    background:var(--black);
+    padding:60px;
 
-    padding:40px;
+    border-radius:30px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(212,175,55,.10),
+            rgba(255,255,255,.02)
+        );
+
+    border:1px solid
+        rgba(212,175,55,.15);
+
+    backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.4);
 }
 
-/* Header */
+.admin-hero::after{
+    content:"";
 
-.dashboard-header{
-    margin-bottom:40px;
+    position:absolute;
+
+    width:350px;
+    height:350px;
+
+    border-radius:50%;
+
+    background:
+        rgba(212,175,55,.05);
+
+    top:-150px;
+    right:-100px;
 }
 
-.dashboard-title{
+.admin-hero h5{
     color:var(--gold);
 
-    font-family:var(--heading-font);
+    letter-spacing:6px;
 
-     font-size: clamp(2.5rem,5vw,4rem);
-
-    margin-bottom:12px;
+    margin-bottom:15px;
 }
 
-.dashboard-subtitle{
-    color:rgba(255,255,255,.7);
+.admin-hero h1{
+    font-size:70px;
 
-    font-size:1rem;
+    line-height:1.1;
 
-    max-width:500px;
-
-    line-height:1.7;
+    margin-bottom:20px;
 }
 
-/* Cards */
+.admin-hero span{
+    color:var(--gold);
+}
 
-.dashboard-cards{
+.admin-hero p{
+    color:var(--gray);
+
+    font-size:20px;
+
+    max-width:700px;
+}
+
+
+/* =========================
+      STATS
+========================= */
+
+.admin-stats{
     display:grid;
 
     grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px,1fr)
-        );
+        repeat(4,1fr);
 
     gap:25px;
-
-    margin-bottom:40px;
 }
 
-.dashboard-card{
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.03),
-            rgba(255,255,255,.01)
-        );
+.admin-stat-card{
+    position:relative;
 
-    border:
-        1px solid
+    padding:40px 30px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    background:
+        rgba(255,255,255,.02);
+
+    border:1px solid
         rgba(212,175,55,.15);
 
-    border-radius:
-        22px;
-
-    padding:
-        30px;
-
     backdrop-filter:
-        blur(10px);
+        blur(20px);
 
-    transition:
-        .3s ease;
+    transition:.35s ease;
 }
 
-.dashboard-card:hover{
+.admin-stat-card:hover{
     transform:
-        translateY(-8px);
+        translateY(-10px);
 
     border-color:
         var(--gold);
 
     box-shadow:
-        0 0 25px
+        0 20px 50px
         rgba(212,175,55,.15);
 }
 
-.dashboard-card h3{
-    color:
-        var(--champagne);
+.admin-stat-card svg{
+    font-size:38px;
 
-    font-size:
-        1rem;
+    color:var(--gold);
 
-    margin-bottom:
-        20px;
+    margin-bottom:20px;
 }
 
-.dashboard-card p{
-    color:
-        var(--gold);
+.admin-stat-card h3{
+    font-size:48px;
 
-    font-size:
-        3rem;
+    color:var(--gold);
 
-    font-family:
-        var(--heading-font);
+    margin-bottom:10px;
 }
 
-/* Summary */
+.admin-stat-card p{
+    color:var(--gray);
 
-.dashboard-summary{
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+
+/* =========================
+      INVENTORY
+========================= */
+
+.inventory-overview{
     background:
         rgba(255,255,255,.02);
 
@@ -127,117 +168,221 @@
         1px solid
         rgba(212,175,55,.15);
 
-    border-radius:
-        22px;
+    border-radius:25px;
 
-    padding:
-        35px;
+    padding:40px;
 
     backdrop-filter:
-        blur(10px);
+        blur(20px);
 }
 
-.dashboard-summary h2{
-    color:
-        var(--gold);
+.inventory-overview h2{
+    color:var(--gold);
 
-    font-family:
-        var(--heading-font);
-
-    margin-bottom:
-        25px;
-
-    font-size:
-        2rem;
+    margin-bottom:30px;
 }
 
-.summary-box{
+.inventory-list{
     display:flex;
-
     flex-direction:column;
-
-    gap:18px;
+    gap:20px;
 }
 
-.summary-box p{
+.inventory-list div{
     display:flex;
 
-    justify-content:space-between;
+    justify-content:
+        space-between;
 
     align-items:center;
 
-    padding-bottom:15px;
+    padding:18px 0;
 
     border-bottom:
         1px solid
         rgba(255,255,255,.08);
-
-    color:
-        var(--white);
-
-    font-size:
-        1rem;
 }
 
-.summary-box span{
-    color:
+.inventory-list span{
+    color:var(--gray);
+}
+
+.inventory-list strong{
+    color:var(--gold);
+
+    font-size:22px;
+}
+
+
+/* =========================
+      ACTIONS
+========================= */
+
+.admin-actions{
+    background:
+        rgba(255,255,255,.02);
+
+    border:
+        1px solid
+        rgba(212,175,55,.15);
+
+    border-radius:25px;
+
+    padding:40px;
+}
+
+.admin-actions h2{
+    color:var(--gold);
+
+    margin-bottom:30px;
+}
+
+.action-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:20px;
+}
+
+.action-card{
+    background:
+        rgba(212,175,55,.05);
+
+    border:
+        1px solid
+        rgba(212,175,55,.15);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    text-decoration:none;
+
+    transition:.3s ease;
+
+    backdrop-filter:blur(15px);
+}
+
+.action-card:hover{
+    transform:
+        translateY(-6px);
+
+    border-color:
         var(--gold);
 
-    font-weight:
-        700;
-
-    font-size:
-        1.1rem;
+    box-shadow:
+        0 15px 35px
+        rgba(212,175,55,.12);
 }
 
-/* Tablet */
+.action-card h3{
+    color:var(--gold);
 
-@media(max-width:992px){
+    margin-bottom:10px;
+}
 
-    .dashboard-page{
-        padding:30px;
-    }
+.action-card p{
+    color:var(--gray);
 
-    .dashboard-cards{
+    font-size:14px;
+}
+
+
+/* =========================
+        TABLET
+========================= */
+
+@media(max-width:1200px){
+
+    .admin-stats{
         grid-template-columns:
             repeat(2,1fr);
     }
+
+    .action-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .admin-hero h1{
+        font-size:54px;
+    }
 }
 
-/* Mobile */
+
+/* =========================
+        MOBILE
+========================= */
 
 @media(max-width:768px){
 
-    .dashboard-page{
-        padding:20px;
+    .admin-dashboard{
+        gap:25px;
     }
 
-    .dashboard-title{
-        font-size:2.2rem;
+    .admin-hero{
+        padding:35px 25px;
     }
 
-    .dashboard-cards{
-        grid-template-columns:
-            1fr;
+    .admin-hero h1{
+        font-size:42px;
     }
 
-    .dashboard-card{
+    .admin-hero p{
+        font-size:16px;
+    }
+
+    .admin-stats{
+        grid-template-columns:1fr;
+    }
+
+    .action-grid{
+        grid-template-columns:1fr;
+    }
+
+    .inventory-overview,
+    .admin-actions{
         padding:25px;
     }
 
-    .dashboard-card p{
-        font-size:2.2rem;
-    }
-
-    .dashboard-summary{
-        padding:25px;
-    }
-
-    .summary-box p{
+    .inventory-list div{
         flex-direction:column;
-
         align-items:flex-start;
+        gap:10px;
+    }
 
-        gap:8px;
+    .admin-stat-card{
+        padding:30px;
+    }
+
+    .admin-stat-card h3{
+        font-size:38px;
+    }
+}
+
+
+/* =========================
+      SMALL MOBILE
+========================= */
+
+@media(max-width:480px){
+
+    .admin-hero{
+        padding:25px 20px;
+    }
+
+    .admin-hero h1{
+        font-size:34px;
+    }
+
+    .admin-hero h5{
+        letter-spacing:3px;
+        font-size:12px;
+    }
+
+    .admin-stat-card{
+        padding:25px;
     }
 }
