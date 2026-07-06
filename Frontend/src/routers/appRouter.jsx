@@ -179,7 +179,6 @@ const AppRouter = () => {
                         {/* USER ROUTES */}
 
 
-                        {/* USER ROUTES */}
 
                         <Route
                             path="/dashboard"
@@ -235,35 +234,13 @@ const AppRouter = () => {
                         </Route>
 
 
-                        {/* 
+
+                        {/*  */}
+
+
+
+
                         <Route
-                            path="/profile"
-                            element={
-                                <ProtectRoute>
-                                    <UserProfile />
-                                </ProtectRoute>
-                            }
-                        /> */}
-
-                        {/* <Route
-                            path="/cart"
-                            element={
-                                <ProtectRoute>
-                                    <CartPage />
-                                </ProtectRoute>
-                            }
-                        /> */}
-
-                        {/* <Route
-                            path="/my-orders"
-                            element={
-                                <ProtectRoute>
-                                    <MyOrders />
-                                </ProtectRoute>
-                            }
-                        /> */}
-
-                           <Route
                             path="/my-membershipHistory"
                             element={
                                 <ProtectRoute>
@@ -272,6 +249,24 @@ const AppRouter = () => {
                             }
                         />
 
+
+                        <Route
+                            path="/wishlist"
+                            element={
+                                <ProtectRoute>
+                                    <WishlistPage />
+                                </ProtectRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/cart"
+                            element={
+                                <ProtectRoute>
+                                    <CartPage />
+                                </ProtectRoute>
+                            }
+                        />
                         <Route
                             path="/checkout"
                             element={
@@ -280,8 +275,8 @@ const AppRouter = () => {
                                 </ProtectRoute>
                             }
                         />
-         
-                     
+
+
 
                         <Route
                             path="/membership/:slug"

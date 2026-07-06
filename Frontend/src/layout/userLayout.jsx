@@ -20,12 +20,12 @@ function UserLayout() {
 
             <div className="user-dashboard-content">
 
-             <button
-    className="user-sidebar-toggle"
-    onClick={() => setSidebarOpen(true)}
->
-    <span>❯</span>
-</button>
+                <button
+                    className="user-sidebar-toggle"
+                    onClick={() => setSidebarOpen(true)}
+                >
+                    <span>❯</span>
+                </button>
 
                 <Outlet />
 

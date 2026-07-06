@@ -344,6 +344,119 @@
     color: var(--gray);
 }
 
+
+
+/* =========================
+    MOBILE SIDEBAR UI
+========================= */
+
+.close-user-sidebar{
+    display:none;
+
+    position:absolute;
+
+    top:20px;
+    right:20px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+        rgba(212,175,55,.1);
+
+    color:
+        var(--gold);
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+.sidebar-overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,.7);
+
+    backdrop-filter:
+        blur(5px);
+
+    z-index:9998;
+}
+
+.user-sidebar-toggle{
+    display: none;
+
+    position: fixed;
+    top: 50%;
+    left: 0;
+
+    transform: translateY(-50%);
+
+    width: 40px;
+    height: 90px;
+
+    background: linear-gradient(
+        180deg,
+        rgba(212,175,55,.15),
+        rgba(212,175,55,.05)
+    );
+
+    border: 1px solid rgba(212,175,55,.25);
+    border-left: none;
+
+    border-radius: 0 18px 18px 0;
+
+    color: var(--gold);
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow: var(--shadow-md);
+
+    z-index: 999;
+}
+
+.user-sidebar-toggle:hover{
+    width: 50px;
+
+    background: rgba(212,175,55,.15);
+
+    box-shadow: var(--shadow-lg);
+}
+
+
+
+.user-sidebar-toggle span{
+    animation: slideArrow 1.5s infinite;
+}
+
+@keyframes slideArrow{
+    0%{
+        transform: translateX(0);
+    }
+
+    50%{
+        transform: translateX(5px);
+    }
+
+    100%{
+        transform: translateX(0);
+    }
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -393,13 +506,8 @@
         align-items:center;
         justify-content:center;
     }
-
-    .dashboard-toggle{
-
-        display:flex;
-
-        align-items:center;
-        justify-content:center;
+    .user-sidebar-toggle{
+        display: flex;
     }
 
     .user-dashboard-content{
@@ -414,7 +522,17 @@
     }
 }
 
+
+@media(max-width:1050px){
+   .user-sidebar-toggle{
+      display:flex;
+   }
+}
+
 @media(max-width:768px){
+     .user-sidebar-toggle{
+      display:flex;
+   }
 
     .user-sidebar{
 
@@ -457,6 +575,9 @@
 
 @media (max-width:480px) {
 
+     .user-sidebar-toggle{
+      display:flex;
+   }
     .user-dashboard-layout {
         padding: 20px 0;
     }
@@ -480,115 +601,3 @@
 
 /* responsive toggler bar  */
 
-/* =========================
-    MOBILE SIDEBAR UI
-========================= */
-
-.close-user-sidebar{
-    display:none;
-
-    position:absolute;
-
-    top:20px;
-    right:20px;
-
-    width:40px;
-    height:40px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:
-        rgba(212,175,55,.1);
-
-    color:
-        var(--gold);
-
-    font-size:22px;
-
-    cursor:pointer;
-}
-
-.sidebar-overlay{
-    position:fixed;
-
-    inset:0;
-
-    background:
-        rgba(0,0,0,.7);
-
-    backdrop-filter:
-        blur(5px);
-
-    z-index:9998;
-}
-
-.user-sidebar-toggle{
-    position: fixed;
-
-    top: 50%;
-    left: 0;
-
-    transform: translateY(-50%);
-
-    width: 40px;
-    height: 90px;
-
-    background: linear-gradient(
-        180deg,
-        rgba(212,175,55,.15),
-        rgba(212,175,55,.05)
-    );
-
-    border: 1px solid rgba(212,175,55,.25);
-    border-left: none;
-
-    border-radius: 0 18px 18px 0;
-
-    color: var(--gold);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 24px;
-
-    cursor: pointer;
-
-    backdrop-filter: blur(15px);
-
-    box-shadow: var(--shadow-md);
-
-    z-index: 999;
-    
-    transition: var(--transition);
-}
-
-.user-sidebar-toggle:hover{
-    width: 50px;
-
-    background: rgba(212,175,55,.15);
-
-    box-shadow: var(--shadow-lg);
-}
-
-
-
-.user-sidebar-toggle span{
-    animation: slideArrow 1.5s infinite;
-}
-
-@keyframes slideArrow{
-    0%{
-        transform: translateX(0);
-    }
-
-    50%{
-        transform: translateX(5px);
-    }
-
-    100%{
-        transform: translateX(0);
-    }
-}

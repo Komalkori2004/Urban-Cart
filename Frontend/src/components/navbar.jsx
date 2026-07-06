@@ -173,7 +173,7 @@ const NavBar = () => {
 
             <Link
               className="nav-item badge-item"
-              to="/dashboard/wishlist"
+              to="/wishlist"
             >
               <FiHeart />
 
@@ -192,7 +192,7 @@ const NavBar = () => {
 
             <Link
               className="nav-item badge-item"
-              to="/dashboard/cart"
+              to="/cart"
             >
               <FiShoppingCart />
 
@@ -403,7 +403,7 @@ const NavBar = () => {
 
           <Link
             className="mobile-link"
-            to="/dashboard/wishlist"
+            to="/wishlist"
             onClick={() =>
               setMenuOpen(false)
             }
@@ -429,7 +429,7 @@ const NavBar = () => {
 
           <Link
             className="mobile-link"
-            to="/dashboard/cart"
+            to="/cart"
             onClick={() =>
               setMenuOpen(false)
             }
