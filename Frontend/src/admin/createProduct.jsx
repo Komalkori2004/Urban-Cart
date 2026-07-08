@@ -4,7 +4,8 @@ import { createProduct } from "../redux/thunks/productThunks";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { getAllCategory } from '../redux/thunks/categoryThunks'
-import "../admin/style/createProduct.css"
+
+import "./style/createProduct.css";
 
 import { toast }
     from "sonner";
@@ -181,339 +182,340 @@ const CreateProduct = () => {
     }
 
 
-return (
+    return (
 
-    <div className="admin-product-page">
+        <div className="admin-product-page">
 
-        <div className="admin-container">
+            <div className="admin-container">
 
-            {/* HEADER */}
+                {/* HEADER */}
 
-            <div className="product-header">
+                <div className="product-header">
 
-                <h1 className="product-title">
-                    Create Product
-                </h1>
+                    <div>
 
-                <p className="product-subtitle">
-                    Add a new luxury product to your UrbanCart store
-                </p>
+                        <h1 className="product-title">
+                            Create New Product
+                        </h1>
 
-            </div>
-
-
-            <form
-                className="product-form"
-                onSubmit={handleSubmit}
-            >
-
-                {/* PRODUCT INFO */}
-
-                <div className="form-section">
-
-                    <h2>
-                        Product Information
-                    </h2>
-
-                    <div className="product-grid">
-
-                        <div className="form-group">
-
-                            <label>
-                                Product Name
-                            </label>
-
-                            <input
-                                className="product-input"
-                                type="text"
-                                name="name"
-                                placeholder="Enter product name"
-                                value={formData.name}
-                                onChange={handleChange}
-                            />
-
-                            {
-                                error.name &&
-                                <p className="error-text">
-                                    {error.name}
-                                </p>
-                            }
-
-                        </div>
-
-
-                        <div className="form-group">
-
-                            <label>
-                                Brand
-                            </label>
-
-                            <input
-                                className="product-input"
-                                type="text"
-                                name="brand"
-                                placeholder="Enter brand"
-                                value={formData.brand}
-                                onChange={handleChange}
-                            />
-
-                            {
-                                error.brand &&
-                                <p className="error-text">
-                                    {error.brand}
-                                </p>
-                            }
-
-                        </div>
-
-
-                        <div className="form-group">
-
-                            <label>
-                                Price
-                            </label>
-
-                            <input
-                                className="product-input"
-                                type="number"
-                                name="price"
-                                placeholder="Enter price"
-                                value={formData.price}
-                                onChange={handleChange}
-                            />
-
-                            {
-                                error.price &&
-                                <p className="error-text">
-                                    {error.price}
-                                </p>
-                            }
-
-                        </div>
-
-
-                        <div className="form-group">
-
-                            <label>
-                                Stock
-                            </label>
-
-                            <input
-                                className="product-input"
-                                type="number"
-                                name="stock"
-                                placeholder="Enter stock"
-                                value={formData.stock}
-                                onChange={handleChange}
-                            />
-
-                            {
-                                error.stock &&
-                                <p className="error-text">
-                                    {error.stock}
-                                </p>
-                            }
-
-                        </div>
-
-
-                        <div className="form-group">
-
-                            <label>
-                                Category
-                            </label>
-
-                            <select
-                                className="product-input"
-                                name="category"
-                                value={formData.category}
-                                onChange={handleChange}
-                            >
-
-                                <option value="">
-                                    Select Category
-                                </option>
-
-                                {
-                                    categories.map(
-                                        category => (
-
-                                            <option
-                                                key={category._id}
-                                                value={category.name}
-                                            >
-                                                {category.name}
-                                            </option>
-                                        )
-                                    )
-                                }
-
-                            </select>
-
-                            {
-                                error.category &&
-                                <p className="error-text">
-                                    {error.category}
-                                </p>
-                            }
-
-                        </div>
-
-
-                        <div className="form-group">
-
-                            <label>
-                                Shipping
-                            </label>
-
-                            <label
-                                className="shipping-check"
-                            >
-
-                                <input
-                                    type="checkbox"
-                                    name="shipping"
-                                    checked={
-                                        formData.shipping
-                                    }
-                                    onChange={
-                                        handleChange
-                                    }
-                                />
-
-                                Free Shipping
-
-                            </label>
-
-                        </div>
+                        <p className="product-subtitle">
+                            Add premium products to your UrbanCart catalog with complete details.
+                        </p>
 
                     </div>
 
+                </div>
 
-                    {/* DESCRIPTION */}
+                <form
+                    className="product-form"
+                    onSubmit={handleSubmit}
+                >
 
-                    <div className="form-group">
+                    {/* PRODUCT INFO */}
 
-                        <label>
-                            Product Description
-                        </label>
+                    <div className="form-section">
 
-                        <textarea
-                            className="
+                        <h2>
+                            Product Information
+                        </h2>
+
+                        <div className="product-grid">
+
+                            <div className="form-group">
+
+                                <label>
+                                    Product Name
+                                </label>
+
+                                <input
+                                    className="product-input"
+                                    type="text"
+                                    name="name"
+                                    placeholder="Enter product name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                />
+
+                                {
+                                    error.name &&
+                                    <p className="error-text">
+                                        {error.name}
+                                    </p>
+                                }
+
+                            </div>
+
+
+                            <div className="form-group">
+
+                                <label>
+                                    Brand
+                                </label>
+
+                                <input
+                                    className="product-input"
+                                    type="text"
+                                    name="brand"
+                                    placeholder="Enter brand"
+                                    value={formData.brand}
+                                    onChange={handleChange}
+                                />
+
+                                {
+                                    error.brand &&
+                                    <p className="error-text">
+                                        {error.brand}
+                                    </p>
+                                }
+
+                            </div>
+
+
+                            <div className="form-group">
+
+                                <label>
+                                    Price
+                                </label>
+
+                                <input
+                                    className="product-input"
+                                    type="number"
+                                    name="price"
+                                    placeholder="Enter price"
+                                    value={formData.price}
+                                    onChange={handleChange}
+                                />
+
+                                {
+                                    error.price &&
+                                    <p className="error-text">
+                                        {error.price}
+                                    </p>
+                                }
+
+                            </div>
+
+
+                            <div className="form-group">
+
+                                <label>
+                                    Stock
+                                </label>
+
+                                <input
+                                    className="product-input"
+                                    type="number"
+                                    name="stock"
+                                    placeholder="Enter stock"
+                                    value={formData.stock}
+                                    onChange={handleChange}
+                                />
+
+                                {
+                                    error.stock &&
+                                    <p className="error-text">
+                                        {error.stock}
+                                    </p>
+                                }
+
+                            </div>
+
+
+                            <div className="form-group">
+
+                                <label>
+                                    Category
+                                </label>
+
+                                <select
+                                    className="product-input"
+                                    name="category"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                >
+
+                                    <option value="">
+                                        Select Category
+                                    </option>
+
+                                    {
+                                        categories.map(
+                                            category => (
+
+                                                <option
+                                                    key={category._id}
+                                                    value={category.name}
+                                                >
+                                                    {category.name}
+                                                </option>
+                                            )
+                                        )
+                                    }
+
+                                </select>
+
+                                {
+                                    error.category &&
+                                    <p className="error-text">
+                                        {error.category}
+                                    </p>
+                                }
+
+                            </div>
+
+
+                            <div className="form-group">
+
+                                <label>
+                                    Shipping
+                                </label>
+
+                                <label className="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        name="shipping"
+                                        checked={formData.shipping}
+                                        onChange={handleChange}
+                                    />
+
+                                    <span className="slider"></span>
+
+                                    <span className="switch-text">
+                                        Free Shipping
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* DESCRIPTION */}
+
+                        <div className="form-group">
+
+                            <label>
+                                Product Description
+                            </label>
+
+                            <textarea
+                                className="
                                 product-input
                                 product-textarea
                             "
-                            name="description"
-                            placeholder="
+                                name="description"
+                                placeholder="
                                 Enter product description
                             "
-                            value={
-                                formData.description
+                                value={
+                                    formData.description
+                                }
+                                onChange={
+                                    handleChange
+                                }
+                            />
+
+                            {
+                                error.description &&
+                                <p className="error-text">
+                                    {error.description}
+                                </p>
                             }
-                            onChange={
-                                handleChange
-                            }
-                        />
+
+                        </div>
+
+                    </div>
+
+
+                    {/* IMAGES */}
+
+                    <div className="form-section">
+
+                        <h2>
+                            Product Images
+                        </h2>
+
+                        <div className="upload-box">
+
+                            <input
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={
+                                    handleImageChange
+                                }
+                            />
+
+                            <p>
+                                Upload product images
+                            </p>
+
+                        </div>
 
                         {
-                            error.description &&
+                            error.images &&
                             <p className="error-text">
-                                {error.description}
+                                {error.images}
                             </p>
                         }
 
-                    </div>
-
-                </div>
-
-
-                {/* IMAGES */}
-
-                <div className="form-section">
-
-                    <h2>
-                        Product Images
-                    </h2>
-
-                    <div className="upload-box">
-
-                        <input
-                            type="file"
-                            multiple
-                            accept="image/*"
-                            onChange={
-                                handleImageChange
-                            }
-                        />
-
-                        <p>
-                            Upload product images
-                        </p>
-
-                    </div>
-
-                    {
-                        error.images &&
-                        <p className="error-text">
-                            {error.images}
-                        </p>
-                    }
-
-                    <div
-                        className="
+                        <div
+                            className="
                             preview-container
                         "
+                        >
+
+                            {
+                                previewImages.map(
+                                    (
+                                        img,
+                                        index
+                                    ) => (
+
+                                        <img
+                                            key={index}
+                                            src={img}
+                                            alt="preview"
+                                            loading="lazy"
+                                            className="
+                                            preview-image
+                                        "
+                                        />
+                                    )
+                                )
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    {/* SUBMIT */}
+
+                    <button
+                        className="
+                        product-submit-btn
+                    "
+                        type="submit"
+                        disabled={loading}
                     >
 
                         {
-                            previewImages.map(
-                                (
-                                    img,
-                                    index
-                                ) => (
-
-                                    <img
-                                        key={index}
-                                        src={img}
-                                        alt="preview"
-                                        loading="lazy"
-                                        className="
-                                            preview-image
-                                        "
-                                    />
-                                )
-                            )
+                            loading
+                                ? "Creating Product..."
+                                : "Create Product"
                         }
 
-                    </div>
+                    </button>
 
-                </div>
+                </form>
 
-
-                {/* SUBMIT */}
-
-                <button
-                    className="
-                        product-submit-btn
-                    "
-                    type="submit"
-                    disabled={loading}
-                >
-
-                    {
-                        loading
-                            ? "Creating Product..."
-                            : "Create Product"
-                    }
-
-                </button>
-
-            </form>
+            </div>
 
         </div>
-
-    </div>
-)
+    )
 }
 
 export default CreateProduct
