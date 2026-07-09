@@ -97,13 +97,36 @@ const createProduct = asyncHandler(async (req, res, next) => {
 //   all product 
 
 const getAllProduct = asyncHandler(async (req, res, next) => {
+
+    const page = Number(req.query.page) || 1;
+    const limit = 2;
+    const skip = (page - 1) * limit;
+
+const totalProducts = await productModel.countDocuments();
+
+const totalPages = Math.ceil(totalProducts / limit);
+
     const products = await productModel.find()
 
-    res.status(200).json({
-        success: true,
-        products
+        .skip(skip)
 
-    })
+        .limit(limit);
+
+  res.status(200).json({
+
+    success: true,
+
+    products,
+
+    currentPage: page,
+
+    totalPages,
+
+    totalProducts,
+
+    limit
+
+});
 
 })
 const getSingleProduct = asyncHandler(async (req, res, next) => {
@@ -319,4 +342,4 @@ const searchProducts = asyncHandler(async (req, res, next) => {
     })
 })
 
-module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct, getSingleProductById, CreateReview ,searchProducts}
+module.exports = { createProduct, getAllProduct, getSingleProduct, updateProducts, deleteProduct, getSingleProductById, CreateReview, searchProducts }
