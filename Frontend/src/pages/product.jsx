@@ -21,12 +21,14 @@ const Product = () => {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const { wishlist } = useSelector(state => state.wishlist)
 
-  const { products, loading, error } = useSelector(state => state.products)
+  const { products, loading, error, totalPages, totalProducts } = useSelector(state => state.products)
 
   const [debouncedSearch, setDebouncedSearch] = useState("")
 
   const [search, setSearch] = useState("")
   const [SortOption, setSortOption] = useState("")
+  const [currentPage, setCurrentPage] = useState(1);
+
 
   const { categories } = useSelector((state) => state.category)
 
@@ -36,11 +38,15 @@ const Product = () => {
 
 useEffect(() => {
 
-    dispatch(getAllproduct());
+    dispatch(getAllproduct(currentPage));
+
+}, [dispatch, currentPage]);
+
+useEffect(() => {
+
     dispatch(getAllCategory());
 
-    const token =
-        localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if (token) {
         dispatch(getWishlist());
@@ -104,82 +110,82 @@ useEffect(() => {
 
 
 
-const handleAddToCart = useCallback(
+  const handleAddToCart = useCallback(
     async (e, productId) => {
 
-        e.preventDefault();
-        e.stopPropagation();
+      e.preventDefault();
+      e.stopPropagation();
 
-        const token =
-            localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
-        if (!token) {
+      if (!token) {
 
-            toast.warning(
-                "Please login to add products to cart"
-            );
+        toast.warning(
+          "Please login to add products to cart"
+        );
 
-            setTimeout(() => {
-                navigate("/login");
-            }, 700);
+        setTimeout(() => {
+          navigate("/login");
+        }, 700);
 
-            return;
-        }
+        return;
+      }
 
-        const result =
-            await dispatch(
-                addToCart({
-                    productId,
-                    quantity: 1
-                })
-            );
+      const result =
+        await dispatch(
+          addToCart({
+            productId,
+            quantity: 1
+          })
+        );
 
-        if (
-            result.meta.requestStatus ===
-            "fulfilled"
-        ) {
-            toast.success(
-                "Product added to cart"
-            );
-        }
+      if (
+        result.meta.requestStatus ===
+        "fulfilled"
+      ) {
+        toast.success(
+          "Product added to cart"
+        );
+      }
 
     },
     [dispatch, navigate]
-);
+  );
 
 
 
 
-const handleWishlist = useCallback(
+  const handleWishlist = useCallback(
     async (
-        e,
-        productId,
-        isWishlisted
+      e,
+      productId,
+      isWishlisted
     ) => {
 
-        e.preventDefault();
-        e.stopPropagation();
+      e.preventDefault();
+      e.stopPropagation();
 
-        const token =
-            localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
-        if (!token) {
+      if (!token) {
 
-            toast.warning(
-                "Please login to access wishlist"
-            );
+        toast.warning(
+          "Please login to access wishlist"
+        );
 
-            setTimeout(() => {
-                navigate("/login");
-            }, 700);
+        setTimeout(() => {
+          navigate("/login");
+        }, 700);
 
-            return;
-        }
+        return;
+      }
 
-        // existing logic
+      // existing logic
     },
     [dispatch, navigate]
-);
+  );
 
 
 
@@ -300,7 +306,7 @@ const handleWishlist = useCallback(
         <div className="product-stats">
 
           <div className="stats-item">
-            <span>{ShortedProducts.length}</span>
+      <span>{totalProducts}</span>
             <p>Exclusive Pieces</p>
           </div>
 
@@ -352,6 +358,73 @@ const handleWishlist = useCallback(
 
         </section>
 
+
+        {/* page count */}
+
+        {/* PAGINATION */}
+
+     {/* PAGINATION */}
+
+{
+    totalPages > 1 && (
+
+        <div className="pagination">
+
+            <button
+                className="pagination-btn"
+                onClick={() =>
+                    setCurrentPage((prev) => prev - 1)
+                }
+                disabled={currentPage === 1}
+            >
+                ← Previous
+            </button>
+
+
+            <div className="pagination-numbers">
+
+                {
+                    [...Array(totalPages)].map((_, index) => (
+
+                        <button
+                            key={index}
+
+                            className={
+                                currentPage === index + 1
+                                    ? "page-number active-page"
+                                    : "page-number"
+                            }
+
+                            onClick={() =>
+                                setCurrentPage(index + 1)
+                            }
+                        >
+                            {index + 1}
+                        </button>
+
+                    ))
+                }
+
+            </div>
+
+
+            <button
+                className="pagination-btn"
+                onClick={() =>
+                    setCurrentPage((prev) => prev + 1)
+                }
+
+                disabled={
+                    currentPage === totalPages
+                }
+            >
+                Next →
+            </button>
+
+        </div>
+
+    )
+}
 
         {/* EMPTY STATE */}
 

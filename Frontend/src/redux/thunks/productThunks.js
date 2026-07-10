@@ -5,10 +5,10 @@ import api from "../../services/api";
 export const getAllproduct = createAsyncThunk(
     "product/getAllproduct",
 
-    async (_, thunkAPI) => {
+    async (page=1, thunkAPI) => {
         try {
-            const { data } = await api.get("/products/")
-            return data.products
+            const { data } = await api.get(`/products/?page=${page}`)
+          return data;
 
 
         } catch (error) {

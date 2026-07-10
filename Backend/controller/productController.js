@@ -109,11 +109,10 @@ const totalPages = Math.ceil(totalProducts / limit);
     const products = await productModel.find()
 
         .skip(skip)
-
         .limit(limit);
 
   res.status(200).json({
-
+    
     success: true,
 
     products,
