@@ -99,33 +99,59 @@ const createProduct = asyncHandler(async (req, res, next) => {
 const getAllProduct = asyncHandler(async (req, res, next) => {
 
     const page = Number(req.query.page) || 1;
+    const search = req.query.search || "";
+
+    const query = {};
+
+    if (search) {
+
+        query.$or = [
+
+            {
+                name: {
+                    $regex: search,
+                    $options: "i"
+                }
+            },
+
+            {
+                description: {
+                    $regex: search,
+                    $options: "i"
+                }
+            }
+
+        ];
+
+    }
+
     const limit = 2;
     const skip = (page - 1) * limit;
 
-const totalProducts = await productModel.countDocuments();
+    const totalProducts = await productModel.countDocuments(query);
 
-const totalPages = Math.ceil(totalProducts / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
-    const products = await productModel.find()
-
+    const products = await productModel
+        .find(query)
         .skip(skip)
         .limit(limit);
 
-  res.status(200).json({
-    
-    success: true,
+    res.status(200).json({
 
-    products,
+        success: true,
 
-    currentPage: page,
+        products,
 
-    totalPages,
+        currentPage: page,
 
-    totalProducts,
+        totalPages,
 
-    limit
+        totalProducts,
 
-});
+        limit
+
+    });
 
 })
 const getSingleProduct = asyncHandler(async (req, res, next) => {
