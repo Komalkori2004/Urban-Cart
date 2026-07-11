@@ -35,24 +35,41 @@ const Product = () => {
 
 
 
+  useEffect(() => {
 
-useEffect(() => {
+    dispatch(
+      getAllproduct({
+        page: currentPage,
+        search: debouncedSearch
+      })
+    );
 
-    dispatch(getAllproduct(currentPage));
+  }, [
+    dispatch,
+    currentPage,
+    debouncedSearch
+  ]);
 
-}, [dispatch, currentPage]);
 
-useEffect(() => {
+  useEffect(() => {
+
+    setCurrentPage(1);
+
+}, [debouncedSearch]);
+
+  useEffect(() => {
 
     dispatch(getAllCategory());
 
     const token = localStorage.getItem("token");
 
     if (token) {
-        dispatch(getWishlist());
+      dispatch(getWishlist());
     }
 
-}, [dispatch]);
+  }, [dispatch]);
+
+
 
 
 
@@ -62,30 +79,36 @@ useEffect(() => {
     }, 500)
     return () => clearTimeout(timer)
   }, [search])
-  const filteredProducts = useMemo(() => {
 
-    return products.filter((product) => {
 
-      const matchCategory =
-        selectedCategory === "All" ||
-        product.category === selectedCategory
 
-      const matchSearch =
-        product.name
-          .toLowerCase()
-          .includes(
-            debouncedSearch.toLowerCase()
-          )
 
-      return matchCategory && matchSearch
-    })
+  // const filteredProducts = useMemo(() => {
 
-  }, [
-    products,
-    selectedCategory,
-    debouncedSearch
-  ])
+  //   return products.filter((product) => {
 
+  //     const matchCategory =
+  //       selectedCategory === "All" ||
+  //       product.category === selectedCategory
+
+  //     const matchSearch =
+  //       product.name
+  //         .toLowerCase()
+  //         .includes(
+  //           debouncedSearch.toLowerCase()
+  //         )
+
+  //     return matchCategory && matchSearch
+  //   })
+
+  // }, [
+  //   products,
+  //   selectedCategory,
+  //   debouncedSearch
+  // ])
+
+
+  const filteredProducts = products;
 
   const ShortedProducts = useMemo(() => {
 
@@ -108,6 +131,8 @@ useEffect(() => {
     SortOption
   ])
 
+
+  
 
 
   const handleAddToCart = useCallback(
@@ -306,7 +331,7 @@ useEffect(() => {
         <div className="product-stats">
 
           <div className="stats-item">
-      <span>{totalProducts}</span>
+            <span>{totalProducts}</span>
             <p>Exclusive Pieces</p>
           </div>
 
@@ -363,68 +388,68 @@ useEffect(() => {
 
         {/* PAGINATION */}
 
-     {/* PAGINATION */}
+        {/* PAGINATION */}
 
-{
-    totalPages > 1 && (
+        {
+          totalPages > 1 && (
 
-        <div className="pagination">
+            <div className="pagination">
 
-            <button
+              <button
                 className="pagination-btn"
                 onClick={() =>
-                    setCurrentPage((prev) => prev - 1)
+                  setCurrentPage((prev) => prev - 1)
                 }
                 disabled={currentPage === 1}
-            >
+              >
                 ← Previous
-            </button>
+              </button>
 
 
-            <div className="pagination-numbers">
+              <div className="pagination-numbers">
 
                 {
-                    [...Array(totalPages)].map((_, index) => (
+                  [...Array(totalPages)].map((_, index) => (
 
-                        <button
-                            key={index}
+                    <button
+                      key={index}
 
-                            className={
-                                currentPage === index + 1
-                                    ? "page-number active-page"
-                                    : "page-number"
-                            }
+                      className={
+                        currentPage === index + 1
+                          ? "page-number active-page"
+                          : "page-number"
+                      }
 
-                            onClick={() =>
-                                setCurrentPage(index + 1)
-                            }
-                        >
-                            {index + 1}
-                        </button>
+                      onClick={() =>
+                        setCurrentPage(index + 1)
+                      }
+                    >
+                      {index + 1}
+                    </button>
 
-                    ))
+                  ))
                 }
 
-            </div>
+              </div>
 
 
-            <button
+              <button
                 className="pagination-btn"
                 onClick={() =>
-                    setCurrentPage((prev) => prev + 1)
+                  setCurrentPage((prev) => prev + 1)
                 }
 
                 disabled={
-                    currentPage === totalPages
+                  currentPage === totalPages
                 }
-            >
+              >
                 Next →
-            </button>
+              </button>
 
-        </div>
+            </div>
 
-    )
-}
+          )
+        }
 
         {/* EMPTY STATE */}
 

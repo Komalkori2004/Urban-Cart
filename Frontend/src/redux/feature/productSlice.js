@@ -6,17 +6,25 @@ import { getAllproduct, getsingleProduct, createProduct, deleteProduct, updatePr
 const initialState = {
 
     products: [],
+
     singleProduct: {},
+
     loading: false,
+
     error: null,
 
     currentPage: 1,
+
     totalPages: 1,
+
     totalProducts: 0,
+
     limit: 0,
 
     searchResults: [],
+
     searchLoading: false,
+
     searchError: null
 
 }
