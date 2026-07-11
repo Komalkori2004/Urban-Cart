@@ -100,6 +100,7 @@ const getAllProduct = asyncHandler(async (req, res, next) => {
 
     const page = Number(req.query.page) || 1;
     const search = req.query.search || "";
+    const category = req.query.category || "";
 
     const query = {};
 
@@ -125,6 +126,15 @@ const getAllProduct = asyncHandler(async (req, res, next) => {
 
     }
 
+
+    if (
+    category &&
+    category !== "All"
+) {
+
+    query.category = category;
+
+}
     const limit = 2;
     const skip = (page - 1) * limit;
 

@@ -38,16 +38,18 @@ const Product = () => {
   useEffect(() => {
 
     dispatch(
-      getAllproduct({
+    getAllproduct({
         page: currentPage,
-        search: debouncedSearch
-      })
-    );
+        search: debouncedSearch,
+        category: selectedCategory
+    })
+);
 
   }, [
     dispatch,
     currentPage,
-    debouncedSearch
+    debouncedSearch,
+        selectedCategory
   ]);
 
 
@@ -108,29 +110,26 @@ const Product = () => {
   // ])
 
 
-  const filteredProducts = products;
+ const ShortedProducts = useMemo(() => {
 
-  const ShortedProducts = useMemo(() => {
+    return [...products].sort((a, b) => {
 
-    return [...filteredProducts].sort((a, b) => {
+        if (SortOption === "lowToHigh") {
+            return a.price - b.price;
+        }
 
-      if (SortOption === "lowToHigh") {
-        return a.price - b.price
-      }
+        if (SortOption === "highToLow") {
+            return b.price - a.price;
+        }
 
-      if (SortOption === "highToLow") {
-        return b.price - a.price
-      }
+        return 0;
 
-      return 0
+    });
 
-    })
-
-  }, [
-    filteredProducts,
+}, [
+    products,
     SortOption
-  ])
-
+]);
 
   
 
