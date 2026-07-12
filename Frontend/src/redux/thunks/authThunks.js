@@ -167,6 +167,7 @@ export const getAddresses=createAsyncThunk(
 
 
 export const addAddress=createAsyncThunk(
+
     "auth/addAddress",
 
 async(addressData,thunkAPI)=>{
@@ -187,3 +188,97 @@ async(addressData,thunkAPI)=>{
 
 
 )
+
+
+
+
+
+export const updateProfile = createAsyncThunk(
+    "auth/updateProfile",
+
+    async (profileData, thunkAPI) => {
+        try {
+
+            const { data } = await api.put(
+                "/user/profile",
+                profileData
+            );
+
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data.user)
+            );
+
+            return data;
+
+        } catch (error) {
+
+            return thunkAPI.rejectWithValue(
+                error.response.data.message
+            );
+
+        }
+    }
+);
+
+
+
+export const updateProfile = createAsyncThunk(
+    "auth/updateProfile",
+
+    async (profileData, thunkAPI) => {
+        try {
+
+            const { data } = await api.put(
+                "/user/profile",
+                profileData
+            );
+
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data.user)
+            );
+
+            return data;
+
+        } catch (error) {
+
+            return thunkAPI.rejectWithValue(
+                error.response.data.message
+            );
+
+        }
+    }
+);
+
+
+
+export const uploadProfileImage = createAsyncThunk(
+    "auth/uploadProfileImage",
+
+    async (formData, thunkAPI) => {
+
+        try {
+
+            const { data } = await api.put(
+                "/user/profile-image",
+                formData
+            );
+
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data.user)
+            );
+
+            return data;
+
+        } catch (error) {
+
+            return thunkAPI.rejectWithValue(
+                error.response.data.message
+            );
+
+        }
+
+    }
+);

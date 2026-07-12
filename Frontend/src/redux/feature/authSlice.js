@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, registerUser, verifyEmail, forgotPassword, resetPassword, getProfile,getAllUser
-    ,addAddress,getAddresses
- } from '../thunks/authThunks';
+import {
+    loginUser, registerUser, verifyEmail, forgotPassword, resetPassword, getProfile, getAllUser
+    , addAddress, getAddresses, updateProfile, changePassword, uploadProfileImage
+} from '../thunks/authThunks';
 
 
 
@@ -21,8 +22,8 @@ const initialState = {
 
     isAuthenticated:
         !!localStorage.getItem("token"),
-        addresses: [],
-users: []
+    addresses: [],
+    users: []
 };
 
 const authSlice = createSlice({
@@ -150,61 +151,116 @@ const authSlice = createSlice({
             })
 
             // get Profile
-            .addCase(getProfile.pending,(state)=>{
-                state.loading=true,
-                state.error=null
+            .addCase(getProfile.pending, (state) => {
+                state.loading = true,
+                    state.error = null
             })
-            .addCase(getProfile.fulfilled,(state,action)=>{
-                state.loading=false,
-                state.user=action.payload.user
+            .addCase(getProfile.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.user = action.payload.user
             })
-            .addCase(getProfile.rejected,(state,action)=>{
-                state.loading=false,
-                state.error=action.payload
+            .addCase(getProfile.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
             })
 
             // get all user for admin
 
-            .addCase(getAllUser.pending,(state)=>{
-                state.loading=true,
-                state.error=null
+            .addCase(getAllUser.pending, (state) => {
+                state.loading = true,
+                    state.error = null
             })
-            .addCase(getAllUser.fulfilled,(state,action)=>{
-                state.loading=false,
-                state.users=action.payload
+            .addCase(getAllUser.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.users = action.payload
             })
-            .addCase(getAllUser.rejected,(state,action)=>{
-                state.loading=false,
-                state.error=action.payload
+            .addCase(getAllUser.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
             })
 
             // get address
-            .addCase(getAddresses.pending,(state)=>{
-                state.loading=true,
-                state.error=null
+            .addCase(getAddresses.pending, (state) => {
+                state.loading = true,
+                    state.error = null
             })
-            .addCase(getAddresses.fulfilled,(state,action)=>{
-                state.loading=false,
-                state.addresses=action.payload
+            .addCase(getAddresses.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.addresses = action.payload
             })
-            .addCase(getAddresses.rejected,(state,action)=>{
-                state.loading=false,
-                state.error=action.payload
+            .addCase(getAddresses.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
             })
 
             // add address
-            .addCase(addAddress.pending,(state)=>{
-                state.loading=true,
-                state.error=null
+            .addCase(addAddress.pending, (state) => {
+                state.loading = true,
+                    state.error = null
             })
-            .addCase(addAddress.fulfilled,(state,action)=>{
-                state.loading=false,
-                state.addresses=action.payload
+            .addCase(addAddress.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.addresses = action.payload
             })
-            .addCase(addAddress.rejected,(state,action)=>{
-                state.loading=false,
-                state.error=action.payload
+            .addCase(addAddress.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
             })
+
+
+            // update profile
+            .addCase(updateProfile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload.user;
+                state.message = action.payload.message;
+            })
+
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            // change password
+            .addCase(changePassword.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+
+            .addCase(changePassword.fulfilled, (state, action) => {
+                state.loading = false;
+                state.message = action.payload.message;
+            })
+
+            .addCase(changePassword.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+
+            // upload profile image
+            .addCase(uploadProfileImage.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+
+            .addCase(uploadProfileImage.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload.user;
+                state.message = action.payload.message;
+            })
+
+            .addCase(uploadProfileImage.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+
+
     }
 
 
