@@ -38,26 +38,32 @@ const Product = () => {
   useEffect(() => {
 
     dispatch(
-    getAllproduct({
+      getAllproduct({
         page: currentPage,
         search: debouncedSearch,
-        category: selectedCategory
-    })
-);
+        category: selectedCategory,
+        sort: SortOption
+      })
+    );
 
   }, [
     dispatch,
     currentPage,
     debouncedSearch,
-        selectedCategory
+    selectedCategory,
+    SortOption
   ]);
 
 
-  useEffect(() => {
-
+useEffect(() => {
     setCurrentPage(1);
+}, [
+    debouncedSearch,
+    selectedCategory,
+    SortOption
+]);
 
-}, [debouncedSearch]);
+
 
   useEffect(() => {
 
@@ -85,53 +91,11 @@ const Product = () => {
 
 
 
-  // const filteredProducts = useMemo(() => {
-
-  //   return products.filter((product) => {
-
-  //     const matchCategory =
-  //       selectedCategory === "All" ||
-  //       product.category === selectedCategory
-
-  //     const matchSearch =
-  //       product.name
-  //         .toLowerCase()
-  //         .includes(
-  //           debouncedSearch.toLowerCase()
-  //         )
-
-  //     return matchCategory && matchSearch
-  //   })
-
-  // }, [
-  //   products,
-  //   selectedCategory,
-  //   debouncedSearch
-  // ])
 
 
- const ShortedProducts = useMemo(() => {
+  const displayedProducts = products;
 
-    return [...products].sort((a, b) => {
 
-        if (SortOption === "lowToHigh") {
-            return a.price - b.price;
-        }
-
-        if (SortOption === "highToLow") {
-            return b.price - a.price;
-        }
-
-        return 0;
-
-    });
-
-}, [
-    products,
-    SortOption
-]);
-
-  
 
 
   const handleAddToCart = useCallback(
@@ -348,7 +312,7 @@ const Product = () => {
 
         <section className="product-container">
 
-          {ShortedProducts.map((product) => {
+          {displayedProducts.map((product) => {
 
             const isWishlisted =
               wishlist.some(
@@ -453,7 +417,7 @@ const Product = () => {
         {/* EMPTY STATE */}
 
         {!loading &&
-          ShortedProducts.length === 0 && (
+          displayedProducts.length === 0 && (
 
             <div className="empty-products">
 

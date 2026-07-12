@@ -101,8 +101,28 @@ const getAllProduct = asyncHandler(async (req, res, next) => {
     const page = Number(req.query.page) || 1;
     const search = req.query.search || "";
     const category = req.query.category || "";
+    const sort = req.query.sort || "";
 
     const query = {};
+    const sortQuery = {};
+
+    if (sort === "lowToHigh") {
+
+    sortQuery.price = 1;
+
+}
+
+else if (sort === "highToLow") {
+
+    sortQuery.price = -1;
+
+}
+
+else if (sort === "newest") {
+
+    sortQuery.createdAt = -1;
+
+}
 
     if (search) {
 
@@ -142,10 +162,11 @@ const getAllProduct = asyncHandler(async (req, res, next) => {
 
     const totalPages = Math.ceil(totalProducts / limit);
 
-    const products = await productModel
-        .find(query)
-        .skip(skip)
-        .limit(limit);
+const products = await productModel
+    .find(query)
+    .sort(sortQuery)
+    .skip(skip)
+    .limit(limit);
 
     res.status(200).json({
 
