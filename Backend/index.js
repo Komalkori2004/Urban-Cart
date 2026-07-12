@@ -26,6 +26,9 @@ const ContactRouter=require("./routes/contactRouter")
 
 const membershipRouter= require("./routes/membershipRouter")
 
+
+const profileRouter=require("./routes/userRouter")
+
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
 
@@ -56,6 +59,8 @@ app.use("/api/newsletter",NewsletterRouter)
 app.use("/api/contact",ContactRouter)
 
 app.use("/api/membership",membershipRouter)
+
+app.use("/api/users",profileRouter)
 
 
 
