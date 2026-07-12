@@ -8,12 +8,12 @@ const router=express.Router()
 
 const { authMiddleware, authorizeRoles } = require("../middleware/authMiddlewar")
 
-const {updateProfile } = require("../controller/userController")
+const {updateProfile, changePassword } = require("../controller/userController")
 
 
 
 router.put("/profile",authMiddleware,updateProfile)
-
+router.put("/change-password",authMiddleware,changePassword)
 
 
 

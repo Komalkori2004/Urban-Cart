@@ -29,15 +29,15 @@ const updateProfile = asyncHandler(async (req, res, next) => {
         );
     }
 
-if (
-    phone !== undefined &&
-    phone !== "" &&
-    !/^[0-9]{10}$/.test(phone)
-) {
-    return next(
-        new ErrorHandler(400, "Phone number must be 10 digits")
-    );
-}   
+    if (
+        phone !== undefined &&
+        phone !== "" &&
+        !/^[0-9]{10}$/.test(phone)
+    ) {
+        return next(
+            new ErrorHandler(400, "Phone number must be 10 digits")
+        );
+    }
     if (phone !== undefined) {
         existingUser.phone = phone.trim();
     }
@@ -71,6 +71,89 @@ if (
 
 
 
+const changePassword = asyncHandler(async (req, res, next) => {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    // Validate required fields
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        return next(
+            new ErrorHandler(400, "Please fill all fields")
+        );
+    }
+
+    // Find logged-in user
+    const existingUser = await User.findById(req.user.id);
+
+    if (!existingUser) {
+        return next(
+            new ErrorHandler(404, "User not found")
+        );
+    }
+
+    // Verify current password
+    const isPasswordMatched = await bcrypt.compare(
+        currentPassword,
+        existingUser.password
+    );
+
+    if (!isPasswordMatched) {
+        return next(
+            new ErrorHandler(400, "Current password is incorrect")
+        );
+    }
+
+    // Validate new password length
+    if (newPassword.length < 6) {
+        return next(
+            new ErrorHandler(
+                400,
+                "New password must be at least 6 characters"
+            )
+        );
+    }
+
+    // Confirm password validation
+    if (newPassword !== confirmPassword) {
+        return next(
+            new ErrorHandler(
+                400,
+                "New password and confirm password do not match"
+            )
+        );
+    }
+
+    // Prevent using the same password
+    const isSamePassword = await bcrypt.compare(
+        newPassword,
+        existingUser.password
+    );
+
+    if (isSamePassword) {
+        return next(
+            new ErrorHandler(
+                400,
+                "New password cannot be the same as your current password"
+            )
+        );
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    existingUser.password = hashedPassword;
+
+    await existingUser.save();
+
+    res.status(200).json({
+        success: true,
+        message: "Password changed successfully",
+    });
+});
+
+
 module.exports = {
-    updateProfile
+
+
+    updateProfile,
+    changePassword,
 }
