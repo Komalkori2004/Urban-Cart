@@ -192,6 +192,10 @@ async(addressData,thunkAPI)=>{
 
 
 
+// user profile update thunk
+
+
+
 
 export const updateProfile = createAsyncThunk(
     "auth/updateProfile",
@@ -223,20 +227,18 @@ export const updateProfile = createAsyncThunk(
 
 
 
-export const updateProfile = createAsyncThunk(
-    "auth/updateProfile",
 
-    async (profileData, thunkAPI) => {
+
+export const changePassword = createAsyncThunk(
+    "auth/changePassword",
+
+    async (passwordData, thunkAPI) => {
+
         try {
 
             const { data } = await api.put(
-                "/user/profile",
-                profileData
-            );
-
-            localStorage.setItem(
-                "user",
-                JSON.stringify(data.user)
+                "/user/change-password",
+                passwordData
             );
 
             return data;
@@ -248,9 +250,9 @@ export const updateProfile = createAsyncThunk(
             );
 
         }
+
     }
 );
-
 
 
 export const uploadProfileImage = createAsyncThunk(

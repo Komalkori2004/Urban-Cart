@@ -130,6 +130,7 @@ import { getCart } from '../redux/thunks/cartThunks'
 
 
 import UserLayout from "../layout/userLayout";
+import ProfileSettings from "../pages/ProfileSettings";
 
 
 
@@ -231,6 +232,13 @@ const AppRouter = () => {
                                 element={<MembershipHistory />}
                             />
 
+                               <Route
+                                path="profile-settings"
+                                element={<ProfileSettings />}
+                            />
+                            
+
+
                         </Route>
 
 
@@ -286,6 +294,16 @@ const AppRouter = () => {
                                 </ProtectRoute>
                             }
                         />
+                        <Route
+                            path="/profile-settings"
+                            element={
+                                <ProtectRoute>
+                                    <ProfileSettings />
+                                </ProtectRoute>
+                            }
+                        />
+
+                        
 
 
 

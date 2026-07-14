@@ -7,6 +7,7 @@ import {
     FiCreditCard,
     FiLogOut,
     FiX,
+      FiUser,
 } from "react-icons/fi";
 
 import { NavLink } from "react-router-dom";
@@ -28,44 +29,56 @@ function UserSidebar({
         setSidebarOpen(false);
     };
 
-    const menuItems = [
-        {
-            path: "/dashboard",
-            icon: <FiGrid />,
-            label: "Dashboard",
-            end: true,
-        },
-        {
-            path: "/dashboard/orders",
-            icon: <FiShoppingBag />,
-            label: "Orders",
-        },
-        {
-            path: "/dashboard/wishlist",
-            icon: <FiHeart />,
-            label: "Wishlist",
-        },
-        {
-            path: "/dashboard/cart",
-            icon: <FiShoppingCart />,
-            label: "Cart",
-        },
-        {
-            path: "/dashboard/address",
-            icon: <FiMapPin />,
-            label: "Address",
-        },
-        {
-            path: "/dashboard/membership",
-            icon: <FiCreditCard />,
-            label: "Membership",
-        },
-        {
-            path: "/dashboard/membership-history",
-            icon: <FiCreditCard />,
-            label: "Membership History",
-        },
-    ];
+const menuItems = [
+    {
+        path: "/dashboard",
+        icon: <FiGrid />,
+        label: "Dashboard",
+        end: true,
+    },
+
+    {
+        path: "/dashboard/profile-settings",
+        icon: <FiUser />,
+        label: "Profile Settings",
+    },
+
+    {
+        path: "/dashboard/orders",
+        icon: <FiShoppingBag />,
+        label: "Orders",
+    },
+
+    {
+        path: "/dashboard/wishlist",
+        icon: <FiHeart />,
+        label: "Wishlist",
+    },
+
+    {
+        path: "/dashboard/cart",
+        icon: <FiShoppingCart />,
+        label: "Cart",
+    },
+
+    {
+        path: "/dashboard/address",
+        icon: <FiMapPin />,
+        label: "Address",
+    },
+
+    {
+        path: "/dashboard/membership",
+        icon: <FiCreditCard />,
+        label: "Membership",
+    },
+
+    {
+        path: "/dashboard/membership-history",
+        icon: <FiCreditCard />,
+        label: "Membership History",
+    },
+];
 
     return (
         <>
