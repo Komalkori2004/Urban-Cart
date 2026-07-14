@@ -204,7 +204,7 @@ export const updateProfile = createAsyncThunk(
         try {
 
             const { data } = await api.put(
-                "/user/profile",
+                "/users/profile",
                 profileData
             );
 
@@ -237,7 +237,7 @@ export const changePassword = createAsyncThunk(
         try {
 
             const { data } = await api.put(
-                "/user/change-password",
+                "/users/change-password",
                 passwordData
             );
 
@@ -263,7 +263,7 @@ export const uploadProfileImage = createAsyncThunk(
         try {
 
             const { data } = await api.put(
-                "/user/profile-image",
+                "/users/profile-image",
                 formData
             );
 

@@ -1,288 +1,361 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { updateProfile } from "../redux/thunks/authThunks";
+import { toast } from "sonner";
 import "../style/ProfileSettings.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileSettings = () => {
-    const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const { user, loading } = useSelector((state) => state.auth);
+    const [profileData, setProfileData] = useState({
+        name: "",
+        phone: "",
+        gender: "",
+        dateOfBirth: "",
+    });
+
+    useEffect(() => {
+        if (user) {
+            setProfileData({
+                name: user.name || "",
+                phone: user.phone || "",
+                gender: user.gender || "",
+                dateOfBirth: user.dateOfBirth
+                    ? user.dateOfBirth.split("T")[0]
+                    : "",
+            });
+        }
+    }, [user]);
 
 
-return (
-    <div className="ps-page">
+    const handleChange = (e) => {
+        setProfileData({
+            ...profileData,
+            [e.target.name]: e.target.value,
+        });
+    };
+const handleProfileUpdate = async (e) => {
 
-        <div className="container">
+    e.preventDefault();
 
-            {/* ================= Hero ================= */}
+    const result = await dispatch(
+        updateProfile(profileData)
+    );
 
-            <section className="ps-hero">
+    if (
+        result.meta.requestStatus === "fulfilled"
+    ) {
 
-                <div className="ps-hero-content">
+        toast.success(
+            result.payload.message
+        );
 
-                    <span className="ps-badge">
-                        ACCOUNT SETTINGS
-                    </span>
+    }
 
-                    <h1 className="ps-title">
-                        Profile Settings
-                    </h1>
+    if (
+        result.meta.requestStatus === "rejected"
+    ) {
 
-                    <p className="ps-description">
-                        Manage your personal information, profile picture and account security from one place.
-                    </p>
+        toast.error(
+            result.payload
+        );
 
-                </div>
+    }
 
-            </section>
+};
 
-            {/* ================= Profile Picture ================= */}
 
-            <section className="ps-avatar-card">
+    return (
+        <div className="ps-page">
 
-                <div className="ps-avatar-wrapper">
+            <div className="container">
 
-                    <div className="ps-avatar">
+                {/* ================= Hero ================= */}
 
-                        {user?.avatar?.url ? (
+                <section className="ps-hero">
 
-                            <img
-                                src={user.avatar.url}
-                                alt={user.name}
-                            />
+                    <div className="ps-hero-content">
 
-                        ) : (
-
-                            <div className="ps-avatar-placeholder">
-
-                                {user?.name?.charAt(0).toUpperCase()}
-
-                            </div>
-
-                        )}
-
-                    </div>
-
-                    <div className="ps-user-info">
-
-                        <h2 className="ps-name">
-                            {user?.name}
-                        </h2>
-
-                        <p className="ps-email">
-                            {user?.email}
-                        </p>
-
-                        <span className="ps-verified">
-                            ✓ Verified Account
+                        <span className="ps-badge">
+                            ACCOUNT SETTINGS
                         </span>
 
-                    </div>
+                        <h1 className="ps-title">
+                            Profile Settings
+                        </h1>
 
-                </div>
-
-                <button className="ps-btn">
-                    Change Profile Photo
-                </button>
-
-            </section>
-
-            {/* ================= Personal Information ================= */}
-
-            <section className="ps-card">
-
-                <div className="ps-card-header">
-
-                    <h2>
-                        Personal Information
-                    </h2>
-
-                    <p>
-                        Update your account details.
-                    </p>
-
-                </div>
-
-                <div className="ps-grid">
-
-                    <div className="ps-group">
-
-                        <label className="ps-label">
-                            Full Name
-                        </label>
-
-                        <input
-                            className="ps-input"
-                            type="text"
-                            value={user?.name || ""}
-                        />
+                        <p className="ps-description">
+                            Manage your personal information, profile picture and account security from one place.
+                        </p>
 
                     </div>
 
-                    <div className="ps-group">
+                </section>
 
-                        <label className="ps-label">
-                            Email Address
-                        </label>
+                {/* ================= Profile Picture ================= */}
 
-                        <input
-                            className="ps-input"
-                            type="email"
-                            value={user?.email || ""}
-                            disabled
-                        />
+                <section className="ps-avatar-card">
+
+                    <div className="ps-avatar-wrapper">
+
+                        <div className="ps-avatar">
+
+                            {user?.avatar?.url ? (
+
+                                <img
+                                    src={user.avatar.url}
+                                    alt={user.name}
+                                />
+
+                            ) : (
+
+                                <div className="ps-avatar-placeholder">
+
+                                    {user?.name?.charAt(0).toUpperCase()}
+
+                                </div>
+
+                            )}
+
+                        </div>
+
+                        <div className="ps-user-info">
+
+                            <h2 className="ps-name">
+                                {user?.name}
+                            </h2>
+
+                            <p className="ps-email">
+                                {user?.email}
+                            </p>
+
+                            <span className="ps-verified">
+                                ✓ Verified Account
+                            </span>
+
+                        </div>
 
                     </div>
 
-                    <div className="ps-group">
+                    <button className="ps-btn">
+                        Change Profile Photo
+                    </button>
 
-                        <label className="ps-label">
-                            Phone Number
-                        </label>
+                </section>
 
-                        <input
-                            className="ps-input"
-                            type="text"
-                            value={user?.phone || ""}
-                        />
+                {/* ================= Personal Information ================= */}
+
+                <form
+                    className="ps-card"
+                    onSubmit={handleProfileUpdate}
+                >
+
+                    <div className="ps-card-header">
+
+                        <h2>
+                            Personal Information
+                        </h2>
+
+                        <p>
+                            Update your account details.
+                        </p>
 
                     </div>
 
-                    <div className="ps-group">
+                    <div className="ps-grid">
 
-                        <label className="ps-label">
-                            Gender
-                        </label>
+                        <div className="ps-group">
 
-                        <select
-                            className="ps-select"
-                            value={user?.gender || ""}
+                            <label className="ps-label">
+                                Full Name
+                            </label>
+
+                            <input
+                                className="ps-input"
+                                type="text"
+                                name="name"
+                                value={profileData.name}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="ps-group">
+
+                            <label className="ps-label">
+                                Email Address
+                            </label>
+
+                            <input
+                                className="ps-input"
+                                type="email"
+                                value={user?.email || ""}
+                                disabled
+                            />
+
+                        </div>
+
+                        <div className="ps-group">
+
+                            <label className="ps-label">
+                                Phone Number
+                            </label>
+
+                            <input
+                                className="ps-input"
+                                type="text"
+                                name="phone"
+                                value={profileData.phone}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="ps-group">
+
+                            <label className="ps-label">
+                                Gender
+                            </label>
+
+                            <select
+                                className="ps-select"
+                                name="gender"
+                                value={profileData.gender}
+                                onChange={handleChange}
+                            >
+
+                                <option value="">
+                                    Select Gender
+                                </option>
+
+                                <option value="Male">
+                                    Male
+                                </option>
+
+                                <option value="Female">
+                                    Female
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div className="ps-group ps-full">
+
+                            <label className="ps-label">
+                                Date of Birth
+                            </label>
+
+                            <input
+                                className="ps-input"
+                                type="date"
+                                name="dateOfBirth"
+                                value={profileData.dateOfBirth}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                    </div>
+
+                    <div className="ps-footer">
+                        <button
+                            type="submit"
+                            className="ps-btn"
+                            disabled={loading}
                         >
 
-                            <option value="">
-                                Select Gender
-                            </option>
-
-                            <option value="Male">
-                                Male
-                            </option>
-
-                            <option value="Female">
-                                Female
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <div className="ps-group ps-full">
-
-                        <label className="ps-label">
-                            Date of Birth
-                        </label>
-
-                        <input
-                            className="ps-input"
-                            type="date"
-                            value={
-                                user?.dateOfBirth
-                                    ? user.dateOfBirth.split("T")[0]
-                                    : ""
+                            {
+                                loading
+                                    ? "Updating..."
+                                    : "Save Changes"
                             }
-                        />
+
+                        </button>
+                    </div>
+
+                </form>
+
+                {/* ================= Security ================= */}
+
+                <section className="ps-card">
+
+                    <div className="ps-card-header">
+
+                        <h2>
+                            Security
+                        </h2>
+
+                        <p>
+                            Update your password regularly to keep your account secure.
+                        </p>
 
                     </div>
 
-                </div>
+                    <div className="ps-security-grid">
 
-                <div className="ps-footer">
+                        <div className="ps-group">
 
-                    <button className="ps-btn">
-                        Save Changes
-                    </button>
+                            <label className="ps-label">
+                                Current Password
+                            </label>
 
-                </div>
+                            <input
+                                className="ps-input"
+                                type="password"
+                                placeholder="Enter current password"
+                            />
 
-            </section>
+                        </div>
 
-            {/* ================= Security ================= */}
+                        <div className="ps-group">
 
-            <section className="ps-card">
+                            <label className="ps-label">
+                                New Password
+                            </label>
 
-                <div className="ps-card-header">
+                            <input
+                                className="ps-input"
+                                type="password"
+                                placeholder="Enter new password"
+                            />
 
-                    <h2>
-                        Security
-                    </h2>
+                        </div>
 
-                    <p>
-                        Update your password regularly to keep your account secure.
-                    </p>
+                        <div className="ps-group">
 
-                </div>
+                            <label className="ps-label">
+                                Confirm Password
+                            </label>
 
-                <div className="ps-security-grid">
+                            <input
+                                className="ps-input"
+                                type="password"
+                                placeholder="Confirm new password"
+                            />
 
-                    <div className="ps-group">
-
-                        <label className="ps-label">
-                            Current Password
-                        </label>
-
-                        <input
-                            className="ps-input"
-                            type="password"
-                            placeholder="Enter current password"
-                        />
-
-                    </div>
-
-                    <div className="ps-group">
-
-                        <label className="ps-label">
-                            New Password
-                        </label>
-
-                        <input
-                            className="ps-input"
-                            type="password"
-                            placeholder="Enter new password"
-                        />
+                        </div>
 
                     </div>
 
-                    <div className="ps-group">
+                    <div className="ps-footer">
 
-                        <label className="ps-label">
-                            Confirm Password
-                        </label>
-
-                        <input
-                            className="ps-input"
-                            type="password"
-                            placeholder="Confirm new password"
-                        />
+                        <button className="ps-btn">
+                            Change Password
+                        </button>
 
                     </div>
 
-                </div>
+                </section>
 
-                <div className="ps-footer">
-
-                    <button className="ps-btn">
-                        Change Password
-                    </button>
-
-                </div>
-
-            </section>
+            </div>
 
         </div>
-
-    </div>
-);
+    );
 };
 
 export default ProfileSettings;
