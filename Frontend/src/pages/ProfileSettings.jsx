@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { updateProfile } from "../redux/thunks/authThunks";
+import { updateProfile, changePassword } from "../redux/thunks/authThunks";
 import { toast } from "sonner";
 import "../style/ProfileSettings.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,12 @@ const ProfileSettings = () => {
         phone: "",
         gender: "",
         dateOfBirth: "",
+    });
+
+    const [passwordData, setPasswordData] = useState({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
     });
 
     useEffect(() => {
@@ -34,35 +40,82 @@ const ProfileSettings = () => {
             [e.target.name]: e.target.value,
         });
     };
-const handleProfileUpdate = async (e) => {
+    const handleProfileUpdate = async (e) => {
 
-    e.preventDefault();
+        e.preventDefault();
 
-    const result = await dispatch(
-        updateProfile(profileData)
-    );
-
-    if (
-        result.meta.requestStatus === "fulfilled"
-    ) {
-
-        toast.success(
-            result.payload.message
+        const result = await dispatch(
+            updateProfile(profileData)
         );
 
-    }
+        if (
+            result.meta.requestStatus === "fulfilled"
+        ) {
 
-    if (
-        result.meta.requestStatus === "rejected"
-    ) {
+            toast.success(
+                result.payload.message
+            );
 
-        toast.error(
-            result.payload
+        }
+
+        if (
+            result.meta.requestStatus === "rejected"
+        ) {
+
+            toast.error(
+                result.payload
+            );
+
+        }
+
+
+    };
+
+    const handlePasswordChange = (e) => {
+
+        setPasswordData({
+            ...passwordData,
+            [e.target.name]: e.target.value,
+        });
+
+    };
+
+
+    const handlePasswordSubmit = async (e) => {
+
+        e.preventDefault();
+
+        const result = await dispatch(
+            changePassword(passwordData)
         );
 
-    }
+        if (
+            result.meta.requestStatus === "fulfilled"
+        ) {
 
-};
+            toast.success(
+                result.payload.message
+            );
+
+            setPasswordData({
+                currentPassword: "",
+                newPassword: "",
+                confirmPassword: "",
+            });
+
+        }
+
+        if (
+            result.meta.requestStatus === "rejected"
+        ) {
+
+            toast.error(
+                result.payload
+            );
+
+        }
+
+    };
 
 
     return (
@@ -282,7 +335,10 @@ const handleProfileUpdate = async (e) => {
 
                 {/* ================= Security ================= */}
 
-                <section className="ps-card">
+                <form
+                    className="ps-card"
+                    onSubmit={handlePasswordSubmit}
+                >
 
                     <div className="ps-card-header">
 
@@ -307,6 +363,9 @@ const handleProfileUpdate = async (e) => {
                             <input
                                 className="ps-input"
                                 type="password"
+                                name="currentPassword"
+                                value={passwordData.currentPassword}
+                                onChange={handlePasswordChange}
                                 placeholder="Enter current password"
                             />
 
@@ -321,6 +380,9 @@ const handleProfileUpdate = async (e) => {
                             <input
                                 className="ps-input"
                                 type="password"
+                                name="newPassword"
+                                value={passwordData.newPassword}
+                                onChange={handlePasswordChange}
                                 placeholder="Enter new password"
                             />
 
@@ -335,6 +397,9 @@ const handleProfileUpdate = async (e) => {
                             <input
                                 className="ps-input"
                                 type="password"
+                                name="confirmPassword"
+                                value={passwordData.confirmPassword}
+                                onChange={handlePasswordChange}
                                 placeholder="Confirm new password"
                             />
 
@@ -343,14 +408,21 @@ const handleProfileUpdate = async (e) => {
                     </div>
 
                     <div className="ps-footer">
-
-                        <button className="ps-btn">
-                            Change Password
+                        <button
+                            type="submit"
+                            className="ps-btn"
+                            disabled={loading}
+                        >
+                            {
+                                loading
+                                    ? "Changing..."
+                                    : "Change Password"
+                            }
                         </button>
 
                     </div>
 
-                </section>
+                </form>
 
             </div>
 
