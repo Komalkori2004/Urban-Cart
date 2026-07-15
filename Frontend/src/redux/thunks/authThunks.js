@@ -254,22 +254,27 @@ export const changePassword = createAsyncThunk(
     }
 );
 
-
 export const uploadProfileImage = createAsyncThunk(
     "auth/uploadProfileImage",
-
     async (formData, thunkAPI) => {
 
         try {
 
+            const token =
+                thunkAPI.getState().auth.token;
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type":
+                        "multipart/form-data",
+                },
+            };
+
             const { data } = await api.put(
                 "/users/profile-image",
-                formData
-            );
-
-            localStorage.setItem(
-                "user",
-                JSON.stringify(data.user)
+                formData,
+                config
             );
 
             return data;

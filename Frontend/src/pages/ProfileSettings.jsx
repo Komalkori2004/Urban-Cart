@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { updateProfile, changePassword } from "../redux/thunks/authThunks";
+import React, { useEffect, useState, useRef, } from "react";
+import { updateProfile, changePassword, uploadProfileImage } from "../redux/thunks/authThunks";
 import { toast } from "sonner";
 import "../style/ProfileSettings.css";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProfileSettings = () => {
     const dispatch = useDispatch();
+    const fileInputRef = useRef(null);
     const { user, loading } = useSelector((state) => state.auth);
     const [profileData, setProfileData] = useState({
         name: "",
@@ -20,8 +21,16 @@ const ProfileSettings = () => {
         confirmPassword: "",
     });
 
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const [previewImage, setPreviewImage] = useState(
+        user?.avatar?.url || ""
+    );
+
     useEffect(() => {
+
         if (user) {
+
             setProfileData({
                 name: user.name || "",
                 phone: user.phone || "",
@@ -30,8 +39,28 @@ const ProfileSettings = () => {
                     ? user.dateOfBirth.split("T")[0]
                     : "",
             });
+
+            setPreviewImage(
+                user.avatar?.url || ""
+            );
+
         }
+
     }, [user]);
+
+    const handleImageChange = (e) => {
+
+        const file = e.target.files[0];
+
+        if (!file) return;
+
+        setSelectedImage(file);
+
+        setPreviewImage(
+            URL.createObjectURL(file)
+        );
+
+    };
 
 
     const handleChange = (e) => {
@@ -118,6 +147,61 @@ const ProfileSettings = () => {
     };
 
 
+
+    const handleImageUpload = async () => {
+
+        console.log("Upload clicked");
+
+        console.log(selectedImage);
+
+        if (!selectedImage) {
+
+            toast.error(
+                "Please select an image"
+            );
+
+            return;
+
+        }
+
+        const formData = new FormData();
+
+        formData.append(
+            "avatar",
+            selectedImage
+        );
+
+        const result = await dispatch(
+            uploadProfileImage(formData)
+        );
+
+        if (
+            result.meta.requestStatus ===
+            "fulfilled"
+        ) {
+
+            toast.success(
+                result.payload.message
+            );
+
+            setSelectedImage(null);
+
+        }
+
+        if (
+            result.meta.requestStatus ===
+            "rejected"
+        ) {
+
+            toast.error(
+                result.payload
+            );
+
+        }
+
+    };
+
+
     return (
         <div className="ps-page">
 
@@ -153,19 +237,17 @@ const ProfileSettings = () => {
 
                         <div className="ps-avatar">
 
-                            {user?.avatar?.url ? (
+                            {previewImage ? (
 
                                 <img
-                                    src={user.avatar.url}
-                                    alt={user.name}
+                                    src={previewImage}
+                                    alt={user?.name}
                                 />
 
                             ) : (
 
                                 <div className="ps-avatar-placeholder">
-
                                     {user?.name?.charAt(0).toUpperCase()}
-
                                 </div>
 
                             )}
@@ -190,9 +272,35 @@ const ProfileSettings = () => {
 
                     </div>
 
-                    <button className="ps-btn">
-                        Change Profile Photo
+                    <button
+                        type="button"
+                        className="ps-btn"
+                        onClick={() => fileInputRef.current.click()}
+                    >
+                        Change Photo
                     </button>
+
+                    {
+                        selectedImage && (
+
+                            <button
+                                type="button"
+                                className="ps-btn"
+                                onClick={handleImageUpload}
+                            >
+                                Upload Photo
+                            </button>
+
+                        )
+                    }
+
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        hidden
+                    />
 
                 </section>
 
