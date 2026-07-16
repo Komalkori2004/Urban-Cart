@@ -8,6 +8,8 @@ const ProfileSettings = () => {
     const dispatch = useDispatch();
     const fileInputRef = useRef(null);
     const { user, loading } = useSelector((state) => state.auth);
+    const [imageLoading, setImageLoading] = useState(false);
+
     const [profileData, setProfileData] = useState({
         name: "",
         phone: "",
@@ -150,19 +152,14 @@ const ProfileSettings = () => {
 
     const handleImageUpload = async () => {
 
-        console.log("Upload clicked");
-
-        console.log(selectedImage);
-
         if (!selectedImage) {
 
-            toast.error(
-                "Please select an image"
-            );
-
+            toast.error("Please select an image");
             return;
 
         }
+
+        setImageLoading(true);
 
         const formData = new FormData();
 
@@ -175,9 +172,10 @@ const ProfileSettings = () => {
             uploadProfileImage(formData)
         );
 
+        setImageLoading(false);
+
         if (
-            result.meta.requestStatus ===
-            "fulfilled"
+            result.meta.requestStatus === "fulfilled"
         ) {
 
             toast.success(
@@ -189,8 +187,7 @@ const ProfileSettings = () => {
         }
 
         if (
-            result.meta.requestStatus ===
-            "rejected"
+            result.meta.requestStatus === "rejected"
         ) {
 
             toast.error(
@@ -207,60 +204,86 @@ const ProfileSettings = () => {
 
             <div className="container">
 
-                {/* ================= Hero ================= */}
+                {/* ================= HEADER ================= */}
 
-                <section className="ps-hero">
+                <div className="ps-header">
 
-                    <div className="ps-hero-content">
+                    <span className="ps-badge">
+                        ACCOUNT SETTINGS
+                    </span>
 
-                        <span className="ps-badge">
-                            ACCOUNT SETTINGS
-                        </span>
+                    <h1 className="ps-title">
+                        Profile Settings
+                    </h1>
 
-                        <h1 className="ps-title">
-                            Profile Settings
-                        </h1>
+                    <p className="ps-description">
+                        Manage your personal information, profile picture and account security.
+                    </p>
 
-                        <p className="ps-description">
-                            Manage your personal information, profile picture and account security from one place.
-                        </p>
+                </div>
 
-                    </div>
+                {/* ================= PROFILE IMAGE ================= */}
 
-                </section>
+                <form
+                    className="ps-card"
+                    onSubmit={handleProfileUpdate}
+                >
 
-                {/* ================= Profile Picture ================= */}
+                    <div className="ps-card-header">
 
-                <section className="ps-avatar-card">
+                        <div>
 
-                    <div className="ps-avatar-wrapper">
+                            <h2>
+                                Personal Information
+                            </h2>
 
-                        <div className="ps-avatar">
-
-                            {previewImage ? (
-
-                                <img
-                                    src={previewImage}
-                                    alt={user?.name}
-                                />
-
-                            ) : (
-
-                                <div className="ps-avatar-placeholder">
-                                    {user?.name?.charAt(0).toUpperCase()}
-                                </div>
-
-                            )}
+                            <p>
+                                Update your account information and profile picture.
+                            </p>
 
                         </div>
 
-                        <div className="ps-user-info">
+                    </div>
 
-                            <h2 className="ps-name">
+                    {/* ================= Profile Top ================= */}
+
+                    <div className="ps-profile-top">
+
+                        <div className="ps-profile-avatar">
+
+                            {
+                                previewImage ? (
+
+                                    <img
+                                        src={previewImage}
+                                        alt={user?.name}
+                                        className="ps-avatar"
+                                    />
+
+                                ) : (
+
+                                    <div className="ps-avatar-placeholder">
+
+                                        {
+                                            user?.name
+                                                ?.charAt(0)
+                                                .toUpperCase()
+                                        }
+
+                                    </div>
+
+                                )
+                            }
+
+                        </div>
+
+                        <div className="ps-profile-details">
+
+                            <h3>
                                 {user?.name}
-                            </h2>
+                            </h3>
 
-                            <p className="ps-email">
+                            <p>
                                 {user?.email}
                             </p>
 
@@ -270,64 +293,58 @@ const ProfileSettings = () => {
 
                         </div>
 
-                    </div>
-
-                    <button
-                        type="button"
-                        className="ps-btn"
-                        onClick={() => fileInputRef.current.click()}
-                    >
-                        Change Photo
-                    </button>
-
-                    {
-                        selectedImage && (
+                        <div className="ps-profile-actions">
 
                             <button
                                 type="button"
                                 className="ps-btn"
-                                onClick={handleImageUpload}
+                                onClick={() =>
+                                    fileInputRef.current.click()
+                                }
                             >
-                                Upload Photo
+                                Change Photo
                             </button>
 
-                        )
-                    }
+                            {
+                                selectedImage && (
 
-                    <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        hidden
-                    />
+                                    <button
+                                        type="button"
+                                        className="ps-btn"
+                                        onClick={handleImageUpload}
+                                        disabled={imageLoading}
+                                    >
 
-                </section>
+                                        {
+                                            imageLoading
+                                                ? "Uploading..."
+                                                : "Upload Photo"
+                                        }
 
-                {/* ================= Personal Information ================= */}
+                                    </button>
 
-                <form
-                    className="ps-card"
-                    onSubmit={handleProfileUpdate}
-                >
+                                )
+                            }
 
-                    <div className="ps-card-header">
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                hidden
+                                accept="image/*"
+                                onChange={handleImageChange}
+                            />
 
-                        <h2>
-                            Personal Information
-                        </h2>
-
-                        <p>
-                            Update your account details.
-                        </p>
+                        </div>
 
                     </div>
+
+                    {/* ================= Form Fields ================= */}
 
                     <div className="ps-grid">
 
                         <div className="ps-group">
 
-                            <label className="ps-label">
+                            <label>
                                 Full Name
                             </label>
 
@@ -343,7 +360,7 @@ const ProfileSettings = () => {
 
                         <div className="ps-group">
 
-                            <label className="ps-label">
+                            <label>
                                 Email Address
                             </label>
 
@@ -358,7 +375,7 @@ const ProfileSettings = () => {
 
                         <div className="ps-group">
 
-                            <label className="ps-label">
+                            <label>
                                 Phone Number
                             </label>
 
@@ -374,7 +391,7 @@ const ProfileSettings = () => {
 
                         <div className="ps-group">
 
-                            <label className="ps-label">
+                            <label>
                                 Gender
                             </label>
 
@@ -407,7 +424,7 @@ const ProfileSettings = () => {
 
                         <div className="ps-group ps-full">
 
-                            <label className="ps-label">
+                            <label>
                                 Date of Birth
                             </label>
 
@@ -424,6 +441,7 @@ const ProfileSettings = () => {
                     </div>
 
                     <div className="ps-footer">
+
                         <button
                             type="submit"
                             className="ps-btn"
@@ -437,100 +455,109 @@ const ProfileSettings = () => {
                             }
 
                         </button>
+
                     </div>
 
                 </form>
 
-                {/* ================= Security ================= */}
 
-                <form
-                    className="ps-card"
-                    onSubmit={handlePasswordSubmit}
-                >
+                 {/* ================= Security ================= */}
 
-                    <div className="ps-card-header">
+            <form
+                className="ps-card"
+                onSubmit={handlePasswordSubmit}
+            >
+
+                <div className="ps-card-header">
+
+                    <div>
 
                         <h2>
                             Security
                         </h2>
 
                         <p>
-                            Update your password regularly to keep your account secure.
+                            Update your password to keep your account secure.
                         </p>
 
                     </div>
 
-                    <div className="ps-security-grid">
+                </div>
 
-                        <div className="ps-group">
+                <div className="ps-security-grid">
 
-                            <label className="ps-label">
-                                Current Password
-                            </label>
+                    <div className="ps-group">
 
-                            <input
-                                className="ps-input"
-                                type="password"
-                                name="currentPassword"
-                                value={passwordData.currentPassword}
-                                onChange={handlePasswordChange}
-                                placeholder="Enter current password"
-                            />
+                        <label>
+                            Current Password
+                        </label>
 
-                        </div>
-
-                        <div className="ps-group">
-
-                            <label className="ps-label">
-                                New Password
-                            </label>
-
-                            <input
-                                className="ps-input"
-                                type="password"
-                                name="newPassword"
-                                value={passwordData.newPassword}
-                                onChange={handlePasswordChange}
-                                placeholder="Enter new password"
-                            />
-
-                        </div>
-
-                        <div className="ps-group">
-
-                            <label className="ps-label">
-                                Confirm Password
-                            </label>
-
-                            <input
-                                className="ps-input"
-                                type="password"
-                                name="confirmPassword"
-                                value={passwordData.confirmPassword}
-                                onChange={handlePasswordChange}
-                                placeholder="Confirm new password"
-                            />
-
-                        </div>
+                        <input
+                            className="ps-input"
+                            type="password"
+                            name="currentPassword"
+                            value={passwordData.currentPassword}
+                            onChange={handlePasswordChange}
+                            placeholder="Enter current password"
+                        />
 
                     </div>
 
-                    <div className="ps-footer">
-                        <button
-                            type="submit"
-                            className="ps-btn"
-                            disabled={loading}
-                        >
-                            {
-                                loading
-                                    ? "Changing..."
-                                    : "Change Password"
-                            }
-                        </button>
+                    <div className="ps-group">
+
+                        <label>
+                            New Password
+                        </label>
+
+                        <input
+                            className="ps-input"
+                            type="password"
+                            name="newPassword"
+                            value={passwordData.newPassword}
+                            onChange={handlePasswordChange}
+                            placeholder="Enter new password"
+                        />
 
                     </div>
 
-                </form>
+                    <div className="ps-group">
+
+                        <label>
+                            Confirm Password
+                        </label>
+
+                        <input
+                            className="ps-input"
+                            type="password"
+                            name="confirmPassword"
+                            value={passwordData.confirmPassword}
+                            onChange={handlePasswordChange}
+                            placeholder="Confirm new password"
+                        />
+
+                    </div>
+
+                </div>
+
+                <div className="ps-footer">
+
+                    <button
+                        type="submit"
+                        className="ps-btn"
+                        disabled={loading}
+                    >
+
+                        {
+                            loading
+                                ? "Updating..."
+                                : "Change Password"
+                        }
+
+                    </button>
+
+                </div>
+
+            </form>
 
             </div>
 
