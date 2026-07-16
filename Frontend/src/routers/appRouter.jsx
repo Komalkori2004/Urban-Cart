@@ -131,6 +131,9 @@ import { getCart } from '../redux/thunks/cartThunks'
 
 import UserLayout from "../layout/userLayout";
 import ProfileSettings from "../pages/ProfileSettings";
+import NotFound from "../components/NotFound";
+
+
 
 
 
@@ -222,7 +225,7 @@ const AppRouter = () => {
 
                             {/* Membership */}
                             <Route
-                                path="membership"
+                                path="c"
                                 element={<MyMembership />}
                             />
 
@@ -301,6 +304,11 @@ const AppRouter = () => {
                                     <ProfileSettings />
                                 </ProtectRoute>
                             }
+                        />
+                        <Route
+
+                            path="*"
+                            element={<NotFound />}
                         />
 
                         

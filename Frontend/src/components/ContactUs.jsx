@@ -60,7 +60,7 @@ function ContactUs() {
 
     }, [success, dispatch]);
     return (
-        <section className="contact-page">
+        <section className="contact-page" id="contact">
 
             <div className="contact-hero">
                 <div className="container">
