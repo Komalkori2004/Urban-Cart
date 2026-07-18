@@ -9,6 +9,7 @@ const user = require("../models/userModel");
 
 
 const orderConfirmationTemplate = require("../utils/emailTemplates/orderConfirmation");
+const orderShippedTemplate = require("../utils/emailTemplates/orderShipped");
 const sendEmail = require("../utils/sendEmail");
 
 
@@ -256,17 +257,6 @@ const placeOrder = asyncHandler(async (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 const getMyOrder = asyncHandler(async (req, res, next) => {
     const userID = req.user.id
 
@@ -303,25 +293,52 @@ const getOrderbyId = asyncHandler(async (req, res, next) => {
 
 
 const orderStatus = asyncHandler(async (req, res, next) => {
-    const { orderStatus } = req.body
-    const order = await Order.findById(req.params.id)
+
+    const { orderStatus } = req.body;
+
+    const order = await Order.findById(req.params.id);
 
     if (!order) {
-        return next(new ErrorHandler(404, "Order not found"))
+        return next(new ErrorHandler(404, "Order not found"));
     }
 
-    order.orderStatus = orderStatus
+    order.orderStatus = orderStatus;
 
-    await order.save()
+    await order.save();
+
+    // ✅ Send email only when order is shipped
+    if (orderStatus === "Shipped") {
+
+        try {
+
+            const existingUser = await user.findById(order.user);
+
+            const html = orderShippedTemplate({
+                name: existingUser.name,
+                orderId: order._id,
+                orderDate: order.createdAt.toLocaleDateString("en-IN"),
+                orderUrl: `${process.env.FRONTEND_URL}/my-orders/${order._id}`,
+            });
+
+            await sendEmail({
+                email: existingUser.email,
+                subject: "Your Order Has Been Shipped",
+                html,
+            });
+
+        } catch (error) {
+            console.error("Shipped email failed:", error.message);
+        }
+
+    }
 
     res.status(200).json({
         success: true,
         message: "Order status updated successfully",
-        data: order
-    })
+        data: order,
+    });
 
-
-})
+});
 
 
 
