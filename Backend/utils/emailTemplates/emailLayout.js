@@ -10,8 +10,9 @@ const emailLayout = ({
 
     return `
 
-<!DOCTYPE html>
 
+
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,8 +20,8 @@ const emailLayout = ({
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 />
 
 <title>${title}</title>
@@ -28,178 +29,335 @@ const emailLayout = ({
 </head>
 
 <body
-    style="
-        margin:0;
-        padding:0;
-        background:#0B0B0B;
-        font-family:Arial,sans-serif;
-    "
+style="
+margin:0;
+padding:40px 20px;
+background:#0D0D0D;
+font-family:Arial,Helvetica,sans-serif;
+"
 >
 
-    <table
-        width="100%"
-        cellpadding="0"
-        cellspacing="0"
-        style="
-            background:#0B0B0B;
-            padding:40px 20px;
-        "
-    >
+<table
+width="100%"
+cellpadding="0"
+cellspacing="0"
+border="0"
+>
 
-        <tr>
+<tr>
 
-            <td align="center">
+<td align="center">
 
-                <table
-                    width="650"
-                    cellpadding="0"
-                    cellspacing="0"
-                    style="
-                        background:#151515;
-                        border:1px solid #2a2a2a;
-                        border-radius:20px;
-                        overflow:hidden;
-                    "
-                >
+<table
+width="620"
+cellpadding="0"
+cellspacing="0"
+border="0"
+style="
+background:#131313;
+border:1px solid rgba(212,175,55,.18);
+border-radius:24px;
+overflow:hidden;
+"
+>
 
-                    <!-- Header -->
+<!-- Brand -->
 
-                    <tr>
+<tr>
 
-                        <td
-                            align="center"
-                            style="
-                                padding:40px 30px 20px;
-                            "
-                        >
+<td
+align="center"
+style="
+padding:55px 40px 35px;
+"
+>
 
-                            <img
-                                src="https://via.placeholder.com/180x60?text=UrbanCart"
-                                alt="UrbanCart"
-                                width="180"
-                            />
+<h1
+style="
+margin:0;
+font-size:36px;
 
-                        </td>
+font-family:Georgia,'Times New Roman',serif;
+font-weight:600;
+color:#F5E6C8;
+letter-spacing:1px;
+"
+>
 
-                    </tr>
+UrbanCart
 
-                    <!-- Body -->
+</h1>
 
-                    <tr>
+<p
+style="
+margin-top:14px;
+font-size:15px;
+letter-spacing:1.5px;
+font-weight:500;
+color:#D4AF37
+"
+>
 
-                        <td
-                            style="
-                                padding:20px 50px;
-                                color:#ffffff;
-                            "
-                        >
+Luxury Fashion • Beauty
 
-                            <p
-                                style="
-                                    font-size:18px;
-                                    margin:0 0 20px;
-                                "
-                            >
-                                ${greeting}
-                            </p>
+</p>
+<p
+style="
+margin-top:22px;
+font-size:14px;
+color:#999999;
+font-style:italic;
+"
+>
 
-                            <h1
-                                style="
-                                    color:#D4AF37;
-                                    margin:0 0 20px;
-                                    font-size:36px;
-                                "
-                            >
-                                ${heading}
-                            </h1>
+Crafted for timeless elegance.
 
-                            <p
-                                style="
-                                    color:#cccccc;
-                                    line-height:1.8;
-                                    font-size:16px;
-                                "
-                            >
-                                ${message}
-                            </p>
+</p>
 
-                            <div
-                                style="
-                                    text-align:center;
-                                    margin:40px 0;
-                                "
-                            >
 
-                                <a
-                                    href="${buttonUrl}"
-                                    style="
-                                        background:#D4AF37;
-                                        color:#111111;
-                                        text-decoration:none;
-                                        padding:16px 40px;
-                                        border-radius:50px;
-                                        display:inline-block;
-                                        font-weight:bold;
-                                    "
-                                >
-                                    ${buttonText}
-                                </a>
+</td>
 
-                            </div>
+</tr>
 
-                        </td>
+<tr>
 
-                    </tr>
+<td>
 
-                    <!-- Footer -->
+<div
+style="
+height:1px;
+background:rgba(212,175,55,.18);
+"
+></div>
 
-                    <tr>
+</td>
 
-                        <td
-                            align="center"
-                            style="
-                                padding:30px;
-                                border-top:1px solid #2a2a2a;
-                            "
-                        >
+</tr>
 
-                            <p
-                                style="
-                                    color:#999999;
-                                    font-size:14px;
-                                    margin:0;
-                                "
-                            >
-                                ${footerText}
-                            </p>
+<!-- Content -->
 
-                            <p
-                                style="
-                                    color:#666666;
-                                    font-size:12px;
-                                    margin-top:20px;
-                                "
-                            >
-                                © 2026 UrbanCart • Luxury Fashion & Beauty
-                            </p>
+<tr>
 
-                        </td>
+<td
+style="
+padding:55px;
+"
+>
 
-                    </tr>
+<p
+style="
+margin:0;
+font-size:18px;
+color:#FFFFFF;
+"
+>
 
-                </table>
+${greeting}
 
-            </td>
+</p>
 
-        </tr>
+<h2
+style="
+margin:30px 0 20px;
+font-size:36px;
+font-family:Georgia,'Times New Roman',serif;
+font-weight:600;
+line-height:44px;
+color:#F5E6C8;
+"
+>
 
-    </table>
+${heading}
+
+</h2>
+<div
+style="
+width:70px;
+height:2px;
+background:#D4AF37;
+margin:24px 0 28px;
+"
+></div>
+
+<p
+style="
+margin:0;
+max-width:420px;
+font-size:17px;
+line-height:30px;
+color:#B8B8B8;
+"
+>
+
+${message}
+
+</p>
+
+<table
+cellpadding="0"
+cellspacing="0"
+border="0"
+style="
+margin-top:45px;
+"
+>
+
+<tr>
+
+<td
+style="
+border:1px solid #D4AF37;
+border-radius:10px;
+"
+>
+
+<a
+href="${buttonUrl}"
+target="_blank"
+style="
+display:inline-block;
+padding:14px 34px;
+font-size:15px;
+font-weight:500;
+letter-spacing:1.5px;
+
+text-decoration:none;
+color:#D4AF37;
+"
+>
+
+${buttonText} →
+
+</a>
+
+</td>
+
+</tr>
+
+</table>
+
+
+
+
+<!-- Closing Note -->
+
+<table
+width="100%"
+cellpadding="0"
+cellspacing="0"
+style="
+margin-top:55px;
+"
+>
+
+<tr>
+
+<td>
+
+<div
+style="
+height:1px;
+background:rgba(212,175,55,.12);
+margin-bottom:35px;
+"
+></div>
+
+<p
+style="
+margin:0;
+max-width:430px;
+font-size:15px;
+line-height:28px;
+color:#8F8F8F;
+"
+>
+
+If you didn't request this email, you can safely ignore it.
+No further action is required.
+
+</p>
+
+</td>
+
+</tr>
+
+</table>
+
+
+
+
+</td>
+
+</tr>
+
+<tr>
+
+<td
+align="center"
+style="
+padding:35px 45px;
+border-top:1px solid rgba(212,175,55,.12);
+"
+>
+
+<p
+style="
+margin:0;
+font-size:15px;
+color:#F5E6C8;
+font-family:Georgia,serif;
+"
+>
+
+UrbanCart
+
+</p>
+
+<p
+style="
+margin:10px 0 0;
+font-size:14px;
+color:#999999;
+"
+>
+
+support@urbancart.com
+
+</p>
+
+<p
+style="
+margin:25px 0 0;
+font-size:13px;
+color:#666666;
+"
+>
+
+${footerText || "© 2026 UrbanCart. All Rights Reserved."}
+
+</p>
+
+</td>
+
+</tr>
+
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
 
 </body>
 
 </html>
 
-`;
+
+
+
+    `;
 
 };
 

@@ -1,27 +1,27 @@
 const nodemailer =
-require("nodemailer")
+    require("nodemailer")
 
 
 
 const transporter =
-nodemailer.createTransport({
+    nodemailer.createTransport({
 
-    host:
-    process.env.MAIL_HOST,
+        host:
+            process.env.MAIL_HOST,
 
-    port:
-    process.env.MAIL_PORT,
-        secure:false,
+        port:
+            process.env.MAIL_PORT,
+        secure: false,
 
-    auth:{
+        auth: {
 
-        user:
-        process.env.MAIL_USER,
+            user:
+                process.env.MAIL_USER,
 
-        pass:
-        process.env.MAIL_PASS
-    }
-})
+            pass:
+                process.env.MAIL_PASS
+        }
+    })
 
 
 

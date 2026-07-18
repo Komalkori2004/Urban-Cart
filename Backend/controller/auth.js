@@ -8,7 +8,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const asyncHandler = require("../middleware/asyncHandler");
-const transporter = require("../config/mailer");
+
+// const transporter = require("../config/transporter");
+const sendEmail = require("../utils/sendEmail");
+const verifyEmailTemplate = require("../utils/emailTemplates/verifyEmail");
+// const forgotPasswordTemplate = require("../utils/emailTemplates/forgotPassword");
 
 
 // Register User
@@ -52,30 +56,16 @@ const registerUser = asyncHandler(async (req, res, next) => {
   const verifyUrl = `${process.env.FRONTEND_URL}/verify/${verifyToken}`
 
 
-  await transporter.sendMail({
-    from: "urbancart@test.com",
-    to: email,
-    subject: "urbanCart Test",
-    html: `
+  const html = verifyEmailTemplate({
+    name,
+    verifyUrl,
+  });
 
-<h2>
-Welcome to UrbanCart
-</h2>
-
-<p>
-Hello ${name},
-</p>
-
-<p>
-Please click below to verify your account:
-</p>
-
-<a href="${verifyUrl}">
-Verify Account
-</a>
-
-`
-  })
+  await sendEmail({
+    email,
+    subject: "Verify Your Email",
+    html,
+  });
 
 
 
@@ -205,6 +195,8 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
 
 
   const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`
+
+
   await transporter.sendMail({
     from:
       "urbancart@test.com",
@@ -319,7 +311,7 @@ const resetPassword =
 
       message:
         "Password reset successfully",
-        
+
     })
 
   })
@@ -327,15 +319,15 @@ const resetPassword =
 
 
 
-  // 
+// 
 
-  const getAlluser=asyncHandler(async(req,res,next)=>{
-    const users=await user.find().select("-password")
-    res.status(200).json({
-      success:true,
-      users
-    })
+const getAlluser = asyncHandler(async (req, res, next) => {
+  const users = await user.find().select("-password")
+  res.status(200).json({
+    success: true,
+    users
   })
+})
 
 
 
@@ -367,21 +359,21 @@ const AdminDashboard = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Welcome to Admin Dashboard",
-    
+
   });
 
 });
 
 
 
-const addAddress = asyncHandler(async(req,res,next)=>{
+const addAddress = asyncHandler(async (req, res, next) => {
 
   const existingUser =
     await user.findById(req.user.id)
 
-  if(!existingUser){
+  if (!existingUser) {
     return next(
-      new ErrorHandler(404,"User not found")
+      new ErrorHandler(404, "User not found")
     )
   }
 
@@ -398,8 +390,8 @@ const addAddress = asyncHandler(async(req,res,next)=>{
   await existingUser.save()
 
   res.status(201).json({
-    success:true,
-    message:"Address added successfully",
+    success: true,
+    message: "Address added successfully",
     addresses:
       existingUser.addresses
   })
@@ -407,19 +399,19 @@ const addAddress = asyncHandler(async(req,res,next)=>{
 })
 
 
-const getAddresses=asyncHandler(async(req,res,next)=>{
-  
-  const existingUser= await user.findById(req.user.id).select("addresses")
+const getAddresses = asyncHandler(async (req, res, next) => {
 
-  if(!existingUser){
+  const existingUser = await user.findById(req.user.id).select("addresses")
+
+  if (!existingUser) {
     return next(
-      new ErrorHandler(404,"User not found")
+      new ErrorHandler(404, "User not found")
     )
   }
 
   res.status(200).json({
-    success:true,
-    addresses:existingUser.addresses
+    success: true,
+    addresses: existingUser.addresses
   })
 })
 
@@ -434,4 +426,4 @@ module.exports = {
   getAlluser,
   addAddress,
   getAddresses
-};
+}
