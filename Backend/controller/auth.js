@@ -14,6 +14,7 @@ const sendEmail = require("../utils/sendEmail");
 const verifyEmailTemplate = require("../utils/emailTemplates/verifyEmail");
 const forgotPasswordTemplate = require("../utils/emailTemplates/forgotPassword");
 const passwordResetSuccessTemplate = require("../utils/emailTemplates/passwordResetSuccess");
+const welcomeEmailTemplate = require("../utils/emailTemplates/welcomeEmail");
 
 // Register User
 const registerUser = asyncHandler(async (req, res, next) => {
@@ -153,6 +154,20 @@ const verifyEmail = asyncHandler(async (req, res, next) => {
   existingUser.verifyTokenExpiry = undefined
 
   await existingUser.save()
+
+
+  const shopUrl = process.env.FRONTEND_URL;
+
+  const html = welcomeEmailTemplate({
+    name: existingUser.name,
+    shopUrl,
+  });
+
+  await sendEmail({
+    email: existingUser.email,
+    subject: "Welcome to UrbanCart",
+    html,
+  });
 
   res.status(200).json({
     success: true,
