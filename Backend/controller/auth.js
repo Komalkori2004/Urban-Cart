@@ -9,10 +9,10 @@ const jwt = require("jsonwebtoken");
 
 const asyncHandler = require("../middleware/asyncHandler");
 
-// const transporter = require("../config/transporter");
+
 const sendEmail = require("../utils/sendEmail");
 const verifyEmailTemplate = require("../utils/emailTemplates/verifyEmail");
-// const forgotPasswordTemplate = require("../utils/emailTemplates/forgotPassword");
+const forgotPasswordTemplate = require("../utils/emailTemplates/forgotPassword");
 
 
 // Register User
@@ -197,33 +197,16 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
   const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`
 
 
-  await transporter.sendMail({
-    from:
-      "urbancart@test.com",
+  const html = forgotPasswordTemplate({
+    name: existUser.name,
+    resetUrl,
+  });
 
-    to: email,
-
-    subject:
-      "Reset Your Password",
-
-
-    html: `
-
-<h2>
-Reset Password
-</h2>
-
-<p>
-Click below to reset your password
-</p>
-
-<a href="${resetUrl}">
-Reset Password
-</a>
-
-`
-
-  })
+  await sendEmail({
+    email,
+    subject: "Reset Your Password",
+    html,
+  });
 
 
   res.status(200).json({
