@@ -5,6 +5,12 @@ const Product = require("../models/productModel")
 const Coupon = require("../models/couponModel")
 const asyncHandler = require("../middleware/asyncHandler")
 const ErrorHandler = require("../utils/errorHandler")
+const user = require("../models/userModel");
+
+
+const orderConfirmationTemplate = require("../utils/emailTemplates/orderConfirmation");
+const sendEmail = require("../utils/sendEmail");
+
 
 const placeOrder = asyncHandler(async (req, res, next) => {
     const userID = req.user.id
@@ -184,13 +190,13 @@ const placeOrder = asyncHandler(async (req, res, next) => {
         originalAmount: totalAmount, // before discount
 
 
-       shippingCharge,
+        shippingCharge,
         discountAmount,
         totalAmount: finalAmount + shippingCharge,  // after discount
 
         couponCode: couponCode || null,
 
-      
+
     };
     if (paymentMethod === "RAZORPAY") {
         orderData.paymentStatus = "Paid";
@@ -199,6 +205,29 @@ const placeOrder = asyncHandler(async (req, res, next) => {
     }
 
     const newOrder = await Order.create(orderData);
+
+
+    try {
+        const existingUser = await user.findById(userID);
+
+        const html = orderConfirmationTemplate({
+            name: existingUser.name,
+            orderId: newOrder._id,
+            orderDate: newOrder.createdAt.toLocaleDateString("en-IN"),
+            paymentMethod: newOrder.paymentMethod,
+            paymentStatus: newOrder.paymentStatus,
+            orderStatus: newOrder.orderStatus,
+            orderUrl: `${process.env.FRONTEND_URL}/my-orders/${newOrder._id}`,
+        });
+
+        await sendEmail({
+            email: existingUser.email,
+            subject: "Your Order has been Confirmed",
+            html,
+        });
+    } catch (error) {
+        console.error("Order email failed:", error.message);
+    }
 
     if (coupon) {
 
