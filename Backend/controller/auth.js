@@ -13,7 +13,7 @@ const asyncHandler = require("../middleware/asyncHandler");
 const sendEmail = require("../utils/sendEmail");
 const verifyEmailTemplate = require("../utils/emailTemplates/verifyEmail");
 const forgotPasswordTemplate = require("../utils/emailTemplates/forgotPassword");
-
+const passwordResetSuccessTemplate = require("../utils/emailTemplates/passwordResetSuccess");
 
 // Register User
 const registerUser = asyncHandler(async (req, res, next) => {
@@ -285,6 +285,19 @@ const resetPassword =
 
 
     await existingUser.save()
+
+    const loginUrl = `${process.env.FRONTEND_URL}/login`;
+
+    const html = passwordResetSuccessTemplate({
+      name: existingUser.name,
+      loginUrl,
+    });
+
+    await sendEmail({
+      email: existingUser.email,
+      subject: "Password Changed Successfully",
+      html,
+    });
 
 
 
