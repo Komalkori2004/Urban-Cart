@@ -167,6 +167,11 @@
     color:#ff7a7a;
 }
 
+.status-badge.out-for-delivery {
+  background: #fff3cd;
+  color: #856404;
+}
+
 
 /* =========================
    BODY

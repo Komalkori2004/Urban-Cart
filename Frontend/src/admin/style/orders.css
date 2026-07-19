@@ -104,7 +104,7 @@
 
 .status-badge.pending{
     background:#fff3cd;
-    color:#856404;
+    color:#3f2f08;
 }
 
 .status-badge.processing{
@@ -125,6 +125,11 @@
 .status-badge.cancelled{
     background:#f8d7da;
     color:#721c24;
+}
+
+.status-badge.out-for-delivery{
+  background: #fff3cd;
+  color: #856404;
 }
 
 /* ==========================

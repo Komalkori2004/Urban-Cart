@@ -158,7 +158,9 @@ const MyOrders = () => {
                                     </div>
 
                                     <span
-                                        className={`status-badge ${order.orderStatus.toLowerCase()}`}
+                                        className={`status-badge ${order.orderStatus
+                                            .toLowerCase()
+                                            .replace(/\s+/g, "-")}`}
                                     >
                                         {
                                             order.orderStatus
@@ -256,13 +258,7 @@ const MyOrders = () => {
                                     </div>
 
                                     <div
-                                        className={`step ${[
-                                            "Processing",
-                                            "Shipped",
-                                            "Delivered"
-                                        ].includes(
-                                            order.orderStatus
-                                        )
+                                        className={`step ${["Processing", "Shipped", "Out for Delivery", "Delivered"].includes(order.orderStatus)
                                             ? "active"
                                             : ""
                                             }`}
@@ -274,12 +270,7 @@ const MyOrders = () => {
                                     </div>
 
                                     <div
-                                        className={`step ${[
-                                            "Shipped",
-                                            "Delivered"
-                                        ].includes(
-                                            order.orderStatus
-                                        )
+                                        className={`step ${["Shipped", "Out for Delivery", "Delivered"].includes(order.orderStatus)
                                             ? "active"
                                             : ""
                                             }`}
@@ -289,6 +280,17 @@ const MyOrders = () => {
                                             Shipped
                                         </p>
                                     </div>
+
+                                    <div
+                                        className={`step ${["Out for Delivery", "Delivered"].includes(order.orderStatus)
+                                            ? "active"
+                                            : ""
+                                            }`}
+                                    >
+                                        <span></span>
+                                        <p>Out for Delivery</p>
+                                    </div>
+
 
                                     <div
                                         className={`step ${order.orderStatus ===
@@ -398,7 +400,7 @@ const MyOrders = () => {
                                         </div>
 
                                         <div
-                                            className={`status-step ${["Processing", "Shipped", "Delivered"]
+                                            className={`status-step ${["Processing", "Shipped", "Out for Delivery", "Delivered"]
                                                 .includes(selectedOrder.orderStatus)
                                                 ? "active"
                                                 : ""
@@ -409,7 +411,7 @@ const MyOrders = () => {
                                         </div>
 
                                         <div
-                                            className={`status-step ${["Shipped", "Delivered"]
+                                            className={`status-step ${["Shipped", "Out for Delivery", "Delivered"]
                                                 .includes(selectedOrder.orderStatus)
                                                 ? "active"
                                                 : ""
@@ -417,6 +419,17 @@ const MyOrders = () => {
                                         >
                                             <span></span>
                                             <p>Shipped</p>
+                                        </div>
+
+
+                                        <div
+                                            className={`status-step ${["Out for Delivery", "Delivered"].includes(selectedOrder.orderStatus)
+                                                ? "active"
+                                                : ""
+                                                }`}
+                                        >
+                                            <span></span>
+                                            <p>Out for Delivery</p>
                                         </div>
 
                                         <div

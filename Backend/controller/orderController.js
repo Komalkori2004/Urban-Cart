@@ -10,6 +10,7 @@ const user = require("../models/userModel");
 
 const orderConfirmationTemplate = require("../utils/emailTemplates/orderConfirmation");
 const orderShippedTemplate = require("../utils/emailTemplates/orderShipped");
+const outForDeliveryTemplate = require("../utils/emailTemplates/outForDelivery");
 const sendEmail = require("../utils/sendEmail");
 
 
@@ -331,6 +332,34 @@ const orderStatus = asyncHandler(async (req, res, next) => {
         }
 
     }
+
+
+    if (orderStatus === "Out for Delivery") {
+
+        try {
+
+            const existingUser = await user.findById(order.user);
+
+            const html = outForDeliveryTemplate({
+                name: existingUser.name,
+                orderId: order._id,
+                orderDate: order.createdAt.toLocaleDateString("en-IN"),
+                orderUrl: `${process.env.FRONTEND_URL}/my-orders/${order._id}`,
+            });
+
+            await sendEmail({
+                email: existingUser.email,
+                subject: "Your Order is Out for Delivery",
+                html,
+            });
+
+        } catch (error) {
+            console.error("Out for delivery email failed:", error.message);
+        }
+
+    }
+
+
 
     res.status(200).json({
         success: true,

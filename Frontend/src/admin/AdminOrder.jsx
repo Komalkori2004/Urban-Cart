@@ -131,7 +131,9 @@ const AdminOrder = () => {
 
                     <td>
                       <span
-                        className={`status-badge ${item.orderStatus.toLowerCase()}`}
+                        className={`status-badge ${item.orderStatus
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
                       >
                         {item.orderStatus}
                       </span>
@@ -167,6 +169,7 @@ const AdminOrder = () => {
                           <option value="Pending">Pending</option>
                           <option value="Processing">Processing</option>
                           <option value="Shipped">Shipped</option>
+                          <option value="Out for Delivery">Out for Delivery</option>
                           <option value="Delivered">Delivered</option>
                           <option value="Cancelled">Cancelled</option>
                         </select>
