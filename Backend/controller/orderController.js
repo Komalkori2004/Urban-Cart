@@ -11,6 +11,7 @@ const user = require("../models/userModel");
 const orderConfirmationTemplate = require("../utils/emailTemplates/orderConfirmation");
 const orderShippedTemplate = require("../utils/emailTemplates/orderShipped");
 const outForDeliveryTemplate = require("../utils/emailTemplates/outForDelivery");
+const orderDeliveredTemplate = require("../utils/emailTemplates/orderDelivered");
 const sendEmail = require("../utils/sendEmail");
 
 
@@ -355,6 +356,33 @@ const orderStatus = asyncHandler(async (req, res, next) => {
 
         } catch (error) {
             console.error("Out for delivery email failed:", error.message);
+        }
+
+    }
+
+
+
+    if (orderStatus === "Delivered") {
+
+        try {
+
+            const existingUser = await user.findById(order.user);
+
+            const html = orderDeliveredTemplate({
+                name: existingUser.name,
+                orderId: order._id,
+                orderDate: order.createdAt.toLocaleDateString("en-IN"),
+                orderUrl: `${process.env.FRONTEND_URL}/my-orders/${order._id}`,
+            });
+
+            await sendEmail({
+                email: existingUser.email,
+                subject: "Your Order Has Been Delivered",
+                html,
+            });
+
+        } catch (error) {
+            console.error("Delivered email failed:", error.message);
         }
 
     }
