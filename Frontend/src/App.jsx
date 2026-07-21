@@ -8,9 +8,8 @@ import AppRouter from './routers/appRouter'
 const App = () => {
   return (
   <>
-  
   <AppRouter/>
-  
+
   </>
   )
 }

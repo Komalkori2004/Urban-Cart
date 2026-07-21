@@ -12,6 +12,8 @@ const orderConfirmationTemplate = require("../utils/emailTemplates/orderConfirma
 const orderShippedTemplate = require("../utils/emailTemplates/orderShipped");
 const outForDeliveryTemplate = require("../utils/emailTemplates/outForDelivery");
 const orderDeliveredTemplate = require("../utils/emailTemplates/orderDelivered");
+
+const orderCancelledTemplate = require("../utils/emailTemplates/orderCancelled");
 const sendEmail = require("../utils/sendEmail");
 
 
@@ -434,8 +436,33 @@ const cancleOrder = asyncHandler(async (req, res, next) => {
         product.stock += item.quantity
         await product.save()
     }
+
     order.orderStatus = "Cancelled"
+    
     await order.save()
+
+    try {
+
+        const existingUser = await user.findById(order.user);
+
+        const html = orderCancelledTemplate({
+            name: existingUser.name,
+            orderId: order._id,
+            orderDate: order.createdAt.toLocaleDateString("en-IN"),
+            shopUrl: `${process.env.FRONTEND_URL}/products`,
+        });
+
+        await sendEmail({
+            email: existingUser.email,
+            subject: "Your UrbanCart Order Has Been Cancelled",
+            html,
+        });
+
+    } catch (error) {
+        console.error("Cancellation email failed:", error.message);
+    }
+
+
     res.status(200).json({
         success: true,
         message: "Order cancelled successfully",
