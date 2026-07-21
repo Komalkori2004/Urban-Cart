@@ -74,7 +74,7 @@ const menuItems = [
     },
 
     {
-        path: "/dashboard/membership-history",
+        path: "/dashboard/my-membershipHistory",
         icon: <FiCreditCard />,
         label: "Membership History",
     },

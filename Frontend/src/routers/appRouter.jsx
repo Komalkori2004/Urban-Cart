@@ -225,13 +225,13 @@ const AppRouter = () => {
 
                             {/* Membership */}
                             <Route
-                                path="c"
+                                path="membership"
                                 element={<MyMembership />}
                             />
 
                             {/* Membership History */}
                             <Route
-                                path="membership-history"
+                                path="my-membershipHistory"
                                 element={<MembershipHistory />}
                             />
 
@@ -239,6 +239,8 @@ const AppRouter = () => {
                                 path="profile-settings"
                                 element={<ProfileSettings />}
                             />
+
+                            
                             
 
 
@@ -251,14 +253,14 @@ const AppRouter = () => {
 
 
 
-                        <Route
+                        {/* <Route
                             path="/my-membershipHistory"
                             element={
                                 <ProtectRoute>
                                     <MembershipHistory />
                                 </ProtectRoute>
                             }
-                        />
+                        /> */}
 
 
                         <Route

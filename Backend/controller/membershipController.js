@@ -11,6 +11,10 @@ const asyncHandler = require("../middleware/asyncHandler")
 const ErrorHandler = require("../utils/errorHandler")
 const User = require("../models/userModel");
 const UserMembership = require("../models/userMembership.model");
+const sendEmail = require("../utils/sendEmail");
+
+const membershipConfirmationTemplate =
+require("../utils/emailTemplates/membershipConfirmationTemplate");
 
 
 
@@ -305,7 +309,7 @@ const purchaseMembership = asyncHandler(async (req, res, next) => {
 
 
 const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
- 
+
 
 
     const {
@@ -363,6 +367,12 @@ const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
                 "Membership plan not found"
             )
         );
+    }
+
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+        return next(new ErrorHandler(404, "User not found"));
     }
 
     const existingMembership =
@@ -430,6 +440,47 @@ const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
         }
     );
 
+
+    await sendEmail({
+
+    email: user.email,
+
+    subject:
+        "🎉 Welcome to UrbanCart Premium Membership",
+
+    html:
+        membershipConfirmationTemplate({
+
+            name:
+                user.name,
+
+            planName:
+                membershipPlan.name,
+
+            amount:
+                membershipPlan.price,
+
+            purchaseDate:
+                userMembership.createdAt
+                    .toLocaleDateString("en-IN"),
+
+            expiryDate:
+                userMembership.expiryDate
+                    .toLocaleDateString("en-IN"),
+
+            paymentMethod:
+                "Razorpay",
+
+            paymentStatus:
+                "Paid",
+
+            membershipUrl:
+                `${process.env.CLIENT_URL}/profile/membership`
+
+        })
+
+});
+
     res.status(200).json({
         success: true,
         message:
@@ -452,7 +503,7 @@ const getMyMembership = asyncHandler(async (req, res, next) => {
     const allMemberships =
         await UserMembership.find();
 
- ;
+    ;
     const membership =
         await UserMembership
             .findOne({

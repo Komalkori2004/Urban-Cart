@@ -80,22 +80,22 @@ function MembershipHistory() {
                                             }
                                         </h2>
 
-                                    <span
-    className={
-        membership.status === "active"
-            ? "status-active"
-            : membership.status === "cancelled"
-                ? "status-cancelled"
-                : "status-expired"
-    }
->
-    {
-        membership.status
-            .charAt(0)
-            .toUpperCase() +
-        membership.status.slice(1)
-    }
-</span>
+                                        <span
+                                            className={
+                                                membership.status === "active"
+                                                    ? "status-active"
+                                                    : membership.status === "cancelled"
+                                                        ? "status-cancelled"
+                                                        : "status-expired"
+                                            }
+                                        >
+                                            {
+                                                membership.status
+                                                    .charAt(0)
+                                                    .toUpperCase() +
+                                                membership.status.slice(1)
+                                            }
+                                        </span>
 
                                     </div>
 
