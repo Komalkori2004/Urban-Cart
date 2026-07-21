@@ -31,7 +31,7 @@ content="width=device-width, initial-scale=1.0"
 <body
 style="
 margin:0;
-padding:40px 20px;
+padding:0;
 background:#0D0D0D;
 font-family:Arial,Helvetica,sans-serif;
 "
@@ -49,11 +49,13 @@ border="0"
 <td align="center">
 
 <table
-width="620"
+width="100%"
 cellpadding="0"
 cellspacing="0"
 border="0"
 style="
+max-width:620px;
+width:100%;
 background:#131313;
 border:1px solid rgba(212,175,55,.18);
 border-radius:24px;
@@ -140,7 +142,7 @@ background:rgba(212,175,55,.18);
 
 <td
 style="
-padding:55px;
+padding:30px 20px;
 "
 >
 
@@ -159,10 +161,12 @@ ${greeting}
 <h2
 style="
 margin:30px 0 20px;
-font-size:36px;
+font-size:30px;
+line-height:38px;
+word-break:break-word;
 font-family:Georgia,'Times New Roman',serif;
 font-weight:600;
-line-height:44px;
+
 color:#F5E6C8;
 "
 >
@@ -179,19 +183,6 @@ margin:24px 0 28px;
 "
 ></div>
 
-<p
-style="
-margin:0;
-max-width:420px;
-font-size:17px;
-line-height:30px;
-color:#B8B8B8;
-"
->
-
-${message}
-
-</p>
 
 <table
 cellpadding="0"

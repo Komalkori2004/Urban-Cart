@@ -13,6 +13,7 @@ const orderShippedTemplate = require("../utils/emailTemplates/orderShipped");
 const outForDeliveryTemplate = require("../utils/emailTemplates/outForDelivery");
 const orderDeliveredTemplate = require("../utils/emailTemplates/orderDelivered");
 
+
 const orderCancelledTemplate = require("../utils/emailTemplates/orderCancelled");
 const sendEmail = require("../utils/sendEmail");
 
@@ -219,6 +220,7 @@ const placeOrder = asyncHandler(async (req, res, next) => {
             name: existingUser.name,
             orderId: newOrder._id,
             orderDate: newOrder.createdAt.toLocaleDateString("en-IN"),
+            amount: newOrder.totalAmount,
             paymentMethod: newOrder.paymentMethod,
             paymentStatus: newOrder.paymentStatus,
             orderStatus: newOrder.orderStatus,
@@ -227,7 +229,7 @@ const placeOrder = asyncHandler(async (req, res, next) => {
 
         await sendEmail({
             email: existingUser.email,
-            subject: "Your Order has been Confirmed",
+            subject: "Your Order Has Been Confirmed",
             html,
         });
     } catch (error) {
@@ -247,6 +249,8 @@ const placeOrder = asyncHandler(async (req, res, next) => {
         const product = await Product.findById(item.product._id)
         product.stock -= item.quantity
         await product.save()
+
+
     }
 
     cartItems.items = []
