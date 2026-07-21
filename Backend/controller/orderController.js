@@ -306,6 +306,15 @@ const orderStatus = asyncHandler(async (req, res, next) => {
         return next(new ErrorHandler(404, "Order not found"));
     }
 
+
+    if (order.orderStatus === "Cancelled") {
+        return next(
+            new ErrorHandler(
+                400,
+                "Cancelled order status cannot be updated."
+            )
+        );
+    }
     order.orderStatus = orderStatus;
 
     await order.save();
@@ -423,12 +432,23 @@ const cancleOrder = asyncHandler(async (req, res, next) => {
     }
 
     if (order.orderStatus === "Cancelled") {
-        return next(new ErrorHandler(400, "Order already cancelled"))
-
+        return next(
+            new ErrorHandler(400, "Order already cancelled")
+        );
     }
 
-    if (order.orderStatus === "Delivered") {
-        return next(new ErrorHandler(400, "Delivered order cannot be cancelled"))
+
+    if (
+        order.orderStatus === "Shipped" ||
+        order.orderStatus === "Out for Delivery" ||
+        order.orderStatus === "Delivered"
+    ) {
+        return next(
+            new ErrorHandler(
+                400,
+                `Order cannot be cancelled once it has been ${order.orderStatus}.`
+            )
+        );
     }
 
     for (const item of order.items) {
@@ -438,7 +458,7 @@ const cancleOrder = asyncHandler(async (req, res, next) => {
     }
 
     order.orderStatus = "Cancelled"
-    
+
     await order.save()
 
     try {
