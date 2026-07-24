@@ -6,6 +6,15 @@ const Contact = require("../models/contactModel")
 const ErrorHandler = require("../utils/errorhandler")
 const asyncHandler = require("../middleware/asyncHandler")
 
+const sendEmail = require("../utils/sendEmail");
+
+const contactConfirmationTemplate =
+require("../utils/emailTemplates/contactConfirmationTemplate");
+
+
+
+
+
 
 
 const createContact = asyncHandler(async (req, res, next) => {
@@ -41,6 +50,7 @@ const createContact = asyncHandler(async (req, res, next) => {
             )
         );
     }
+
     await Contact.create({
         name,
         email,
@@ -48,6 +58,28 @@ const createContact = asyncHandler(async (req, res, next) => {
         subject,
         message
     })
+
+
+await sendEmail({
+
+    email,
+
+    subject: "📩 Thank You for Contacting UrbanCart",
+
+    html: contactConfirmationTemplate({
+
+        name,
+
+        subject,
+
+        email,
+
+        supportUrl: process.env.CLIENT_URL
+
+    })
+
+});
+
 
     res.status(200).json({
         success: true,
