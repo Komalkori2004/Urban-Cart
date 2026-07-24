@@ -14,8 +14,10 @@ const UserMembership = require("../models/userMembership.model");
 const sendEmail = require("../utils/sendEmail");
 
 const membershipConfirmationTemplate =
-require("../utils/emailTemplates/membershipConfirmationTemplate");
+    require("../utils/emailTemplates/membershipConfirmationTemplate");
 
+const membershipCancellationTemplate =
+    require("../utils/emailTemplates/membershipCancellationTemplate");
 
 
 
@@ -443,43 +445,43 @@ const verifyMembershipPayment = asyncHandler(async (req, res, next) => {
 
     await sendEmail({
 
-    email: user.email,
+        email: user.email,
 
-    subject:
-        "🎉 Welcome to UrbanCart Premium Membership",
+        subject:
+            "🎉 Welcome to UrbanCart Premium Membership",
 
-    html:
-        membershipConfirmationTemplate({
+        html:
+            membershipConfirmationTemplate({
 
-            name:
-                user.name,
+                name:
+                    user.name,
 
-            planName:
-                membershipPlan.name,
+                planName:
+                    membershipPlan.name,
 
-            amount:
-                membershipPlan.price,
+                amount:
+                    membershipPlan.price,
 
-            purchaseDate:
-                userMembership.createdAt
-                    .toLocaleDateString("en-IN"),
+                purchaseDate:
+                    userMembership.createdAt
+                        .toLocaleDateString("en-IN"),
 
-            expiryDate:
-                userMembership.expiryDate
-                    .toLocaleDateString("en-IN"),
+                expiryDate:
+                    userMembership.expiryDate
+                        .toLocaleDateString("en-IN"),
 
-            paymentMethod:
-                "Razorpay",
+                paymentMethod:
+                    "Razorpay",
 
-            paymentStatus:
-                "Paid",
+                paymentStatus:
+                    "Paid",
 
-            membershipUrl:
-                `${process.env.CLIENT_URL}/profile/membership`
+                membershipUrl:
+                    `${process.env.CLIENT_URL}/profile/membership`
 
-        })
+            })
 
-});
+    });
 
     res.status(200).json({
         success: true,
@@ -568,7 +570,7 @@ const cancelMembership = asyncHandler(async (req, res, next) => {
             expiryDate: {
                 $gt: new Date()
             }
-        });
+        }).populate("membershipPlan");
 
 
     if (!membership) {
@@ -578,6 +580,12 @@ const cancelMembership = asyncHandler(async (req, res, next) => {
                 "No active membership found"
             )
         );
+    }
+
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+        return next(new ErrorHandler(404, "User not found"));
     }
 
     membership.status = "cancelled"
@@ -590,6 +598,25 @@ const cancelMembership = asyncHandler(async (req, res, next) => {
             membership: null
         }
     );
+
+
+    await sendEmail({
+        email: user.email,
+
+        subject: "Your Premium Membership Has Been Cancelled",
+
+        html: membershipCancellationTemplate({
+            name: user.name,
+
+            planName: membership.membershipPlan.name,
+
+            cancellationDate: new Date().toLocaleDateString("en-IN"),
+
+            expiryDate: membership.expiryDate.toLocaleDateString("en-IN"),
+
+            membershipUrl: `${process.env.CLIENT_URL}/membership`
+        })
+    });
 
 
     res.status(200).json({
