@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./membership.css";
-import { useNavigate  , Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
 
 import {
@@ -154,20 +154,46 @@ function MembershipPlans() {
     return (
         <>
             <div className="membership-container">
-
                 <div className="membership-header">
 
+                    <span className="membership-tag">
+                        ✨ UrbanCart Premium
+                    </span>
+
                     <h1>
-                        Membership Plans
+                        Unlock the Ultimate
+                        Shopping Experience
                     </h1>
 
                     <p>
-                        Unlock premium shopping
-                        experience with exclusive
-                        benefits.
+                        Become an UrbanCart Premium Member and enjoy
+                        exclusive discounts, faster delivery,
+                        priority support, and member-only rewards
+                        designed to elevate every purchase.
                     </p>
 
+                    <div className="membership-header-features">
+
+                        <div className="header-feature">
+                            <h3>🚚</h3>
+                            <span>Free Shipping</span>
+                        </div>
+
+                        <div className="header-feature">
+                            <h3>💎</h3>
+                            <span>Exclusive Rewards</span>
+                        </div>
+
+                        <div className="header-feature">
+                            <h3>⚡</h3>
+                            <span>Priority Support</span>
+                        </div>
+
+                    </div>
+
                 </div>
+
+
 
                 <div className="membership-grid">
 
@@ -197,22 +223,21 @@ function MembershipPlans() {
                                 </p>
                                 <div className="membership-price">
 
-                                    <h2>
-                                        ₹{plan.price}
-                                    </h2>
+                                    <h2>₹{plan.price}</h2>
 
-                                    <span>
-                                        / {plan.durationInDays} Days
-                                    </span>
+                                    <span>{plan.durationInDays} Days Membership</span>
 
                                 </div>
+
+                                <div className="price-divider"></div>
 
                                 <ul className="membership-features">
                                     {
                                         plan.features?.map(
                                             (feature, index) => (
                                                 <li key={index}>
-                                                    ✓ {feature}
+                                                    <span>✔</span>
+                                                    {feature}
                                                 </li>
                                             )
                                         )
@@ -230,11 +255,10 @@ function MembershipPlans() {
                                     Become Premium
                                 </button>
                                 <Link
-                                    to={
-                                        `/membership/${plan.slug}`
-                                    }
+                                    to={`/membership/${plan.slug}`}
+                                    className="membership-details-btn"
                                 >
-                                    View Details
+                                    View Details →
                                 </Link>
 
                             </div>

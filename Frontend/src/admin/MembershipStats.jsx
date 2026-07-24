@@ -19,7 +19,7 @@ import {
     FaRupeeSign
 } from "react-icons/fa";
 
-import "./style/membership.css"
+import "./style/Adminmembership.css"
 
 function MembershipStats() {
 

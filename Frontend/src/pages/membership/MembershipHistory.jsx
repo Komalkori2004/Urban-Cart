@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./membership.css";
+// import "./membership.css";
 
 import { getMembershipHistory } from "../../redux/thunks/membershipThunk";
 

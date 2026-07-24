@@ -2,7 +2,7 @@ import React, { useState ,useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import "./style/membership.css"
+// import "./style/membership.css"
 import { useLocation } from "react-router-dom";
 import { updateMembershipPlan, deleteMembershipPlan }
     from "../redux/thunks/membershipThunk";

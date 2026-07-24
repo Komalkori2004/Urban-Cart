@@ -6,7 +6,7 @@ import {
     cancelMembership
 } from "../../redux/thunks/membershipThunk";
 
-import "./membership.css";
+// import "./membership.css";
 
 function MyMembership() {
 

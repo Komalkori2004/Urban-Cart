@@ -3,7 +3,7 @@ import React, {
 } from "react";
 
 
-import "../pages/membership/membership.css"
+import "./style/Adminmembership.css"
 import {
     useDispatch,
     useSelector

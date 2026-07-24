@@ -11,7 +11,7 @@ import {
 
 // import "../Auth/auth.css"
 
-import "./style/membership.css"
+// import "./style/membership.css"
 function CreateMembership() {
 
     const dispatch = useDispatch();
