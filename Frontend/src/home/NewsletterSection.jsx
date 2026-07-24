@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "../home/style/NewsletterSection.css";
 
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 import { subscribeNewsletter } from "../redux/thunks/newsletterThunk";
 
@@ -28,18 +28,30 @@ function NewsletterSection() {
       email.trim().toLowerCase();
 
     if (!trimmedEmail) {
+
       return toast.error(
-        "Email is required"
+        "Subscription Failed",
+        {
+          description:
+            "Please enter your email address."
+        }
       );
+
     }
 
     const emailRegex =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(trimmedEmail)) {
+
       return toast.error(
-        "Please enter a valid email"
+        "Invalid Email",
+        {
+          description:
+            "Please enter a valid email address."
+        }
       );
+
     }
 
     dispatch(
@@ -47,6 +59,7 @@ function NewsletterSection() {
         trimmedEmail
       )
     );
+
   };
 
   useEffect(() => {
@@ -54,7 +67,11 @@ function NewsletterSection() {
     if (success) {
 
       toast.success(
-        "Welcome to UrbanCart"
+        "🎉 Welcome to UrbanCart!",
+        {
+          description:
+            "Your newsletter subscription was successful. Check your inbox for your welcome email."
+        }
       );
 
       setEmail("");
@@ -62,6 +79,7 @@ function NewsletterSection() {
       dispatch(
         resetNewsletterState()
       );
+
     }
 
   }, [success, dispatch]);
@@ -96,19 +114,24 @@ function NewsletterSection() {
             experiences.
           </p>
 
-          <form className="newsletter-form"
-            onSubmit={handleSubmit}>
+          <form
+            className="newsletter-form"
+            onSubmit={handleSubmit}
+          >
 
             <div className="newsletter-input">
 
               <span className="mail-icon">
                 ✉
               </span>
+
               <input
                 type="email"
                 placeholder="Enter your email address"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
               />
 
             </div>
@@ -116,8 +139,13 @@ function NewsletterSection() {
             <button
               type="submit"
               className="newsletter-btn"
+              disabled={loading}
             >
-              {loading ? "Joining..." : "Join The Circle"}
+              {
+                loading
+                  ? "Joining..."
+                  : "Join The Circle"
+              }
             </button>
 
           </form>
@@ -132,7 +160,9 @@ function NewsletterSection() {
       </div>
 
     </section>
+
   );
+
 }
 
 export default NewsletterSection;
