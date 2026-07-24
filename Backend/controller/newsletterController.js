@@ -3,7 +3,9 @@
 const Newsletter = require("../models/newsletterModel")
 const ErrorHandler = require("../utils/errorhandler")
 const asyncHandler = require("../middleware/asyncHandler")
+const newsletterWelcomeTemplate = require("../utils/emailTemplates/newsletterWelcomeTemplate")
 
+const sendEmail = require("../utils/sendEmail");
 
 const subscribeNewsletter = asyncHandler(async (req, res, next) => {
 
@@ -27,11 +29,23 @@ const subscribeNewsletter = asyncHandler(async (req, res, next) => {
         return next(new ErrorHandler(400, "You are already subscribed"))
     }
 
-
-    await Newsletter.create({
+    const subscriber = await Newsletter.create({
         email: email.toLowerCase()
-    })
+    });
 
+    await sendEmail({
+
+        email: subscriber.email,
+
+        subject: "🎉 Welcome to UrbanCart Newsletter",
+
+        html: newsletterWelcomeTemplate({
+
+            email: subscriber.email
+
+        })
+
+    });
 
 
     res.status(201).json({

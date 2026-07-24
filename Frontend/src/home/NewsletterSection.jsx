@@ -68,67 +68,70 @@ function NewsletterSection() {
 
   return (
 
-<section className="newsletter">
+    <section className="newsletter">
 
-    <div className="container">
+      <div className="container">
 
         <div className="newsletter-card">
 
-            <div className="newsletter-badge-wrapper">
+          <div className="newsletter-badge-wrapper">
 
-                <span className="badge-line"></span>
+            <span className="badge-line"></span>
 
-                <span className="newsletter-badge">
-                    ✦ EXCLUSIVE ACCESS ✦
-                </span>
+            <span className="newsletter-badge">
+              ✦ EXCLUSIVE ACCESS ✦
+            </span>
 
-                <span className="badge-line"></span>
+            <span className="badge-line"></span>
+
+          </div>
+
+          <h2 className="newsletter-title">
+            Join The UrbanCart Circle
+          </h2>
+
+          <p className="newsletter-description">
+            Discover private launches, luxury collections,
+            curated fashion inspiration and members-only
+            experiences.
+          </p>
+
+          <form className="newsletter-form"
+            onSubmit={handleSubmit}>
+
+            <div className="newsletter-input">
+
+              <span className="mail-icon">
+                ✉
+              </span>
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
             </div>
 
-            <h2 className="newsletter-title">
-                Join The UrbanCart Circle
-            </h2>
+            <button
+              type="submit"
+              className="newsletter-btn"
+            >
+              {loading ? "Joining..." : "Join The Circle"}
+            </button>
 
-            <p className="newsletter-description">
-                Discover private launches, luxury collections,
-                curated fashion inspiration and members-only
-                experiences.
-            </p>
+          </form>
 
-            <form className="newsletter-form">
-
-                <div className="newsletter-input">
-
-                    <span className="mail-icon">
-                        ✉
-                    </span>
-
-                    <input
-                        type="email"
-                        placeholder="Enter your email address"
-                    />
-
-                </div>
-
-                <button
-                    className="newsletter-btn"
-                >
-                    Join The Circle
-                </button>
-
-            </form>
-
-            <p className="newsletter-privacy">
-                We respect your privacy.
-                Unsubscribe anytime.
-            </p>
+          <p className="newsletter-privacy">
+            We respect your privacy.
+            Unsubscribe anytime.
+          </p>
 
         </div>
 
-    </div>
+      </div>
 
-</section>
+    </section>
   );
 }
 
