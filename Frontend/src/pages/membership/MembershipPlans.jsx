@@ -127,7 +127,7 @@ function MembershipPlans() {
                     );
 
                     navigate(
-                        "/my-membership"
+                        "/membership"
                     );
                 },
 

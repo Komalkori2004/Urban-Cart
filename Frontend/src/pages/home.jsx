@@ -10,6 +10,7 @@ import CategoryCarousel from '../components/CategoryCarousel'
 
 import OfferBanner from '../home/OfferBanner'
 import NewArrivals from '../home/NewArrivals'
+import MembershipPlans from './membership/MembershipPlans';
 
 const BrandStory = lazy(() =>
   import("../home/BrandStory")
@@ -31,6 +32,7 @@ const NewsletterSection = lazy(() =>
 const ContactUs = lazy(() =>
   import("../components/ContactUs")
 );
+
 function HomePage() {
   return (
     <>
@@ -39,6 +41,8 @@ function HomePage() {
     <CategoryCarousel/>
         <FeatureProduct/>
     <OfferBanner/>
+<MembershipPlans/>
+
       <Suspense fallback={null}>
     <BrandStory />
     <Testimonials />

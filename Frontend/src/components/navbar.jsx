@@ -22,8 +22,11 @@ import {
   FiShoppingCart,
   FiUser,
   FiLogOut,
-  FiSearch
+  FiSearch,
+  
 } from "react-icons/fi";
+
+import { RiVipCrown2Line } from "react-icons/ri";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -117,7 +120,7 @@ const NavBar = () => {
   };
 
 
-    if (location.pathname.includes("/admin")) {
+  if (location.pathname.includes("/admin")) {
     return null
   }
 
@@ -125,7 +128,7 @@ const NavBar = () => {
   return (
     <>
 
-  
+
       <nav className="navbar">
 
         <div className="container navbar-container">
@@ -148,6 +151,12 @@ const NavBar = () => {
             <Link className="nav-item" to="/products">
               <FiShoppingBag />
               <span>Shop</span>
+            </Link>
+
+            <Link className="nav-item" to="/plan">
+             <RiVipCrown2Line />
+
+              <span>Membership</span>
             </Link>
 
           </div>
@@ -396,6 +405,20 @@ const NavBar = () => {
 
             <span>
               Shop
+            </span>
+
+          </Link>
+
+          <Link
+            className="mobile-link"
+            to="/plan"
+            onClick={() => setMenuOpen(false)}
+          >
+               <RiVipCrown2Line />
+
+
+            <span>
+              Membership
             </span>
 
           </Link>

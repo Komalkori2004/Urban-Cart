@@ -235,13 +235,13 @@ const AppRouter = () => {
                                 element={<MembershipHistory />}
                             />
 
-                               <Route
+                            <Route
                                 path="profile-settings"
                                 element={<ProfileSettings />}
                             />
 
-                            
-                            
+
+
 
 
                         </Route>
@@ -251,6 +251,16 @@ const AppRouter = () => {
                         {/*  */}
 
 
+
+
+                        <Route
+                            path="/membership"
+                            element={
+                                <ProtectRoute>
+                                    <MyMembership/>
+                                </ProtectRoute>
+                            }
+                        />
 
 
                         <Route
@@ -313,7 +323,7 @@ const AppRouter = () => {
                             element={<NotFound />}
                         />
 
-                        
+
 
 
 
