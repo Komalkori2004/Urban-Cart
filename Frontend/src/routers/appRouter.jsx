@@ -253,14 +253,14 @@ const AppRouter = () => {
 
 
 
-                        {/* <Route
+                        <Route
                             path="/my-membershipHistory"
                             element={
                                 <ProtectRoute>
                                     <MembershipHistory />
                                 </ProtectRoute>
                             }
-                        /> */}
+                        />
 
 
                         <Route
