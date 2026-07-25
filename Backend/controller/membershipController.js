@@ -518,14 +518,11 @@ const getMyMembership = asyncHandler(async (req, res, next) => {
             .populate("membershipPlan");
 
     if (!membership) {
-        return next(
-            new ErrorHandler(
-                404,
-                "Membership not found"
-            )
-        );
+        return res.status(200).json({
+            success: true,
+            membership: null
+        });
     }
-
     res.status(200).json({
         success: true,
         membership
