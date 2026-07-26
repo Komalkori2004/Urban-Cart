@@ -17,16 +17,27 @@ const AdminProducts = () => {
 
     const dispatch = useDispatch()
     const [deleteLoading, setDeleteLoading] = useState(null)
-    const { products, loading, error } = useSelector((state) => state.products)
+    const [page, setPage] = useState(1);
+
+    const {
+        products,
+        loading,
+        error,
+        currentPage,
+        totalPages
+    } = useSelector(
+        (state) => state.products
+    );
 
     useEffect(() => {
 
-        if (products.length === 0) {
-            dispatch(getAllproduct())
-        }
+        dispatch(
+            getAllproduct({
+                page
+            })
+        );
 
-    }, [dispatch, products.length])
-
+    }, [dispatch, page]);
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -93,132 +104,167 @@ const AdminProducts = () => {
     return (
         <>
 
-        <div className="admin-container">
+            <div className="admin-container">
 
-            <div className="admin-products-page">
+                <div className="admin-products-page">
 
-                <h1 className="admin-title">
-                    Admin Products
-                </h1>
+                    <h1 className="admin-title">
+                        Admin Products
+                    </h1>
 
-                {
-                    products.length === 0 ? (
+                    {
+                        products.length === 0 ? (
 
-                        <div className="admin-empty-products">
+                            <div className="admin-empty-products">
 
-                            <h2>
-                                No Products Found
-                            </h2>
+                                <h2>
+                                    No Products Found
+                                </h2>
 
-                        </div>
+                            </div>
 
-                    ) : (
+                        ) : (<>
 
-                        <div className="admin-product-container">
+                            <div className="admin-product-container">
 
-                            {
-                                products.map((product) => (
+                                {
+                                    products.map((product) => (
 
-                                    <div
-                                        className="admin-product-card"
-                                        key={product._id}
-                                    >
+                                        <div
+                                            className="admin-product-card"
+                                            key={product._id}
+                                        >
 
-                                        <img
-                                            src={product.images?.[0]?.url}
-                                            alt={product.name}
-                                            className="admin-product-image"
-                                            loading="lazy"
-                                        />
+                                            <img
+                                                src={product.images?.[0]?.url}
+                                                alt={product.name}
+                                                className="admin-product-image"
+                                                loading="lazy"
+                                            />
 
-                                        <div className="admin-product-info">
+                                            <div className="admin-product-info">
 
-                                            <h3>
-                                                {product.name}
-                                            </h3>
+                                                <h3>
+                                                    {product.name}
+                                                </h3>
 
-                                            <p className="admin-product-category">
-                                                {product.category}
-                                            </p>
+                                                <p className="admin-product-category">
+                                                    {product.category}
+                                                </p>
 
-                                            {
-                                                product.brand && (
-                                                    <p className="admin-product-brand">
-                                                        {product.brand}
-                                                    </p>
-                                                )
-                                            }
+                                                {
+                                                    product.brand && (
+                                                        <p className="admin-product-brand">
+                                                            {product.brand}
+                                                        </p>
+                                                    )
+                                                }
 
-                                            <div className="admin-price-section">
+                                                <div className="admin-price-section">
 
-                                                <span className="admin-price">
-                                                    ₹{product.price}
-                                                </span>
-
-                                            </div>
-
-                                            <p
-                                                className={`admin-stock ${getStockClass(
-                                                    product.stock
-                                                )}`}
-                                            >
-                                                {getStockText(product.stock)}
-                                                ({product.stock})
-                                            </p>
-
-                                            {
-                                                product.shipping && (
-                                                    <span className="admin-shipping-badge">
-                                                        Free Shipping
+                                                    <span className="admin-price">
+                                                        ₹{product.price}
                                                     </span>
-                                                )
-                                            }
 
-                                            <div className="admin-btns">
+                                                </div>
 
-                                                <Link
-                                                    to={`/admin/update-product/${product._id}`}
+                                                <p
+                                                    className={`admin-stock ${getStockClass(
+                                                        product.stock
+                                                    )}`}
                                                 >
+                                                    {getStockText(product.stock)}
+                                                    ({product.stock})
+                                                </p>
+
+                                                {
+                                                    product.shipping && (
+                                                        <span className="admin-shipping-badge">
+                                                            Free Shipping
+                                                        </span>
+                                                    )
+                                                }
+
+                                                <div className="admin-btns">
+
+                                                    <Link
+                                                        to={`/admin/update-product/${product._id}`}
+                                                    >
+
+                                                        <button
+                                                            className="admin-edit-btn"
+                                                        >
+                                                            Edit
+                                                        </button>
+
+                                                    </Link>
 
                                                     <button
-                                                        className="admin-edit-btn"
+                                                        className="admin-delete-btn"
+                                                        disabled={
+                                                            deleteLoading === product._id
+                                                        }
+                                                        onClick={() => {
+                                                            handleDelete(product._id)
+                                                        }}
                                                     >
-                                                        Edit
+
+                                                        {
+                                                            deleteLoading === product._id
+                                                                ? "Deleting..."
+                                                                : "Delete"
+                                                        }
+
                                                     </button>
 
-                                                </Link>
-
-                                                <button
-                                                    className="admin-delete-btn"
-                                                    disabled={
-                                                        deleteLoading === product._id
-                                                    }
-                                                    onClick={() => {
-                                                        handleDelete(product._id)
-                                                    }}
-                                                >
-
-                                                    {
-                                                        deleteLoading === product._id
-                                                            ? "Deleting..."
-                                                            : "Delete"
-                                                    }
-
-                                                </button>
+                                                </div>
 
                                             </div>
 
                                         </div>
+                                    ))
+                                }
 
-                                    </div>
-                                ))
-                            }
+                            </div>
 
-                        </div>
-                    )
-                }
+                            <div className="admin-pagination">
 
-            </div>
+                                <button
+                                    className="admin-page-btn"
+                                    disabled={currentPage === 1}
+                                    onClick={() => setPage(prev => prev - 1)}
+                                >
+                                    ← Previous
+                                </button>
+
+                                <span className="admin-page-info">
+
+                                    Page {currentPage} of {totalPages}
+
+                                </span>
+
+                                <button
+                                    className="admin-page-btn"
+                                    disabled={currentPage === totalPages}
+                                    onClick={() => setPage(prev => prev + 1)}
+                                >
+                                    Next →
+                                </button>
+
+                            </div>
+
+
+
+
+
+
+                        </>
+
+
+                        )
+                    }
+
+                </div>
             </div>
 
         </>

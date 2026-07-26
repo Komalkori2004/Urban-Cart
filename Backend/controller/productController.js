@@ -167,6 +167,13 @@ const products = await productModel
     .sort(sortQuery)
     .skip(skip)
     .limit(limit);
+    console.log(products);
+
+
+
+console.log("Query:", query);
+console.log("Products:", products);
+
 
     res.status(200).json({
 

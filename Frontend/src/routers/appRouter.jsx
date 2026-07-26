@@ -252,12 +252,22 @@ const AppRouter = () => {
 
 
 
+                        <Route
+                            path="/address"
+                            element={
+                                <ProtectRoute>
+                                    <AddAddressPage />
+                                </ProtectRoute>
+                            }
+                        />
+
+
 
                         <Route
                             path="/membership"
                             element={
                                 <ProtectRoute>
-                                    <MyMembership/>
+                                    <MyMembership />
                                 </ProtectRoute>
                             }
                         />

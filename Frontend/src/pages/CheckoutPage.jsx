@@ -211,7 +211,7 @@ setIsPlacingOrder(true);
                     <button
                         type="button"
                         className="add-address-btn"
-                        onClick={() => navigate("/add-address")}
+                        onClick={() => navigate("/address")}
                     >
                         + Add New Address
                     </button>
