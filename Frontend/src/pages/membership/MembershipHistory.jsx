@@ -140,16 +140,66 @@ function MembershipHistory() {
                             <div className="empty-history">
 
                                 <div className="empty-history-icon">
+
                                     👑
+
                                 </div>
 
+                                <span className="empty-history-tag">
+
+                                    UrbanCart Premium
+
+                                </span>
+
                                 <h2>
-                                    No Membership History
+
+                                    No Membership History Yet
+
                                 </h2>
 
                                 <p>
-                                    You haven't purchased any membership yet.
+
+                                    It looks like you haven't purchased any premium membership.
+                                    Unlock exclusive benefits and enjoy a premium shopping experience.
+
                                 </p>
+
+                                <div className="empty-history-benefits">
+
+                                    <div>
+
+                                        ✓ Free Shipping
+
+                                    </div>
+
+                                    <div>
+
+                                        ✓ Exclusive Discounts
+
+                                    </div>
+
+                                    <div>
+
+                                        ✓ Priority Support
+
+                                    </div>
+
+                                    <div>
+
+                                        ✓ Early Access
+
+                                    </div>
+
+                                </div>
+
+                                <button
+                                    className="explore-membership-btn"
+                                    onClick={() => navigate("/plan")}
+                                >
+
+                                    Explore Membership Plans
+
+                                </button>
 
                             </div>
 

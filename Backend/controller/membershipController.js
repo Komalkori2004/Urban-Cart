@@ -545,7 +545,15 @@ const getMembershipHistory = asyncHandler(async (req, res, next) => {
 
 
     if (memberships.length === 0) {
-        return next(new ErrorHandler(404, "No membership history found"))
+
+        return res.status(200).json({
+
+            success: true,
+
+            memberships: []
+
+        });
+
     }
 
     res.status(200).json({

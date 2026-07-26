@@ -158,94 +158,258 @@
 
 .empty-history{
 
-    max-width:700px;
+    max-width:750px;
 
-    margin:auto;
+    margin:70px auto;
+
+    padding:60px 45px;
 
     text-align:center;
 
-    background:
-        var(--glass-bg);
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.03),
+        rgba(212,175,55,.04)
+    );
 
-    border:
-        var(--border-gold);
+    border:var(--border-gold);
 
-    border-radius:
-        var(--radius-xl);
+    border-radius:28px;
 
-    padding:60px 40px;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+
+    position:relative;
+
+    overflow:hidden;
 }
+
+.empty-history::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-80px;
+
+    right:-80px;
+
+    width:180px;
+
+    height:180px;
+
+    background:rgba(212,175,55,.08);
+
+    border-radius:50%;
+}
+
+.empty-history::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-70px;
+
+    left:-70px;
+
+    width:150px;
+
+    height:150px;
+
+    background:rgba(212,175,55,.05);
+
+    border-radius:50%;
+}
+
+
+/* ICON */
 
 .empty-history-icon{
 
-    width:100px;
+    width:90px;
 
-    height:100px;
+    height:90px;
 
-    margin:auto;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
+    margin:0 auto 25px;
 
     border-radius:50%;
 
-    background:
-        rgba(212,175,55,.08);
+    display:flex;
 
-    border:
-        var(--border-gold);
+    align-items:center;
+
+    justify-content:center;
 
     font-size:42px;
 
-    margin-bottom:24px;
+    color:var(--gold);
+
+    background:rgba(212,175,55,.08);
+
+    border:2px solid rgba(212,175,55,.25);
+
+    position:relative;
+
+    z-index:2;
 }
 
-.empty-history h2{
 
-    color:
-        var(--white);
+/* TAG */
 
-    font-family:
-        var(--heading-font);
+.empty-history-tag{
 
-    font-size:36px;
+    display:inline-block;
 
-    margin-bottom:18px;
-}
+    padding:10px 24px;
 
-.empty-history p{
-
-    color:
-        var(--text-muted);
-
-    line-height:1.8;
-
-    margin-bottom:35px;
-}
-
-.empty-history button{
-
-    padding:15px 34px;
+    margin-bottom:25px;
 
     border-radius:50px;
 
-    background:
-        var(--gold);
+    background:rgba(212,175,55,.08);
 
-    color:
-        var(--black);
+    border:var(--border-gold);
+
+    color:var(--gold);
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    text-transform:uppercase;
+
+    position:relative;
+
+    z-index:2;
+}
+
+
+/* TITLE */
+
+.empty-history h2{
+
+    color:var(--white);
+
+    font-family:var(--heading-font);
+
+    font-size:42px;
+
+    margin-bottom:18px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+
+/* DESCRIPTION */
+
+.empty-history p{
+
+    max-width:520px;
+
+    margin:0 auto 40px;
+
+    color:var(--text-muted);
+
+    line-height:1.9;
+
+    font-size:16px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+
+/* BENEFITS */
+
+.empty-history-benefits{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    margin-bottom:40px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+.empty-history-benefits div{
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.03);
+
+    border:1px solid rgba(212,175,55,.15);
+
+    color:var(--white);
 
     font-weight:600;
+
+    transition:var(--transition);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
 }
 
-.empty-history button:hover{
+.empty-history-benefits div:hover{
 
-    background:
-        var(--gold-light);
+    transform:translateY(-5px);
+
+    border-color:var(--gold);
+
+    background:rgba(212,175,55,.08);
 }
+
+
+/* BUTTON */
+
+.explore-membership-btn{
+
+    padding:16px 36px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:var(--gold);
+
+    color:var(--black);
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+    position:relative;
+
+    z-index:2;
+}
+
+.explore-membership-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 30px rgba(212,175,55,.35);
+}
+
 
 
 /* ==========================================
@@ -577,6 +741,27 @@
         grid-template-columns:1fr;
     }
 
+
+     .empty-history{
+
+        padding:45px 25px;
+    }
+
+    .empty-history h2{
+
+        font-size:32px;
+    }
+
+    .empty-history-benefits{
+
+        grid-template-columns:1fr;
+    }
+
+    .empty-history p{
+
+        font-size:15px;
+    }
+
 }
 
 @media(max-width:480px){
@@ -605,6 +790,31 @@
     .history-price .price{
 
         font-size:28px;
+    }
+
+
+        .empty-history{
+
+        padding:35px 20px;
+    }
+
+    .empty-history-icon{
+
+        width:75px;
+
+        height:75px;
+
+        font-size:34px;
+    }
+
+    .empty-history h2{
+
+        font-size:28px;
+    }
+
+    .explore-membership-btn{
+
+        width:100%;
     }
 
 }
