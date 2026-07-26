@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     createMembershipPlan
 } from "../redux/thunks/membershipThunk";
-
+import { toast } from "sonner";
 
 import "./style/createMemberShip.css"
 
@@ -69,266 +69,287 @@ function CreateMembership() {
                     : value
         });
     };
-    const handleSubmit =
-        async (e) => {
+    const handleSubmit = async (e) => {
 
-            e.preventDefault();
+        e.preventDefault();
 
-            const payload = {
+        const payload = {
 
-                ...formData,
+            ...formData,
 
-                price:
-                    Number(formData.price),
+            price: Number(formData.price),
 
-                durationInDays:
-                    Number(formData.durationInDays),
+            durationInDays: Number(formData.durationInDays),
 
-                discountPercentage:
-                    Number(formData.discountPercentage),
+            discountPercentage: Number(formData.discountPercentage),
 
-                maxDiscountAmount:
-                    Number(formData.maxDiscountAmount),
+            maxDiscountAmount: Number(formData.maxDiscountAmount),
 
-                features:
-                    formData.features
-                        .split(",")
-                        .map(item => item.trim())
-            };
+            features: formData.features
+                .split(",")
+                .map(item => item.trim())
 
-            console.log(payload);
-
-            await dispatch(
-                createMembershipPlan(
-                    payload
-                )
-            );
         };
-return (
 
-    <div className="membership-container">
+        const result = await dispatch(
+            createMembershipPlan(payload)
+        );
 
-        <div className="membership-card">
+        if (createMembershipPlan.fulfilled.match(result)) {
 
-            <h1 className="membership-title">
-                Create Membership
-            </h1>
+            toast.success("Membership created successfully!");
 
-            <p className="membership-subtitle">
-                Create a new premium membership plan
-                for UrbanCart customers.
-            </p>
+            setFormData({
+                name: "",
+                description: "",
+                price: "",
+                durationInDays: "",
+                features: "",
+                discountPercentage: "",
+                freeShipping: false,
+                prioritySupport: false,
+                earlyAccess: false,
+                premiumBadge: "",
+                maxDiscountAmount: "",
+                isPopular: false,
+                isRecommended: false,
+                isActive: true
+            });
 
-            <form
-                className="membership-form"
-                onSubmit={handleSubmit}
-            >
+        } else {
 
-                <h3 className="membership-section-title">
-                    Basic Information
-                </h3>
+            toast.error(
+                result.payload || "Failed to create membership."
+            );
 
-                <input
-                    className="membership-input"
-                    type="text"
-                    name="name"
-                    placeholder="Membership Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
+        }
 
-                <textarea
-                    className="membership-input membership-textarea"
-                    name="description"
-                    placeholder="Description"
-                    value={formData.description}
-                    onChange={handleChange}
-                />
+    };
+    return (
 
-                <div className="membership-grid">
+        <div className="admin-create-membership-page">
 
-                    <input
-                        className="membership-input"
-                        type="number"
-                        name="price"
-                        placeholder="Price"
-                        value={formData.price}
-                        onChange={handleChange}
-                    />
+            <div className="admin-create-header">
 
-                    <input
-                        className="membership-input"
-                        type="number"
-                        name="durationInDays"
-                        placeholder="Duration In Days"
-                        value={formData.durationInDays}
-                        onChange={handleChange}
-                    />
+                <span className="admin-create-tag">
+                    👑 UrbanCart Admin
+                </span>
 
-                </div>
+                <h1>
+                    Create Membership Plan
+                </h1>
 
-                <h3 className="membership-section-title">
-                    Membership Benefits
-                </h3>
+                <p>
+                    Create premium membership plans for your customers with pricing,
+                    discounts, exclusive benefits and premium access.
+                </p>
 
-                <textarea
-                    className="membership-input membership-textarea"
-                    name="features"
-                    placeholder="Free Shipping, Priority Support"
-                    value={formData.features}
-                    onChange={handleChange}
-                />
+            </div>
 
-                <div className="membership-grid">
+            <div className="admin-create-card">
 
-                    <input
-                        className="membership-input"
-                        type="number"
-                        name="discountPercentage"
-                        placeholder="Discount Percentage"
-                        value={formData.discountPercentage}
-                        onChange={handleChange}
-                    />
-
-                    <input
-                        className="membership-input"
-                        type="number"
-                        name="maxDiscountAmount"
-                        placeholder="Max Discount Amount"
-                        value={formData.maxDiscountAmount}
-                        onChange={handleChange}
-                    />
-
-                </div>
-
-                <input
-                    className="membership-input"
-                    type="text"
-                    name="premiumBadge"
-                    placeholder="Premium Badge"
-                    value={formData.premiumBadge}
-                    onChange={handleChange}
-                />
-
-                <h3 className="membership-section-title">
-                    Membership Settings
-                </h3>
-
-                <div className="membership-checkbox-group">
-
-                    <label className="membership-check">
-
-                        <input
-                            type="checkbox"
-                            name="freeShipping"
-                            checked={formData.freeShipping}
-                            onChange={handleChange}
-                        />
-
-                        Free Shipping
-
-                    </label>
-
-                    <label className="membership-check">
-
-                        <input
-                            type="checkbox"
-                            name="prioritySupport"
-                            checked={formData.prioritySupport}
-                            onChange={handleChange}
-                        />
-
-                        Priority Support
-
-                    </label>
-
-                    <label className="membership-check">
-
-                        <input
-                            type="checkbox"
-                            name="earlyAccess"
-                            checked={formData.earlyAccess}
-                            onChange={handleChange}
-                        />
-
-                        Early Access
-
-                    </label>
-
-                    <label className="membership-check">
-
-                        <input
-                            type="checkbox"
-                            name="isPopular"
-                            checked={formData.isPopular}
-                            onChange={handleChange}
-                        />
-
-                        Popular
-
-                    </label>
-
-                    <label className="membership-check">
-
-                        <input
-                            type="checkbox"
-                            name="isRecommended"
-                            checked={formData.isRecommended}
-                            onChange={handleChange}
-                        />
-
-                        Recommended
-
-                    </label>
-
-                    <label className="membership-check">
-
-                        <input
-                            type="checkbox"
-                            name="isActive"
-                            checked={formData.isActive}
-                            onChange={handleChange}
-                        />
-
-                        Active
-
-                    </label>
-
-                </div>
-
-                <button
-                    className="membership-btn"
-                    type="submit"
+                <form
+                    className="admin-create-form"
+                    onSubmit={handleSubmit}
                 >
-                    {
-                        createLoading
-                            ? "Creating..."
-                            : "Create Membership"
-                    }
-                </button>
 
-            </form>
+                    <div className="admin-form-section">
 
-            {
-                createSuccess && (
-                    <p className="membership-success">
-                        Membership created successfully
-                    </p>
-                )
-            }
+                        <h2>
+                            Basic Information
+                        </h2>
 
-            {
-                createError && (
-                    <p className="membership-error">
-                        {createError}
-                    </p>
-                )
-            }
+                        <div className="admin-form-grid">
+
+                            <input
+                                className="admin-input"
+                                type="text"
+                                name="name"
+                                placeholder="Membership Name"
+                                value={formData.name}
+                                onChange={handleChange}
+                            />
+
+                            <input
+                                className="admin-input"
+                                type="text"
+                                name="premiumBadge"
+                                placeholder="Premium Badge"
+                                value={formData.premiumBadge}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <textarea
+                            className="admin-input admin-textarea"
+                            name="description"
+                            placeholder="Membership Description"
+                            value={formData.description}
+                            onChange={handleChange}
+                        />
+
+                    </div>
+
+
+                    <div className="admin-form-section">
+
+                        <h2>
+                            Pricing Details
+                        </h2>
+
+                        <div className="admin-form-grid">
+
+                            <input
+                                className="admin-input"
+                                type="number"
+                                name="price"
+                                placeholder="Price"
+                                value={formData.price}
+                                onChange={handleChange}
+                            />
+
+                            <input
+                                className="admin-input"
+                                type="number"
+                                name="durationInDays"
+                                placeholder="Duration (Days)"
+                                value={formData.durationInDays}
+                                onChange={handleChange}
+                            />
+
+                            <input
+                                className="admin-input"
+                                type="number"
+                                name="discountPercentage"
+                                placeholder="Discount %"
+                                value={formData.discountPercentage}
+                                onChange={handleChange}
+                            />
+
+                            <input
+                                className="admin-input"
+                                type="number"
+                                name="maxDiscountAmount"
+                                placeholder="Max Discount Amount"
+                                value={formData.maxDiscountAmount}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                    </div>
+
+
+                    <div className="admin-form-section">
+
+                        <h2>
+                            Membership Features
+                        </h2>
+
+                        <textarea
+                            className="admin-input admin-textarea"
+                            name="features"
+                            placeholder="Free Shipping, Priority Support, Early Access..."
+                            value={formData.features}
+                            onChange={handleChange}
+                        />
+
+                    </div>
+
+
+                    <div className="admin-form-section">
+
+                        <h2>
+                            Membership Settings
+                        </h2>
+
+                        <div className="admin-checkbox-grid">
+
+                            <label className="admin-check">
+                                <input
+                                    type="checkbox"
+                                    name="freeShipping"
+                                    checked={formData.freeShipping}
+                                    onChange={handleChange}
+                                />
+                                Free Shipping
+                            </label>
+
+                            <label className="admin-check">
+                                <input
+                                    type="checkbox"
+                                    name="prioritySupport"
+                                    checked={formData.prioritySupport}
+                                    onChange={handleChange}
+                                />
+                                Priority Support
+                            </label>
+
+                            <label className="admin-check">
+                                <input
+                                    type="checkbox"
+                                    name="earlyAccess"
+                                    checked={formData.earlyAccess}
+                                    onChange={handleChange}
+                                />
+                                Early Access
+                            </label>
+
+                            <label className="admin-check">
+                                <input
+                                    type="checkbox"
+                                    name="isPopular"
+                                    checked={formData.isPopular}
+                                    onChange={handleChange}
+                                />
+                                Popular Plan
+                            </label>
+
+                            <label className="admin-check">
+                                <input
+                                    type="checkbox"
+                                    name="isRecommended"
+                                    checked={formData.isRecommended}
+                                    onChange={handleChange}
+                                />
+                                Recommended
+                            </label>
+
+                            <label className="admin-check">
+                                <input
+                                    type="checkbox"
+                                    name="isActive"
+                                    checked={formData.isActive}
+                                    onChange={handleChange}
+                                />
+                                Active Plan
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        className="admin-submit-btn"
+                        type="submit"
+                        disabled={createLoading}
+                    >
+                        {
+                            createLoading
+                                ? "Creating..."
+                                : "Create Membership"
+                        }
+                    </button>
+
+
+                </form>
+
+            </div>
 
         </div>
 
-    </div>
-);
+    );
 }
 
 export default CreateMembership;

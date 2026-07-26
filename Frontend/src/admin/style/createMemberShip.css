@@ -1,0 +1,363 @@
+/*==========================================
+  CREATE MEMBERSHIP PAGE
+==========================================*/
+
+.admin-create-membership-page{
+
+    min-height:100vh;
+
+    padding:40px;
+
+    background:var(--black);
+
+}
+
+
+/*==========================================
+  HEADER
+==========================================*/
+
+.admin-create-header{
+
+    margin-bottom:40px;
+
+}
+
+.admin-create-tag{
+
+    display:inline-block;
+
+    padding:10px 22px;
+
+    border-radius:50px;
+
+    background:rgba(212,175,55,.08);
+
+    border:var(--border-gold);
+
+    color:var(--gold);
+
+    font-size:13px;
+
+    font-weight:600;
+
+    margin-bottom:18px;
+
+}
+
+.admin-create-header h1{
+
+    color:var(--white);
+
+    font-family:var(--heading-font);
+
+    font-size:52px;
+
+    margin-bottom:15px;
+
+}
+
+.admin-create-header p{
+
+    max-width:700px;
+
+    color:var(--text-muted);
+
+    line-height:1.8;
+
+}
+
+
+/*==========================================
+  CARD
+==========================================*/
+
+.admin-create-card{
+
+    background:var(--glass-bg);
+
+    border:var(--border-gold);
+
+    border-radius:24px;
+
+    padding:40px;
+
+}
+
+
+/*==========================================
+  FORM
+==========================================*/
+
+.admin-create-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:35px;
+
+}
+
+
+/*==========================================
+  SECTION
+==========================================*/
+
+.admin-form-section h2{
+
+    color:var(--gold);
+
+    margin-bottom:22px;
+
+    font-size:22px;
+
+}
+
+
+/*==========================================
+  GRID
+==========================================*/
+
+.admin-form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+
+/*==========================================
+  INPUTS
+==========================================*/
+
+.admin-input{
+
+    width:100%;
+
+    padding:15px 18px;
+
+    background:rgba(255,255,255,.03);
+
+    border:1px solid rgba(255,255,255,.1);
+
+    border-radius:14px;
+
+    color:var(--white);
+
+    outline:none;
+
+    transition:.3s;
+
+    font-size:15px;
+
+}
+
+.admin-input::placeholder{
+
+    color:var(--gray);
+
+}
+
+.admin-input:focus{
+
+    border:1px solid var(--gold);
+
+}
+
+.admin-textarea{
+
+    margin-top:20px;
+
+    resize:none;
+
+    min-height:130px;
+
+}
+
+
+/*==========================================
+  CHECKBOX
+==========================================*/
+
+.admin-checkbox-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+.admin-check{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.03);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:var(--white);
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.admin-check:hover{
+
+    border-color:var(--gold);
+
+}
+
+.admin-check input{
+
+    width:18px;
+
+    height:18px;
+
+    accent-color:var(--gold);
+
+}
+
+
+/*==========================================
+  BUTTON
+==========================================*/
+
+.admin-submit-btn{
+
+    width:100%;
+
+    padding:17px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:var(--gold);
+
+    color:var(--black);
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.admin-submit-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+/*==========================================
+  ALERTS
+==========================================*/
+
+.admin-success{
+
+    color:#2ecc71;
+
+    text-align:center;
+
+    font-weight:600;
+
+}
+
+.admin-error{
+
+    color:#ff6b6b;
+
+    text-align:center;
+
+    font-weight:600;
+
+}
+
+
+
+.admin-submit-btn:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+
+/*==========================================
+  RESPONSIVE
+==========================================*/
+
+@media(max-width:992px){
+
+    .admin-form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .admin-create-membership-page{
+
+        padding:20px;
+
+    }
+
+    .admin-create-card{
+
+        padding:25px;
+
+    }
+
+    .admin-create-header h1{
+
+        font-size:38px;
+
+    }
+
+    .admin-checkbox-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .admin-create-header h1{
+
+        font-size:30px;
+
+    }
+
+    .admin-submit-btn{
+
+        font-size:15px;
+
+    }
+
+}   
