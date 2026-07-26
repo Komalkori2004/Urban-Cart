@@ -15,25 +15,27 @@ import {
     getSingleMembership
 } from "../../redux/thunks/membershipThunk";
 
+import "./SingleMembership.css"
+
 function SingleMembership() {
 
-    const { slug } =useParams();
-        
+    const { slug } = useParams();
 
-    const dispatch =   useDispatch();
-      
 
-    const {singleMembership,singleLoading,singleError } = useSelector( state => state.membership);
+    const dispatch = useDispatch();
 
-   useEffect(() => {
 
-    dispatch(
-        getSingleMembership(
-            slug
-        )
-    );
+    const { singleMembership, singleLoading, singleError } = useSelector(state => state.membership);
 
-}, [dispatch, slug]);
+    useEffect(() => {
+
+        dispatch(
+            getSingleMembership(
+                slug
+            )
+        );
+
+    }, [dispatch, slug]);
 
     if (singleLoading)
         return <h2>Loading...</h2>;
@@ -41,136 +43,539 @@ function SingleMembership() {
     if (singleError)
         return <h2>{singleError}</h2>;
 
- return (
 
-    <div className="membership-container">
 
-        <div className="membership-header">
 
-            <h1>
-                Membership Details
-            </h1>
 
-            <p>
-                Explore premium benefits and
-                exclusive rewards.
-            </p>
 
-        </div>
+    return (
 
-        <div className="membership-grid">
+        <div className="single-membership-page">
 
-            <div
-                className={`membership-card ${
-                    singleMembership?.isPopular
-                        ? "popular"
-                        : ""
-                }`}
-            >
+            <div className="container">
 
-                {
-                    singleMembership?.isPopular && (
-                        <span className="membership-badge">
-                            Popular
-                        </span>
-                    )
-                }
+                {/* ================= HERO ================= */}
 
-                <h2 className="membership-name">
-                    {
-                        singleMembership?.name
-                    }
-                </h2>
+                <section className="single-membership-hero">
 
-                <p className="membership-description">
-                    {
-                        singleMembership?.description
-                    }
-                </p>
+                    <span className="single-membership-tag">
 
-                <div className="membership-price">
+                        👑 UrbanCart Premium
 
-                    <h2>
-                        ₹{
-                            singleMembership?.price
-                        }
-                    </h2>
-
-                    <span>
-                        /
-                        {
-                            singleMembership
-                                ?.durationInDays
-                        }
-                        Days
                     </span>
 
-                </div>
+                    <h1>
 
-                <ul className="membership-features">
+                        {singleMembership?.name}
 
-                    {
-                        singleMembership?.features?.map(
-                            (feature, index) => (
-                                <li key={index}>
-                                    ✓ {feature}
-                                </li>
+                    </h1>
+
+                    <p>
+
+                        {singleMembership?.description}
+
+                    </p>
+
+                    <div className="single-membership-stats">
+
+                        <div className="single-membership-stat">
+
+                            <h3>
+
+                                ₹{singleMembership?.price}
+
+                            </h3>
+
+                            <span>
+
+                                Membership Price
+
+                            </span>
+
+                        </div>
+
+                        <div className="single-membership-stat">
+
+                            <h3>
+
+                                {
+                                    singleMembership?.durationInDays
+                                }
+
+                            </h3>
+
+                            <span>
+
+                                Days Validity
+
+                            </span>
+
+                        </div>
+
+                        <div className="single-membership-stat">
+
+                            <h3>
+
+                                {
+                                    singleMembership?.features?.length || 0
+                                }
+
+                            </h3>
+
+                            <span>
+
+                                Premium Benefits
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                {/* ================= MAIN ================= */}
+
+                <section className="single-membership-main">
+
+                    {/* LEFT SIDE START */}
+
+                    <div className="single-membership-plan-card">
+
+                        {
+                            singleMembership?.isPopular && (
+
+                                <span className="single-membership-badge">
+
+                                    🔥 Most Popular
+
+                                </span>
+
                             )
-                        )
-                    }
-
-                    <li>
-                        Discount:
-                        {
-                            singleMembership
-                                ?.discountPercentage
-                        }%
-                    </li>
-
-                    <li>
-                        Free Shipping:
-                        {
-                            singleMembership
-                                ?.freeShipping
-                                ? " Yes"
-                                : " No"
                         }
-                    </li>
 
-                    <li>
-                        Priority Support:
-                        {
-                            singleMembership
-                                ?.prioritySupport
-                                ? " Yes"
-                                : " No"
-                        }
-                    </li>
+                        <div className="single-membership-price-box">
 
-                    <li>
-                        Early Access:
-                        {
-                            singleMembership
-                                ?.earlyAccess
-                                ? " Yes"
-                                : " No"
-                        }
-                    </li>
+                            <h2>
 
-                </ul>
+                                ₹{singleMembership?.price}
 
-                <button
-                    className="membership-btn"
-                >
-                    Become Premium
-                </button>
+                            </h2>
+
+                            <span>
+
+                                {singleMembership?.durationInDays} Days Membership
+
+                            </span>
+
+                        </div>
+
+                        <div className="single-membership-plan-info">
+
+                            <div>
+
+                                <span>Discount</span>
+
+                                <strong>
+
+                                    {singleMembership?.discountPercentage}%
+
+                                </strong>
+
+                            </div>
+
+                            <div>
+
+                                <span>Validity</span>
+
+                                <strong>
+
+                                    {singleMembership?.durationInDays} Days
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            className="single-membership-btn"
+                        >
+
+                            Become Premium
+
+                        </button>
+
+                    </div>
+
+
+
+                    {/* RIGHT SIDE */}
+
+                    <div className="single-membership-benefits">
+
+                        <span className="single-membership-benefits-tag">
+
+                            Premium Benefits
+
+                        </span>
+
+                        <h2>
+
+                            Everything Included
+
+                        </h2>
+
+                        <p>
+
+                            Enjoy exclusive premium advantages designed
+                            to elevate your UrbanCart shopping experience.
+
+                        </p>
+
+                        <div className="single-membership-benefit-grid">
+
+                            {
+                                singleMembership?.features?.map(
+
+                                    (feature, index) => (
+
+                                        <div
+                                            key={index}
+                                            className="single-membership-benefit-card"
+                                        >
+
+                                            <div className="single-membership-benefit-icon">
+
+                                                ✓
+
+                                            </div>
+
+                                            <div>
+
+                                                <h3>
+
+                                                    {feature}
+
+                                                </h3>
+
+                                                <span>
+
+                                                    Included with this membership
+
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    )
+
+                                )
+                            }
+
+                        </div>
+
+                    </div>
+                </section>
+
+
+                {/* ================= PREMIUM BENEFITS ================= */}
+
+                <section className="single-membership-extra">
+
+                    <div className="single-membership-extra-header">
+
+                        <span>
+
+                            Premium Advantages
+
+                        </span>
+
+                        <h2>
+
+                            Everything You Unlock
+
+                        </h2>
+
+                        <p>
+
+                            Every membership comes with premium shopping advantages designed
+                            to give you a better UrbanCart experience.
+
+                        </p>
+
+                    </div>
+
+                    <div className="single-membership-extra-grid">
+
+                        <div className="single-membership-extra-card">
+
+                            <h3>
+
+                                🎁 Discount
+
+                            </h3>
+
+                            <p>
+
+                                Save up to
+
+                                <strong>
+
+                                    {" "}
+                                    {singleMembership?.discountPercentage}% OFF
+
+                                </strong>
+
+                                {" "}
+                                on eligible purchases.
+
+                            </p>
+
+                        </div>
+
+                        <div className="single-membership-extra-card">
+
+                            <h3>
+
+                                🚚 Free Shipping
+
+                            </h3>
+
+                            <p>
+
+                                {
+                                    singleMembership?.freeShipping
+                                        ? "Unlimited free shipping on eligible orders."
+                                        : "Free shipping is not included in this plan."
+                                }
+
+                            </p>
+
+                        </div>
+
+                        <div className="single-membership-extra-card">
+
+                            <h3>
+
+                                ⚡ Early Access
+
+                            </h3>
+
+                            <p>
+
+                                {
+                                    singleMembership?.earlyAccess
+                                        ? "Get early access to new collections and exclusive launches."
+                                        : "Early access is not available in this plan."
+                                }
+
+                            </p>
+
+                        </div>
+
+                        <div className="single-membership-extra-card">
+
+                            <h3>
+
+                                🎧 Priority Support
+
+                            </h3>
+
+                            <p>
+
+                                {
+                                    singleMembership?.prioritySupport
+                                        ? "Receive priority customer support whenever you need help."
+                                        : "Standard customer support is available."
+                                }
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+
+                {/* ================= FINAL CTA ================= */}
+                {/* ================= PLAN OVERVIEW ================= */}
+
+                <section className="single-membership-overview">
+
+                    <div className="single-membership-overview-header">
+
+                        <span>
+
+                            Membership Overview
+
+                        </span>
+
+                        <h2>
+
+                            Plan Information
+
+                        </h2>
+
+                        <p>
+
+                            A quick overview of everything included with your membership.
+
+                        </p>
+
+                    </div>
+
+                    <div className="single-membership-overview-grid">
+
+                        <div className="single-membership-overview-card">
+
+                            <span>
+                                💰
+                            </span>
+
+                            <h4>
+                                Membership Price
+                            </h4>
+
+                            <strong>
+
+                                ₹{singleMembership?.price}
+
+                            </strong>
+
+                        </div>
+
+                        <div className="single-membership-overview-card">
+
+                            <span>
+                                📅
+                            </span>
+
+                            <h4>
+                                Validity
+                            </h4>
+
+                            <strong>
+
+                                {singleMembership?.durationInDays} Days
+
+                            </strong>
+
+                        </div>
+
+                        <div className="single-membership-overview-card">
+
+                            <span>
+                                🎁
+                            </span>
+
+                            <h4>
+                                Discount
+                            </h4>
+
+                            <strong>
+
+                                {singleMembership?.discountPercentage}%
+
+                            </strong>
+
+                        </div>
+
+                        <div className="single-membership-overview-card">
+
+                            <span>
+                                🚚
+                            </span>
+
+                            <h4>
+                                Free Shipping
+                            </h4>
+
+                            <strong>
+
+                                {
+                                    singleMembership?.freeShipping
+                                        ? "Included"
+                                        : "Not Included"
+                                }
+
+                            </strong>
+
+                        </div>
+
+                        <div className="single-membership-overview-card">
+
+                            <span>
+                                🎧
+                            </span>
+
+                            <h4>
+                                Priority Support
+                            </h4>
+
+                            <strong>
+
+                                {
+                                    singleMembership?.prioritySupport
+                                        ? "Available"
+                                        : "Unavailable"
+                                }
+
+                            </strong>
+
+                        </div>
+
+                        <div className="single-membership-overview-card">
+
+                            <span>
+                                ⚡
+                            </span>
+
+                            <h4>
+                                Early Access
+                            </h4>
+
+                            <strong>
+
+                                {
+                                    singleMembership?.earlyAccess
+                                        ? "Included"
+                                        : "Not Included"
+                                }
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
 
             </div>
 
         </div>
 
-    </div>
-);
+    )
+
+    return
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 export default SingleMembership;

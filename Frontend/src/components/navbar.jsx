@@ -156,7 +156,7 @@ const NavBar = () => {
             <Link className="nav-item" to="/plan">
              <RiVipCrown2Line />
 
-              <span>Membership</span>
+              <span>Plans</span>
             </Link>
 
           </div>
@@ -418,7 +418,7 @@ const NavBar = () => {
 
 
             <span>
-              Membership
+              Plans
             </span>
 
           </Link>
