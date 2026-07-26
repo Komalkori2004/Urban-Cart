@@ -6,12 +6,8 @@ import {
 } from "../redux/thunks/membershipThunk";
 
 
+import "./style/createMemberShip.css"
 
-// import "./style/admin.css"
-
-// import "../Auth/auth.css"
-
-// import "./style/membership.css"
 function CreateMembership() {
 
     const dispatch = useDispatch();
