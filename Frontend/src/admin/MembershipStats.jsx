@@ -19,7 +19,7 @@ import {
     FaRupeeSign
 } from "react-icons/fa";
 
-import "./style/Adminmembership.css"
+import "./style/MembershipStats.css"
 
 function MembershipStats() {
 
@@ -59,106 +59,136 @@ function MembershipStats() {
         );
     }
 
-    return (
+ return (
 
-        <div className="membership-stats">
+    <div className="admin-membership-stats-page">
 
-            <div className="stats-header">
+        <div className="admin-membership-stats-header">
 
-                <h1>
-                    Membership Stats
-                </h1>
+            <span className="admin-membership-stats-tag">
+                👑 UrbanCart Admin
+            </span>
 
-                <p>
-                    Overview of membership performance
-                    and revenue.
-                </p>
+            <h1>
+                Membership Statistics
+            </h1>
+
+            <p>
+                Monitor membership growth, revenue and customer activity from
+                your premium dashboard.
+            </p>
+
+        </div>
+
+        <div className="admin-membership-stats-grid">
+
+            <div className="admin-membership-stat-card">
+
+                <div className="admin-membership-stat-icon">
+
+                    <FaCrown />
+
+                </div>
+
+                <h4>
+                    Total Memberships
+                </h4>
+
+                <h2>
+                    {membershipStats?.totalMemberships}
+                </h2>
 
             </div>
 
-            <div className="stats-grid">
 
-                <div className="stats-card">
+            <div className="admin-membership-stat-card">
 
-                    <div className="stats-icon">
-                        <FaCrown />
-                    </div>
+                <div className="admin-membership-stat-icon active">
 
-                    <h4>
-                        Total Memberships
-                    </h4>
-
-                    <h2>
-                        {membershipStats?.totalMemberships}
-                    </h2>
+                    <FaCheckCircle />
 
                 </div>
 
-                <div className="stats-card">
+                <h4>
+                    Active Memberships
+                </h4>
 
-                    <div className="stats-icon active-icon">
-                        <FaCheckCircle />
-                    </div>
+                <h2>
 
-                    <h4>
-                        Active Memberships
-                    </h4>
+                    {membershipStats?.activeMemberships}
 
-                    <h2>
-                        {membershipStats?.activeMemberships}
-                    </h2>
+                </h2>
+
+            </div>
+
+
+            <div className="admin-membership-stat-card">
+
+                <div className="admin-membership-stat-icon cancelled">
+
+                    <FaTimesCircle />
+
+                </div>
+
+                <h4>
+                    Cancelled Memberships
+                </h4>
+
+                <h2>
+
+                    {membershipStats?.cancelledMemberships}
+
+                </h2>
+
+            </div>
+
+
+            <div className="admin-membership-stat-card">
+
+                <div className="admin-membership-stat-icon expired">
+
+                    <FaClock />
 
                 </div>
 
-                <div className="stats-card">
+                <h4>
+                    Expired Memberships
+                </h4>
 
-                    <div className="stats-icon cancelled-icon">
-                        <FaTimesCircle />
-                    </div>
+                <h2>
 
-                    <h4>
-                        Cancelled Memberships
-                    </h4>
+                    {membershipStats?.expiredMemberships}
 
-                    <h2>
-                        {membershipStats?.cancelledMemberships}
-                    </h2>
+                </h2>
 
-                </div>
-                <div className="stats-card">
+            </div>
 
-                    <div className="stats-icon expired-icon">
-                        <FaClock />
-                    </div>
 
-                    <h4>
-                        Expired Memberships
-                    </h4>
+            <div className="admin-membership-stat-card revenue-card">
 
-                    <h2>
-                        {membershipStats?.expiredMemberships}
-                    </h2>
+                <div className="admin-membership-stat-icon revenue">
+
+                    <FaRupeeSign />
 
                 </div>
-                <div className="stats-card revenue-card">
 
-                    <div className="stats-icon revenue-icon">
-                        <FaRupeeSign />
-                    </div>
+                <h4>
+                    Total Revenue
+                </h4>
 
-                    <h4>
-                        Total Revenue
-                    </h4>
+                <h2>
 
-                    <h2>
-                        ₹{membershipStats?.totalRevenue}
-                    </h2>
+                    ₹{membershipStats?.totalRevenue}
 
-                </div>
+                </h2>
+
             </div>
 
         </div>
-    );
+
+    </div>
+
+);
 }
 
 export default MembershipStats;

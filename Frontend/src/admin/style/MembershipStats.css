@@ -1,0 +1,203 @@
+/*==========================================
+    MEMBERSHIP STATS
+==========================================*/
+
+.admin-membership-stats-page{
+
+    min-height:100vh;
+
+    padding:40px;
+
+    background:var(--black);
+
+}
+
+.admin-membership-stats-header{
+
+    margin-bottom:45px;
+
+}
+
+.admin-membership-stats-tag{
+
+    display:inline-block;
+
+    padding:10px 22px;
+
+    border-radius:50px;
+
+    background:rgba(212,175,55,.08);
+
+    border:var(--border-gold);
+
+    color:var(--gold);
+
+    font-size:13px;
+
+    font-weight:600;
+
+    margin-bottom:18px;
+
+}
+
+.admin-membership-stats-header h1{
+
+    font-family:var(--heading-font);
+
+    color:var(--white);
+
+    font-size:52px;
+
+    margin-bottom:15px;
+
+}
+
+.admin-membership-stats-header p{
+
+    color:var(--text-muted);
+
+    max-width:650px;
+
+    line-height:1.8;
+
+}
+
+
+/*==========================================
+    GRID
+==========================================*/
+
+.admin-membership-stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+
+    gap:30px;
+
+}
+
+
+/*==========================================
+    CARD
+==========================================*/
+
+.admin-membership-stat-card{
+
+    background:var(--glass-bg);
+
+    border:var(--border-gold);
+
+    border-radius:24px;
+
+    padding:35px;
+
+    transition:.3s;
+
+}
+
+.admin-membership-stat-card:hover{
+
+    transform:translateY(-8px);
+
+    border:var(--border-gold-hover);
+
+}
+
+.admin-membership-stat-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+    margin-bottom:25px;
+
+    background:rgba(212,175,55,.12);
+
+    color:var(--gold);
+
+}
+
+.admin-membership-stat-card h4{
+
+    color:var(--text-muted);
+
+    margin-bottom:10px;
+
+}
+
+.admin-membership-stat-card h2{
+
+    color:var(--white);
+
+    font-size:40px;
+
+}
+
+
+/*==========================================
+    ICON COLORS
+==========================================*/
+
+.active{
+
+    background:rgba(46,204,113,.12);
+
+    color:#2ecc71;
+
+}
+
+.cancelled{
+
+    background:rgba(231,76,60,.12);
+
+    color:#e74c3c;
+
+}
+
+.expired{
+
+    background:rgba(243,156,18,.12);
+
+    color:#f39c12;
+
+}
+
+.revenue{
+
+    background:rgba(52,152,219,.12);
+
+    color:#3498db;
+
+}
+
+
+/*==========================================
+    RESPONSIVE
+==========================================*/
+
+@media(max-width:768px){
+
+    .admin-membership-stats-page{
+
+        padding:20px;
+
+    }
+
+    .admin-membership-stats-header h1{
+
+        font-size:38px;
+
+    }
+
+}
