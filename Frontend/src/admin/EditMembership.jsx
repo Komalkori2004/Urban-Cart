@@ -1,16 +1,21 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import "./style/editmembership.css"
+import { useNavigate } from "react-router-dom";
 
-// import "./style/membership.css"
+import { toast } from "sonner";
+
 import { useLocation } from "react-router-dom";
 import { updateMembershipPlan, deleteMembershipPlan }
+
     from "../redux/thunks/membershipThunk";
 
 function EditMembership() {
 
     const dispatch =
         useDispatch();
+        const navigate = useNavigate();
 
     const location = useLocation();
 
@@ -79,43 +84,104 @@ function EditMembership() {
                     : value
         });
     };
-    const handleSubmit =
-        async (e) => {
+    const handleSubmit = async (e) => {
 
-            e.preventDefault();
+        e.preventDefault();
 
-            await dispatch(
-                updateMembershipPlan({
+        const result = await dispatch(
+            updateMembershipPlan({
+                id,
+                membershipData: {
+                    name: formData.name,
+                    description: formData.description,
+                    price: Number(formData.price),
+                    durationInDays: Number(formData.durationInDays),
+                    features: formData.features
+                        .split(",")
+                        .map(item => item.trim()),
+                    discountPercentage: Number(formData.discountPercentage),
+                    maxDiscountAmount: Number(formData.maxDiscountAmount),
+                    premiumBadge: formData.premiumBadge,
+                    freeShipping: formData.freeShipping,
+                    prioritySupport: formData.prioritySupport,
+                    earlyAccess: formData.earlyAccess,
+                    isPopular: formData.isPopular,
+                    isRecommended: formData.isRecommended,
+                    isActive: formData.isActive
+                }
+            })
+        );
 
-                    id,
+        if (updateMembershipPlan.fulfilled.match(result)) {
 
-                    membershipData: {
-                        name: formData.name,
-                        description: formData.description,
-                        price: Number(formData.price),
-                        durationInDays: Number(formData.durationInDays)
+            toast.success("Membership updated successfully!");
+
+        } else {
+
+            toast.error(
+                result.payload || "Failed to update membership."
+            );
+
+        }
+
+    };
+
+
+
+const handleDelete = () => {
+
+    toast(
+        "Delete Membership?",
+        {
+            description:
+                "This action cannot be undone.",
+
+            action: {
+
+                label: "Delete",
+
+                onClick: async () => {
+
+                    const result =
+                        await dispatch(
+                            deleteMembershipPlan(id)
+                        );
+
+                    if (
+                        deleteMembershipPlan.fulfilled.match(result)
+                    ) {
+
+                        toast.success(
+                            "Membership deleted successfully!"
+                        );
+
+                        navigate(
+                            "/admin/membership-management"
+                        );
+
+                    } else {
+
+                        toast.error(
+                            result.payload ||
+                            "Failed to delete membership."
+                        );
+
                     }
-                })
-            );
-        };
 
+                }
 
+            },
 
-    const handleDelete =
-        async () => {
+            cancel: {
 
-            const confirmDelete =
-                window.confirm(
-                    "Are you sure you want to delete this membership?"
-                );
+                label: "Cancel"
 
-            if (!confirmDelete)
-                return;
+            }
 
-            await dispatch(
-                deleteMembershipPlan(id)
-            );
-        };
+        }
+    );
+
+};
 
 
 
@@ -145,244 +211,288 @@ function EditMembership() {
         }
 
     }, [location]);
-  return (
+   
 
-    <div className="membership-container">
 
-        <div className="membership-card">
 
-            <h1 className="membership-title">
-                Edit Membership
+    return (
+
+    <div className="admin-edit-membership-page">
+
+        <div className="admin-edit-header">
+
+            <span className="admin-edit-tag">
+                👑 UrbanCart Admin
+            </span>
+
+            <h1>
+                Edit Membership Plan
             </h1>
 
-            <p className="membership-subtitle">
-                Update your premium membership plan
-                details for UrbanCart customers.
+            <p>
+                Update your premium membership plan, pricing, benefits and
+                membership settings from one place.
             </p>
 
+        </div>
+
+        <div className="admin-edit-card">
+
             <form
-                className="membership-form"
+                className="admin-edit-form"
                 onSubmit={handleSubmit}
             >
 
-                <h3 className="membership-section-title">
-                    Basic Information
-                </h3>
+                {/* =========================
+                    BASIC INFORMATION
+                ========================== */}
 
-                <input
-                    className="membership-input"
-                    type="text"
-                    name="name"
-                    placeholder="Membership Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
+                <div className="admin-edit-section">
 
-                <textarea
-                    className="membership-input membership-textarea"
-                    name="description"
-                    placeholder="Description"
-                    value={formData.description}
-                    onChange={handleChange}
-                />
+                    <h2>
+                        Basic Information
+                    </h2>
 
-                <div className="membership-grid">
+                    <div className="admin-edit-grid">
 
-                    <input
-                        className="membership-input"
-                        type="number"
-                        name="price"
-                        placeholder="Price"
-                        value={formData.price}
-                        onChange={handleChange}
-                    />
+                        <input
+                            className="admin-edit-input"
+                            type="text"
+                            name="name"
+                            placeholder="Membership Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
 
-                    <input
-                        className="membership-input"
-                        type="number"
-                        name="durationInDays"
-                        placeholder="Duration In Days"
-                        value={formData.durationInDays}
-                        onChange={handleChange}
-                    />
+                        <input
+                            className="admin-edit-input"
+                            type="text"
+                            name="premiumBadge"
+                            placeholder="Premium Badge"
+                            value={formData.premiumBadge}
+                            onChange={handleChange}
+                        />
 
-                </div>
+                    </div>
 
-                <h3 className="membership-section-title">
-                    Membership Benefits
-                </h3>
-
-                <textarea
-                    className="membership-input membership-textarea"
-                    name="features"
-                    placeholder="Feature1, Feature2, Feature3"
-                    value={formData.features}
-                    onChange={handleChange}
-                />
-
-                <div className="membership-grid">
-
-                    <input
-                        className="membership-input"
-                        type="number"
-                        name="discountPercentage"
-                        placeholder="Discount Percentage"
-                        value={formData.discountPercentage}
-                        onChange={handleChange}
-                    />
-
-                    <input
-                        className="membership-input"
-                        type="number"
-                        name="maxDiscountAmount"
-                        placeholder="Max Discount Amount"
-                        value={formData.maxDiscountAmount}
+                    <textarea
+                        className="admin-edit-input admin-edit-textarea"
+                        name="description"
+                        placeholder="Membership Description"
+                        value={formData.description}
                         onChange={handleChange}
                     />
 
                 </div>
 
-                <input
-                    className="membership-input"
-                    type="text"
-                    name="premiumBadge"
-                    placeholder="Premium Badge"
-                    value={formData.premiumBadge}
-                    onChange={handleChange}
-                />
 
-                <h3 className="membership-section-title">
-                    Membership Settings
-                </h3>
+                {/* =========================
+                    PRICING DETAILS
+                ========================== */}
 
-                <div className="membership-checkbox-group">
+                <div className="admin-edit-section">
 
-                    <label className="membership-check">
+                    <h2>
+                        Pricing Details
+                    </h2>
+
+                    <div className="admin-edit-grid">
+
                         <input
-                            type="checkbox"
-                            name="freeShipping"
-                            checked={formData.freeShipping}
+                            className="admin-edit-input"
+                            type="number"
+                            name="price"
+                            placeholder="Price"
+                            value={formData.price}
                             onChange={handleChange}
                         />
-                        Free Shipping
-                    </label>
 
-                    <label className="membership-check">
                         <input
-                            type="checkbox"
-                            name="prioritySupport"
-                            checked={formData.prioritySupport}
+                            className="admin-edit-input"
+                            type="number"
+                            name="durationInDays"
+                            placeholder="Duration (Days)"
+                            value={formData.durationInDays}
                             onChange={handleChange}
                         />
-                        Priority Support
-                    </label>
 
-                    <label className="membership-check">
                         <input
-                            type="checkbox"
-                            name="earlyAccess"
-                            checked={formData.earlyAccess}
+                            className="admin-edit-input"
+                            type="number"
+                            name="discountPercentage"
+                            placeholder="Discount Percentage"
+                            value={formData.discountPercentage}
                             onChange={handleChange}
                         />
-                        Early Access
-                    </label>
 
-                    <label className="membership-check">
                         <input
-                            type="checkbox"
-                            name="isPopular"
-                            checked={formData.isPopular}
+                            className="admin-edit-input"
+                            type="number"
+                            name="maxDiscountAmount"
+                            placeholder="Max Discount Amount"
+                            value={formData.maxDiscountAmount}
                             onChange={handleChange}
                         />
-                        Popular
-                    </label>
 
-                    <label className="membership-check">
-                        <input
-                            type="checkbox"
-                            name="isRecommended"
-                            checked={formData.isRecommended}
-                            onChange={handleChange}
-                        />
-                        Recommended
-                    </label>
-
-                    <label className="membership-check">
-                        <input
-                            type="checkbox"
-                            name="isActive"
-                            checked={formData.isActive}
-                            onChange={handleChange}
-                        />
-                        Active
-                    </label>
+                    </div>
 
                 </div>
 
-                <div className="membership-action-buttons">
+                                {/* =========================
+                    MEMBERSHIP FEATURES
+                ========================== */}
+
+                <div className="admin-edit-section">
+
+                    <h2>
+                        Membership Features
+                    </h2>
+
+                    <textarea
+                        className="admin-edit-input admin-edit-textarea"
+                        name="features"
+                        placeholder="Free Shipping, Priority Support, Early Access..."
+                        value={formData.features}
+                        onChange={handleChange}
+                    />
+
+                </div>
+
+
+                {/* =========================
+                    MEMBERSHIP SETTINGS
+                ========================== */}
+
+                <div className="admin-edit-section">
+
+                    <h2>
+                        Membership Settings
+                    </h2>
+
+                    <div className="admin-edit-checkbox-grid">
+
+                        <label className="admin-edit-check">
+
+                            <input
+                                type="checkbox"
+                                name="freeShipping"
+                                checked={formData.freeShipping}
+                                onChange={handleChange}
+                            />
+
+                            Free Shipping
+
+                        </label>
+
+                        <label className="admin-edit-check">
+
+                            <input
+                                type="checkbox"
+                                name="prioritySupport"
+                                checked={formData.prioritySupport}
+                                onChange={handleChange}
+                            />
+
+                            Priority Support
+
+                        </label>
+
+                        <label className="admin-edit-check">
+
+                            <input
+                                type="checkbox"
+                                name="earlyAccess"
+                                checked={formData.earlyAccess}
+                                onChange={handleChange}
+                            />
+
+                            Early Access
+
+                        </label>
+
+                        <label className="admin-edit-check">
+
+                            <input
+                                type="checkbox"
+                                name="isPopular"
+                                checked={formData.isPopular}
+                                onChange={handleChange}
+                            />
+
+                            Popular Plan
+
+                        </label>
+
+                        <label className="admin-edit-check">
+
+                            <input
+                                type="checkbox"
+                                name="isRecommended"
+                                checked={formData.isRecommended}
+                                onChange={handleChange}
+                            />
+
+                            Recommended
+
+                        </label>
+
+                        <label className="admin-edit-check">
+
+                            <input
+                                type="checkbox"
+                                name="isActive"
+                                checked={formData.isActive}
+                                onChange={handleChange}
+                            />
+
+                            Active Plan
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <div className="admin-edit-action-buttons">
 
                     <button
-                        className="membership-btn"
+                        className="admin-update-btn"
                         type="submit"
+                        disabled={updateLoading}
                     >
+
                         {
                             updateLoading
                                 ? "Updating..."
                                 : "Update Membership"
                         }
+
                     </button>
 
                     <button
-                        className="membership-btn membership-delete-btn"
+                        className="admin-delete-btn"
                         type="button"
+                        disabled={deleteLoading}
                         onClick={handleDelete}
                     >
+
                         {
                             deleteLoading
                                 ? "Deleting..."
                                 : "Delete Membership"
                         }
+
                     </button>
 
                 </div>
 
             </form>
 
-            {
-                updateSuccess && (
-                    <p className="membership-success">
-                        Membership updated successfully
-                    </p>
-                )
-            }
-
-            {
-                updateError && (
-                    <p className="membership-error">
-                        {updateError}
-                    </p>
-                )
-            }
-
-            {
-                deleteSuccess && (
-                    <p className="membership-success">
-                        Membership deleted successfully
-                    </p>
-                )
-            }
-
-            {
-                deleteError && (
-                    <p className="membership-error">
-                        {deleteError}
-                    </p>
-                )
-            }
-
         </div>
 
     </div>
+
 );
 }
 
