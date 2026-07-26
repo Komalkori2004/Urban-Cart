@@ -612,3 +612,221 @@
 
     line-height:1.8;
 }
+
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1200px){
+
+    .single-membership-main{
+
+        grid-template-columns:360px 1fr;
+
+        gap:30px;
+    }
+
+}
+
+
+@media (max-width: 992px){
+
+    .single-membership-page{
+
+        padding:70px 0;
+    }
+
+    .single-membership-hero{
+
+        margin-bottom:50px;
+    }
+
+    .single-membership-hero h1{
+
+        font-size:42px;
+    }
+
+    .single-membership-main{
+
+        grid-template-columns:1fr;
+
+        gap:40px;
+    }
+
+    .single-membership-plan-card{
+
+        position:static;
+    }
+
+    .single-membership-benefit-grid{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .single-membership-overview-grid{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .single-membership-extra-grid{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+
+@media (max-width: 768px){
+
+    .single-membership-page{
+
+        padding:60px 0;
+    }
+
+    .single-membership-hero{
+
+        margin-bottom:40px;
+    }
+
+    .single-membership-hero h1{
+
+        font-size:34px;
+    }
+
+    .single-membership-hero p{
+
+        font-size:15px;
+    }
+
+    .single-membership-tag{
+
+        font-size:13px;
+
+        padding:8px 18px;
+    }
+
+    .single-membership-stats{
+
+        gap:15px;
+    }
+
+    .single-membership-stat{
+
+        min-width:150px;
+
+        padding:16px;
+    }
+
+    .single-membership-stat h3{
+
+        font-size:24px;
+    }
+
+    .single-membership-plan-card{
+
+        padding:25px;
+    }
+
+    .single-membership-price-box h2{
+
+        font-size:42px;
+    }
+
+    .single-membership-plan-info{
+
+        grid-template-columns:1fr;
+    }
+
+    .single-membership-benefits h2,
+
+    .single-membership-extra-header h2,
+
+    .single-membership-overview-header h2{
+
+        font-size:32px;
+    }
+
+    .single-membership-benefit-grid,
+
+    .single-membership-extra-grid,
+
+    .single-membership-overview-grid{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+
+@media (max-width: 576px){
+
+    .single-membership-page{
+
+        padding:50px 0;
+    }
+
+    .single-membership-hero h1{
+
+        font-size:28px;
+    }
+
+    .single-membership-hero p{
+
+        font-size:14px;
+    }
+
+    .single-membership-stats{
+
+        flex-direction:column;
+
+        align-items:center;
+    }
+
+    .single-membership-stat{
+
+        width:100%;
+
+        max-width:280px;
+    }
+
+    .single-membership-plan-card{
+
+        padding:20px;
+    }
+
+    .single-membership-price-box h2{
+
+        font-size:36px;
+    }
+
+    .single-membership-btn{
+
+        padding:14px;
+
+        font-size:15px;
+    }
+
+    .single-membership-benefit-card{
+
+        flex-direction:column;
+
+        text-align:center;
+
+        padding:20px;
+    }
+
+    .single-membership-benefit-icon{
+
+        margin-bottom:10px;
+    }
+
+    .single-membership-extra-card,
+
+    .single-membership-overview-card{
+
+        padding:22px;
+    }
+
+}
