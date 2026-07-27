@@ -37,14 +37,15 @@ const Product = () => {
 
   useEffect(() => {
 
-    dispatch(
-      getAllproduct({
-        page: currentPage,
-        search: debouncedSearch,
-        category: selectedCategory,
-        sort: SortOption
-      })
-    );
+   dispatch(
+  getAllproduct({
+    page: currentPage,
+    limit: 2,
+    search: debouncedSearch,
+    category: selectedCategory,
+    sort: SortOption
+  })
+);
 
   }, [
     dispatch,

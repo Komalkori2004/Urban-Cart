@@ -155,7 +155,7 @@ else if (sort === "newest") {
     query.category = category;
 
 }
-    const limit = 2;
+const limit = Number(req.query.limit) || 8;
     const skip = (page - 1) * limit;
 
     const totalProducts = await productModel.countDocuments(query);
