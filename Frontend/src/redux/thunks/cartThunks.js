@@ -53,7 +53,7 @@ export const getCart = createAsyncThunk(
             }
 
             const { data } = await api.get("/cart", config)
-            return data.items
+         return data.data.items;
         }
         catch (error) {
 

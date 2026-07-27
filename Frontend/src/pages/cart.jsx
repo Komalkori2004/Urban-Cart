@@ -27,6 +27,9 @@ const CartPage = () => {
         (state) => state.coupon
     )
 
+console.log("Cart Items:", items);
+console.log("Items Length:", items?.length);
+
 
     console.log("coupon state", {
         appliedCoupon,
@@ -34,17 +37,17 @@ const CartPage = () => {
         finalAmount
     });
 
-    
-useEffect(() => {
 
-    const token =
-        localStorage.getItem("token");
+    useEffect(() => {
 
-    if (token) {
-        dispatch(getCart());
-    }
+        const token =
+            localStorage.getItem("token");
 
-}, [dispatch]);
+        if (token) {
+            dispatch(getCart());
+        }
+
+    }, [dispatch]);
 
     // if (loading) {
     //     return <h2>Loading...</h2>
@@ -52,53 +55,53 @@ useEffect(() => {
     // if (error) {
     //     return <h2>{error}</h2>
     // }
-   if (!loading && items?.length === 0) {
+    if (!loading && items?.length === 0) {
 
-    return (
+        return (
 
-        <div className="cart-empty-page">
+            <div className="cart-empty-page">
 
-            <div className="container">
+                <div className="container">
 
-                <div className="cart-empty-card">
+                    <div className="cart-empty-card">
 
-                    <div className="cart-empty-icon">
-                        🛍️
+                        <div className="cart-empty-icon">
+                            🛍️
+                        </div>
+
+                        <p className="cart-empty-subtitle">
+                            PREMIUM SHOPPING
+                        </p>
+
+                        <h1 className="cart-empty-title">
+                            Your Cart Is Empty
+                        </h1>
+
+                        <p className="cart-empty-description">
+
+                            Looks like you haven't added
+                            any luxury items yet.
+                            Discover our curated collection
+                            and find something special.
+
+                        </p>
+
+                        <button
+                            className="continue-shopping-btn"
+                            onClick={() =>
+                                navigate("/products")
+                            }
+                        >
+                            Continue Shopping
+                        </button>
+
                     </div>
-
-                    <p className="cart-empty-subtitle">
-                        PREMIUM SHOPPING
-                    </p>
-
-                    <h1 className="cart-empty-title">
-                        Your Cart Is Empty
-                    </h1>
-
-                    <p className="cart-empty-description">
-
-                        Looks like you haven't added
-                        any luxury items yet.
-                        Discover our curated collection
-                        and find something special.
-
-                    </p>
-
-                    <button
-                        className="continue-shopping-btn"
-                        onClick={() =>
-                            navigate("/products")
-                        }
-                    >
-                        Continue Shopping
-                    </button>
 
                 </div>
 
             </div>
-
-        </div>
-    )
-}
+        )
+    }
 
     const handleRemoveCart = async (
         productId
@@ -233,19 +236,13 @@ useEffect(() => {
         };
 
 
-    const totalItem = items.reduce((acc, item) => {
-        return acc + item.quantity
-    },
-        0)
+    const totalItem = (items || []).reduce((acc, item) => {
+        return acc + item.quantity;
+    }, 0);
 
-
-    const subTotal = items.reduce((acc, item) => {
-
-        return acc + (
-            item.quantity * item.product.price
-        )
-    },
-        0)
+    const subTotal = (items || []).reduce((acc, item) => {
+        return acc + (item.quantity * item.product.price);
+    }, 0);
 
     const shipping = subTotal >= 5000 ? 0 : 100
 
@@ -253,6 +250,9 @@ useEffect(() => {
         discount > 0
             ? finalAmount + shipping
             : subTotal + shipping;
+
+
+             
     return (
         <>
             <div className="cart-page">
