@@ -40,7 +40,9 @@ function MembershipPlans() {
                 resultAction
             )
         ) {
-            toast.error("Failed to create order");
+            toast.error(
+                resultAction.payload || "Failed to create order"
+            );
             return;
         }
 

@@ -1,23 +1,21 @@
-import React, {
-    useEffect
-} from "react";
+import React, { useEffect } from "react";
 
 import {
-    useDispatch,
-    useSelector
+    useDispatch, useSelector
 } from "react-redux";
 
-import {
-    useParams
-} from "react-router-dom";
 
-import {
-    getSingleMembership
-} from "../../redux/thunks/membershipThunk";
+import { toast } from "sonner";
+
+import { useParams, useNavigate } from "react-router-dom";
+
+import {    getSingleMembership,purchaseMembership, verifyMembershipPayment, getMyMembership, checkPremiumStatus } from "../../redux/thunks/membershipThunk";
 
 import "./SingleMembership.css"
 
 function SingleMembership() {
+
+    const navigate = useNavigate();
 
     const { slug } = useParams();
 
@@ -36,6 +34,111 @@ function SingleMembership() {
         );
 
     }, [dispatch, slug]);
+
+
+    const handlePurchase = async (planId) => {
+
+        const resultAction =
+            await dispatch(
+                purchaseMembership(planId)
+            );
+
+        if (
+            !purchaseMembership.fulfilled.match(
+                resultAction
+            )
+        ) {
+            toast.error(
+                resultAction.payload || "Failed to create order"
+            );
+            return;
+        }
+
+        const {
+            order,
+            membershipPlan
+        } = resultAction.payload;
+
+        const options = {
+
+            key:
+                import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+            amount:
+                order.amount,
+
+            currency:
+                order.currency,
+
+            order_id:
+                order.id,
+
+            name:
+                "UrbanCart",
+
+            description:
+                membershipPlan.name,
+
+            handler:
+                async function (
+                    response
+                ) {
+
+                    const verifyResult = await dispatch(
+                        verifyMembershipPayment({
+                            membershipPlanId: membershipPlan._id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature,
+                        })
+                    );
+
+                    if (
+                        verifyMembershipPayment.rejected.match(
+                            verifyResult
+                        )
+                    ) {
+                        toast.error("Payment verification failed");
+                        return;
+                    }
+                    await dispatch(
+                        getMyMembership()
+                    );
+
+                    await dispatch(
+                        checkPremiumStatus()
+                    );
+
+                    toast.success(
+                        "Membership Activated"
+                    );
+
+                    navigate(
+                        "/membership"
+                    );
+                },
+
+            modal: {
+
+                ondismiss: function () {
+
+                    toast.error(
+                        "Payment cancelled"
+                    );
+                }
+            }
+        };
+
+        const razorpay =
+            new window.Razorpay(
+                options
+            );
+
+        razorpay.open();
+    };
+
+
+
 
     if (singleLoading)
         return <h2>Loading...</h2>;
@@ -202,10 +305,11 @@ function SingleMembership() {
 
                         <button
                             className="single-membership-btn"
+                            onClick={() =>
+                                handlePurchase(singleMembership._id)
+                            }
                         >
-
                             Become Premium
-
                         </button>
 
                     </div>
