@@ -127,11 +127,7 @@ const Login = () => {
                             </Link>
                         </p>
 
-                        {error && (
-                            <p className="auth-error">
-                                {error}
-                            </p>
-                        )}
+                      
 
                     </form>
 

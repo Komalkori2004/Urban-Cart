@@ -5,7 +5,7 @@ import './auth.css';
 import { useNavigate, Link } from 'react-router-dom';
 import { registerUser } from '../redux/thunks/authThunks';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { toast } from "sonner";
 const Signup = () => {
 
     const dispatch = useDispatch();
@@ -39,7 +39,22 @@ const Signup = () => {
 
         if (result.payload?.success) {
 
-            navigate("/login");
+            toast.success(
+                "Account created successfully! Please check your email to verify your account."
+            );
+
+            setTimeout(() => {
+                navigate("/login");
+            }, 1500);
+        }
+
+        if (result.meta.requestStatus === "rejected") {
+
+            toast.error(
+                result.payload || "Registration failed"
+            );
+
+            return;
         }
     };
 
@@ -116,12 +131,6 @@ const Signup = () => {
                     </Link>
                 </p>
 
-                {
-                    error &&
-                    <p className="auth-error">
-                        {error}
-                    </p>
-                }
 
             </div>
 

@@ -106,6 +106,15 @@ const LoginUser = asyncHandler(async (req, res, next) => {
     );
   }
 
+  if (!existingUser.isVerified) {
+   return next(
+    new ErrorHandler(
+        401,
+        "Your email is not verified. Please verify your email and then login."
+    )
+);
+}
+
   // Compare password
   const isMatch = await bcrypt.compare(
     password,
