@@ -43,98 +43,102 @@ function ProductCard({
 
             {/* CONTENT */}
 
-        {/* CONTENT */}
+            {/* CONTENT */}
 
-<div className="product-content">
+            <div className="product-content">
 
-    <p className="product-brand">
-        {product.brand || "UrbanCart Fashion"}
-    </p>
+                <p className="product-brand">
+                    {product.brand || "UrbanCart Fashion"}
+                </p>
 
-    <h3 className="product-name">
-        {product.name}
-    </h3>
+                <h3 className="product-name">
+                    {product.name}
+                </h3>
 
-   {
-    product.numReviews > 0 && (
+                {
+                    product.numReviews > 0 && (
 
-        <div className="product-rating">
+                        <div className="product-rating">
 
-            <span className="stars">
+                            <span className="stars">
 
-                {"★".repeat(
-                    Math.round(
-                        product.ratings || 0
+                                {"★".repeat(
+                                    Math.round(
+                                        product.ratings || 0
+                                    )
+                                )}
+
+                                {"☆".repeat(
+                                    5 - Math.round(
+                                        product.ratings || 0
+                                    )
+                                )}
+
+                            </span>
+
+                            <span className="rating-count">
+                                ({product.numReviews})
+                            </span>
+
+                        </div>
+
                     )
-                )}
+                }
 
-                {"☆".repeat(
-                    5 - Math.round(
-                        product.ratings || 0
-                    )
-                )}
+                <div className="product-price-box">
 
-            </span>
+                    <h2 className="product-price">
+                        ₹ {product.price}
+                    </h2>
 
-            <span className="rating-count">
-                ({product.numReviews})
-            </span>
+                    <span className="old-price">
 
-        </div>
+                        ₹ {
+                            Math.floor(
+                                product.price * 1.3
+                            )
+                        }
 
-    )
-}
+                    </span>
 
-    <div className="product-price-box">
+                </div>
 
-        <h2 className="product-price">
-            ₹ {product.price}
-        </h2>
+                <div className="product-features">
 
-        <span className="old-price">
+                    <span>
+                        Premium Quality
+                    </span>
 
-            ₹ {
-                Math.floor(
-                    product.price * 1.3
-                )
-            }
+                    <span>
+                        Fast Delivery
+                    </span>
 
-        </span>
+                </div>
 
-    </div>
+                <div className="stock-badge">
 
-    <div className="product-features">
+                    {
+                        product.stock > 0
+                            ? "In Stock"
+                            : "Out of Stock"
+                    }
 
-        <span>
-            Premium Quality
-        </span>
+                </div>
 
-        <span>
-            Fast Delivery
-        </span>
+                <div className="product-divider"></div>
+                <button
+                    className="product-btn"
+                    onClick={onAddToCart}
+                    disabled={product.stock <= 0}
+                >
+                    {
+                        product.stock > 0
+                            ? "Add To Cart"
+                            : "Out of Stock"
+                    }
+                </button>
 
-    </div>
-
-    <div className="stock-badge">
-
-        {
-            product.stock > 0
-                ? "In Stock"
-                : "Out of Stock"
-        }
-
-    </div>
-
-    <div className="product-divider"></div>
-
-    <button
-        className="product-btn"
-        onClick={onAddToCart}
-    >
-        Add To Cart
-    </button>
-
-</div>
+            </div>
 
         </Link>
     );

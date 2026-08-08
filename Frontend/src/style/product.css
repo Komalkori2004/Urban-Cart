@@ -1,3 +1,17 @@
+
+.product-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: var(--dark-hover);
+    color: var(--gray);
+    border-color: var(--gold-border-light);
+}
+
+.product-btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 /* ==================================
             SHOP PAGE
 ================================== */

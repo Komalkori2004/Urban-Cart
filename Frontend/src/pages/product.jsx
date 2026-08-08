@@ -37,15 +37,15 @@ const Product = () => {
 
   useEffect(() => {
 
-   dispatch(
-  getAllproduct({
-    page: currentPage,
-    limit: 2,
-    search: debouncedSearch,
-    category: selectedCategory,
-    sort: SortOption
-  })
-);
+    dispatch(
+      getAllproduct({
+        page: currentPage,
+        limit: 2,
+        search: debouncedSearch,
+        category: selectedCategory,
+        sort: SortOption
+      })
+    );
 
   }, [
     dispatch,
@@ -56,13 +56,13 @@ const Product = () => {
   ]);
 
 
-useEffect(() => {
+  useEffect(() => {
     setCurrentPage(1);
-}, [
+  }, [
     debouncedSearch,
     selectedCategory,
     SortOption
-]);
+  ]);
 
 
 
@@ -128,14 +128,34 @@ useEffect(() => {
             quantity: 1
           })
         );
-
       if (
         result.meta.requestStatus ===
         "fulfilled"
       ) {
+
         toast.success(
           "Product added to cart"
         );
+
+      } else {
+
+        if (
+          result.payload ===
+          "Insufficient stock"
+        ) {
+
+          toast.error(
+            "Limited Stock — This product is already at its available quantity in your cart."
+          );
+
+        } else {
+
+          toast.error(
+            result.payload ||
+            "Unable to add product to cart"
+          );
+
+        }
       }
 
     },

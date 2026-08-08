@@ -108,21 +108,21 @@ const getAllProduct = asyncHandler(async (req, res, next) => {
 
     if (sort === "lowToHigh") {
 
-    sortQuery.price = 1;
+        sortQuery.price = 1;
 
-}
+    }
 
-else if (sort === "highToLow") {
+    else if (sort === "highToLow") {
 
-    sortQuery.price = -1;
+        sortQuery.price = -1;
 
-}
+    }
 
-else if (sort === "newest") {
+    else if (sort === "newest") {
 
-    sortQuery.createdAt = -1;
+        sortQuery.createdAt = -1;
 
-}
+    }
 
     if (search) {
 
@@ -148,31 +148,31 @@ else if (sort === "newest") {
 
 
     if (
-    category &&
-    category !== "All"
-) {
+        category &&
+        category !== "All"
+    ) {
 
-    query.category = category;
+        query.category = category;
 
-}
-const limit = Number(req.query.limit) || 8;
+    }
+    const limit = Number(req.query.limit) || 8;
     const skip = (page - 1) * limit;
 
     const totalProducts = await productModel.countDocuments(query);
 
     const totalPages = Math.ceil(totalProducts / limit);
 
-const products = await productModel
-    .find(query)
-    .sort(sortQuery)
-    .skip(skip)
-    .limit(limit);
+    const products = await productModel
+        .find(query)
+        .sort(sortQuery)
+        .skip(skip)
+        .limit(limit);
     console.log(products);
 
 
 
-console.log("Query:", query);
-console.log("Products:", products);
+    console.log("Query:", query);
+    console.log("Products:", products);
 
 
     res.status(200).json({
@@ -227,7 +227,10 @@ const updateProducts = asyncHandler(async (req, res, next) => {
     product.price = price || product.price
     product.category = category || product.category
     product.brand = brand || product.brand
-    product.stock = stock || product.stock
+    product.stock =
+        stock !== undefined
+            ? stock
+            : product.stock;
     product.shipping = shipping || product.shipping
 
     if (name) {
