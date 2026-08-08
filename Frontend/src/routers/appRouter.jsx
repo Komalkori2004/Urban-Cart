@@ -54,6 +54,7 @@ const UpdateProduct = lazy(() =>
 import Product from '../pages/product'
 import SingleProduct from '../pages/singleProduct'
 import NavBar from '../components/navbar'
+import BuyNowCheckout from '../pages/BuyNowCheckout'
 
 
 import AdminLayout from '../layout/AdminLayout'
@@ -257,6 +258,17 @@ const AppRouter = () => {
                             element={
                                 <ProtectRoute>
                                     <AddAddressPage />
+                                </ProtectRoute>
+                            }
+                        />
+
+
+
+                        <Route
+                            path="/buy-now-checkout"
+                            element={
+                                <ProtectRoute>
+                                    <BuyNowCheckout />
                                 </ProtectRoute>
                             }
                         />

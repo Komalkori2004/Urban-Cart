@@ -66,7 +66,7 @@ const CheckoutPage = () => {
 
         if (isPlacingOrder) return;
 
-setIsPlacingOrder(true);
+        setIsPlacingOrder(true);
         e.preventDefault();
 
 

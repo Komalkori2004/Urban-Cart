@@ -2,11 +2,9 @@
 import React, { useEffect, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams ,useNavigate,Link } from 'react-router-dom'
 import { getsingleProduct, getAllproduct } from '../redux/thunks/productThunks'
-import { Link } from "react-router-dom"
 
-import { useNavigate } from "react-router-dom"
 import { addToCart } from "../redux/thunks/cartThunks"
 import { addReview } from '../redux/thunks/reviewThunk'
 import ProductReviewForm from "../components/ProductReviewForm"
@@ -20,6 +18,8 @@ import "../style/singleProduct.css"
 const SingleProduct = () => {
     const navigate = useNavigate()
 
+    
+
     const dispatch = useDispatch()
     const { slug } = useParams()
     const [rating, setRating] = useState(0)
@@ -28,6 +28,7 @@ const SingleProduct = () => {
 
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState("")
+    
     const { wishlist } = useSelector((state) => state.wishlist)
     const { loading: reviewLoadind } = useSelector(state => state.review)
 
@@ -58,31 +59,30 @@ const SingleProduct = () => {
 
 
 
-//     const handleBuyNow = async () => {
+    const handleBuyNow = () => {
 
-//     const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token");
 
-//     if (!token) {
+        if (!token) {
 
-//         toast.warning("Please login to continue");
+            toast.warning(
+                "Please login to continue"
+            );
 
-//         navigate("/login");
+            setTimeout(() => {
+                navigate("/login");
+            }, 700);
 
-//         return;
-//     }
+            return;
+        }
 
-//     const result = await dispatch(
-//         addToCart({
-//             productId: singleProduct._id,
-//             quantity
-//         })
-//     );
-
-//     if (result.meta.requestStatus === "fulfilled") {
-
-//         navigate("/checkout");
-//     }
-// };
+        navigate("/buy-now-checkout", {
+            state: {
+                product: singleProduct,
+                quantity
+            }
+        });
+    };
 
     const handleAddToCart = async () => {
 

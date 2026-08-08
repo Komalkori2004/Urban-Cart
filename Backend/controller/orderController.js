@@ -204,11 +204,11 @@ const placeOrder = asyncHandler(async (req, res, next) => {
 
 
     };
-    // if (paymentMethod === "RAZORPAY") {
-    //     orderData.paymentStatus = "Paid";
-    //     orderData.isPaid = true;
-    //     orderData.paidAt = new Date();
-    // }
+    if (paymentMethod === "RAZORPAY") {
+        orderData.paymentStatus = "Paid";
+        orderData.isPaid = true;
+        orderData.paidAt = new Date();
+    }
 
     const newOrder = await Order.create(orderData);
 
