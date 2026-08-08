@@ -173,7 +173,7 @@ export const createRozerpayOrder = createAsyncThunk(
                     Authorization: `Bearer ${token}`
                 }
             }
-    
+
             const { data } = await api.post("/payment/create-order", { amount }, config)
             return data.order
 
@@ -185,33 +185,74 @@ export const createRozerpayOrder = createAsyncThunk(
     }
 )
 
-export const  verifyPayment=createAsyncThunk(
-"order/verifyPayment",
+export const verifyPayment = createAsyncThunk(
+    "order/verifyPayment",
 
-async(paymentData,thunkAPI)=>{
-    try{
+    async (paymentData, thunkAPI) => {
+        try {
 
-   const token = thunkAPI.getState().auth.token;
+            const token = thunkAPI.getState().auth.token;
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
 
-      const { data } = await api.post(
-        "/payment/verify-payment",
-        paymentData,
-        config
-      );
+            const { data } = await api.post(
+                "/payment/verify-payment",
+                paymentData,
+                config
+            );
 
-      return data;
+            return data;
+
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+
 
     }
-    catch(error){
-return thunkAPI.rejectWithValue(error.response.data)
-    }
-    
-
-}
 )
+
+
+
+
+
+
+export const buyNowOrder = createAsyncThunk(
+    "order/buyNowOrder",
+
+    async (orderData, thunkAPI) => {
+
+        try {
+
+            const token =
+                thunkAPI.getState().auth.token;
+
+            const config = {
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            };
+
+            const { data } =
+                await api.post(
+                    "/order/buy-now",
+                    orderData,
+                    config
+                );
+
+            return data.data;
+
+        } catch (error) {
+
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Failed to place Buy Now order"
+            );
+        }
+    }
+);

@@ -3,7 +3,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
     getAllOrders, updateOrderStatus, getOrderById, getMyOrders, cancleOrder, placeOrder
-    , verifyPayment
+    , verifyPayment, buyNowOrder
 } from "../thunks/orderThunks"
 
 
@@ -14,6 +14,10 @@ const initialState = {
     error: null,
     selectedOrder: null,
     paymentVerified: false,
+
+    buyNowLoading: false,
+    buyNowError: null,
+    buyNowOrder: null,
 };
 
 
@@ -139,6 +143,30 @@ const orderSlice = createSlice({
                 state.loading = false;
                 state.paymentVerified = false;
                 state.error = action.payload;
+            })
+
+            .addCase(buyNowOrder.pending, (state) => {
+
+                state.buyNowLoading = true;
+                state.buyNowError = null;
+                state.buyNowOrder = null;
+
+            })
+
+            .addCase(buyNowOrder.fulfilled, (state, action) => {
+
+                state.buyNowLoading = false;
+                state.buyNowOrder = action.payload;
+                state.buyNowError = null;
+
+            })
+
+            .addCase(buyNowOrder.rejected, (state, action) => {
+
+                state.buyNowLoading = false;
+                state.buyNowError =
+                    action.payload || "Failed to place Buy Now order";
+
             })
 
     }
