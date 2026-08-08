@@ -9,7 +9,6 @@ import {
     verifyPayment
 } from "../redux/thunks/orderThunks";
 
-// import "./style/checkout.css";
 import "../style/checkOut.css"
 
 const BuyNowCheckout = () => {
