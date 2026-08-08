@@ -204,11 +204,11 @@ const placeOrder = asyncHandler(async (req, res, next) => {
 
 
     };
-    if (paymentMethod === "RAZORPAY") {
-        orderData.paymentStatus = "Paid";
-        orderData.isPaid = true;
-        orderData.paidAt = new Date();
-    }
+    // if (paymentMethod === "RAZORPAY") {
+    //     orderData.paymentStatus = "Paid";
+    //     orderData.isPaid = true;
+    //     orderData.paidAt = new Date();
+    // }
 
     const newOrder = await Order.create(orderData);
 
@@ -262,6 +262,152 @@ const placeOrder = asyncHandler(async (req, res, next) => {
     })
 
 })
+
+
+
+
+
+
+const buyNowOrder = asyncHandler(async (req, res, next) => {
+
+    const userID = req.user.id;
+
+    const {
+        productId,
+        quantity,
+        shippingAddress,
+        paymentMethod,
+        couponCode
+    } = req.body;
+
+    // 1. Product find
+    const product = await Product.findById(productId);
+
+    if (!product) {
+        return next(
+            new ErrorHandler(
+                404,
+                "Product not found"
+            )
+        );
+    }
+
+    // 2. Quantity validation
+    if (!quantity || quantity < 1) {
+        return next(
+            new ErrorHandler(
+                400,
+                "Invalid quantity"
+            )
+        );
+    }
+
+    // 3. Stock validation
+    if (quantity > product.stock) {
+        return next(
+            new ErrorHandler(
+                400,
+                `Only ${product.stock} items available`
+            )
+        );
+    }
+
+    // 4. Create order item
+    const orderItems = [
+        {
+            product: product._id,
+            name: product.name,
+            image: product.images?.[0]?.url || "",
+            price: product.price,
+            quantity
+        }
+    ];
+
+    // 5. Calculate total
+    const totalAmount =
+        product.price * quantity;
+
+    // 6. Shipping
+    const shippingCharge =
+        totalAmount >= 5000 ? 0 : 100;
+
+    // 7. Final amount
+    const finalAmount =
+        totalAmount + shippingCharge;
+
+    // 8. Prepare order
+    const orderData = {
+
+        user: userID,
+
+        items: orderItems,
+
+        shippingAddress,
+
+        paymentMethod,
+
+        originalAmount: totalAmount,
+
+        shippingCharge,
+
+        discountAmount: 0,
+
+        totalAmount: finalAmount,
+
+        couponCode:
+            couponCode || null
+    };
+
+    // 9. Razorpay payment status
+    if (
+        paymentMethod === "RAZORPAY"
+    ) {
+
+        orderData.paymentStatus =
+            "Paid";
+
+        orderData.isPaid = true;
+
+        orderData.paidAt =
+            new Date();
+    }
+
+    const newOrder = await Order.create(orderData);
+
+    product.stock -= quantity;
+
+    await product.save();
+
+
+    // Send order confirmation email
+    const existingUser = await user.findById(userID);
+
+    if (existingUser) {
+
+        const html = orderConfirmationTemplate({
+            name: existingUser.name,
+            order: newOrder
+        });
+
+        await sendEmail({
+            email: existingUser.email,
+            subject: "Order Confirmation - UrbanCart",
+            html
+        });
+    }
+
+
+    res.status(200).json({
+
+        success: true,
+
+        message: "Buy Now order placed successfully",
+
+        data: newOrder
+
+    });
+
+});
 
 
 
@@ -510,5 +656,5 @@ const getAllOrders = asyncHandler(async (req, res, next) => {
 
 
 
-module.exports = { placeOrder, getMyOrder, getOrderbyId, orderStatus, cancleOrder, getAllOrders }
+module.exports = { placeOrder, getMyOrder, getOrderbyId, orderStatus, cancleOrder, getAllOrders, buyNowOrder }
 

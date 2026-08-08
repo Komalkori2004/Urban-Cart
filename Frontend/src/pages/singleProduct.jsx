@@ -56,6 +56,34 @@ const SingleProduct = () => {
         }
     }
 
+
+
+//     const handleBuyNow = async () => {
+
+//     const token = localStorage.getItem("token");
+
+//     if (!token) {
+
+//         toast.warning("Please login to continue");
+
+//         navigate("/login");
+
+//         return;
+//     }
+
+//     const result = await dispatch(
+//         addToCart({
+//             productId: singleProduct._id,
+//             quantity
+//         })
+//     );
+
+//     if (result.meta.requestStatus === "fulfilled") {
+
+//         navigate("/checkout");
+//     }
+// };
+
     const handleAddToCart = async () => {
 
         const result =
@@ -305,11 +333,12 @@ const SingleProduct = () => {
                                     : "🤍 Add Wishlist"
                                 }
                             </button>
-
-                            <button className="buy-now-btn">
+                            <button
+                                className="buy-now-btn"
+                                onClick={handleBuyNow}
+                            >
                                 Buy Now
                             </button>
-
                         </div>
 
                     </div>
