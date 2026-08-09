@@ -4,37 +4,27 @@ const sendEmail = async ({
     email,
     subject,
     html,
-      attachments = [],
+    attachments = []
 }) => {
 
     try {
 
         await transporter.sendMail({
 
-            from: `"UrbanCart" <${process.env.MAIL_USER}>`,
-
+            from: `"UrbanCart" <${process.env.MAIL_FROM}>`,
             to: email,
-
             subject,
-
             html,
-              attachments,
+            attachments
 
         });
 
     } catch (error) {
 
-        console.error(
-            "Email Error:",
-            error
-        );
+        console.error("Email Error:", error);
 
-        throw new Error(
-            "Failed to send email"
-        );
-
+        throw new Error("Failed to send email");
     }
-
 };
 
 module.exports = sendEmail;
