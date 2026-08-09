@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams ,useNavigate,Link } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getsingleProduct, getAllproduct } from '../redux/thunks/productThunks'
 
 import { addToCart } from "../redux/thunks/cartThunks"
@@ -10,6 +10,7 @@ import { addReview } from '../redux/thunks/reviewThunk'
 import ProductReviewForm from "../components/ProductReviewForm"
 import RelatedProducts from '../components/RelatedProducts'
 import ProductReviews from '../components/ProductReviews'
+import { toast } from "sonner";
 
 import { getWishlist, removeWishlist, addToWishlist } from "../redux/thunks/wishlistThunks"
 import "../style/singleProduct.css"
@@ -18,7 +19,7 @@ import "../style/singleProduct.css"
 const SingleProduct = () => {
     const navigate = useNavigate()
 
-    
+
 
     const dispatch = useDispatch()
     const { slug } = useParams()
@@ -28,7 +29,7 @@ const SingleProduct = () => {
 
     const [quantity, setQuantity] = useState(1)
     const [activeImage, setActiveImage] = useState("")
-    
+
     const { wishlist } = useSelector((state) => state.wishlist)
     const { loading: reviewLoadind } = useSelector(state => state.review)
 
@@ -48,9 +49,17 @@ const SingleProduct = () => {
     const incressQty = () => {
 
         if (quantity < singleProduct.stock) {
-            setQuantity(quantity + 1)
+
+            setQuantity(quantity + 1);
+
+        } else {
+
+            toast.warning(
+                `Only ${singleProduct.stock} items are available`
+            );
+
         }
-    }
+    };
     const decressQty = () => {
         if (quantity > 1) {
             setQuantity(quantity - 1)
@@ -60,6 +69,15 @@ const SingleProduct = () => {
 
 
     const handleBuyNow = () => {
+
+        if (singleProduct.stock <= 0) {
+
+            toast.error(
+                "This product is currently out of stock"
+            );
+
+            return;
+        }
 
         const token = localStorage.getItem("token");
 
@@ -83,21 +101,43 @@ const SingleProduct = () => {
             }
         });
     };
-
     const handleAddToCart = async () => {
+        if (singleProduct.stock <= 0) {
+
+            toast.error(
+                "This product is currently out of stock"
+            );
+
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+
+            toast.warning(
+                "Please login to add products to cart"
+            );
+
+            setTimeout(() => {
+                navigate("/login");
+            }, 700);
+
+            return;
+        }
 
         const result =
             await dispatch(
                 addToCart({
-                    productId:
-                        singleProduct._id,
+                    productId: singleProduct._id,
                     quantity
                 })
             );
 
+
         if (
-            result.meta.requestStatus
-            === "fulfilled"
+            result.meta.requestStatus ===
+            "fulfilled"
         ) {
 
             toast.success(
@@ -105,6 +145,26 @@ const SingleProduct = () => {
             );
 
             navigate("/dashboard/cart");
+
+        } else {
+
+            if (
+                result.payload ===
+                "Insufficient stock"
+            ) {
+
+                toast.error(
+                    "Limited Stock — This product is already at its available quantity in your cart."
+                );
+
+            } else {
+
+                toast.error(
+                    result.payload ||
+                    "Unable to add product to cart"
+                );
+
+            }
         }
     };
 
@@ -133,36 +193,83 @@ const SingleProduct = () => {
 
     const handleWishlist = async () => {
 
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+
+            toast.warning(
+                "Please login to manage your wishlist"
+            );
+
+            setTimeout(() => {
+                navigate("/login");
+            }, 700);
+
+            return;
+        }
+
         if (isWishlisted) {
 
-            dispatch(
+            const result = await dispatch(
                 removeWishlist(singleProduct._id)
-            )
+            );
+
+            if (
+                removeWishlist.fulfilled.match(result)
+            ) {
+
+                toast.success(
+                    "Removed from wishlist"
+                );
+
+            } else {
+
+                toast.error(
+                    result.payload ||
+                    "Unable to remove from wishlist"
+                );
+            }
 
         } else {
 
-            await dispatch(
+            const result = await dispatch(
                 addToWishlist(singleProduct._id)
-            )
+            );
 
-            dispatch(getWishlist())
+            if (
+                addToWishlist.fulfilled.match(result)
+            ) {
+
+                toast.success(
+                    "Added to wishlist"
+                );
+
+                dispatch(getWishlist());
+
+            } else {
+
+                toast.error(
+                    result.payload ||
+                    "Unable to add to wishlist"
+                );
+            }
         }
-    }
+    };
 
 
 
     const handleReviewSubmit = async (e) => {
-        e.preventDefault()
-        console.log("Button clicked")
-        console.log("Rating:", rating)
-        console.log("Comment:", comment)
 
-        if (!rating || !comment) {
-            return alert("Please enter rating and comment")
+        e.preventDefault();
+
+        if (!rating || !comment.trim()) {
+
+            toast.warning(
+                "Please enter rating and comment"
+            );
+
+            return;
         }
-
-
-        console.log("Before Dispatch")
 
         const result = await dispatch(
             addReview({
@@ -170,13 +277,11 @@ const SingleProduct = () => {
                 rating,
                 comment
             })
-        )
+        );
 
-        console.log("After Dispatch")
-        console.log(result)
+
         if (
-            result.meta.requestStatus ===
-            "fulfilled"
+            addReview.fulfilled.match(result)
         ) {
 
             toast.success(
@@ -188,10 +293,16 @@ const SingleProduct = () => {
             );
 
             setRating(0);
-
             setComment("");
+
+        } else {
+
+            toast.error(
+                result.payload ||
+                "Failed to submit review"
+            );
         }
-    }
+    };
     // dispatch(addToReview({rating,comment,singleProduct._id}))
 
 
@@ -309,19 +420,37 @@ const SingleProduct = () => {
                         </div>
 
                         <div className="quantity-box">
-                            <button onClick={decressQty}>-</button>
-                            <span>{quantity}</span>
-                            <button onClick={incressQty}>+</button>
-                        </div>
 
+                            <button
+                                onClick={decressQty}
+                                disabled={singleProduct.stock <= 0}
+                            >
+                                -
+                            </button>
+
+                            <span>{quantity}</span>
+
+                            <button
+                                onClick={incressQty}
+                                disabled={singleProduct.stock <= 0}
+                            >
+                                +
+                            </button>
+
+                        </div>
 
                         <div className="product-actions">
 
                             <button
                                 className="add-cart-btn"
                                 onClick={handleAddToCart}
+                                disabled={singleProduct.stock <= 0}
                             >
-                                Add To Cart
+                                {
+                                    singleProduct.stock > 0
+                                        ? "Add To Cart"
+                                        : "Out Of Stock"
+                                }
                             </button>
 
                             <button
