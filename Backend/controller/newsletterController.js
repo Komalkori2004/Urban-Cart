@@ -1,7 +1,7 @@
 
 
 const Newsletter = require("../models/newsletterModel")
-const ErrorHandler = require("../utils/errorhandler")
+const ErrorHandler = require("../utils/errorHandler")
 const asyncHandler = require("../middleware/asyncHandler")
 const newsletterWelcomeTemplate = require("../utils/emailTemplates/newsletterWelcomeTemplate")
 

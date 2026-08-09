@@ -3,7 +3,7 @@
 const Contact = require("../models/contactModel")
 
 
-const ErrorHandler = require("../utils/errorhandler")
+const ErrorHandler = require("../utils/errorHandler")
 const asyncHandler = require("../middleware/asyncHandler")
 
 const sendEmail = require("../utils/sendEmail");

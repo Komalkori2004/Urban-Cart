@@ -16,18 +16,18 @@ const productRouter = require("./routes/productRouter")
 const cartRouter = require("./routes/cartRouter")
 const CategoryRouter = require("./routes/categoryRouter")
 const OrderRouter = require("./routes/orderRouter")
-const wishlistRouter=require("./routes/wishlistRoute")
-const paymentRouter=require("./routes/paymentRoutes")
-const couponRouter=require("./routes/couponRouter")
+const wishlistRouter = require("./routes/wishlistRoute")
+const paymentRouter = require("./routes/paymentRoutes")
+const couponRouter = require("./routes/couponRouter")
 
-const NewsletterRouter=require("./routes/newsletterRouter")
+const NewsletterRouter = require("./routes/newsletterRouter")
 
-const ContactRouter=require("./routes/contactRouter")
+const ContactRouter = require("./routes/contactRouter")
 
-const membershipRouter= require("./routes/membershipRouter")
+const membershipRouter = require("./routes/membershipRouter")
 
 
-const profileRouter=require("./routes/userRouter")
+const profileRouter = require("./routes/userRouter")
 
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
@@ -51,16 +51,16 @@ app.use("/api/category", CategoryRouter)
 
 app.use("/api/order", OrderRouter)
 
-app.use("/api/wishlist",wishlistRouter)
-app.use("/api/payment",paymentRouter)
+app.use("/api/wishlist", wishlistRouter)
+app.use("/api/payment", paymentRouter)
 
-app.use("/api/coupon",couponRouter)
-app.use("/api/newsletter",NewsletterRouter)
-app.use("/api/contact",ContactRouter)
+app.use("/api/coupon", couponRouter)
+app.use("/api/newsletter", NewsletterRouter)
+app.use("/api/contact", ContactRouter)
 
-app.use("/api/membership",membershipRouter)
+app.use("/api/membership", membershipRouter)
 
-app.use("/api/users",profileRouter)
+app.use("/api/users", profileRouter)
 
 
 
@@ -83,6 +83,6 @@ app.use(errorMiddleware)
 
 // port
 const PORT = process.env.PORT || 5000
-app.listen(PORT, () => {
-    console.log(`server is runningon port ${PORT}`)
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`server is running on port ${PORT}`)
 })
