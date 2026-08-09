@@ -7,6 +7,7 @@ import "../Auth/auth.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { forgotPassword } from '../redux/thunks/authThunks'
+import { toast } from "sonner";
 
 function ForgotPassword() {
 
@@ -14,91 +15,106 @@ function ForgotPassword() {
     const dispatch = useDispatch()
     const { loading, error, message } = useSelector((state) => state.auth)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = async (e) => {
 
-        dispatch(forgotPassword(email))
-        console.log(email)
+        e.preventDefault();
+
+        if (!email.trim()) {
+
+            toast.warning(
+                "Please enter your email address"
+            );
+
+            return;
+        }
+
+        const result = await dispatch(
+            forgotPassword(email)
+        );
+
+        if (
+            forgotPassword.fulfilled.match(result)
+        ) {
+
+            toast.success(
+                result.payload?.message ||
+                "Password reset link sent successfully"
+            );
+
+        } else {
+
+            toast.error(
+                result.payload ||
+                "Unable to send password reset link"
+            );
+        }
+    };
 
 
-    }
 
+    return (
+        <div className="auth-container">
 
-   
-return (
-    <div className="auth-container">
+            <div className="auth-box">
 
-        <div className="auth-box">
-
-            <img
-                src="/logo/nav-logo.png"
-                alt="UrbanCart"
-                className="auth-logo"
-                 loading="lazy"
-            />
-
-            <h2 className="auth-title">
-                Forgot Password
-            </h2>
-
-            <p className="auth-subtitle">
-                Enter the email associated with your account
-                and we'll send you a secure password reset link.
-            </p>
-
-            <form
-                onSubmit={handleSubmit}
-                className="auth-form"
-            >
-
-                <input
-                    type="email"
-                    className="auth-input"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
+                <img
+                    src="/logo/nav-logo.png"
+                    alt="UrbanCart"
+                    className="auth-logo"
+                    loading="lazy"
                 />
 
-                <button
-                    type="submit"
-                    className="auth-btn"
+                <h2 className="auth-title">
+                    Forgot Password
+                </h2>
+
+                <p className="auth-subtitle">
+                    Enter the email associated with your account
+                    and we'll send you a secure password reset link.
+                </p>
+
+                <form
+                    onSubmit={handleSubmit}
+                    className="auth-form"
                 >
-                    {
-                        loading
-                            ? "Sending..."
-                            : "Send Reset Link"
-                    }
-                </button>
 
-            </form>
+                    <input
+                        type="email"
+                        className="auth-input"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) =>
+                            setEmail(e.target.value)
+                        }
+                    />
 
-            <p className="auth-link">
-                Remember your password?
-                <Link to="/login">
-                    Login
-                </Link>
-            </p>
+                    <button
+                        type="submit"
+                        className="auth-btn"
+                        disabled={loading}
+                    >
+                        {
+                            loading
+                                ? "Sending..."
+                                : "Send Reset Link"
+                        }
+                    </button>
 
-            {
-                message &&
-                <p className="auth-success">
-                    {message}
+                </form>
+
+                <p className="auth-link">
+                    Remember your password?
+                    <Link to="/login">
+                        Login
+                    </Link>
                 </p>
-            }
 
-            {
-                error &&
-                <p className="auth-error">
-                    {error}
-                </p>
-            }
+
+
+            </div>
 
         </div>
-
-    </div>
-)
+    )
 
 
 }
